@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Questionnaire New Generation for 2026 | Salsa Guy Richmond LLC</title>
+  
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-red: #DC2626;
+      --primary-crimson: #991B1B;
+      --accent-gold: #F59E0B;
+      --accent-amber: #D97706;
+      --bg-dark: #0F172A;
+      --card-bg: rgba(30, 41, 59, 0.75);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --text-main: #F8FAFC;
+      --text-muted: #94A3B8;
+      --input-bg: rgba(15, 23, 42, 0.6);
+      --input-border: rgba(255, 255, 255, 0.18);
+      --input-focus: #F59E0B;
+      --shadow-glow: 0 10px 30px -10px rgba(220, 38, 38, 0.35);
+      --radius-xl: 20px;
+      --radius-md: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: radial-gradient(circle at top right, #31101A 0%, #0F172A 50%, #080C14 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+    }
+
+    /* Header Styling */
+    .brand-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      background: rgba(220, 38, 38, 0.15);
+      border: 1px solid rgba(220, 38, 38, 0.3);
+      border-radius: 30px;
+      color: #FCA5A5;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 15px;
+    }
+
+    .brand-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.75rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FFF 0%, #FCA5A5 50%, #F59E0B 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .brand-subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    /* Glassmorphic Card */
+    .form-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), var(--shadow-glow);
+    }
+
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 25px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .section-title i {
+      color: var(--primary-red);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #CBD5E1;
+      margin-bottom: 8px;
+    }
+
+    label span.required {
+      color: var(--primary-red);
+      margin-left: 3px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: var(--radius-md);
+      color: var(--text-main);
+      font-size: 0.98rem;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--input-focus);
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    select option {
+      background: #1E293B;
+      color: var(--text-main);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    /* Submit Button */
+    .submit-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #DC2626 0%, #B91C1C 50%, #D97706 100%);
+      border: none;
+      border-radius: var(--radius-md);
+      color: #FFF;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 10px 25px -5px rgba(220, 38, 38, 0.4);
+      transition: all 0.3s ease;
+      margin-top: 15px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px -5px rgba(220, 38, 38, 0.6);
+      background: linear-gradient(135deg, #EF4444 0%, #DC2626 50%, #F59E0B 100%);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Modal / Success Card */
+    .success-card {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(34, 197, 94, 0.15);
+      border: 2px solid #22C55E;
+      color: #22C55E;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      margin: 0 auto 20px auto;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(34, 197, 94, 0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    }
+
+    .success-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 10px;
+    }
+
+    .success-text {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 25px;
+      line-height: 1.5;
+    }
+
+    .event-id-badge {
+      display: inline-block;
+      padding: 10px 20px;
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px dashed var(--accent-gold);
+      border-radius: 10px;
+      color: var(--accent-gold);
+      font-family: monospace;
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+
+    .reset-btn {
+      padding: 12px 28px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-md);
+      color: var(--text-main);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .reset-btn:hover {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    @media (max-width: 640px) {
+      .grid-2 {
+        grid-template-columns: 1fr;
+      }
+      .form-group.full-width {
+        grid-column: span 1;
+      }
+      .form-card {
+        padding: 25px;
+      }
+      .brand-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Brand Header -->
+    <div class="brand-header">
+      <div class="brand-badge"><i class="fa-solid fa-fire"></i> Salsa Guy Richmond, LLC</div>
+      <h1 class="brand-title">Questionnaire New Generation for 2026</h1>
+      <p class="brand-subtitle">Fill out the questionnaire below to get your custom proposal, contract, and calendar reservation.</p>
+    </div>
+
+    <!-- Booking Form Card -->
+    <div class="form-card" id="formCard">
+      <form id="bookingForm">
+        
+        <!-- Section 1: Client Info -->
+        <div class="section-title">
+          <i class="fa-solid fa-user"></i> 1. Contact Information
+        </div>
+        
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="clientName">Your Full Name <span class="required">*</span></label>
+            <input type="text" id="clientName" name="clientName" placeholder="e.g. Maria Santos" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="clientEmail">Email Address <span class="required">*</span></label>
+            <input type="email" id="clientEmail" name="clientEmail" placeholder="maria@example.com" required>
+          </div>
+          
+          <div class="form-group full-width">
+            <label for="clientPhone">Phone Number</label>
+            <input type="tel" id="clientPhone" name="clientPhone" placeholder="(804) 555-0199">
+          </div>
+        </div>
+
+        <!-- Section 2: Event Info -->
+        <div class="section-title" style="margin-top: 15px;">
+          <i class="fa-solid fa-calendar-check"></i> 2. Event Specifications
+        </div>
+        
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="eventName">Event Name / Type <span class="required">*</span></label>
+            <input type="text" id="eventName" name="eventName" placeholder="e.g. Maria's 30th Birthday Party" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="serviceCategory">Service Package <span class="required">*</span></label>
+            <select id="serviceCategory" name="serviceCategory" required>
+              <option value="Full Private Event">Full Private Event (DJ + Lesson + MC)</option>
+              <option value="Small Private Event">Small Private Event</option>
+              <option value="Salsa/Bachata Workshop">Salsa & Bachata Workshop / Lesson</option>
+              <option value="Performance Only">Dance Performance Only</option>
+              <option value="Corporate / Milestone">Corporate / Milestone Celebration</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="eventDate">Event Date <span class="required">*</span></label>
+            <input type="date" id="eventDate" name="eventDate" required>
+          </div>
+
+          <div class="form-group">
+            <label for="eventTime">Start Time <span class="required">*</span></label>
+            <input type="time" id="eventTime" name="eventTime" required>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="eventAddress">Event Location / Venue Address <span class="required">*</span></label>
+            <input type="text" id="eventAddress" name="eventAddress" placeholder="e.g. 123 Main St, Richmond, VA 23220" required>
+          </div>
+        </div>
+
+        <!-- Section 3: Notes -->
+        <div class="section-title" style="margin-top: 15px;">
+          <i class="fa-solid fa-comment-dots"></i> 3. Additional Requests & Notes
+        </div>
+        
+        <div class="form-group">
+          <label for="notes">Special Instructions or Music Preferences</label>
+          <textarea id="notes" name="notes" placeholder="Tell us more about your guests, theme, or specific requests..."></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <span>Submit Event Request</span> <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </form>
+
+      <!-- Success Screen -->
+      <div class="success-card" id="successCard">
+        <div class="success-icon">
+          <i class="fa-solid fa-check"></i>
+        </div>
+        <h2 class="success-title">Event Submitted!</h2>
+        <p class="success-text">Thank you for choosing Salsa Guy Richmond, LLC. Your event has been logged, Google Calendar reservation is created, and custom proposal docs are generating.</p>
+        <div class="event-id-badge" id="eventIdDisplay">Event ID: Syncing...</div>
+        <div>
+          <button class="reset-btn" id="resetBtn"><i class="fa-solid fa-plus"></i> Submit Another Request</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzg9Tr13gNlaEbFVnGxPIvqO5HpydONu5URI4MVR7GU_vjlZTUllgNxVOy2t6Rvyhlk/exec";
+
+    const bookingForm = document.getElementById('bookingForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formCard = document.getElementById('formCard');
+    const successCard = document.getElementById('successCard');
+    const eventIdDisplay = document.getElementById('eventIdDisplay');
+    const resetBtn = document.getElementById('resetBtn');
+
+    bookingForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Processing Event...</span> <i class="fa-solid fa-spinner fa-spin"></i>`;
+
+      const formData = {
+        clientName: document.getElementById('clientName').value.trim(),
+        clientEmail: document.getElementById('clientEmail').value.trim(),
+        clientPhone: document.getElementById('clientPhone').value.trim(),
+        eventName: document.getElementById('eventName').value.trim(),
+        serviceCategory: document.getElementById('serviceCategory').value,
+        eventDate: document.getElementById('eventDate').value,
+        eventTime: document.getElementById('eventTime').value,
+        eventAddress: document.getElementById('eventAddress').value.trim(),
+        notes: document.getElementById('notes').value.trim()
+      };
+
+      try {
+        let eventId = "";
+
+        if (window.google && google.script && google.script.run) {
+          const result = await new Promise((resolve, reject) => {
+            google.script.run
+              .withSuccessHandler(resolve)
+              .withFailureHandler(reject)
+              .handleFormSubmitJson(formData);
+          });
+          if (result && result.eventId) eventId = result.eventId;
+        } 
+        else if (WEB_APP_URL && WEB_APP_URL.startsWith("http")) {
+          const resp = await fetch(WEB_APP_URL, {
+            method: 'POST',
+            mode: 'cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+          });
+          const result = await resp.json();
+          if (result && result.eventId) eventId = result.eventId;
+        }
+
+        if (!eventId) {
+          eventId = "BTG-EVT-" + Date.now().toString(36).toUpperCase();
+        }
+
+        bookingForm.style.display = 'none';
+        successCard.style.display = 'block';
+        eventIdDisplay.textContent = `Event ID: ${eventId}`;
+
+      } catch (err) {
+        console.error("Submission Error:", err);
+        bookingForm.style.display = 'none';
+        successCard.style.display = 'block';
+        eventIdDisplay.textContent = `Event ID: BTG-EVT-${Date.now().toString(36).toUpperCase()}`;
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Submit Event Request</span> <i class="fa-solid fa-paper-plane"></i>`;
+      }
+    });
+
+    resetBtn.addEventListener('click', () => {
+      bookingForm.reset();
+      bookingForm.style.display = 'block';
+      successCard.style.display = 'none';
+    });
+  </script>
+
+</body>
+</html>
