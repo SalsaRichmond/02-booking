@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Questionnaire New Generation for 2026 | Salsa Guy Richmond LLC</title>
+  <title>Event Booking Questionnaire 2026 | Salsa Guy Richmond LLC</title>
   
   <!-- Google Fonts: Outfit & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,11 +20,11 @@
       --accent-gold: #F59E0B;
       --accent-amber: #D97706;
       --bg-dark: #0F172A;
-      --card-bg: rgba(30, 41, 59, 0.75);
+      --card-bg: rgba(30, 41, 59, 0.85);
       --card-border: rgba(255, 255, 255, 0.12);
       --text-main: #F8FAFC;
       --text-muted: #94A3B8;
-      --input-bg: rgba(15, 23, 42, 0.6);
+      --input-bg: rgba(15, 23, 42, 0.7);
       --input-border: rgba(255, 255, 255, 0.18);
       --input-focus: #F59E0B;
       --shadow-glow: 0 10px 30px -10px rgba(220, 38, 38, 0.35);
@@ -51,13 +51,13 @@
 
     .container {
       width: 100%;
-      max-width: 800px;
+      max-width: 900px;
     }
 
     /* Header Styling */
     .brand-header {
       text-align: center;
-      margin-bottom: 35px;
+      margin-bottom: 30px;
     }
 
     .brand-badge {
@@ -77,18 +77,29 @@
 
     .brand-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 2.75rem;
+      font-size: 2.5rem;
       font-weight: 800;
       background: linear-gradient(135deg, #FFF 0%, #FCA5A5 50%, #F59E0B 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       line-height: 1.2;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
-    .brand-subtitle {
-      color: var(--text-muted);
-      font-size: 1.05rem;
+    .notice-box {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      font-size: 0.92rem;
+      color: #FDE68A;
+      line-height: 1.5;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .notice-box strong {
+      color: #FFF;
     }
 
     /* Glassmorphic Card */
@@ -104,15 +115,20 @@
 
     .section-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: 700;
       color: var(--accent-gold);
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 25px;
+      margin-top: 30px;
+      margin-bottom: 22px;
       padding-bottom: 10px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .section-title:first-of-type {
+      margin-top: 0;
     }
 
     .section-title i {
@@ -146,6 +162,13 @@
       margin-left: 3px;
     }
 
+    label span.hint {
+      font-weight: 400;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-left: 5px;
+    }
+
     input, select, textarea {
       width: 100%;
       padding: 14px 16px;
@@ -153,7 +176,7 @@
       border: 1px solid var(--input-border);
       border-radius: var(--radius-md);
       color: var(--text-main);
-      font-size: 0.98rem;
+      font-size: 0.95rem;
       outline: none;
       transition: all 0.25s ease;
     }
@@ -161,7 +184,7 @@
     input:focus, select:focus, textarea:focus {
       border-color: var(--input-focus);
       box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
-      background: rgba(15, 23, 42, 0.85);
+      background: rgba(15, 23, 42, 0.9);
     }
 
     select option {
@@ -172,6 +195,40 @@
     textarea {
       resize: vertical;
       min-height: 100px;
+    }
+
+    /* Checkbox & Radio Groups */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .checkbox-item, .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid var(--input-border);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.9rem;
+      color: #E2E8F0;
+    }
+
+    .checkbox-item:hover, .radio-item:hover {
+      border-color: var(--accent-gold);
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    .checkbox-item input, .radio-item input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-gold);
+      cursor: pointer;
     }
 
     /* Submit Button */
@@ -193,7 +250,7 @@
       gap: 12px;
       box-shadow: 0 10px 25px -5px rgba(220, 38, 38, 0.4);
       transition: all 0.3s ease;
-      margin-top: 15px;
+      margin-top: 30px;
     }
 
     .submit-btn:hover {
@@ -208,7 +265,7 @@
       transform: none;
     }
 
-    /* Modal / Success Card */
+    /* Success Card */
     .success-card {
       display: none;
       text-align: center;
@@ -302,22 +359,27 @@
     <!-- Brand Header -->
     <div class="brand-header">
       <div class="brand-badge"><i class="fa-solid fa-fire"></i> Salsa Guy Richmond, LLC</div>
-      <h1 class="brand-title">Questionnaire New Generation for 2026</h1>
-      <p class="brand-subtitle">Fill out the questionnaire below to get your custom proposal, contract, and calendar reservation.</p>
+      <h1 class="brand-title">Tell me about you and your event!</h1>
+      
+      <div class="notice-box">
+        <i class="fa-solid fa-calendar-days"></i> <strong>Schedule Availability Notice:</strong><br>
+        • <strong>Friday – Sunday:</strong> Available for both Live Performances and Dance Lessons.<br>
+        • <strong>Monday – Thursday:</strong> Dedicated exclusively to Dance Lessons (No performances accepted).
+      </div>
     </div>
 
     <!-- Booking Form Card -->
     <div class="form-card" id="formCard">
       <form id="bookingForm">
         
-        <!-- Section 1: Client Info -->
+        <!-- Section 1: Contact & Organization -->
         <div class="section-title">
-          <i class="fa-solid fa-user"></i> 1. Contact Information
+          <i class="fa-solid fa-user-circle"></i> 1. Contact & Organization Info
         </div>
         
         <div class="grid-2">
           <div class="form-group">
-            <label for="clientName">Your Full Name <span class="required">*</span></label>
+            <label for="clientName">Your Name <span class="required">*</span></label>
             <input type="text" id="clientName" name="clientName" placeholder="e.g. Maria Santos" required>
           </div>
           
@@ -326,34 +388,64 @@
             <input type="email" id="clientEmail" name="clientEmail" placeholder="maria@example.com" required>
           </div>
           
-          <div class="form-group full-width">
-            <label for="clientPhone">Phone Number</label>
-            <input type="tel" id="clientPhone" name="clientPhone" placeholder="(804) 555-0199">
+          <div class="form-group">
+            <label for="clientPhone">Best Contact Phone Number <span class="required">*</span></label>
+            <input type="tel" id="clientPhone" name="clientPhone" placeholder="(804) 555-0199" required>
           </div>
-        </div>
 
-        <!-- Section 2: Event Info -->
-        <div class="section-title" style="margin-top: 15px;">
-          <i class="fa-solid fa-calendar-check"></i> 2. Event Specifications
-        </div>
-        
-        <div class="grid-2">
           <div class="form-group">
-            <label for="eventName">Event Name / Type <span class="required">*</span></label>
-            <input type="text" id="eventName" name="eventName" placeholder="e.g. Maria's 30th Birthday Party" required>
-          </div>
-          
-          <div class="form-group">
-            <label for="serviceCategory">Service Package <span class="required">*</span></label>
-            <select id="serviceCategory" name="serviceCategory" required>
-              <option value="Full Private Event">Full Private Event (DJ + Lesson + MC)</option>
-              <option value="Small Private Event">Small Private Event</option>
-              <option value="Salsa/Bachata Workshop">Salsa & Bachata Workshop / Lesson</option>
-              <option value="Performance Only">Dance Performance Only</option>
-              <option value="Corporate / Milestone">Corporate / Milestone Celebration</option>
+            <label for="representType">Who do you represent?</label>
+            <select id="representType" name="representType">
+              <option value="Corporate / Business">Corporate / Business</option>
+              <option value="Non-Profit / 501(c) Organization">Non-Profit / 501(c) Organization</option>
+              <option value="Government / Municipal Entity">Government / Municipal Entity</option>
+              <option value="Private Individual / Family">Private Individual / Family</option>
+              <option value="Community Organization">Community Organization</option>
             </select>
           </div>
 
+          <div class="form-group">
+            <label for="eventName">Name of the Event <span class="required">*</span></label>
+            <input type="text" id="eventName" name="eventName" placeholder="e.g. Richmond Salsa Festival 2026" required>
+          </div>
+
+          <div class="form-group">
+            <label for="eventTypeScale">Event Scale / Type</label>
+            <select id="eventTypeScale" name="eventTypeScale">
+              <option value="Large Public Event">Large Public Event</option>
+              <option value="Small Private Event">Small Private Event</option>
+              <option value="Corporate / Milestone">Corporate / Milestone</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label for="eventDescription">Describe Your Event</label>
+            <textarea id="eventDescription" name="eventDescription" placeholder="Provide background on theme, venue, guest flow..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="websites">Websites for Event & Organization</label>
+            <input type="text" id="websites" name="websites" placeholder="https://example.com">
+          </div>
+
+          <div class="form-group">
+            <label for="hearAboutUs">How did you HEAR of us?</label>
+            <select id="hearAboutUs" name="hearAboutUs">
+              <option value="Social Media">Social Media</option>
+              <option value="Previous Event / Live Performance">Previous Event / Live Performance</option>
+              <option value="Word of Mouth / Referral">Word of Mouth / Referral</option>
+              <option value="Website Search">Website Search</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Section 2: Date, Time & Location -->
+        <div class="section-title">
+          <i class="fa-solid fa-calendar-check"></i> 2. Date, Time & Location
+        </div>
+        
+        <div class="grid-2">
           <div class="form-group">
             <label for="eventDate">Event Date <span class="required">*</span></label>
             <input type="date" id="eventDate" name="eventDate" required>
@@ -365,19 +457,171 @@
           </div>
 
           <div class="form-group full-width">
-            <label for="eventAddress">Event Location / Venue Address <span class="required">*</span></label>
+            <label for="eventAddress">Where will the event take place? (Full Address) <span class="required">*</span></label>
             <input type="text" id="eventAddress" name="eventAddress" placeholder="e.g. 123 Main St, Richmond, VA 23220" required>
+          </div>
+
+          <div class="form-group">
+            <label for="expectedAttendance">Expected Attendance Count</label>
+            <input type="number" id="expectedAttendance" name="expectedAttendance" placeholder="e.g. 150">
+          </div>
+
+          <div class="form-group">
+            <label for="admissionType">Admission Type</label>
+            <select id="admissionType" name="admissionType">
+              <option value="Free / Open to Public">Free / Open to Public</option>
+              <option value="Ticketed / Paid Admission">Ticketed / Paid Admission</option>
+              <option value="Private Event">Private Event</option>
+            </select>
+          </div>
+
+          <!-- Target Audience Checkboxes -->
+          <div class="form-group full-width">
+            <label>Target Audience Demographic <span class="hint">(Select all that apply)</span></label>
+            <div class="options-grid">
+              <label class="checkbox-item"><input type="checkbox" name="audience" value="Every age group" checked> Every age group</label>
+              <label class="checkbox-item"><input type="checkbox" name="audience" value="Young adults: 20-39 years"> Young adults: 20-39 yrs</label>
+              <label class="checkbox-item"><input type="checkbox" name="audience" value="Middle-aged adults: 40-59 years"> Middle-aged adults: 40-59 yrs</label>
+              <label class="checkbox-item"><input type="checkbox" name="audience" value="Older adults: 60-79 years"> Older adults: 60-79 yrs</label>
+              <label class="checkbox-item"><input type="checkbox" name="audience" value="Adolescents: 13-19 years"> Adolescents: 13-19 yrs</label>
+              <label class="checkbox-item"><input type="checkbox" name="audience" value="Children & Preschoolers"> Children & Preschoolers</label>
+            </div>
           </div>
         </div>
 
-        <!-- Section 3: Notes -->
-        <div class="section-title" style="margin-top: 15px;">
-          <i class="fa-solid fa-comment-dots"></i> 3. Additional Requests & Notes
+        <!-- Section 3: Services Requested -->
+        <div class="section-title">
+          <i class="fa-solid fa-music"></i> 3. Services Requested
         </div>
-        
+
         <div class="form-group">
-          <label for="notes">Special Instructions or Music Preferences</label>
-          <textarea id="notes" name="notes" placeholder="Tell us more about your guests, theme, or specific requests..."></textarea>
+          <label>Performance Services Needed</label>
+          <div class="options-grid">
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Stage Performance"> Stage Performance</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Interactive Animation"> Interactive Animation</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Opening Act"> Opening Act</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Festival Headliner"> Festival Headliner</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Dance Lesson Services Needed</label>
+          <div class="options-grid">
+            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Salsa Workshop"> Salsa Workshop</label>
+            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Bachata Workshop"> Bachata Workshop</label>
+            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Merengue Workshop"> Merengue Workshop</label>
+            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Bomba & Plena Workshop"> Bomba & Plena Workshop</label>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="timeDuration">Duration Required from Us</label>
+            <input type="text" id="timeDuration" name="timeDuration" placeholder="e.g. 2 Hours (1hr lesson + 1hr social)">
+          </div>
+
+          <div class="form-group">
+            <label for="audienceParticipation">Expecting Audience Participation?</label>
+            <select id="audienceParticipation" name="audienceParticipation">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Section 4: Technical & Stage Specs -->
+        <div class="section-title">
+          <i class="fa-solid fa-sliders"></i> 4. Technical & Stage Specs
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="stageArea">Stage / Performance Area Size</label>
+            <input type="text" id="stageArea" name="stageArea" placeholder="e.g. 20ft x 15ft stage">
+          </div>
+
+          <div class="form-group">
+            <label for="surfaceType">Surface Type</label>
+            <input type="text" id="surfaceType" name="surfaceType" placeholder="e.g. Hardwood floor, concrete, stage tile">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="soundSystem">Sound System Setup</label>
+            <select id="soundSystem" name="soundSystem">
+              <option value="Professional sound system and technician provided by venue">Professional sound system and technician provided by venue</option>
+              <option value="Basic sound system provided, we need to plug in">Basic sound system provided, we need to plug in</option>
+              <option value="We need to provide our own sound system">We need to provide our own sound system</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="needDj">Will you need DJ Services?</label>
+            <select id="needDj" name="needDj">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="venueEnvironment">Venue Environment</label>
+            <select id="venueEnvironment" name="venueEnvironment">
+              <option value="Indoors">Indoors</option>
+              <option value="Outdoors">Outdoors</option>
+              <option value="Outdoor Under cover area">Outdoor Under cover area</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Section 5: Facilities, Budget & Marketing -->
+        <div class="section-title">
+          <i class="fa-solid fa-handshake"></i> 5. Logistics, Budget & Hospitality
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="budgetConfirmed">Do you have a confirmed budget?</label>
+            <select id="budgetConfirmed" name="budgetConfirmed">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="budgetAmount">Budget Amount ($)</label>
+            <input type="text" id="budgetAmount" name="budgetAmount" placeholder="e.g. $750 - $1,500">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="contingencyPlan">Contingency Plan (Alternate dates/locations for weather)</label>
+            <textarea id="contingencyPlan" name="contingencyPlan" placeholder="Rain location, backup indoor venue, alternate dates..."></textarea>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Performer Hospitality Provided</label>
+            <div class="options-grid">
+              <label class="checkbox-item"><input type="checkbox" name="hospitality" value="Drinking Water / Refreshments" checked> Drinking Water / Refreshments</label>
+              <label class="checkbox-item"><input type="checkbox" name="hospitality" value="Designated Parking Space" checked> Designated Parking Space</label>
+              <label class="checkbox-item"><input type="checkbox" name="hospitality" value="Private Dressing Room / Changing Area"> Private Dressing Room</label>
+              <label class="checkbox-item"><input type="checkbox" name="hospitality" value="Meal / Food Provision"> Meal / Food Provision</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 6: Additional Notes & Terms -->
+        <div class="section-title">
+          <i class="fa-solid fa-file-contract"></i> 6. Special Instructions & Terms
+        </div>
+
+        <div class="form-group">
+          <label for="notes">Special Instructions, Song Requests or Notes</label>
+          <textarea id="notes" name="notes" placeholder="Tell us any special requests, song choices, or event guidelines..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-item" style="border-color: var(--accent-gold); background: rgba(245, 158, 11, 0.1);">
+            <input type="checkbox" id="termsCheck" required> 
+            <span>I agree to the Terms of Service & Booking Privacy Guidelines <span class="required">*</span></span>
+          </label>
         </div>
 
         <!-- Submit Button -->
@@ -391,8 +635,8 @@
         <div class="success-icon">
           <i class="fa-solid fa-check"></i>
         </div>
-        <h2 class="success-title">Event Submitted!</h2>
-        <p class="success-text">Thank you for choosing Salsa Guy Richmond, LLC. Your event has been logged, Google Calendar reservation is created, and custom proposal docs are generating.</p>
+        <h2 class="success-title">Event Request Received!</h2>
+        <p class="success-text">Thank you for choosing Salsa Guy Richmond, LLC. Your questionnaire has been logged, your calendar slot reservation is pending, and custom proposal docs are generating.</p>
         <div class="event-id-badge" id="eventIdDisplay">Event ID: Syncing...</div>
         <div>
           <button class="reset-btn" id="resetBtn"><i class="fa-solid fa-plus"></i> Submit Another Request</button>
@@ -412,22 +656,47 @@
     const eventIdDisplay = document.getElementById('eventIdDisplay');
     const resetBtn = document.getElementById('resetBtn');
 
+    function getCheckedValues(name) {
+      return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value).join(", ");
+    }
+
     bookingForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       
       submitBtn.disabled = true;
-      submitBtn.innerHTML = `<span>Processing Event...</span> <i class="fa-solid fa-spinner fa-spin"></i>`;
+      submitBtn.innerHTML = `<span>Processing Event Request...</span> <i class="fa-solid fa-spinner fa-spin"></i>`;
 
       const formData = {
         clientName: document.getElementById('clientName').value.trim(),
         clientEmail: document.getElementById('clientEmail').value.trim(),
         clientPhone: document.getElementById('clientPhone').value.trim(),
+        representType: document.getElementById('representType').value,
         eventName: document.getElementById('eventName').value.trim(),
-        serviceCategory: document.getElementById('serviceCategory').value,
+        eventTypeScale: document.getElementById('eventTypeScale').value,
+        eventDescription: document.getElementById('eventDescription').value.trim(),
+        websites: document.getElementById('websites').value.trim(),
+        hearAboutUs: document.getElementById('hearAboutUs').value,
         eventDate: document.getElementById('eventDate').value,
         eventTime: document.getElementById('eventTime').value,
         eventAddress: document.getElementById('eventAddress').value.trim(),
-        notes: document.getElementById('notes').value.trim()
+        expectedAttendance: document.getElementById('expectedAttendance').value,
+        admissionType: document.getElementById('admissionType').value,
+        targetAudience: getCheckedValues('audience'),
+        performanceServices: getCheckedValues('perfServices'),
+        lessonServices: getCheckedValues('lessonServices'),
+        timeDuration: document.getElementById('timeDuration').value.trim(),
+        audienceParticipation: document.getElementById('audienceParticipation').value,
+        stageArea: document.getElementById('stageArea').value.trim(),
+        surfaceType: document.getElementById('surfaceType').value.trim(),
+        soundSystem: document.getElementById('soundSystem').value,
+        needDj: document.getElementById('needDj').value,
+        venueEnvironment: document.getElementById('venueEnvironment').value,
+        budgetConfirmed: document.getElementById('budgetConfirmed').value,
+        budgetAmount: document.getElementById('budgetAmount').value.trim(),
+        contingencyPlan: document.getElementById('contingencyPlan').value.trim(),
+        hospitality: getCheckedValues('hospitality'),
+        notes: document.getElementById('notes').value.trim(),
+        serviceCategory: document.getElementById('eventTypeScale').value
       };
 
       try {
