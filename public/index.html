@@ -231,6 +231,15 @@
       cursor: pointer;
     }
 
+    /* Conditional Section Container */
+    .conditional-block {
+      transition: all 0.35s ease-in-out;
+      border-left: 3px solid var(--accent-gold);
+      padding-left: 18px;
+      margin-top: 15px;
+      margin-bottom: 20px;
+    }
+
     /* Submit Button */
     .submit-btn {
       width: 100%;
@@ -410,11 +419,11 @@
           </div>
 
           <div class="form-group">
-            <label for="eventTypeScale">Event Scale / Type</label>
-            <select id="eventTypeScale" name="eventTypeScale">
+            <label for="eventTypeScale">Is your event a large public event or a small private event? <span class="required">*</span></label>
+            <select id="eventTypeScale" name="eventTypeScale" required>
               <option value="Large Public Event">Large Public Event</option>
               <option value="Small Private Event">Small Private Event</option>
-              <option value="Corporate / Milestone">Corporate / Milestone</option>
+              <option value="Corporate / Milestone">Corporate / Milestone Celebration</option>
             </select>
           </div>
 
@@ -474,8 +483,14 @@
               <option value="Private Event">Private Event</option>
             </select>
           </div>
+        </div>
 
-          <!-- Target Audience Checkboxes -->
+        <!-- DYNAMIC SECTION: Large Public Event Questionnaire -->
+        <div id="largePublicSection" class="conditional-block">
+          <div class="section-title">
+            <i class="fa-solid fa-bullhorn"></i> 3A. Large Public Event Details & Promotions
+          </div>
+
           <div class="form-group full-width">
             <label>Target Audience Demographic <span class="hint">(Select all that apply)</span></label>
             <div class="options-grid">
@@ -487,11 +502,81 @@
               <label class="checkbox-item"><input type="checkbox" name="audience" value="Children & Preschoolers"> Children & Preschoolers</label>
             </div>
           </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="boothSpace">Will you provide a Booth/Exhibitor Space (10x10 Tent)?</label>
+              <select id="boothSpace" name="boothSpace">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Not Applicable">Not Applicable</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="promoInclude">Include our logo on promo materials & social media?</label>
+              <select id="promoInclude" name="promoInclude">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Not Applicable">Not Applicable</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="helpPromote">Are we allowed to help promote the event?</label>
+              <select id="helpPromote" name="helpPromote">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Not Applicable">Not Applicable</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="photoFootage">Can we get copies of video footage & photos?</label>
+              <select id="photoFootage" name="photoFootage">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Not Applicable">Not Applicable</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="contingencyPlan">Contingency Plan (Alternate dates/locations for weather)</label>
+              <textarea id="contingencyPlan" name="contingencyPlan" placeholder="Rain location, backup indoor venue, alternate dates..."></textarea>
+            </div>
+          </div>
         </div>
 
-        <!-- Section 3: Services Requested -->
+        <!-- DYNAMIC SECTION: Small Private Event Questionnaire -->
+        <div id="smallPrivateSection" class="conditional-block" style="display: none;">
+          <div class="section-title">
+            <i class="fa-solid fa-cake-candles"></i> 3B. Small Private Event Specifications
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="privateGatheringType">Type of Private Gathering</label>
+              <select id="privateGatheringType" name="privateGatheringType">
+                <option value="Birthday Party">Birthday Party</option>
+                <option value="Wedding / Anniversary">Wedding / Anniversary</option>
+                <option value="Private Dance Lesson">Private Dance Lesson</option>
+                <option value="Other Private Event">Other Private Event</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="performerBadge">Will a Badge or ID be required to enter?</label>
+              <select id="performerBadge" name="performerBadge">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: Services Requested -->
         <div class="section-title">
-          <i class="fa-solid fa-music"></i> 3. Services Requested
+          <i class="fa-solid fa-music"></i> 4. Services Requested
         </div>
 
         <div class="form-group">
@@ -529,9 +614,9 @@
           </div>
         </div>
 
-        <!-- Section 4: Technical & Stage Specs -->
+        <!-- Section 5: Technical & Stage Specs -->
         <div class="section-title">
-          <i class="fa-solid fa-sliders"></i> 4. Technical & Stage Specs
+          <i class="fa-solid fa-sliders"></i> 5. Technical & Stage Specs
         </div>
 
         <div class="grid-2">
@@ -572,9 +657,9 @@
           </div>
         </div>
 
-        <!-- Section 5: Facilities, Budget & Marketing -->
+        <!-- Section 6: Facilities, Budget & Hospitality -->
         <div class="section-title">
-          <i class="fa-solid fa-handshake"></i> 5. Logistics, Budget & Hospitality
+          <i class="fa-solid fa-handshake"></i> 6. Logistics, Budget & Hospitality
         </div>
 
         <div class="grid-2">
@@ -592,11 +677,6 @@
           </div>
 
           <div class="form-group full-width">
-            <label for="contingencyPlan">Contingency Plan (Alternate dates/locations for weather)</label>
-            <textarea id="contingencyPlan" name="contingencyPlan" placeholder="Rain location, backup indoor venue, alternate dates..."></textarea>
-          </div>
-
-          <div class="form-group full-width">
             <label>Performer Hospitality Provided</label>
             <div class="options-grid">
               <label class="checkbox-item"><input type="checkbox" name="hospitality" value="Drinking Water / Refreshments" checked> Drinking Water / Refreshments</label>
@@ -607,9 +687,9 @@
           </div>
         </div>
 
-        <!-- Section 6: Additional Notes & Terms -->
+        <!-- Section 7: Additional Notes & Terms -->
         <div class="section-title">
-          <i class="fa-solid fa-file-contract"></i> 6. Special Instructions & Terms
+          <i class="fa-solid fa-file-contract"></i> 7. Special Instructions & Terms
         </div>
 
         <div class="form-group">
@@ -656,6 +736,29 @@
     const eventIdDisplay = document.getElementById('eventIdDisplay');
     const resetBtn = document.getElementById('resetBtn');
 
+    const eventTypeScale = document.getElementById('eventTypeScale');
+    const largePublicSection = document.getElementById('largePublicSection');
+    const smallPrivateSection = document.getElementById('smallPrivateSection');
+
+    // Dynamic Section Visibility Switcher
+    function updateConditionalSections() {
+      const val = eventTypeScale.value;
+      if (val === 'Large Public Event') {
+        largePublicSection.style.display = 'block';
+        smallPrivateSection.style.display = 'none';
+      } else if (val === 'Small Private Event') {
+        largePublicSection.style.display = 'none';
+        smallPrivateSection.style.display = 'block';
+      } else {
+        // Corporate / Milestone: show relevant public/private fields
+        largePublicSection.style.display = 'block';
+        smallPrivateSection.style.display = 'block';
+      }
+    }
+
+    eventTypeScale.addEventListener('change', updateConditionalSections);
+    updateConditionalSections(); // Run initially
+
     function getCheckedValues(name) {
       return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value).join(", ");
     }
@@ -682,6 +785,13 @@
         expectedAttendance: document.getElementById('expectedAttendance').value,
         admissionType: document.getElementById('admissionType').value,
         targetAudience: getCheckedValues('audience'),
+        boothSpace: document.getElementById('boothSpace')?.value || '',
+        promoInclude: document.getElementById('promoInclude')?.value || '',
+        helpPromote: document.getElementById('helpPromote')?.value || '',
+        photoFootage: document.getElementById('photoFootage')?.value || '',
+        contingencyPlan: document.getElementById('contingencyPlan')?.value.trim() || '',
+        privateGatheringType: document.getElementById('privateGatheringType')?.value || '',
+        performerBadge: document.getElementById('performerBadge')?.value || '',
         performanceServices: getCheckedValues('perfServices'),
         lessonServices: getCheckedValues('lessonServices'),
         timeDuration: document.getElementById('timeDuration').value.trim(),
@@ -693,7 +803,6 @@
         venueEnvironment: document.getElementById('venueEnvironment').value,
         budgetConfirmed: document.getElementById('budgetConfirmed').value,
         budgetAmount: document.getElementById('budgetAmount').value.trim(),
-        contingencyPlan: document.getElementById('contingencyPlan').value.trim(),
         hospitality: getCheckedValues('hospitality'),
         notes: document.getElementById('notes').value.trim(),
         serviceCategory: document.getElementById('eventTypeScale').value
@@ -743,6 +852,7 @@
 
     resetBtn.addEventListener('click', () => {
       bookingForm.reset();
+      updateConditionalSections();
       bookingForm.style.display = 'block';
       successCard.style.display = 'none';
     });
