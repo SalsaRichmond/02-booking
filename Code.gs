@@ -755,7 +755,15 @@ function sanitizeAndPopulateSheet(sheet) {
           safeSetCellValue(sheet.getRange(rowNum, dowIdx + 1), days[parsedDate.getDay()]);
         }
         if (!dateFormulas[i] || !dateFormulas[i][0] || !dateFormulas[i][0].toUpperCase().startsWith("=HYPERLINK")) {
-          safeSetCellValue(sheet.getRange(rowNum, dateIdx + 1), parsedDate);
+          const eventIdIdx = getHeaderIndex(headers, ["Event ID", "Calendar Event ID", "EventId"]);
+          let fullId = (eventIdIdx > -1 && data[i][eventIdIdx]) ? data[i][eventIdIdx].toString().trim() : "";
+          let calUrl = fullId ? getCalendarEventUrl(fullId) : "";
+          let dStr = Utilities.formatDate(parsedDate, Session.getScriptTimeZone(), "yyyy-MM-dd");
+          if (calUrl) {
+            safeSetCellValue(sheet.getRange(rowNum, dateIdx + 1), `=HYPERLINK("${calUrl}", "${dStr}")`);
+          } else {
+            safeSetCellValue(sheet.getRange(rowNum, dateIdx + 1), parsedDate);
+          }
         }
       }
     }
@@ -1795,5 +1803,28 @@ function fixMisplacedEmailData() {
   
   if (ui) {
     ui.alert(`✅ Data Cleanup Complete!\n\nFixed and moved ${totalFixed} misplaced email addresses from 'Your Name' into 'Email Address' column!`);
+  }
+}
+
+/**
+ * Constructs a direct, clickable Google Calendar web URL for a given Google Calendar Event ID.
+ * Resolves missing hyperlink issue in 'Please confirm the DATE of your event:' column.
+ */
+function getCalendarEventUrl(eventId) {
+  if (!eventId) return "";
+  try {
+    let cleanId = eventId.toString().trim();
+    if (cleanId.startsWith("BTG-EVT-")) return "";
+    
+    let rawId = cleanId.split('@')[0];
+    let calId = CONFIG.INFOCALENDAR_ID || "primary";
+    
+    let combo = rawId + " " + calId;
+    let eid = Utilities.base64EncodeWebSafe(combo).replace(/=/g, "");
+    
+    return `https://www.google.com/calendar/event?eid=${eid}`;
+  } catch (err) {
+    console.warn("getCalendarEventUrl error: ", err);
+    return "";
   }
 }
