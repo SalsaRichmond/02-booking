@@ -35,6 +35,7 @@ function onOpen() {
     .addItem('🚀 SEND CLIENT EMAIL DIRECTLY', 'sendClientEmailDirectly')
     .addSeparator()
     .addItem('📤 UPLOAD PROFE\'S QUICK ENTRY', 'importQuickEntryData')
+    .addItem('📧 FIX MISPLACED EMAILS IN NAME COLUMN', 'fixMisplacedEmailData')
     .addItem('🧹 RUN BTG CLEANUP', 'cleanupBlankRows')
     .addToUi();
 }
@@ -684,6 +685,25 @@ function sanitizeAndPopulateSheet(sheet) {
     let row = data[i];
     let rowNum = i + 2;
     
+    // Auto-Fix: Move email addresses accidentally placed in "Your Name" column to "Email Address"
+    if (nameIdx > -1 && emailIdx > -1) {
+      let nameVal = String(row[nameIdx] || "").trim();
+      let emailVal = String(row[emailIdx] || "").trim();
+      const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+      let emailMatch = nameVal.match(emailRegex);
+      if (emailMatch) {
+        let extractedEmail = emailMatch[0];
+        if (!emailVal || emailVal === "") {
+          row[emailIdx] = extractedEmail;
+          safeSetCellValue(sheet.getRange(rowNum, emailIdx + 1), extractedEmail);
+        }
+        let cleanedName = nameVal.replace(extractedEmail, "").replace(/[<>()]/g, "").trim();
+        let finalName = cleanedName || extractedEmail.split("@")[0];
+        row[nameIdx] = finalName;
+        safeSetCellValue(sheet.getRange(rowNum, nameIdx + 1), finalName);
+      }
+    }
+
     if (nameIdx > -1 && (!row[nameIdx] || row[nameIdx].toString().trim() === "")) {
       let fbName = getRowValueByAliases(headers, row, ["your name", "full name", "client name", "name"]);
       if (fbName) {
@@ -1712,4 +1732,68 @@ function handleFormSubmitJson(data) {
     row: rowNum,
     eventId: finalEventId || `BTG-EVT-${rowNum}-${Date.now().toString(36).toUpperCase()}`
   };
+}
+
+/**
+ * Cleanup Task: Scans the sheet for rows where email addresses were entered into the "Your Name" column,
+ * moves the email address to the "Email Address" column, and cleans up the "Your Name" column.
+ */
+function fixMisplacedEmailData() {
+  const ss = SpreadsheetApp.openByUrl(CONFIG.SOURCE_SPREADSHEET_URL) || SpreadsheetApp.getActiveSpreadsheet();
+  const ui = (typeof SpreadsheetApp.getUi === 'function') ? SpreadsheetApp.getUi() : null;
+  
+  let sheetsToProcess = [
+    ss.getSheetByName(CONFIG.SHEET_NAME),
+    ss.getSheetByName("Form_Responses_Clean")
+  ].filter(s => s !== null);
+  
+  if (sheetsToProcess.length === 0) sheetsToProcess = [ss.getSheets()[0]];
+  
+  let totalFixed = 0;
+  
+  sheetsToProcess.forEach(sheet => {
+    const lastRow = sheet.getLastRow();
+    const lastCol = sheet.getLastColumn();
+    if (lastRow < 2 || lastCol < 1) return;
+    
+    const headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+    const nameIdx = getHeaderIndex(headers, ["Your Name", "Full Name", "Client Name", "Name"]);
+    const emailIdx = getHeaderIndex(headers, ["Email Address", "Email"]);
+    
+    if (nameIdx === -1 || emailIdx === -1) return;
+    
+    const dataRange = sheet.getRange(2, 1, lastRow - 1, lastCol);
+    const data = dataRange.getValues();
+    const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+    
+    let modified = false;
+    
+    for (let r = 0; r < data.length; r++) {
+      let nameVal = String(data[r][nameIdx] || "").trim();
+      let emailVal = String(data[r][emailIdx] || "").trim();
+      
+      let emailMatch = nameVal.match(emailRegex);
+      if (emailMatch) {
+        let extractedEmail = emailMatch[0];
+        
+        if (!emailVal || emailVal === "") {
+          data[r][emailIdx] = extractedEmail;
+        }
+        
+        let cleanedName = nameVal.replace(extractedEmail, "").replace(/[<>()]/g, "").trim();
+        data[r][nameIdx] = cleanedName || extractedEmail.split("@")[0];
+        
+        modified = true;
+        totalFixed++;
+      }
+    }
+    
+    if (modified) {
+      dataRange.setValues(data);
+    }
+  });
+  
+  if (ui) {
+    ui.alert(`✅ Data Cleanup Complete!\n\nFixed and moved ${totalFixed} misplaced email addresses from 'Your Name' into 'Email Address' column!`);
+  }
 }
