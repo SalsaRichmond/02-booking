@@ -95,7 +95,7 @@
 
     .container {
       width: 100%;
-      max-width: 920px;
+      max-width: 960px;
     }
 
     /* Controls Bar: Day/Night, Theme, Language */
@@ -152,8 +152,7 @@
       cursor: pointer;
     }
 
-    /* Header Styling */
-    /* El Profe Logo Badge */
+    /* Header Styling & El Profe Logo Badge */
     .profe-logo {
       width: 130px;
       height: 130px;
@@ -231,7 +230,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-top: 30px;
+      margin-top: 35px;
       margin-bottom: 22px;
       padding-bottom: 10px;
       border-bottom: 1px solid var(--card-border);
@@ -303,7 +302,7 @@
 
     textarea {
       resize: vertical;
-      min-height: 100px;
+      min-height: 90px;
     }
 
     /* File Upload Box (H1.7) */
@@ -338,7 +337,7 @@
     /* Checkbox & Radio Groups */
     .options-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 12px;
       margin-top: 6px;
     }
@@ -373,8 +372,8 @@
       transition: all 0.35s ease-in-out;
       border-left: 3px solid var(--accent-gold);
       padding-left: 18px;
-      margin-top: 15px;
-      margin-bottom: 20px;
+      margin-top: 20px;
+      margin-bottom: 25px;
     }
 
     /* Submit Button */
@@ -396,7 +395,7 @@
       gap: 12px;
       box-shadow: var(--shadow-glow);
       transition: all 0.3s ease;
-      margin-top: 30px;
+      margin-top: 35px;
     }
 
     .submit-btn:hover {
@@ -570,7 +569,7 @@
     <div class="form-card" id="formCard">
       <form id="bookingForm">
         
-        <!-- Section 1: Contact & Organization -->
+        <!-- SECTION 1: CONTACT & ORGANIZATION INFO -->
         <div class="section-title" id="sec1Title">
           <i class="fa-solid fa-user-circle"></i> 1. Contact & Organization Info
         </div>
@@ -617,6 +616,30 @@
             </select>
           </div>
 
+          <!-- Q8: Event Websites -->
+          <div class="form-group">
+            <label for="eventWebsites" id="lblWebsites">Websites for Event & Organization</label>
+            <input type="url" id="eventWebsites" name="eventWebsites" placeholder="https://www.example.com">
+          </div>
+
+          <!-- Q9: Purpose of Event -->
+          <div class="form-group">
+            <label for="eventPurpose" id="lblPurpose">Purpose of this Event</label>
+            <input type="text" id="eventPurpose" name="eventPurpose" placeholder="e.g. Cultural Celebration, Fundraiser..." spellcheck="true">
+          </div>
+
+          <!-- Q10: How did you hear about us -->
+          <div class="form-group">
+            <label for="hearAboutUs" id="lblHearAbout">How did you HEAR of us?</label>
+            <select id="hearAboutUs" name="hearAboutUs">
+              <option value="Social Media">Social Media</option>
+              <option value="Previous Event / Live Performance">Previous Event / Live Performance</option>
+              <option value="Word of Mouth / Referral">Word of Mouth / Referral</option>
+              <option value="Website Search">Website Search</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
           <div class="form-group full-width">
             <label for="eventDescription" id="lblDescription">Describe Your Event</label>
             <textarea id="eventDescription" name="eventDescription" placeholder="Provide background on theme, venue, guest flow..." spellcheck="true"></textarea>
@@ -631,9 +654,9 @@
           </div>
         </div>
 
-        <!-- Section 2: Date, Time & Location -->
+        <!-- SECTION 2: DATE, TIME, LOCATION & LOGISTICS -->
         <div class="section-title" id="sec2Title">
-          <i class="fa-solid fa-calendar-check"></i> 2. Date, Time & Location
+          <i class="fa-solid fa-calendar-check"></i> 2. Date, Time & Logistics
         </div>
         
         <div class="grid-2">
@@ -648,20 +671,115 @@
           </div>
 
           <div class="form-group full-width">
-            <label for="eventAddress" id="lblEventAddress">Where will the event take place? (Full Address) <span class="required">*</span></label>
+            <label for="eventAddress" id="lblEventAddress">Where will the event take place? (ADDRESS) <span class="required">*</span></label>
             <input type="text" id="eventAddress" name="eventAddress" placeholder="e.g. 123 Main St, Richmond, VA 23220" spellcheck="true" required>
+          </div>
+
+          <!-- Q15: Attendance Count -->
+          <div class="form-group">
+            <label for="expectedAttendance" id="lblAttendance">Expected Number of Attendees</label>
+            <input type="number" id="expectedAttendance" name="expectedAttendance" placeholder="e.g. 250">
+          </div>
+
+          <!-- Q17: Admission Type -->
+          <div class="form-group">
+            <label for="admissionType" id="lblAdmission">Type of Event Admission</label>
+            <select id="admissionType" name="admissionType">
+              <option value="Free / Open to Public">Free / Open to Public</option>
+              <option value="Ticketed / Paid Admission">Ticketed / Paid Admission</option>
+              <option value="Private Event">Private Event</option>
+            </select>
+          </div>
+
+          <!-- Q21: Time Required -->
+          <div class="form-group">
+            <label for="durationRequired" id="lblDuration">Time Required from Us (Hours/Minutes)</label>
+            <input type="text" id="durationRequired" name="durationRequired" placeholder="e.g. 2 Hours (1 hr lesson + 1 hr show)">
+          </div>
+
+          <!-- Q22: Audience Participation -->
+          <div class="form-group">
+            <label for="audienceParticipation" id="lblAudiencePart">Expecting Audience Participation?</label>
+            <select id="audienceParticipation" name="audienceParticipation">
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <!-- Q23: Performance Area Size -->
+          <div class="form-group">
+            <label for="performanceAreaSize" id="lblAreaSize">Size of Performance / Class Area</label>
+            <input type="text" id="performanceAreaSize" name="performanceAreaSize" placeholder="e.g. 20ft x 30ft Stage / Dance Floor">
+          </div>
+
+          <!-- Q24: Surface Type -->
+          <div class="form-group">
+            <label for="surfaceType" id="lblSurface">Surface Floor Type</label>
+            <input type="text" id="surfaceType" name="surfaceType" placeholder="e.g. Wood Dance Floor, Concrete, Grass...">
+          </div>
+
+          <!-- Q45: Indoor / Outdoor Location -->
+          <div class="form-group">
+            <label for="venueSetting" id="lblVenueSetting">Venue Location Setting</label>
+            <select id="venueSetting" name="venueSetting">
+              <option value="Indoors">Indoors</option>
+              <option value="Outdoors">Outdoors</option>
+              <option value="Outdoor Under Cover Area">Outdoor Under Cover Area</option>
+            </select>
+          </div>
+
+          <!-- Q25: Sound System Details -->
+          <div class="form-group full-width">
+            <label for="soundSystem" id="lblSoundSystem">Sound System Equipment</label>
+            <select id="soundSystem" name="soundSystem">
+              <option value="Professional sound system and technician provided by venue">Professional sound system and technician provided by venue</option>
+              <option value="Basic sound system provided, we need to plug in">Basic sound system provided, we need to plug in</option>
+              <option value="We need to provide our own sound system">We need to provide our own sound system</option>
+            </select>
+          </div>
+
+          <!-- Q16: Target Audience Age Groups -->
+          <div class="form-group full-width">
+            <label id="lblAudienceAges">Audience Age Groups Expected</label>
+            <div class="options-grid">
+              <label class="checkbox-item"><input type="checkbox" name="audienceAges" value="Toddlers (1-3 yrs)"> Toddlers (1-3 yrs)</label>
+              <label class="checkbox-item"><input type="checkbox" name="audienceAges" value="Preschoolers (3-5 yrs)"> Preschoolers (3-5 yrs)</label>
+              <label class="checkbox-item"><input type="checkbox" name="audienceAges" value="School-age (6-12 yrs)"> School-age (6-12 yrs)</label>
+              <label class="checkbox-item"><input type="checkbox" name="audienceAges" value="Adolescents (13-19 yrs)"> Adolescents (13-19 yrs)</label>
+              <label class="checkbox-item"><input type="checkbox" name="audienceAges" value="Young Adults (20-39 yrs)"> Young Adults (20-39 yrs)</label>
+              <label class="checkbox-item"><input type="checkbox" name="audienceAges" value="Middle-aged (40-59 yrs)"> Middle-aged (40-59 yrs)</label>
+              <label class="checkbox-item"><input type="checkbox" name="audienceAges" value="Seniors (60+ yrs)"> Seniors (60+ yrs)</label>
+              <label class="checkbox-item"><input type="checkbox" name="audienceAges" value="Every Age Group" checked> Every Age Group</label>
+            </div>
           </div>
         </div>
 
-        <!-- DYNAMIC SECTION: Large Public Event -->
+        <!-- DYNAMIC SECTION: Large Public Event (Q27-Q34) -->
         <div id="largePublicSection" class="conditional-block">
           <div class="section-title" id="sec3aTitle">
-            <i class="fa-solid fa-bullhorn"></i> 3A. Large Public Event Details & Promotions
+            <i class="fa-solid fa-bullhorn"></i> 3A. Large Public Event Details, 501(c) & Promotions
           </div>
 
           <div class="grid-2">
+            <!-- Q27: 501(c) Organization Name -->
             <div class="form-group">
-              <label for="boothSpace">Will you provide a Booth/Exhibitor Space (10x10 Tent)?</label>
+              <label for="nonProfitName">501(c) Non-Profit Name (If Applicable)</label>
+              <input type="text" id="nonProfitName" name="nonProfitName" placeholder="Organization Tax Name">
+            </div>
+
+            <!-- Q28: Tax Deductibility Letter -->
+            <div class="form-group">
+              <label for="taxLetter">Can you provide a Tax Deductibility Letter?</label>
+              <select id="taxLetter" name="taxLetter">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Not Applicable">Not Applicable</option>
+              </select>
+            </div>
+
+            <!-- Q29: Booth Space -->
+            <div class="form-group">
+              <label for="boothSpace">Provide a Booth/Exhibitor Space (10x10 Tent)?</label>
               <select id="boothSpace" name="boothSpace">
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -669,6 +787,7 @@
               </select>
             </div>
 
+            <!-- Q30: Promo & Logo Inclusion -->
             <div class="form-group">
               <label for="promoInclude">Include our logo on promo materials & social media?</label>
               <select id="promoInclude" name="promoInclude">
@@ -677,16 +796,43 @@
                 <option value="Not Applicable">Not Applicable</option>
               </select>
             </div>
+
+            <!-- Q31: Allow Help Promote -->
+            <div class="form-group">
+              <label for="allowHelpPromote">Allowed to help promote the event?</label>
+              <select id="allowHelpPromote" name="allowHelpPromote">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Not Applicable">Not Applicable</option>
+              </select>
+            </div>
+
+            <!-- Q32: Video & Picture Footage Copies -->
+            <div class="form-group">
+              <label for="videoRights">Provide copies of video footage and photos?</label>
+              <select id="videoRights" name="videoRights">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Not Applicable">Not Applicable</option>
+              </select>
+            </div>
+
+            <!-- Q33 & Q34: Contingency Plan -->
+            <div class="form-group full-width">
+              <label for="contingencyPlan">Weather / Contingency Plan (Alternate Location, Rain Date, Time)</label>
+              <textarea id="contingencyPlan" name="contingencyPlan" placeholder="Describe backup indoor location, rain date..." spellcheck="true"></textarea>
+            </div>
           </div>
         </div>
 
-        <!-- DYNAMIC SECTION: Small Private Event -->
+        <!-- DYNAMIC SECTION: Small Private Event (Q39, Q44-Q50) -->
         <div id="smallPrivateSection" class="conditional-block" style="display: none;">
           <div class="section-title" id="sec3bTitle">
-            <i class="fa-solid fa-cake-candles"></i> 3B. Small Private Event Specifications
+            <i class="fa-solid fa-cake-candles"></i> 3B. Small Private Event Specifications & Hospitality
           </div>
 
           <div class="grid-2">
+            <!-- Q39: Type of Private Gathering -->
             <div class="form-group">
               <label for="privateGatheringType">Type of Private Gathering</label>
               <select id="privateGatheringType" name="privateGatheringType">
@@ -696,14 +842,56 @@
                 <option value="Other Private Event">Other Private Event</option>
               </select>
             </div>
+
+            <!-- Q44: Badge / ID Pass Access -->
+            <div class="form-group">
+              <label for="badgeAccess">Badge or ID pass issued for performer access?</label>
+              <select id="badgeAccess" name="badgeAccess">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <!-- Q46: Costume Change Room Instructions -->
+            <div class="form-group">
+              <label for="dressingRoomInstructions">Dressing Room / Costume Changing Instructions</label>
+              <input type="text" id="dressingRoomInstructions" name="dressingRoomInstructions" placeholder="e.g. Private Green Room on 2nd Floor">
+            </div>
+
+            <!-- Q47 & Q48: Budget Details -->
+            <div class="form-group">
+              <label for="budgetAmount">Confirmed Budget for Performance / Workshop</label>
+              <input type="text" id="budgetAmount" name="budgetAmount" placeholder="e.g. $500 - $1,000">
+            </div>
+
+            <!-- Q49: Invited to Attend -->
+            <div class="form-group">
+              <label for="invitedToAttend">Are performers invited to attend/stay for the event?</label>
+              <select id="invitedToAttend" name="invitedToAttend">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <!-- Q50: Performer Provisions Checkboxes -->
+            <div class="form-group full-width">
+              <label id="lblProvisions">Performer Provisions Provided</label>
+              <div class="options-grid">
+                <label class="checkbox-item"><input type="checkbox" name="provisions" value="Drinking Water / Refreshments" checked> Drinking Water / Refreshments</label>
+                <label class="checkbox-item"><input type="checkbox" name="provisions" value="Designated Parking Space" checked> Designated Parking Space</label>
+                <label class="checkbox-item"><input type="checkbox" name="provisions" value="Private Dressing Room"> Private Dressing Room</label>
+                <label class="checkbox-item"><input type="checkbox" name="provisions" value="Meal / Food Provision"> Meal / Food Provision</label>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Section 4: Services Requested -->
+        <!-- SECTION 4: SERVICES REQUESTED (Q18, Q19, Q20, Q26) -->
         <div class="section-title" id="sec4Title">
           <i class="fa-solid fa-music"></i> 4. Services Requested
         </div>
 
+        <!-- Q18: Performance Services -->
         <div class="form-group">
           <label id="lblPerfServices">Performance Services Needed</label>
           <div class="options-grid">
@@ -714,6 +902,7 @@
           </div>
         </div>
 
+        <!-- Q19: Dance Lesson Services -->
         <div class="form-group">
           <label id="lblLessonServices">Dance Lesson Services Needed</label>
           <div class="options-grid">
@@ -721,6 +910,16 @@
             <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Bachata Workshop"> Bachata Workshop</label>
             <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Merengue Workshop"> Merengue Workshop</label>
             <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Bomba & Plena Workshop"> Bomba & Plena Workshop</label>
+          </div>
+        </div>
+
+        <!-- Q20 & Q26: Other Services (MC, DJ, Lectures) -->
+        <div class="form-group">
+          <label id="lblOtherServices">Additional Services Needed</label>
+          <div class="options-grid">
+            <label class="checkbox-item"><input type="checkbox" name="otherServices" value="Master of Ceremonies (MC)"> Master of Ceremonies (MC)</label>
+            <label class="checkbox-item"><input type="checkbox" name="otherServices" value="DJ Services"> DJ Services</label>
+            <label class="checkbox-item"><input type="checkbox" name="otherServices" value="Cultural Presentation / Lecture"> Cultural Presentation / Lecture</label>
           </div>
         </div>
 
@@ -739,16 +938,18 @@
           </div>
         </div>
 
-        <!-- Section 6: Special Notes & Terms -->
+        <!-- SECTION 6: SPECIAL NOTES & TERMS -->
         <div class="section-title" id="sec5Title">
           <i class="fa-solid fa-file-contract"></i> 6. Special Instructions & Terms
         </div>
 
+        <!-- Q42: Special Requests -->
         <div class="form-group">
           <label for="notes" id="lblNotes">Special Instructions, Song Requests or Notes</label>
           <textarea id="notes" name="notes" placeholder="Tell us any special requests, song choices, or event guidelines..." spellcheck="true"></textarea>
         </div>
 
+        <!-- Q51: Terms & Privacy Links -->
         <div class="form-group">
           <label class="checkbox-item" style="border-color: var(--accent-gold); background: rgba(245, 158, 11, 0.1);">
             <input type="checkbox" id="termsCheck" required> 
@@ -812,7 +1013,7 @@
       }
     });
 
-    // H1.3 Language Translations Dictionary
+    // H1.3 Language Translations Dictionary (All 51 Fields)
     const i18n = {
       en: {
         title: "Tell me about you and your event!",
@@ -824,17 +1025,30 @@
         represent: "Who do you represent?",
         eventName: "Name of the Event",
         eventScale: "Is your event a large public event or a small private event?",
+        websites: "Websites for Event & Organization",
+        purpose: "Purpose of this Event",
+        hearAbout: "How did you HEAR of us?",
         description: "Describe Your Event",
         emailReceipt: "📧 Send instant Event ID confirmation receipt to my email",
-        sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Date, Time & Location",
+        sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Date, Time & Logistics",
         date: "Event Date",
         time: "Start Time",
-        address: "Where will the event take place? (Full Address)",
-        sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Large Public Event Details & Promotions",
-        sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Small Private Event Specifications",
+        address: "Where will the event take place? (ADDRESS)",
+        attendance: "Expected Number of Attendees",
+        admission: "Type of Event Admission",
+        duration: "Time Required from Us (Hours/Minutes)",
+        audiencePart: "Expecting Audience Participation?",
+        areaSize: "Size of Performance / Class Area",
+        surface: "Surface Floor Type",
+        venueSetting: "Venue Location Setting",
+        soundSystem: "Sound System Equipment",
+        audienceAges: "Audience Age Groups Expected",
+        sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Large Public Event Details, 501(c) & Promotions",
+        sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Small Private Event Specifications & Hospitality",
         sec4: "<i class='fa-solid fa-music'></i> 4. Services Requested",
         perfServices: "Performance Services Needed",
         lessonServices: "Dance Lesson Services Needed",
+        otherServices: "Additional Services Needed",
         secFile: "<i class='fa-solid fa-paperclip'></i> 5. File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
         lblFile: "Upload Event Document / Attachment",
         fileBox: "Click or Drag & Drop File Here to Attach to Drive",
@@ -858,17 +1072,30 @@
         represent: "¿A quién representa?",
         eventName: "Nombre del Evento",
         eventScale: "¿Es un evento público grande o un evento privado pequeño?",
+        websites: "Sitios Web del Evento y Organización",
+        purpose: "Propósito del Evento",
+        hearAbout: "¿Cómo se enteró de nosotros?",
         description: "Describa su Evento",
         emailReceipt: "📧 Enviar confirmación instantánea con ID del Evento a mi correo",
-        sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Fecha, Hora y Ubicación",
+        sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Fecha, Hora y Logística",
         date: "Fecha del Evento",
         time: "Hora de Inicio",
         address: "¿Dónde se llevará a cabo el evento? (Dirección)",
-        sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Detalles de Eventos Públicos Grandes",
-        sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Especificaciones para Evento Privado",
+        attendance: "Número Estimado de Asistentes",
+        admission: "Tipo de Entrada al Evento",
+        duration: "Tiempo Requerido (Horas/Minutos)",
+        audiencePart: "¿Se espera participación del público?",
+        areaSize: "Tamaño del Área de Baile / Escenario",
+        surface: "Tipo de Piso / Superficie",
+        venueSetting: "Ubicación / Entorno del Lugar",
+        soundSystem: "Equipo de Sistema de Sonido",
+        audienceAges: "Edades Esperadas de la Audiencia",
+        sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Detalles de Eventos Públicos Grandes, 501(c) y Promoción",
+        sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Especificaciones de Eventos Privados y Hospitalidad",
         sec4: "<i class='fa-solid fa-music'></i> 4. Servicios Solicitados",
         perfServices: "Servicios de Espectáculo / Baile",
         lessonServices: "Talleres y Clases de Baile",
+        otherServices: "Servicios Adicionales Requeridos",
         secFile: "<i class='fa-solid fa-paperclip'></i> 5. Archivos Adjuntos (Folleto / Plano / Carta 501c)",
         lblFile: "Adjuntar Documento del Evento",
         fileBox: "Haga clic o arrastre su archivo aquí para adjuntarlo a Drive",
@@ -925,6 +1152,9 @@
       document.getElementById('lblRepresent').textContent = t.represent;
       document.getElementById('lblEventName').childNodes[0].nodeValue = t.eventName + " ";
       document.getElementById('lblEventScale').childNodes[0].nodeValue = t.eventScale + " ";
+      document.getElementById('lblWebsites').textContent = t.websites;
+      document.getElementById('lblPurpose').textContent = t.purpose;
+      document.getElementById('lblHearAbout').textContent = t.hearAbout;
       document.getElementById('lblDescription').textContent = t.description;
       document.getElementById('lblEmailReceipt').textContent = t.emailReceipt;
 
@@ -932,6 +1162,15 @@
       document.getElementById('lblEventDate').childNodes[0].nodeValue = t.date + " ";
       document.getElementById('lblEventTime').childNodes[0].nodeValue = t.time + " ";
       document.getElementById('lblEventAddress').childNodes[0].nodeValue = t.address + " ";
+      document.getElementById('lblAttendance').textContent = t.attendance;
+      document.getElementById('lblAdmission').textContent = t.admission;
+      document.getElementById('lblDuration').textContent = t.duration;
+      document.getElementById('lblAudiencePart').textContent = t.audiencePart;
+      document.getElementById('lblAreaSize').textContent = t.areaSize;
+      document.getElementById('lblSurface').textContent = t.surface;
+      document.getElementById('lblVenueSetting').textContent = t.venueSetting;
+      document.getElementById('lblSoundSystem').textContent = t.soundSystem;
+      document.getElementById('lblAudienceAges').textContent = t.audienceAges;
 
       document.getElementById('sec3aTitle').innerHTML = t.sec3a;
       document.getElementById('sec3bTitle').innerHTML = t.sec3b;
@@ -939,6 +1178,7 @@
       document.getElementById('sec4Title').innerHTML = t.sec4;
       document.getElementById('lblPerfServices').textContent = t.perfServices;
       document.getElementById('lblLessonServices').textContent = t.lessonServices;
+      document.getElementById('lblOtherServices').textContent = t.otherServices;
 
       document.getElementById('secFileTitle').innerHTML = t.secFile;
       document.getElementById('lblFileUpload').childNodes[0].nodeValue = t.lblFile + " ";
@@ -1001,16 +1241,39 @@
         representType: document.getElementById('representType').value,
         eventName: document.getElementById('eventName').value.trim(),
         eventTypeScale: document.getElementById('eventTypeScale').value,
+        eventWebsites: document.getElementById('eventWebsites').value.trim(),
+        eventPurpose: document.getElementById('eventPurpose').value.trim(),
+        hearAboutUs: document.getElementById('hearAboutUs').value,
         eventDescription: document.getElementById('eventDescription').value.trim(),
         sendEmailReceipt: document.getElementById('sendEmailReceipt').checked,
         eventDate: document.getElementById('eventDate').value,
         eventTime: document.getElementById('eventTime').value,
         eventAddress: document.getElementById('eventAddress').value.trim(),
+        expectedAttendance: document.getElementById('expectedAttendance').value,
+        admissionType: document.getElementById('admissionType').value,
+        durationRequired: document.getElementById('durationRequired').value.trim(),
+        audienceParticipation: document.getElementById('audienceParticipation').value,
+        performanceAreaSize: document.getElementById('performanceAreaSize').value.trim(),
+        surfaceType: document.getElementById('surfaceType').value.trim(),
+        venueSetting: document.getElementById('venueSetting').value,
+        soundSystem: document.getElementById('soundSystem').value,
+        audienceAges: getCheckedValues('audienceAges'),
+        nonProfitName: document.getElementById('nonProfitName')?.value.trim() || '',
+        taxLetter: document.getElementById('taxLetter')?.value || '',
         boothSpace: document.getElementById('boothSpace')?.value || '',
         promoInclude: document.getElementById('promoInclude')?.value || '',
+        allowHelpPromote: document.getElementById('allowHelpPromote')?.value || '',
+        videoRights: document.getElementById('videoRights')?.value || '',
+        contingencyPlan: document.getElementById('contingencyPlan')?.value.trim() || '',
         privateGatheringType: document.getElementById('privateGatheringType')?.value || '',
+        badgeAccess: document.getElementById('badgeAccess')?.value || '',
+        dressingRoomInstructions: document.getElementById('dressingRoomInstructions')?.value.trim() || '',
+        budgetAmount: document.getElementById('budgetAmount')?.value.trim() || '',
+        invitedToAttend: document.getElementById('invitedToAttend')?.value || '',
+        provisions: getCheckedValues('provisions'),
         performanceServices: getCheckedValues('perfServices'),
         lessonServices: getCheckedValues('lessonServices'),
+        otherServices: getCheckedValues('otherServices'),
         attachedFile: uploadedFileData,
         notes: document.getElementById('notes').value.trim(),
         serviceCategory: document.getElementById('eventTypeScale').value
