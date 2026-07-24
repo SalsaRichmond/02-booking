@@ -995,42 +995,260 @@
         <!-- Q18: Performance Services Multi-Select Checkboxes Grid -->
         <div class="form-group full-width">
           <label id="lblPerfServices">Which of our PERFORMANCE SERVICES will you need? <span class="hint">(Check all options that apply)</span></label>
-          <div class="options-grid" id="perfServicesGrid">
+
+          <!-- 1. GENERAL FORMATS -->
+          <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 12px; margin-bottom: 8px;">
+            <i class="fa-solid fa-star"></i> General Formats
+          </div>
+          <div class="options-grid">
             <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Stage Performance"> Stage Performance</label>
             <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Interactive (AUDIENCE PARTICIPATION)"> Interactive (AUDIENCE PARTICIPATION)</label>
             <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Opening Act"> Opening Act</label>
             <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Festival Headliner"> Festival Headliner</label>
             <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Main Act / Showcase"> Main Act / Showcase</label>
             <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Background Performance"> Background Performance</label>
+          </div>
+
+          <!-- 2. MEXICO / NORTH AMERICAN DANCES -->
+          <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
+            🇲🇽 Mexico / North American Dances
+          </div>
+          <div class="options-grid">
             <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 10px;">
-                <input type="checkbox" name="perfServices" value="Meet & Greet / Photo Op"> 
-                <span>Meet & Greet / Photo Op</span>
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="A Selection of Dances from the Disney Movie COCO (Mexico)"> 
+                <span>A Selection of Dances from COCO (Mexico)</span>
               </span>
-              <a href="https://www.tradicion.org/presentations/performances#h.9ozfl2xso0dr" onclick="openMeetGreetModal(event)" style="color: var(--accent-gold); font-size: 0.95rem; display: inline-flex; align-items: center; gap: 4px; font-weight: 600; text-decoration: underline;" title="View Meet & Greet Details">
+              <a href="https://www.tradicion.org/presentations/performances#h.u2ev1fpxfe3" onclick="openPerfModal(event, 'coco_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
                 <i class="fa-solid fa-circle-info"></i> Details
               </a>
             </label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Afro Puerto Rican Folk - Bomba"> Dance Performance - Afro Puerto Rican Folk - Bomba</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Puerto Rican - Plena"> Dance Performance - Puerto Rican - Plena</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Puerto Rican - Seis"> Dance Performance - Puerto Rican - Seis</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Puerto Rican - Danza, Mazurca, Valz"> Dance Performance - Puerto Rican - Danza, Mazurca, Valz</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Cuba - Salsa Rueda"> Dance Performance - Cuba - Salsa Rueda</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Mexico - Day of the Dead Celebration"> Dance Performance - Mexico - Day of the Dead Celebration</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Mexico - Danza de los Viejitos de Michoacán"> Dance Performance - Mexico - Danza de los Viejitos de Michoacán</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Mexico - Coco dance performance - Our Interpretation of Miguelito"> Dance Performance - Mexico - Coco dance performance - Our Interpretation of Miguelito</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Mexico - Valz de la Llorona"> Dance Performance - Mexico - Valz de la Llorona</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Salvador - Cumbia. El Sombrero Azul"> Dance Performance - Salvador - Cumbia. El Sombrero Azul</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Salvador - Las Comaleras"> Dance Performance - Salvador - Las Comaleras</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Columbia - Cumbia. La Pollera Colorá"> Dance Performance - Columbia - Cumbia. La Pollera Colorá</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="General Performance - Puerto Rican Folk Characters Meet and Greet"> General Performance - Puerto Rican Folk Characters Meet and Greet</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="General Dance Performance Salsa, Merengue and Bachata Rueda dance performance"> General Dance Performance Salsa, Merengue and Bachata Rueda dance performance</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="General Performance - Puerto Rican Folk Characters Explanation and Meet and Greet"> General Performance - Puerto Rican Folk Characters Explanation and Meet and Greet</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="General Performance - Folk Characters Meet and Greet"> General Performance - Folk Characters Meet and Greet</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="General Performance - Latin American Singers"> General Performance - Latin American Singers</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="General Performance - Folk Dresses"> General Performance - Folk Dresses</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="General Performance - Mexico - MIX"> General Performance - Mexico - MIX</label>
+
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="El Baile de los Viejitos (The Dance of The Old Men) (Mexico)"> 
+                <span>El Baile de los Viejitos (Mexico)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.iz1tgf3gwi18" onclick="openPerfModal(event, 'viejitos_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="The Waltz of La Llorona (Weeping Woman) (Mexico)"> 
+                <span>The Waltz of La Llorona (Mexico)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.omqh83ecrbmx" onclick="openPerfModal(event, 'llorona_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Día de los Muertos - Day of the Dead Celebration (Mexico)"> 
+                <span>Día de los Muertos Celebration (Mexico)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.mxgg2sd19z8r" onclick="openPerfModal(event, 'dia_muertos_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
           </div>
+
+          <!-- 3. CARIBBEAN DANCES -->
+          <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
+            🇨🇺 🇵🇷 Caribbean Dances (Cuba & Puerto Rico)
+          </div>
+          <div class="options-grid">
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Salsa Rueda (Cuba)"> 
+                <span>Salsa Rueda (Cuba)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.4i00j5hmn4fs" onclick="openPerfModal(event, 'salsa_rueda_cuba')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Bomba (Puerto Rico)"> 
+                <span>Bomba (Puerto Rico)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.v4lswcm84zw" onclick="openPerfModal(event, 'bomba_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Plena (Puerto Rico)"> 
+                <span>Plena (Puerto Rico)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.120b1nf06hcf" onclick="openPerfModal(event, 'plena_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Seis (Puerto Rico)"> 
+                <span>Seis (Puerto Rico)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.8blubd79glpf" onclick="openPerfModal(event, 'seis_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Danza (Puerto Rico)"> 
+                <span>Danza (Puerto Rico)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.ynlss9y2an4i" onclick="openPerfModal(event, 'danza_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+          </div>
+
+          <!-- 4. CENTRAL AMERICAN DANCES -->
+          <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
+            🇸🇻 Central American Dances (El Salvador)
+          </div>
+          <div class="options-grid">
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Cumbia (El Salvador)"> 
+                <span>Cumbia (El Salvador)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.3jbwxosjacst" onclick="openPerfModal(event, 'cumbia_salvador')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Las Comaleras (El Salvador)"> 
+                <span>Las Comaleras (El Salvador)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.ad9yggt7cmxc" onclick="openPerfModal(event, 'comaleras_salvador')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Las Cortadoras (El Salvador) COMING SOON"> 
+                <span>Las Cortadoras (El Salvador) <span style="font-size:0.75rem; color:var(--accent-gold);">(COMING SOON)</span></span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.p5sjlz8viodw" onclick="openPerfModal(event, 'cortadoras_salvador')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+          </div>
+
+          <!-- 5. SOUTH AMERICAN DANCES -->
+          <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
+            🇨🇴 🇦🇷 South American Dances (Colombia & Argentina)
+          </div>
+          <div class="options-grid">
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Cumbia (Colombia)"> 
+                <span>Cumbia (Colombia)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.adfdbqcu00up" onclick="openPerfModal(event, 'cumbia_colombia')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Cumbia &quot;La Pollera Colorá&quot; (Colombia)"> 
+                <span>Cumbia "La Pollera Colorá" (Colombia)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.lrrar6hw8e9w" onclick="openPerfModal(event, 'pollera_colora_colombia')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="El Mapalé (Colombia)"> 
+                <span>El Mapalé (Colombia)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.u6muchltmued" onclick="openPerfModal(event, 'mapale_colombia')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Tango (Argentina)"> 
+                <span>Tango (Argentina)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.9o6kw0vhisrt" onclick="openPerfModal(event, 'tango_argentina')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+          </div>
+
+          <!-- 6. THEATRICAL, PARADE & SINGING PERFORMANCES -->
+          <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
+            🎭 Theatrical, Parade & Singing Performances
+          </div>
+          <div class="options-grid">
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Salsa Performance Group (Ladies in Red)"> 
+                <span>Salsa Performance Group (Ladies in Red)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.3mokvxbrgbuk" onclick="openPerfModal(event, 'ladies_in_red')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Folk Characters Meet & Greet (Puerto Rico & Mexico)"> 
+                <span>Folk Characters Meet & Greet (Puerto Rico & Mexico)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.9ozfl2xso0dr" onclick="openPerfModal(event, 'meet_greet_photo')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Folk Characters Show (Puerto Rico)"> 
+                <span>Folk Characters Show (Puerto Rico)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.owfw8w80w5rn" onclick="openPerfModal(event, 'folk_characters_show')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Singer - Alma Ranchera (Mexico)"> 
+                <span>Singer - Alma Ranchera (Mexico)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.vw6lti8subow" onclick="openPerfModal(event, 'singer_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+
+            <label class="checkbox-item" style="justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 8px;">
+                <input type="checkbox" name="perfServices" value="Los Cantores de Tradicion (Puerto Rican Christmas Parranda)"> 
+                <span>Los Cantores de Tradicion (Parranda)</span>
+              </span>
+              <a href="https://www.tradicion.org/presentations/performances#h.fogbsebxxaxb" onclick="openPerfModal(event, 'cantores_tradicion')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline;" title="View Details">
+                <i class="fa-solid fa-circle-info"></i> Details
+              </a>
+            </label>
+          </div>
+
         </div>
 
         <!-- Other Performance Services Text Input -->
@@ -1542,10 +1760,392 @@
       successCard.style.display = 'none';
     });
 
-    // Meet & Greet / Photo Op Modal Controls
-    function openMeetGreetModal(e) {
+    // 21 Performance Services Dynamic Data Dictionary
+    const PERFORMANCE_DATA = {
+      coco_mexico: {
+        title: "A Selection of Dances from the Disney Movie COCO (Mexico)",
+        icon: "fa-film",
+        photo: "meet_greet_photo.png",
+        pitch: "Experience the magic of Disney-Pixar's COCO brought to life! Featuring favorite characters like Miguel, Hector, and Imelda dancing to iconic hit songs from the movie including 'Un Poco Loco' and 'Proud Corazón'.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Iconic Character Costumes & Mask Performances</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Energy Choreography to Popular Movie Hits</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Interactive Audience Engagement & Family Friendly</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Perfect for Festivals, Schools & Day of the Dead Celebrations</li>
+        `,
+        quote: `"Depicts the Mexican holiday Día de los Muertos featuring characters like Miguel, Hector, and Imelda from the Disney-Pixar movie Coco, dancing to popular songs from the film."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 to 10 Performers (Requires sound system & large space)</li>
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers (Requires sound system)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 to 10 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.u2ev1fpxfe3"
+      },
+      viejitos_mexico: {
+        title: "El Baile de los Viejitos (The Dance of The Old Men) (Mexico)",
+        icon: "fa-person-cane",
+        photo: "meet_greet_photo.png",
+        pitch: "A beloved, hilarious traditional folk dance from Michoacán, Mexico! Dancers wear clay masks of smiling old men and wooden canes, starting with comical slow movements before bursting into energetic tap dancing.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Michoacán Clay Masks & Carved Canes</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Humorous Comical Transition to Fast Tap Dancing</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Crowd-Pleasing Mexican Folkloric Tradition</li>
+        `,
+        quote: `"Dancers wear clay masks depicting smiling old men and carry carved wooden canes. The dance starts slowly mimicking old age before transitioning into a fast-paced energetic tap dance."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 to 10 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 to 10 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.iz1tgf3gwi18"
+      },
+      llorona_mexico: {
+        title: "The Waltz of La Llorona (Weeping Woman) (Mexico)",
+        icon: "fa-ghost",
+        photo: "meet_greet_photo.png",
+        pitch: "A hauntingly elegant and beautiful waltz depicting the legendary figure of La Llorona and La Catrina from Mexican folklore in stunning traditional attire.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Elegant Catrina & La Llorona Costume Artistry</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Hauntingly Beautiful Waltz Choreography</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Perfect for Cultural & Day of the Dead Festivities</li>
+        `,
+        quote: `"A hauntingly beautiful waltz that represents the legendary figure of La Llorona (or Catrina) from Mexican folklore."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 to 10 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 to 10 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.omqh83ecrbmx"
+      },
+      dia_muertos_mexico: {
+        title: "Día de los Muertos - Day of the Dead Celebration (Mexico)",
+        icon: "fa-skull",
+        photo: "meet_greet_photo.png",
+        pitch: "A vibrant, festive celebration honoring Día de los Muertos! Combines traditional Mexican folkloric dance styles, elaborate face paint, and joyful musical tribute.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Festive Day of the Dead Choreography & Attire</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Rich Mexican Folkloric Musical Showcase</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Great for Community & Cultural Celebrations</li>
+        `,
+        quote: `"A festive celebration dance honoring the Day of the Dead, combining various traditional Mexican folkloric dance and musical styles."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 to 10 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 to 10 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.mxgg2sd19z8r"
+      },
+      salsa_rueda_cuba: {
+        title: "Salsa Rueda (Cuba)",
+        icon: "fa-compact-disc",
+        photo: "meet_greet_photo.png",
+        pitch: "The thrilling Cuban Rueda de Casino! Couples dance in a synchronized circle, executing exciting turn patterns called out dynamically in real-time by a designated leader.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Synchronized Circular Cuban Rueda Choreography</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Dynamic Caller Leading Fast Turn Patterns</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Energy Festival & Party Favorite</li>
+        `,
+        quote: `"Originated in Cuba in the 1950s. Couples dance in a circle, executing synchronized moves called out by a designated leader."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 to 10 Performers (5-10 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 Performers (3-10 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.4i00j5hmn4fs"
+      },
+      bomba_puerto_rico: {
+        title: "Bomba (Puerto Rico)",
+        icon: "fa-drum",
+        photo: "meet_greet_photo.png",
+        pitch: "An ancient Afro-Puerto Rican musical tradition dating to the 17th century! An interactive dialogue where the dancer's improvised movements challenge and command the lead subidor drum.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Interactive Dancer-Drummer Dialogue & Challenge</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Traditional Costumes & Skirt Work</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Powerful Afro-Puerto Rican Heritage Showcase</li>
+        `,
+        quote: `"An ancient Afro-Puerto Rican dance and music style dating back to the 17th century, characterized by an interactive dialogue where the dancer's movements challenge and dictate the rhythm played by the lead drummer."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 8 Performers (12 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 Performers (3-10 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.v4lswcm84zw"
+      },
+      plena_puerto_rico: {
+        title: "Plena (Puerto Rico)",
+        icon: "fa-guitar",
+        photo: "meet_greet_photo.png",
+        pitch: "The 'sung newspaper' of Puerto Rico! Developed in coastal Ponce, Plena combines panderos (hand drums) with narrative songs telling stories of daily community life.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Pandero (Hand Drum) Rhythms & Singing</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Vibrant Storytelling & Festive Dance Movements</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Joyful Coastal Puerto Rican Folklórico</li>
+        `,
+        quote: `"Developed in the coastal barrios of Ponce around the late 19th/early 20th century. Often referred to as the 'sung newspaper' because its lyrics narrate daily life events."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 8 Performers (12 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 Performers (3-10 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.120b1nf06hcf"
+      },
+      seis_puerto_rico: {
+        title: "Seis (Puerto Rico)",
+        icon: "fa-sun",
+        photo: "meet_greet_photo.png",
+        pitch: "The rich traditional music of Puerto Rico's mountain farmers (jíbaros)! Features Spanish colonial footwork, vibrant costumes, and the 10-string Puerto Rican cuatro.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Jíbaro Mountain Folk Attire</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Spanish Colonial Footwork & Cuatro Melodies</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Traditional Festival & Celebration Performance</li>
+        `,
+        quote: `"The traditional music of Puerto Rico's mountain farmers (jíbaros), featuring Spanish colonial roots and the cuatro guitar."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 8 Performers (3 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 Performers (3 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.8blubd79glpf"
+      },
+      danza_puerto_rico: {
+        title: "Danza (Puerto Rico)",
+        icon: "fa-fan",
+        photo: "meet_greet_photo.png",
+        pitch: "An aristocratic 19th-century ballroom dance from Ponce! Dancers glide in formal gowns and tuxedos, using handheld fans to convey subtle messages in classical elegance.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Society Formal Gowns & Ballroom Elegance</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Handheld Fan Language & Classical Choreography</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Historical Puerto Rican Cultural Heritage</li>
+        `,
+        quote: `"A formal ballroom dance that emerged in Ponce around 1870, influenced by the Cuban habanera and classical European waltzes."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 8 to 10 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 10 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.ynlss9y2an4i"
+      },
+      cumbia_salvador: {
+        title: "Cumbia (El Salvador)",
+        icon: "fa-music",
+        photo: "meet_greet_photo.png",
+        pitch: "Set to the legendary Salvadoran anthem 'El Sombrero Azul'! A festive performance fusing indigenous melodies with upbeat clave rhythms and bright brass horn arrangements.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Performance Set to 'El Sombrero Azul'</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Vibrant Salvadoran Costumes & Energetic Steps</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Central American Pride & Cultural Celebration</li>
+        `,
+        quote: `"Based on the popular Salvadoran song 'El Sombrero Azul,' this dance fuses indigenous melodies with African clave rhythms."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 10 Performers (3 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 to 6 Performers (3 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.3jbwxosjacst"
+      },
+      comaleras_salvador: {
+        title: "Las Comaleras (El Salvador)",
+        icon: "fa-utensils",
+        photo: "meet_greet_photo.png",
+        pitch: "A delightful rural Salvadoran folk dance celebrating women who bake tortillas over traditional clay comales griddles with expressive theatrical storytelling.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Traditional Clay Comales & Tortilla Making Props</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Expressive Rural Folk Choreography</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Salvadoran Country Costumes</li>
+        `,
+        quote: `"A rural folk dance celebrating Salvadoran women who work over traditional clay comales (griddles), mimicking the process of shaping and cooking tortillas."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 Performers (3 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 Performers (3 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.ad9yggt7cmxc"
+      },
+      cortadoras_salvador: {
+        title: "Las Cortadoras (El Salvador) COMING SOON",
+        icon: "fa-wheat-awn",
+        photo: "meet_greet_photo.png",
+        pitch: "Depicts farmworkers harvesting agricultural crops in rural El Salvador. Performers wear traditional colorful skirts and utilize harvest baskets and props!",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Salvadoran Harvest Skirts & Baskets Showcase</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Agricultural Folk Choreography</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Central American Cultural Heritage</li>
+        `,
+        quote: `"Depicts farmworkers harvesting agricultural crops in rural El Salvador. Performers wear traditional colorful costumes and utilize props like harvest baskets."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 Performers (3 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 Performers (3 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.p5sjlz8viodw"
+      },
+      cumbia_colombia: {
+        title: "Cumbia (Colombia)",
+        icon: "fa-fire",
+        photo: "meet_greet_photo.png",
+        pitch: "The timeless courtship dance of Colombia's Caribbean coast! Partners dance gracefully without touching, displaying candle-lit romance, swaying hips, and majestic skirt work.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Colombian Coastal Courtship Choreography</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Candle Props & Flowing Traditional Costumes</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Elegance Romance & Rhythmic Flute Melodies</li>
+        `,
+        quote: `"A courtship dance from the coastal regions of Colombia. Danced in couples where partners do not touch, mimicking amorous conquest."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 4 to 6 Performers (3-6 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 Performers (3-6 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.adfdbqcu00up"
+      },
+      pollera_colora_colombia: {
+        title: "Cumbia \"La Pollera Colorá\" (Colombia)",
+        icon: "fa-shirt",
+        photo: "meet_greet_photo.png",
+        pitch: "Named after the famous 'brightly colored skirt'! Set to the legendary 1960s Colombian cumbia anthem with explosive skirt movement and festive energy.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Iconic Bright Red & Gold Pollera Skirts</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Choreographed to the Classic 1960s Cumbia Hit</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Showstopping Visual & Musical Festival Act</li>
+        `,
+        quote: `"Named after the 'brightly colored skirt' which serves as the traditional dress for women in Colombia, set to the famous cumbia song of the same name."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 10 Performers (3-6 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 to 6 Performers (3-6 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.lrrar6hw8e9w"
+      },
+      mapale_colombia: {
+        title: "El Mapalé (Colombia)",
+        icon: "fa-fish",
+        photo: "meet_greet_photo.png",
+        pitch: "An explosive, high-speed Afro-Colombian dance! Mimics the frantic wriggling of the mapalé fish caught out of water with rapid drum beats and athletic acrobatics.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Speed Afro-Colombian Drumming & Movement</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Athletic Wriggling & Rapid Hip isolations</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Vibrant Afro-Caribbean Coast Attire</li>
+        `,
+        quote: `"A fast-paced, high-energy Afro-Colombian dance from the Caribbean coast. Named after a fish that wriggles out of water, mimicking these movements to rapid drum beats."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.u6muchltmued"
+      },
+      tango_argentina: {
+        title: "Tango (Argentina)",
+        icon: "fa-heart",
+        photo: "meet_greet_photo.png",
+        pitch: "The sensual, passionate Argentine Tango from Buenos Aires! Characterized by intimate partner connection, dramatic leg wraps (ganchos), and intricate footwork.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Intimate & Dramatic Buenos Aires Ballroom Tango</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Intricate Footwork, Ganchos & Boleos</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Elegant Formal Evening Attire</li>
+        `,
+        quote: `"Originating in Buenos Aires in the late 19th century, Argentine Tango is an intimate, improvisational partner dance characterized by intricate footwork."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Duo Ensemble:</strong> 2 Dancers</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 to 10 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.9o6kw0vhisrt"
+      },
+      ladies_in_red: {
+        title: "Salsa Performance Group (Ladies in Red)",
+        icon: "fa-gem",
+        photo: "meet_greet_photo.png",
+        pitch: "A glamorous all-female performance ensemble showcasing synchronized Salsa, Bachata, and Cha-cha in dazzling red sequin gowns!",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Dazzling Red Sequin Costume Showcase</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Synchronized Salsa, Bachata & Cha-Cha Styling</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Impact Stage Show for Galas & Events</li>
+        `,
+        quote: `"An all-female performance group showcasing Salsa, Bachata, and Cha-cha in vibrant red costumes."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 3 to 4 Performers (3-10 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 Performers (3-10 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.3mokvxbrgbuk"
+      },
+      meet_greet_photo: {
+        title: "Folk Characters Meet & Greet (Puerto Rico & Mexico)",
+        icon: "fa-camera-retro",
+        photo: "meet_greet_photo.png",
+        pitch: "Our Meet & Greet and Photo Op experiences allow guests to interact directly with performers, take memorable photos in full authentic folk costumes, and bring extra warmth and cultural engagement to your event!",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Puerto Rican & Latin Folk Character Interaction</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Vibrant High-Res Photo Ops for Guests & VIPs</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Cultural Costume Showcase & Storytelling</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Perfect for Festivals, Corporate Events & Private Parties</li>
+        `,
+        quote: `"The traditional folk characters from Puerto Rico, Mexico, and Latin America are dressed in full authentic folk attire and facilitate event promotion and public engagement, allowing the public and guests to pose with the performers for pictures and unforgettable photo ops."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 5 to 8 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-book-open" style="color: #38BDF8;"></i> <strong>Folk Character Showcase:</strong> Includes brief cultural explanation & festival history</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.9ozfl2xso0dr"
+      },
+      folk_characters_show: {
+        title: "Folk Characters Show (Puerto Rico)",
+        icon: "fa-masks-theater",
+        photo: "meet_greet_photo.png",
+        pitch: "A theatrical presentation outlining the history and folklore of Puerto Rican festival characters, featuring up to six masked Cabezudos & Vejigantes!",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Theatrical History Presentation & Storytelling</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Up to 6 Masked Cabezudos & Vejigantes Characters</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Interactive Parade & Stage Production</li>
+        `,
+        quote: `"A theatrical presentation outlining the history and meaning of traditional Puerto Rican festival characters, specifically the masked Cabezudos."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 5 to 6 Performers (up to 30 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.owfw8w80w5rn"
+      },
+      singer_mexico: {
+        title: "Singer - Alma Ranchera (Mexico)",
+        icon: "fa-microphone",
+        photo: "meet_greet_photo.png",
+        pitch: "Vocal performance by artist Alma Ranchera in full charro attire! Performs legendary Mexican rancheras like 'Guadalajara', 'Volver Volver', and 'El Mariachi Loco'.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Mariachi / Charro Outfit Showcase</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Live Ranchera Vocals & Audience Interaction</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Repertoire of Beloved Mexican Classics</li>
+        `,
+        quote: `"Traditional Ranchera vocal performance by artist Alma Ranchera, wearing the iconic charro costume."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-microphone-lines" style="color: #EC4899;"></i> <strong>Vocal Soloist:</strong> Requires sound system</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 30 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.vw6lti8subow"
+      },
+      cantores_tradicion: {
+        title: "Los Cantores de Tradicion (Puerto Rican Christmas Parranda)",
+        icon: "fa-gifts",
+        photo: "meet_greet_photo.png",
+        pitch: "The festive Puerto Rican Parranda caroling tradition! Featuring Christmas classics like 'Mi Burrito Sabanero', 'Los Peces En El Río', and 'Feliz Navidad'.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Traditional Puerto Rican Parranda Caroling</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Festive Percussion (Güiro, Maracas, Tambora) & Vocals</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Perfect for Holiday Parties & Christmas Events</li>
+        `,
+        quote: `"A holiday singing performance showcasing the Puerto Rican Parranda (caroling) tradition with classic Latin American Christmas songs."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-users" style="color: #EC4899;"></i> <strong>Musical Ensemble:</strong> Small space / sound system</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 15 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.fogbsebxxaxb"
+      }
+    };
+
+    // Open Performance Modal dynamically
+    function openPerfModal(e, perfKey) {
       if (e) e.preventDefault();
+      const data = PERFORMANCE_DATA[perfKey] || PERFORMANCE_DATA.meet_greet_photo;
+      
+      document.getElementById('modalTitleText').textContent = data.title;
+      document.getElementById('modalIcon').className = `fa-solid ${data.icon || 'fa-masks-theater'}`;
+      document.getElementById('modalPitchText').textContent = data.pitch;
+      document.getElementById('modalIncludedList').innerHTML = data.included;
+      document.getElementById('modalQuoteText').textContent = data.quote;
+      document.getElementById('modalEnsembleList').innerHTML = data.ensemble;
+      document.getElementById('modalLinkBtn').href = data.link;
+
       document.getElementById('infoModal').style.display = 'flex';
+    }
+
+    function openMeetGreetModal(e) {
+      openPerfModal(e, 'meet_greet_photo');
     }
 
     function closeInfoModal() {
@@ -1553,22 +2153,22 @@
     }
   </script>
 
-  <!-- Modal Popup Overlay for Meet & Greet / Photo Op -->
+  <!-- Modal Popup Overlay for Performance Details -->
   <div id="infoModal" class="modal-overlay" onclick="if(event.target===this) closeInfoModal();" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 9999; justify-content: center; align-items: center; padding: 20px; overflow-y: auto;">
     <div class="modal-card" style="background: #1E293B; border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; width: 100%; max-width: 680px; padding: 30px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6); text-align: left; position: relative; max-height: 90vh; overflow-y: auto;">
       <button type="button" onclick="closeInfoModal()" style="position: absolute; top: 18px; right: 22px; background: none; border: none; color: #94A3B8; font-size: 1.8rem; cursor: pointer; line-height: 1;" title="Close Popup">&times;</button>
       
       <!-- 1. TITLE -->
-      <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.45rem; color: #F59E0B; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-        <i class="fa-solid fa-camera-retro" style="color: #DC2626; font-size: 1.6rem;"></i> Meet & Greet / Photo Op Experience
+      <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.35rem; color: #F59E0B; margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+        <i id="modalIcon" class="fa-solid fa-camera-retro" style="color: #DC2626; font-size: 1.5rem;"></i> <span id="modalTitleText">Meet & Greet / Photo Op Experience</span>
       </h3>
 
       <!-- 2. PIC / VIDEO ASSET -->
-      <img src="meet_greet_photo.png" alt="Folk Characters Meet & Greet Photo Op" style="width: 100%; max-height: 250px; object-fit: cover; border-radius: 14px; margin-bottom: 18px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 10px 20px rgba(0,0,0,0.4);">
+      <img id="modalImg" src="meet_greet_photo.png" alt="Performance Showcase" style="width: 100%; max-height: 250px; object-fit: cover; border-radius: 14px; margin-bottom: 18px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 10px 20px rgba(0,0,0,0.4);">
       
       <!-- 3. SALES PITCH INTRO -->
       <div style="background: rgba(245, 158, 11, 0.1); border-left: 4px solid #F59E0B; border-radius: 10px; padding: 14px 18px; margin-bottom: 18px; color: #F8FAFC; font-size: 0.96rem; line-height: 1.6; font-weight: 500;">
-        Our Meet & Greet and Photo Op experiences allow guests to interact directly with performers, take memorable photos in full authentic folk costumes, and bring extra warmth and cultural engagement to your event!
+        <span id="modalPitchText">Our Meet & Greet and Photo Op experiences allow guests to interact directly with performers...</span>
       </div>
 
       <!-- 4. WHAT'S INCLUDED BOX -->
@@ -1576,18 +2176,14 @@
         <h4 style="color: #38BDF8; font-family: 'Outfit', sans-serif; font-size: 1.02rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
           <i class="fa-solid fa-star" style="color: #F59E0B;"></i> What's Included:
         </h4>
-        <ul style="list-style: none; padding: 0; color: #E2E8F0; font-size: 0.92rem; line-height: 1.8;">
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Puerto Rican & Latin Folk Character Interaction</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Vibrant High-Res Photo Ops for Guests & VIPs</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Cultural Costume Showcase & Storytelling</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Perfect for Festivals, Corporate Events & Private Parties</li>
+        <ul id="modalIncludedList" style="list-style: none; padding: 0; color: #E2E8F0; font-size: 0.92rem; line-height: 1.8;">
         </ul>
       </div>
 
       <!-- 5. OFFICIAL DESCRIPTION QUOTE -->
       <div style="background: rgba(15, 23, 42, 0.5); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 14px 18px; margin-bottom: 18px; color: #94A3B8; font-size: 0.9rem; line-height: 1.6; font-style: italic;">
         <i class="fa-solid fa-quote-left" style="color: #F59E0B; margin-right: 6px;"></i>
-        "The traditional folk characters from Puerto Rico, Mexico, and Latin America are dressed in full authentic folk attire and facilitate event promotion and public engagement, allowing the public and guests to pose with the performers for pictures and unforgettable photo ops."
+        <span id="modalQuoteText">"The traditional folk characters from Puerto Rico, Mexico, and Latin America are dressed in full authentic folk attire..."</span>
       </div>
 
       <!-- 6. PERFORMANCE & ENSEMBLE OPTIONS BOX -->
@@ -1595,16 +2191,7 @@
         <h4 style="color: #38BDF8; font-family: 'Outfit', sans-serif; font-size: 1.02rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
           <i class="fa-solid fa-users-viewfinder" style="color: #F59E0B;"></i> Performance & Ensemble Options:
         </h4>
-        <ul style="list-style: none; padding: 0; color: #E2E8F0; font-size: 0.92rem; line-height: 1.8;">
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-            <i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 5 to 8 Performers in full traditional costumes & masks
-          </li>
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;">
-            <i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers for intimate gatherings & photo ops
-          </li>
-          <li style="display: flex; align-items: center; gap: 8px;">
-            <i class="fa-solid fa-book-open" style="color: #38BDF8;"></i> <strong>Folk Character Showcase:</strong> Includes brief cultural explanation & festival history
-          </li>
+        <ul id="modalEnsembleList" style="list-style: none; padding: 0; color: #E2E8F0; font-size: 0.92rem; line-height: 1.8;">
         </ul>
       </div>
 
@@ -1613,8 +2200,8 @@
         <div style="font-size: 0.9rem; color: #F8FAFC; margin-bottom: 12px; font-weight: 500;">
           <i class="fa-solid fa-globe" style="color: #38BDF8; margin-right: 6px;"></i> Official Presentation Details on Tradisión.org:
         </div>
-        <a href="https://www.tradicion.org/presentations/performances#h.9ozfl2xso0dr" target="_blank" style="display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%); color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700; border-radius: 12px; text-decoration: none; box-shadow: 0 10px 25px -5px rgba(220, 38, 38, 0.4); transition: transform 0.2s ease;">
-          <span>Visit Official Meet & Greet Page</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        <a id="modalLinkBtn" href="https://www.tradicion.org/presentations/performances#h.9ozfl2xso0dr" target="_blank" style="display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%); color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700; border-radius: 12px; text-decoration: none; box-shadow: 0 10px 25px -5px rgba(220, 38, 38, 0.4); transition: transform 0.2s ease;">
+          <span>Visit Official Performance Page</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
         </a>
       </div>
 
