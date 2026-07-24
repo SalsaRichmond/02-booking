@@ -2140,6 +2140,12 @@
       document.getElementById('modalEnsembleList').innerHTML = data.ensemble;
       document.getElementById('modalLinkBtn').href = data.link;
 
+      const modalImg = document.getElementById('modalImg');
+      if (modalImg) {
+        modalImg.src = data.photo || 'meet_greet_photo.png';
+        modalImg.alt = data.title;
+      }
+
       document.getElementById('infoModal').style.display = 'flex';
     }
 
@@ -2197,10 +2203,10 @@
       <!-- 7. OFFICIAL PRESENTATION LINK & ACTION BUTTON -->
       <div style="background: rgba(220, 38, 38, 0.1); border: 1px dashed rgba(220, 38, 38, 0.3); border-radius: 14px; padding: 18px; text-align: center; margin-bottom: 20px;">
         <div style="font-size: 0.9rem; color: #F8FAFC; margin-bottom: 12px; font-weight: 500;">
-          <i class="fa-solid fa-globe" style="color: #38BDF8; margin-right: 6px;"></i> Official Presentation Details on Tradisión.org:
+          <i class="fa-solid fa-film" style="color: #F59E0B; margin-right: 6px;"></i> <i class="fa-solid fa-globe" style="color: #38BDF8; margin-right: 6px;"></i> Official Presentation & Video Showcase on Tradisión.org:
         </div>
         <a id="modalLinkBtn" href="https://www.tradicion.org/presentations/performances#h.9ozfl2xso0dr" target="_blank" style="display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%); color: #FFF; font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700; border-radius: 12px; text-decoration: none; box-shadow: 0 10px 25px -5px rgba(220, 38, 38, 0.4); transition: transform 0.2s ease;">
-          <span>Visit Official Performance Page</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          <span>Visit Official Performance & Video Page</span> <i class="fa-solid fa-arrow-up-right-from-square"></i>
         </a>
       </div>
 
