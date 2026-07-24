@@ -793,6 +793,18 @@
           </div>
 
           <div class="grid-2">
+            <!-- Performance Services Frequency (Recurring / Nonrecurring) -->
+            <div class="form-group">
+              <label for="serviceRecurrence">Will the <strong>PERFORMANCE SERVICES</strong> be ...</label>
+              <select id="serviceRecurrence" name="serviceRecurrence">
+                <option value="Nonrecurring - One time">Nonrecurring - One time</option>
+                <option value="Recurring">Recurring</option>
+                <option value="Recurring Weekly">Recurring Weekly</option>
+                <option value="Recurring Monthly">Recurring Monthly</option>
+                <option value="Recurring Yearly">Recurring Yearly</option>
+              </select>
+            </div>
+
             <!-- Q27: 501(c) Organization Name -->
             <div class="form-group">
               <label for="nonProfitName">501(c) Non-Profit Name (If Applicable)</label>
@@ -1312,6 +1324,7 @@
         venueSetting: document.getElementById('venueSetting').value,
         soundSystem: document.getElementById('soundSystem').value,
         audienceAges: getCheckedValues('audienceAges'),
+        serviceRecurrence: document.getElementById('serviceRecurrence')?.value || '',
         nonProfitName: document.getElementById('nonProfitName')?.value.trim() || '',
         taxLetter: document.getElementById('taxLetter')?.value || '',
         boothSpace: document.getElementById('boothSpace')?.value || '',
