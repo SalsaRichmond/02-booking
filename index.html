@@ -959,15 +959,24 @@
           <input type="text" id="otherPerfServices" name="otherPerfServices" placeholder="Describe any custom performance services..." spellcheck="true">
         </div>
 
-        <!-- Q19: Dance Lesson Services -->
-        <div class="form-group">
-          <label id="lblLessonServices">Dance Lesson Services Needed</label>
-          <div class="options-grid">
-            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Salsa Workshop"> Salsa Workshop</label>
-            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Bachata Workshop"> Bachata Workshop</label>
-            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Merengue Workshop"> Merengue Workshop</label>
-            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Bomba & Plena Workshop"> Bomba & Plena Workshop</label>
-          </div>
+        <!-- Q19: Dance Lesson Services Dropdown -->
+        <div class="form-group full-width">
+          <label for="lessonServicesSelect" id="lblLessonServices">Which of our DANCE LESSON SERVICES will you need?</label>
+          <select id="lessonServicesSelect" name="lessonServicesSelect">
+            <option value="None">None</option>
+            <option value="Dance Lessons - Salsa Guy's Line Dance lesson Salsa, Merengue, Bachata and Chacha">Dance Lessons - Salsa Guy's Line Dance lesson Salsa, Merengue, Bachata and Chacha</option>
+            <option value="Dance Lesson - Puerto Rican Folk - Bomba y Plena (Live Music)">Dance Lesson - Puerto Rican Folk - Bomba y Plena (Live Music)</option>
+            <option value="Dance Lesson - Merengue - Dominican Republic">Dance Lesson - Merengue - Dominican Republic</option>
+            <option value="Dance Lesson - Bachata - Dominican Republic">Dance Lesson - Bachata - Dominican Republic</option>
+            <option value="Dance Lesson - Salsa - Puerto Rico">Dance Lesson - Salsa - Puerto Rico</option>
+            <option value="Dance Lessons - Cuba - Rueda">Dance Lessons - Cuba - Rueda</option>
+            <option value="Dance Lessons - Choreographies for Wedding or Sweet Fifteen (Quinceañero)">Dance Lessons - Choreographies for Wedding or Sweet Fifteen (Quinceañero)</option>
+            <option value="Dance Lessons - All Salsa, Merengue and Bachata">Dance Lessons - All Salsa, Merengue and Bachata</option>
+            <option value="Dance Lessons for Team Building">Dance Lessons for Team Building</option>
+            <option value="Dance Lessons - Virtual">Dance Lessons - Virtual</option>
+            <option value="Dance Lessons - Wedding 1st Dance">Dance Lessons - Wedding 1st Dance</option>
+            <option value="Dance Lessons for Children">Dance Lessons for Children</option>
+          </select>
         </div>
 
         <!-- Q20 & Q26: Other Services (MC, DJ, Lectures) -->
@@ -1105,7 +1114,7 @@
         sec4: "<i class='fa-solid fa-music'></i> 4. Services Requested",
         perfServices: "Which of our PERFORMANCE SERVICES will you need?",
         otherPerfServices: "Any other PERFORMANCE SERVICES you wish , but are not listed above?",
-        lessonServices: "Dance Lesson Services Needed",
+        lessonServices: "Which of our DANCE LESSON SERVICES will you need?",
         otherServices: "Additional Services Needed",
         secFile: "<i class='fa-solid fa-paperclip'></i> 5. File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
         lblFile: "Upload Event Document / Attachment",
@@ -1153,7 +1162,7 @@
         sec4: "<i class='fa-solid fa-music'></i> 4. Servicios Solicitados",
         perfServices: "¿Cuál de nuestros SERVICIOS DE ESPECTÁCULO necesitará?",
         otherPerfServices: "¿Algún otro SERVICIO DE ESPECTÁCULO que desee y no esté listado arriba?",
-        lessonServices: "Talleres y Clases de Baile",
+        lessonServices: "¿Cuál de nuestros SERVICIOS DE CLASES DE BAILE necesitará?",
         otherServices: "Servicios Adicionales Requeridos",
         secFile: "<i class='fa-solid fa-paperclip'></i> 5. Archivos Adjuntos (Folleto / Plano / Carta 501c)",
         lblFile: "Adjuntar Documento del Evento",
@@ -1334,7 +1343,7 @@
         provisions: getCheckedValues('provisions'),
         performanceServices: document.getElementById('perfServicesSelect') ? document.getElementById('perfServicesSelect').value : getCheckedValues('perfServices'),
         otherPerfServices: document.getElementById('otherPerfServices')?.value.trim() || '',
-        lessonServices: getCheckedValues('lessonServices'),
+        lessonServices: document.getElementById('lessonServicesSelect') ? document.getElementById('lessonServicesSelect').value : getCheckedValues('lessonServices'),
         otherServices: getCheckedValues('otherServices'),
         attachedFile: uploadedFileData,
         notes: document.getElementById('notes').value.trim(),
