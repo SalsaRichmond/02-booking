@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark" data-color-scheme="crimson">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,21 +15,64 @@
 
   <style>
     :root {
-      --primary-red: #DC2626;
-      --primary-crimson: #991B1B;
+      /* Theme 1: Crimson Fire (Default) */
+      --primary-accent: #DC2626;
+      --primary-dark: #991B1B;
       --accent-gold: #F59E0B;
-      --accent-amber: #D97706;
-      --bg-dark: #0F172A;
+      --bg-gradient-1: #31101A;
+      --bg-gradient-2: #0F172A;
+      --bg-gradient-3: #080C14;
       --card-bg: rgba(30, 41, 59, 0.85);
       --card-border: rgba(255, 255, 255, 0.12);
       --text-main: #F8FAFC;
       --text-muted: #94A3B8;
       --input-bg: rgba(15, 23, 42, 0.7);
       --input-border: rgba(255, 255, 255, 0.18);
-      --input-focus: #F59E0B;
       --shadow-glow: 0 10px 30px -10px rgba(220, 38, 38, 0.35);
       --radius-xl: 20px;
       --radius-md: 12px;
+    }
+
+    /* Color Scheme Presets */
+    [data-color-scheme="salsa-passion"] {
+      --primary-accent: #EC4899;
+      --primary-dark: #BE185D;
+      --accent-gold: #F43F5E;
+      --bg-gradient-1: #3B0764;
+      --bg-gradient-2: #1E1B4B;
+      --shadow-glow: 0 10px 30px -10px rgba(236, 72, 153, 0.35);
+    }
+
+    [data-color-scheme="tropical-palm"] {
+      --primary-accent: #10B981;
+      --primary-dark: #047857;
+      --accent-gold: #F59E0B;
+      --bg-gradient-1: #064E3B;
+      --bg-gradient-2: #065F46;
+      --shadow-glow: 0 10px 30px -10px rgba(16, 185, 129, 0.35);
+    }
+
+    [data-color-scheme="midnight-fiesta"] {
+      --primary-accent: #06B6D4;
+      --primary-dark: #0E7490;
+      --accent-gold: #38BDF8;
+      --bg-gradient-1: #0F172A;
+      --bg-gradient-2: #1E1B4B;
+      --shadow-glow: 0 10px 30px -10px rgba(6, 182, 212, 0.35);
+    }
+
+    /* Light Mode Overrides */
+    [data-theme="light"] {
+      --bg-gradient-1: #FFF5F5;
+      --bg-gradient-2: #F1F5F9;
+      --bg-gradient-3: #E2E8F0;
+      --card-bg: rgba(255, 255, 255, 0.92);
+      --card-border: rgba(0, 0, 0, 0.1);
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --input-bg: #FFFFFF;
+      --input-border: #CBD5E1;
+      --shadow-glow: 0 10px 30px -10px rgba(220, 38, 38, 0.15);
     }
 
     * {
@@ -40,18 +83,73 @@
     }
 
     body {
-      background: radial-gradient(circle at top right, #31101A 0%, #0F172A 50%, #080C14 100%);
+      background: radial-gradient(circle at top right, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 50%, var(--bg-gradient-3) 100%);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       padding: 40px 20px;
+      transition: background 0.4s ease, color 0.4s ease;
     }
 
     .container {
       width: 100%;
-      max-width: 900px;
+      max-width: 920px;
+    }
+
+    /* Controls Bar: Day/Night, Theme, Language */
+    .controls-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: 30px;
+      padding: 10px 20px;
+      margin-bottom: 25px;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .control-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .control-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      color: var(--text-main);
+      padding: 6px 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .control-btn:hover {
+      background: var(--primary-accent);
+      color: #FFF;
+    }
+
+    .theme-select {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      color: var(--text-main);
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
     }
 
     /* Header Styling */
@@ -68,7 +166,7 @@
       background: rgba(220, 38, 38, 0.15);
       border: 1px solid rgba(220, 38, 38, 0.3);
       border-radius: 30px;
-      color: #FCA5A5;
+      color: var(--primary-accent);
       font-size: 0.88rem;
       font-weight: 600;
       letter-spacing: 0.5px;
@@ -79,7 +177,7 @@
       font-family: 'Outfit', sans-serif;
       font-size: 2.5rem;
       font-weight: 800;
-      background: linear-gradient(135deg, #FFF 0%, #FCA5A5 50%, #F59E0B 100%);
+      background: linear-gradient(135deg, var(--text-main) 0%, var(--primary-accent) 50%, var(--accent-gold) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       line-height: 1.2;
@@ -92,14 +190,10 @@
       border-radius: var(--radius-md);
       padding: 16px 20px;
       font-size: 0.92rem;
-      color: #FDE68A;
+      color: var(--accent-gold);
       line-height: 1.5;
       margin-bottom: 30px;
       text-align: left;
-    }
-
-    .notice-box strong {
-      color: #FFF;
     }
 
     /* Glassmorphic Card */
@@ -110,7 +204,7 @@
       border: 1px solid var(--card-border);
       border-radius: var(--radius-xl);
       padding: 40px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), var(--shadow-glow);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3), var(--shadow-glow);
     }
 
     .section-title {
@@ -124,7 +218,7 @@
       margin-top: 30px;
       margin-bottom: 22px;
       padding-bottom: 10px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid var(--card-border);
     }
 
     .section-title:first-of-type {
@@ -132,7 +226,7 @@
     }
 
     .section-title i {
-      color: var(--primary-red);
+      color: var(--primary-accent);
     }
 
     .grid-2 {
@@ -153,12 +247,12 @@
       display: block;
       font-size: 0.9rem;
       font-weight: 600;
-      color: #CBD5E1;
+      color: var(--text-main);
       margin-bottom: 8px;
     }
 
     label span.required {
-      color: var(--primary-red);
+      color: var(--primary-accent);
       margin-left: 3px;
     }
 
@@ -182,14 +276,13 @@
     }
 
     input:focus, select:focus, textarea:focus {
-      border-color: var(--input-focus);
+      border-color: var(--accent-gold);
       box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
-      background: rgba(15, 23, 42, 0.9);
     }
 
     select option {
       background: #1E293B;
-      color: var(--text-main);
+      color: #F8FAFC;
     }
 
     textarea {
@@ -210,13 +303,13 @@
       align-items: center;
       gap: 10px;
       padding: 12px 16px;
-      background: rgba(15, 23, 42, 0.5);
+      background: var(--input-bg);
       border: 1px solid var(--input-border);
       border-radius: var(--radius-md);
       cursor: pointer;
       transition: all 0.2s ease;
       font-size: 0.9rem;
-      color: #E2E8F0;
+      color: var(--text-main);
     }
 
     .checkbox-item:hover, .radio-item:hover {
@@ -231,7 +324,6 @@
       cursor: pointer;
     }
 
-    /* Conditional Section Container */
     .conditional-block {
       transition: all 0.35s ease-in-out;
       border-left: 3px solid var(--accent-gold);
@@ -244,7 +336,7 @@
     .submit-btn {
       width: 100%;
       padding: 18px;
-      background: linear-gradient(135deg, #DC2626 0%, #B91C1C 50%, #D97706 100%);
+      background: linear-gradient(135deg, var(--primary-accent) 0%, var(--primary-dark) 50%, var(--accent-gold) 100%);
       border: none;
       border-radius: var(--radius-md);
       color: #FFF;
@@ -257,7 +349,7 @@
       justify-content: center;
       align-items: center;
       gap: 12px;
-      box-shadow: 0 10px 25px -5px rgba(220, 38, 38, 0.4);
+      box-shadow: var(--shadow-glow);
       transition: all 0.3s ease;
       margin-top: 30px;
     }
@@ -265,7 +357,6 @@
     .submit-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 15px 30px -5px rgba(220, 38, 38, 0.6);
-      background: linear-gradient(135deg, #EF4444 0%, #DC2626 50%, #F59E0B 100%);
     }
 
     .submit-btn:disabled {
@@ -306,7 +397,7 @@
       font-family: 'Outfit', sans-serif;
       font-size: 2rem;
       font-weight: 700;
-      color: #FFF;
+      color: var(--text-main);
       margin-bottom: 10px;
     }
 
@@ -333,7 +424,7 @@
     .reset-btn {
       padding: 12px 28px;
       background: rgba(255, 255, 255, 0.08);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid var(--card-border);
       border-radius: var(--radius-md);
       color: var(--text-main);
       font-weight: 600;
@@ -342,7 +433,8 @@
     }
 
     .reset-btn:hover {
-      background: rgba(255, 255, 255, 0.18);
+      background: var(--primary-accent);
+      color: #FFF;
     }
 
     @media (max-width: 640px) {
@@ -364,13 +456,38 @@
 <body>
 
   <div class="container">
+
+    <!-- Controls Bar: H1.1 (Day/Night), H1.2 (Theme), H1.3 (Language) -->
+    <div class="controls-bar">
+      <div class="control-group">
+        <!-- H1.1 Toggle Day/Night -->
+        <button type="button" class="control-btn" id="themeToggleBtn">
+          <i class="fa-solid fa-moon" id="themeIcon"></i> <span id="themeBtnText">Night Mode</span>
+        </button>
+
+        <!-- H1.2 Visual Theme Selector -->
+        <select class="theme-select" id="colorSchemeSelect">
+          <option value="crimson">🔥 Crimson Fire</option>
+          <option value="salsa-passion">💃 Salsa Passion</option>
+          <option value="tropical-palm">🌴 Tropical Palm</option>
+          <option value="midnight-fiesta">🪩 Midnight Fiesta</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <!-- H1.3 Toggle Language (EN/ES) -->
+        <button type="button" class="control-btn" id="langToggleBtn">
+          <i class="fa-solid fa-globe"></i> <span id="langBtnText">Español 🇪🇸</span>
+        </button>
+      </div>
+    </div>
     
     <!-- Brand Header -->
     <div class="brand-header">
       <div class="brand-badge"><i class="fa-solid fa-fire"></i> Salsa Guy Richmond, LLC</div>
-      <h1 class="brand-title">Tell me about you and your event!</h1>
+      <h1 class="brand-title" id="txtTitle">Tell me about you and your event!</h1>
       
-      <div class="notice-box">
+      <div class="notice-box" id="txtNotice">
         <i class="fa-solid fa-calendar-days"></i> <strong>Schedule Availability Notice:</strong><br>
         • <strong>Friday – Sunday:</strong> Available for both Live Performances and Dance Lessons.<br>
         • <strong>Monday – Thursday:</strong> Dedicated exclusively to Dance Lessons (No performances accepted).
@@ -382,28 +499,28 @@
       <form id="bookingForm">
         
         <!-- Section 1: Contact & Organization -->
-        <div class="section-title">
+        <div class="section-title" id="sec1Title">
           <i class="fa-solid fa-user-circle"></i> 1. Contact & Organization Info
         </div>
         
         <div class="grid-2">
           <div class="form-group">
-            <label for="clientName">Your Name <span class="required">*</span></label>
+            <label for="clientName" id="lblClientName">Your Name <span class="required">*</span></label>
             <input type="text" id="clientName" name="clientName" placeholder="e.g. Maria Santos" required>
           </div>
           
           <div class="form-group">
-            <label for="clientEmail">Email Address <span class="required">*</span></label>
+            <label for="clientEmail" id="lblClientEmail">Email Address <span class="required">*</span></label>
             <input type="email" id="clientEmail" name="clientEmail" placeholder="maria@example.com" required>
           </div>
           
           <div class="form-group">
-            <label for="clientPhone">Best Contact Phone Number <span class="required">*</span></label>
+            <label for="clientPhone" id="lblClientPhone">Best Contact Phone Number <span class="required">*</span></label>
             <input type="tel" id="clientPhone" name="clientPhone" placeholder="(804) 555-0199" required>
           </div>
 
           <div class="form-group">
-            <label for="representType">Who do you represent?</label>
+            <label for="representType" id="lblRepresent">Who do you represent?</label>
             <select id="representType" name="representType">
               <option value="Corporate / Business">Corporate / Business</option>
               <option value="Non-Profit / 501(c) Organization">Non-Profit / 501(c) Organization</option>
@@ -414,12 +531,12 @@
           </div>
 
           <div class="form-group">
-            <label for="eventName">Name of the Event <span class="required">*</span></label>
+            <label for="eventName" id="lblEventName">Name of the Event <span class="required">*</span></label>
             <input type="text" id="eventName" name="eventName" placeholder="e.g. Richmond Salsa Festival 2026" required>
           </div>
 
           <div class="form-group">
-            <label for="eventTypeScale">Is your event a large public event or a small private event? <span class="required">*</span></label>
+            <label for="eventTypeScale" id="lblEventScale">Is your event a large public event or a small private event? <span class="required">*</span></label>
             <select id="eventTypeScale" name="eventTypeScale" required>
               <option value="Large Public Event">Large Public Event</option>
               <option value="Small Private Event">Small Private Event</option>
@@ -428,79 +545,45 @@
           </div>
 
           <div class="form-group full-width">
-            <label for="eventDescription">Describe Your Event</label>
+            <label for="eventDescription" id="lblDescription">Describe Your Event</label>
             <textarea id="eventDescription" name="eventDescription" placeholder="Provide background on theme, venue, guest flow..."></textarea>
           </div>
 
-          <div class="form-group">
-            <label for="websites">Websites for Event & Organization</label>
-            <input type="text" id="websites" name="websites" placeholder="https://example.com">
-          </div>
-
-          <div class="form-group">
-            <label for="hearAboutUs">How did you HEAR of us?</label>
-            <select id="hearAboutUs" name="hearAboutUs">
-              <option value="Social Media">Social Media</option>
-              <option value="Previous Event / Live Performance">Previous Event / Live Performance</option>
-              <option value="Word of Mouth / Referral">Word of Mouth / Referral</option>
-              <option value="Website Search">Website Search</option>
-              <option value="Other">Other</option>
-            </select>
+          <!-- H1.4 Customer Email Receipt Checkbox -->
+          <div class="form-group full-width">
+            <label class="checkbox-item" style="border-color: var(--accent-gold); background: rgba(245, 158, 11, 0.1);">
+              <input type="checkbox" id="sendEmailReceipt" checked> 
+              <span id="lblEmailReceipt">📧 Send instant Event ID confirmation receipt to my email</span>
+            </label>
           </div>
         </div>
 
         <!-- Section 2: Date, Time & Location -->
-        <div class="section-title">
+        <div class="section-title" id="sec2Title">
           <i class="fa-solid fa-calendar-check"></i> 2. Date, Time & Location
         </div>
         
         <div class="grid-2">
           <div class="form-group">
-            <label for="eventDate">Event Date <span class="required">*</span></label>
+            <label for="eventDate" id="lblEventDate">Event Date <span class="required">*</span></label>
             <input type="date" id="eventDate" name="eventDate" required>
           </div>
 
           <div class="form-group">
-            <label for="eventTime">Start Time <span class="required">*</span></label>
+            <label for="eventTime" id="lblEventTime">Start Time <span class="required">*</span></label>
             <input type="time" id="eventTime" name="eventTime" required>
           </div>
 
           <div class="form-group full-width">
-            <label for="eventAddress">Where will the event take place? (Full Address) <span class="required">*</span></label>
+            <label for="eventAddress" id="lblEventAddress">Where will the event take place? (Full Address) <span class="required">*</span></label>
             <input type="text" id="eventAddress" name="eventAddress" placeholder="e.g. 123 Main St, Richmond, VA 23220" required>
-          </div>
-
-          <div class="form-group">
-            <label for="expectedAttendance">Expected Attendance Count</label>
-            <input type="number" id="expectedAttendance" name="expectedAttendance" placeholder="e.g. 150">
-          </div>
-
-          <div class="form-group">
-            <label for="admissionType">Admission Type</label>
-            <select id="admissionType" name="admissionType">
-              <option value="Free / Open to Public">Free / Open to Public</option>
-              <option value="Ticketed / Paid Admission">Ticketed / Paid Admission</option>
-              <option value="Private Event">Private Event</option>
-            </select>
           </div>
         </div>
 
-        <!-- DYNAMIC SECTION: Large Public Event Questionnaire -->
+        <!-- DYNAMIC SECTION: Large Public Event -->
         <div id="largePublicSection" class="conditional-block">
-          <div class="section-title">
+          <div class="section-title" id="sec3aTitle">
             <i class="fa-solid fa-bullhorn"></i> 3A. Large Public Event Details & Promotions
-          </div>
-
-          <div class="form-group full-width">
-            <label>Target Audience Demographic <span class="hint">(Select all that apply)</span></label>
-            <div class="options-grid">
-              <label class="checkbox-item"><input type="checkbox" name="audience" value="Every age group" checked> Every age group</label>
-              <label class="checkbox-item"><input type="checkbox" name="audience" value="Young adults: 20-39 years"> Young adults: 20-39 yrs</label>
-              <label class="checkbox-item"><input type="checkbox" name="audience" value="Middle-aged adults: 40-59 years"> Middle-aged adults: 40-59 yrs</label>
-              <label class="checkbox-item"><input type="checkbox" name="audience" value="Older adults: 60-79 years"> Older adults: 60-79 yrs</label>
-              <label class="checkbox-item"><input type="checkbox" name="audience" value="Adolescents: 13-19 years"> Adolescents: 13-19 yrs</label>
-              <label class="checkbox-item"><input type="checkbox" name="audience" value="Children & Preschoolers"> Children & Preschoolers</label>
-            </div>
           </div>
 
           <div class="grid-2">
@@ -521,35 +604,12 @@
                 <option value="Not Applicable">Not Applicable</option>
               </select>
             </div>
-
-            <div class="form-group">
-              <label for="helpPromote">Are we allowed to help promote the event?</label>
-              <select id="helpPromote" name="helpPromote">
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-                <option value="Not Applicable">Not Applicable</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label for="photoFootage">Can we get copies of video footage & photos?</label>
-              <select id="photoFootage" name="photoFootage">
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-                <option value="Not Applicable">Not Applicable</option>
-              </select>
-            </div>
-
-            <div class="form-group full-width">
-              <label for="contingencyPlan">Contingency Plan (Alternate dates/locations for weather)</label>
-              <textarea id="contingencyPlan" name="contingencyPlan" placeholder="Rain location, backup indoor venue, alternate dates..."></textarea>
-            </div>
           </div>
         </div>
 
-        <!-- DYNAMIC SECTION: Small Private Event Questionnaire -->
+        <!-- DYNAMIC SECTION: Small Private Event -->
         <div id="smallPrivateSection" class="conditional-block" style="display: none;">
-          <div class="section-title">
+          <div class="section-title" id="sec3bTitle">
             <i class="fa-solid fa-cake-candles"></i> 3B. Small Private Event Specifications
           </div>
 
@@ -563,24 +623,16 @@
                 <option value="Other Private Event">Other Private Event</option>
               </select>
             </div>
-
-            <div class="form-group">
-              <label for="performerBadge">Will a Badge or ID be required to enter?</label>
-              <select id="performerBadge" name="performerBadge">
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
           </div>
         </div>
 
         <!-- Section 4: Services Requested -->
-        <div class="section-title">
+        <div class="section-title" id="sec4Title">
           <i class="fa-solid fa-music"></i> 4. Services Requested
         </div>
 
         <div class="form-group">
-          <label>Performance Services Needed</label>
+          <label id="lblPerfServices">Performance Services Needed</label>
           <div class="options-grid">
             <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Stage Performance"> Stage Performance</label>
             <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Interactive Animation"> Interactive Animation</label>
@@ -590,7 +642,7 @@
         </div>
 
         <div class="form-group">
-          <label>Dance Lesson Services Needed</label>
+          <label id="lblLessonServices">Dance Lesson Services Needed</label>
           <div class="options-grid">
             <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Salsa Workshop"> Salsa Workshop</label>
             <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Bachata Workshop"> Bachata Workshop</label>
@@ -599,114 +651,26 @@
           </div>
         </div>
 
-        <div class="grid-2">
-          <div class="form-group">
-            <label for="timeDuration">Duration Required from Us</label>
-            <input type="text" id="timeDuration" name="timeDuration" placeholder="e.g. 2 Hours (1hr lesson + 1hr social)">
-          </div>
-
-          <div class="form-group">
-            <label for="audienceParticipation">Expecting Audience Participation?</label>
-            <select id="audienceParticipation" name="audienceParticipation">
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Section 5: Technical & Stage Specs -->
-        <div class="section-title">
-          <i class="fa-solid fa-sliders"></i> 5. Technical & Stage Specs
-        </div>
-
-        <div class="grid-2">
-          <div class="form-group">
-            <label for="stageArea">Stage / Performance Area Size</label>
-            <input type="text" id="stageArea" name="stageArea" placeholder="e.g. 20ft x 15ft stage">
-          </div>
-
-          <div class="form-group">
-            <label for="surfaceType">Surface Type</label>
-            <input type="text" id="surfaceType" name="surfaceType" placeholder="e.g. Hardwood floor, concrete, stage tile">
-          </div>
-
-          <div class="form-group full-width">
-            <label for="soundSystem">Sound System Setup</label>
-            <select id="soundSystem" name="soundSystem">
-              <option value="Professional sound system and technician provided by venue">Professional sound system and technician provided by venue</option>
-              <option value="Basic sound system provided, we need to plug in">Basic sound system provided, we need to plug in</option>
-              <option value="We need to provide our own sound system">We need to provide our own sound system</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="needDj">Will you need DJ Services?</label>
-            <select id="needDj" name="needDj">
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="venueEnvironment">Venue Environment</label>
-            <select id="venueEnvironment" name="venueEnvironment">
-              <option value="Indoors">Indoors</option>
-              <option value="Outdoors">Outdoors</option>
-              <option value="Outdoor Under cover area">Outdoor Under cover area</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Section 6: Facilities, Budget & Hospitality -->
-        <div class="section-title">
-          <i class="fa-solid fa-handshake"></i> 6. Logistics, Budget & Hospitality
-        </div>
-
-        <div class="grid-2">
-          <div class="form-group">
-            <label for="budgetConfirmed">Do you have a confirmed budget?</label>
-            <select id="budgetConfirmed" name="budgetConfirmed">
-              <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="budgetAmount">Budget Amount ($)</label>
-            <input type="text" id="budgetAmount" name="budgetAmount" placeholder="e.g. $750 - $1,500">
-          </div>
-
-          <div class="form-group full-width">
-            <label>Performer Hospitality Provided</label>
-            <div class="options-grid">
-              <label class="checkbox-item"><input type="checkbox" name="hospitality" value="Drinking Water / Refreshments" checked> Drinking Water / Refreshments</label>
-              <label class="checkbox-item"><input type="checkbox" name="hospitality" value="Designated Parking Space" checked> Designated Parking Space</label>
-              <label class="checkbox-item"><input type="checkbox" name="hospitality" value="Private Dressing Room / Changing Area"> Private Dressing Room</label>
-              <label class="checkbox-item"><input type="checkbox" name="hospitality" value="Meal / Food Provision"> Meal / Food Provision</label>
-            </div>
-          </div>
-        </div>
-
-        <!-- Section 7: Additional Notes & Terms -->
-        <div class="section-title">
-          <i class="fa-solid fa-file-contract"></i> 7. Special Instructions & Terms
+        <!-- Section 5: Special Notes & Terms -->
+        <div class="section-title" id="sec5Title">
+          <i class="fa-solid fa-file-contract"></i> 5. Special Instructions & Terms
         </div>
 
         <div class="form-group">
-          <label for="notes">Special Instructions, Song Requests or Notes</label>
+          <label for="notes" id="lblNotes">Special Instructions, Song Requests or Notes</label>
           <textarea id="notes" name="notes" placeholder="Tell us any special requests, song choices, or event guidelines..."></textarea>
         </div>
 
         <div class="form-group">
           <label class="checkbox-item" style="border-color: var(--accent-gold); background: rgba(245, 158, 11, 0.1);">
             <input type="checkbox" id="termsCheck" required> 
-            <span>I agree to the Terms of Service & Booking Privacy Guidelines <span class="required">*</span></span>
+            <span id="lblTerms">I agree to the Terms of Service & Booking Privacy Guidelines <span class="required">*</span></span>
           </label>
         </div>
 
         <!-- Submit Button -->
         <button type="submit" class="submit-btn" id="submitBtn">
-          <span>Submit Event Request</span> <i class="fa-solid fa-paper-plane"></i>
+          <span id="btnSubmitText">Submit Event Request</span> <i class="fa-solid fa-paper-plane"></i>
         </button>
       </form>
 
@@ -715,11 +679,11 @@
         <div class="success-icon">
           <i class="fa-solid fa-check"></i>
         </div>
-        <h2 class="success-title">Event Request Received!</h2>
-        <p class="success-text">Thank you for choosing Salsa Guy Richmond, LLC. Your questionnaire has been logged, your calendar slot reservation is pending, and custom proposal docs are generating.</p>
+        <h2 class="success-title" id="txtSuccessTitle">Event Request Received!</h2>
+        <p class="success-text" id="txtSuccessDesc">Thank you for choosing Salsa Guy Richmond, LLC. Your questionnaire has been logged, calendar reservation is pending, and custom proposal docs are generating.</p>
         <div class="event-id-badge" id="eventIdDisplay">Event ID: Syncing...</div>
         <div>
-          <button class="reset-btn" id="resetBtn"><i class="fa-solid fa-plus"></i> Submit Another Request</button>
+          <button class="reset-btn" id="resetBtn"><i class="fa-solid fa-plus"></i> <span id="btnResetText">Submit Another Request</span></button>
         </div>
       </div>
 
@@ -728,6 +692,139 @@
 
   <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzg9Tr13gNlaEbFVnGxPIvqO5HpydONu5URI4MVR7GU_vjlZTUllgNxVOy2t6Rvyhlk/exec";
+
+    let currentLang = 'en';
+
+    // H1.3 Language Translations Dictionary
+    const i18n = {
+      en: {
+        title: "Tell me about you and your event!",
+        notice: "<i class='fa-solid fa-calendar-days'></i> <strong>Schedule Availability Notice:</strong><br>• <strong>Friday – Sunday:</strong> Available for both Live Performances and Dance Lessons.<br>• <strong>Monday – Thursday:</strong> Dedicated exclusively to Dance Lessons (No performances accepted).",
+        sec1: "<i class='fa-solid fa-user-circle'></i> 1. Contact & Organization Info",
+        name: "Your Name",
+        email: "Email Address",
+        phone: "Best Contact Phone Number",
+        represent: "Who do you represent?",
+        eventName: "Name of the Event",
+        eventScale: "Is your event a large public event or a small private event?",
+        description: "Describe Your Event",
+        emailReceipt: "📧 Send instant Event ID confirmation receipt to my email",
+        sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Date, Time & Location",
+        date: "Event Date",
+        time: "Start Time",
+        address: "Where will the event take place? (Full Address)",
+        sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Large Public Event Details & Promotions",
+        sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Small Private Event Specifications",
+        sec4: "<i class='fa-solid fa-music'></i> 4. Services Requested",
+        perfServices: "Performance Services Needed",
+        lessonServices: "Dance Lesson Services Needed",
+        sec5: "<i class='fa-solid fa-file-contract'></i> 5. Special Instructions & Terms",
+        notes: "Special Instructions, Song Requests or Notes",
+        terms: "I agree to the Terms of Service & Booking Privacy Guidelines",
+        submit: "Submit Event Request",
+        successTitle: "Event Request Received!",
+        successDesc: "Thank you for choosing Salsa Guy Richmond, LLC. Your questionnaire has been logged, calendar reservation is pending, and custom proposal docs are generating.",
+        reset: "Submit Another Request",
+        langBtn: "Español 🇪🇸"
+      },
+      es: {
+        title: "¡Cuéntame sobre ti y tu evento!",
+        notice: "<i class='fa-solid fa-calendar-days'></i> <strong>Aviso de Disponibilidad:</strong><br>• <strong>Viernes – Domingo:</strong> Disponible para Espectáculos en Vivo y Clases de Baile.<br>• <strong>Lunes – Jueves:</strong> Dedicado exclusivamente a Clases de Baile (No espectáculos).",
+        sec1: "<i class='fa-solid fa-user-circle'></i> 1. Información de Contacto y Organización",
+        name: "Su Nombre Completo",
+        email: "Correo Electrónico",
+        phone: "Teléfono de Contacto Principal",
+        represent: "¿A quién representa?",
+        eventName: "Nombre del Evento",
+        eventScale: "¿Es un evento público grande o un evento privado pequeño?",
+        description: "Describa su Evento",
+        emailReceipt: "📧 Enviar confirmación instantánea con ID del Evento a mi correo",
+        sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Fecha, Hora y Ubicación",
+        date: "Fecha del Evento",
+        time: "Hora de Inicio",
+        address: "¿Dónde se llevará a cabo el evento? (Dirección)",
+        sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Detalles de Eventos Públicos Grandes",
+        sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Especificaciones para Evento Privado",
+        sec4: "<i class='fa-solid fa-music'></i> 4. Servicios Solicitados",
+        perfServices: "Servicios de Espectáculo / Baile",
+        lessonServices: "Talleres y Clases de Baile",
+        sec5: "<i class='fa-solid fa-file-contract'></i> 5. Instrucciones Especiales y Términos",
+        notes: "Instrucciones Especiales, Canciones o Notas",
+        terms: "Acepto los Términos de Servicio y Políticas de Reserva",
+        submit: "Enviar Solicitud de Evento",
+        successTitle: "¡Solicitud de Evento Recibida!",
+        successDesc: "Gracias por elegir Salsa Guy Richmond, LLC. Su cuestionario ha sido registrado, la reserva de calendario está pendiente y los documentos de propuesta se están generando.",
+        reset: "Enviar Otra Solicitud",
+        langBtn: "English 🇺🇸"
+      }
+    };
+
+    // H1.1 Day / Night Mode Toggle
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeBtnText = document.getElementById('themeBtnText');
+
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      if (currentTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        themeIcon.className = 'fa-solid fa-sun';
+        themeBtnText.textContent = 'Day Mode';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeIcon.className = 'fa-solid fa-moon';
+        themeBtnText.textContent = 'Night Mode';
+      }
+    });
+
+    // H1.2 Visual Theme Color Scheme Selector
+    const colorSchemeSelect = document.getElementById('colorSchemeSelect');
+    colorSchemeSelect.addEventListener('change', (e) => {
+      document.documentElement.setAttribute('data-color-scheme', e.target.value);
+    });
+
+    // H1.3 Toggle Language Switcher
+    const langToggleBtn = document.getElementById('langToggleBtn');
+    const langBtnText = document.getElementById('langBtnText');
+
+    langToggleBtn.addEventListener('click', () => {
+      currentLang = currentLang === 'en' ? 'es' : 'en';
+      const t = i18n[currentLang];
+
+      document.getElementById('txtTitle').textContent = t.title;
+      document.getElementById('txtNotice').innerHTML = t.notice;
+      document.getElementById('sec1Title').innerHTML = t.sec1;
+      document.getElementById('lblClientName').childNodes[0].nodeValue = t.name + " ";
+      document.getElementById('lblClientEmail').childNodes[0].nodeValue = t.email + " ";
+      document.getElementById('lblClientPhone').childNodes[0].nodeValue = t.phone + " ";
+      document.getElementById('lblRepresent').textContent = t.represent;
+      document.getElementById('lblEventName').childNodes[0].nodeValue = t.eventName + " ";
+      document.getElementById('lblEventScale').childNodes[0].nodeValue = t.eventScale + " ";
+      document.getElementById('lblDescription').textContent = t.description;
+      document.getElementById('lblEmailReceipt').textContent = t.emailReceipt;
+
+      document.getElementById('sec2Title').innerHTML = t.sec2;
+      document.getElementById('lblEventDate').childNodes[0].nodeValue = t.date + " ";
+      document.getElementById('lblEventTime').childNodes[0].nodeValue = t.time + " ";
+      document.getElementById('lblEventAddress').childNodes[0].nodeValue = t.address + " ";
+
+      document.getElementById('sec3aTitle').innerHTML = t.sec3a;
+      document.getElementById('sec3bTitle').innerHTML = t.sec3b;
+
+      document.getElementById('sec4Title').innerHTML = t.sec4;
+      document.getElementById('lblPerfServices').textContent = t.perfServices;
+      document.getElementById('lblLessonServices').textContent = t.lessonServices;
+
+      document.getElementById('sec5Title').innerHTML = t.sec5;
+      document.getElementById('lblNotes').textContent = t.notes;
+      document.getElementById('lblTerms').childNodes[0].nodeValue = t.terms + " ";
+
+      document.getElementById('btnSubmitText').textContent = t.submit;
+      document.getElementById('txtSuccessTitle').textContent = t.successTitle;
+      document.getElementById('txtSuccessDesc').textContent = t.successDesc;
+      document.getElementById('btnResetText').textContent = t.reset;
+      langBtnText.textContent = t.langBtn;
+    });
 
     const bookingForm = document.getElementById('bookingForm');
     const submitBtn = document.getElementById('submitBtn');
@@ -740,7 +837,6 @@
     const largePublicSection = document.getElementById('largePublicSection');
     const smallPrivateSection = document.getElementById('smallPrivateSection');
 
-    // Dynamic Section Visibility Switcher
     function updateConditionalSections() {
       const val = eventTypeScale.value;
       if (val === 'Large Public Event') {
@@ -750,14 +846,13 @@
         largePublicSection.style.display = 'none';
         smallPrivateSection.style.display = 'block';
       } else {
-        // Corporate / Milestone: show relevant public/private fields
         largePublicSection.style.display = 'block';
         smallPrivateSection.style.display = 'block';
       }
     }
 
     eventTypeScale.addEventListener('change', updateConditionalSections);
-    updateConditionalSections(); // Run initially
+    updateConditionalSections();
 
     function getCheckedValues(name) {
       return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value).join(", ");
@@ -767,7 +862,7 @@
       e.preventDefault();
       
       submitBtn.disabled = true;
-      submitBtn.innerHTML = `<span>Processing Event Request...</span> <i class="fa-solid fa-spinner fa-spin"></i>`;
+      submitBtn.innerHTML = `<span>Processing...</span> <i class="fa-solid fa-spinner fa-spin"></i>`;
 
       const formData = {
         clientName: document.getElementById('clientName').value.trim(),
@@ -777,33 +872,15 @@
         eventName: document.getElementById('eventName').value.trim(),
         eventTypeScale: document.getElementById('eventTypeScale').value,
         eventDescription: document.getElementById('eventDescription').value.trim(),
-        websites: document.getElementById('websites').value.trim(),
-        hearAboutUs: document.getElementById('hearAboutUs').value,
+        sendEmailReceipt: document.getElementById('sendEmailReceipt').checked,
         eventDate: document.getElementById('eventDate').value,
         eventTime: document.getElementById('eventTime').value,
         eventAddress: document.getElementById('eventAddress').value.trim(),
-        expectedAttendance: document.getElementById('expectedAttendance').value,
-        admissionType: document.getElementById('admissionType').value,
-        targetAudience: getCheckedValues('audience'),
         boothSpace: document.getElementById('boothSpace')?.value || '',
         promoInclude: document.getElementById('promoInclude')?.value || '',
-        helpPromote: document.getElementById('helpPromote')?.value || '',
-        photoFootage: document.getElementById('photoFootage')?.value || '',
-        contingencyPlan: document.getElementById('contingencyPlan')?.value.trim() || '',
         privateGatheringType: document.getElementById('privateGatheringType')?.value || '',
-        performerBadge: document.getElementById('performerBadge')?.value || '',
         performanceServices: getCheckedValues('perfServices'),
         lessonServices: getCheckedValues('lessonServices'),
-        timeDuration: document.getElementById('timeDuration').value.trim(),
-        audienceParticipation: document.getElementById('audienceParticipation').value,
-        stageArea: document.getElementById('stageArea').value.trim(),
-        surfaceType: document.getElementById('surfaceType').value.trim(),
-        soundSystem: document.getElementById('soundSystem').value,
-        needDj: document.getElementById('needDj').value,
-        venueEnvironment: document.getElementById('venueEnvironment').value,
-        budgetConfirmed: document.getElementById('budgetConfirmed').value,
-        budgetAmount: document.getElementById('budgetAmount').value.trim(),
-        hospitality: getCheckedValues('hospitality'),
         notes: document.getElementById('notes').value.trim(),
         serviceCategory: document.getElementById('eventTypeScale').value
       };
@@ -846,7 +923,7 @@
         eventIdDisplay.textContent = `Event ID: BTG-EVT-${Date.now().toString(36).toUpperCase()}`;
       } finally {
         submitBtn.disabled = false;
-        submitBtn.innerHTML = `<span>Submit Event Request</span> <i class="fa-solid fa-paper-plane"></i>`;
+        submitBtn.innerHTML = `<span>${i18n[currentLang].submit}</span> <i class="fa-solid fa-paper-plane"></i>`;
       }
     });
 
