@@ -799,19 +799,20 @@
             </select>
           </div>
 
-          <!-- Q16: Target Audience Age Groups -->
+          <!-- Q16: Target Audience Age Groups Dropdown -->
           <div class="form-group full-width">
-            <label id="lblAudienceAges">Audience Age Groups Expected</label>
-            <div class="options-grid">
-              <label class="checkbox-item"><input type="checkbox" name="audienceAges" value="Toddlers (1-3 yrs)"> Toddlers (1-3 yrs)</label>
-              <label class="checkbox-item"><input type="checkbox" name="audienceAges" value="Preschoolers (3-5 yrs)"> Preschoolers (3-5 yrs)</label>
-              <label class="checkbox-item"><input type="checkbox" name="audienceAges" value="School-age (6-12 yrs)"> School-age (6-12 yrs)</label>
-              <label class="checkbox-item"><input type="checkbox" name="audienceAges" value="Adolescents (13-19 yrs)"> Adolescents (13-19 yrs)</label>
-              <label class="checkbox-item"><input type="checkbox" name="audienceAges" value="Young Adults (20-39 yrs)"> Young Adults (20-39 yrs)</label>
-              <label class="checkbox-item"><input type="checkbox" name="audienceAges" value="Middle-aged (40-59 yrs)"> Middle-aged (40-59 yrs)</label>
-              <label class="checkbox-item"><input type="checkbox" name="audienceAges" value="Seniors (60+ yrs)"> Seniors (60+ yrs)</label>
-              <label class="checkbox-item"><input type="checkbox" name="audienceAges" value="Every Age Group" checked> Every Age Group</label>
-            </div>
+            <label for="audienceAgesSelect" id="lblAudienceAges">Audience Age Groups Expected</label>
+            <select id="audienceAgesSelect" name="audienceAgesSelect">
+              <option value="Every Age Group">Every Age Group (All Ages Welcome)</option>
+              <option value="Toddlers (1-3 yrs)">Toddlers (1-3 yrs)</option>
+              <option value="Preschoolers (3-5 yrs)">Preschoolers (3-5 yrs)</option>
+              <option value="School-age (6-12 yrs)">School-age (6-12 yrs)</option>
+              <option value="Adolescents (13-19 yrs)">Adolescents (13-19 yrs)</option>
+              <option value="Young Adults (20-39 yrs)">Young Adults (20-39 yrs)</option>
+              <option value="Middle-aged (40-59 yrs)">Middle-aged (40-59 yrs)</option>
+              <option value="Seniors (60+ yrs)">Seniors (60+ yrs)</option>
+              <option value="Adults Only (18+ / 21+)">Adults Only (18+ / 21+)</option>
+            </select>
           </div>
         </div>
 
@@ -1473,7 +1474,7 @@
         surfaceType: document.getElementById('surfaceType').value.trim(),
         venueSetting: document.getElementById('venueSetting').value,
         soundSystem: document.getElementById('soundSystem').value,
-        audienceAges: getCheckedValues('audienceAges'),
+        audienceAges: document.getElementById('audienceAgesSelect')?.value || '',
         serviceRecurrence: document.getElementById('serviceRecurrence')?.value || '',
         nonProfitName: document.getElementById('nonProfitName')?.value.trim() || '',
         taxLetter: document.getElementById('taxLetter')?.value || '',
