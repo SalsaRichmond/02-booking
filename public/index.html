@@ -1084,6 +1084,26 @@
           </label>
         </div>
 
+        <!-- SECTION 7: GENERAL INFORMATION -->
+        <div class="section-title" id="sec7Title">
+          <i class="fa-solid fa-circle-info"></i> 7. General Information
+        </div>
+
+        <div class="notice-box" id="txtGeneralInfo" style="background: rgba(30, 41, 59, 0.6); border: 1px solid var(--card-border); border-left: 4px solid var(--accent-gold); padding: 22px; border-radius: var(--radius-md); font-size: 0.94rem; line-height: 1.6; color: var(--text-main); margin-bottom: 30px;">
+          <h4 style="color: var(--accent-gold); font-family: 'Outfit', sans-serif; font-size: 1.1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-masks-theater"></i> <span id="lblHiringPerformers">HIRING SIMILAR PERFORMERS</span>
+          </h4>
+          <p style="margin-bottom: 14px;" id="lblGenInfoP1">
+            While you may be tempted to hire similar performances, I truly believe that incorporating different styles and specialties can greatly enhance your event experience in multiple ways. First and foremost, offering a variety of performances will keep your guests engaged and captivated throughout the entire event. By avoiding repetition or monotony, I ensure that attendees remain entertained and have a truly memorable experience.
+          </p>
+          <p style="margin-bottom: 14px;" id="lblGenInfoP2">
+            Furthermore, diverse performances cater to a broader audience, attracting individuals with varying interests and preferences. By providing a mix of entertainment options, I ensure that everyone finds something appealing and feels included in the festivities. This inclusive approach guarantees a more enjoyable and satisfying experience for all attendees.
+          </p>
+          <p style="margin: 0;" id="lblGenInfoP3">
+            I understand that you may have already considered these points, and I would be absolutely delighted to discuss further how my unique and engaging performances can complement your event. It will simplify the logistics of the event, making it easier for you to plan and execute. I am confident that I can deliver a truly exceptional and unforgettable experience for your guests.
+          </p>
+        </div>
+
         <!-- Submit Button -->
         <button type="submit" class="submit-btn" id="submitBtn">
           <span id="btnSubmitText">Submit Event Request</span> <i class="fa-solid fa-paper-plane"></i>
@@ -1180,6 +1200,7 @@
         lblFile: "Upload Event Document / Attachment",
         fileBox: "Click or Drag & Drop File Here to Attach to Drive",
         sec5: "<i class='fa-solid fa-file-contract'></i> 6. Special Instructions & Terms",
+        sec7: "<i class='fa-solid fa-circle-info'></i> 7. General Information",
         notes: "Special Instructions, Song Requests or Notes",
         terms: "I agree to the <a href='https://www.salsarichmond.com/event-planners-promoter' target='_blank' style='color: var(--accent-gold); text-decoration: underline;'>Terms of Service</a> & <a href='https://www.tradicion.org/services' target='_blank' style='color: var(--accent-gold); text-decoration: underline;'>Booking Privacy Guidelines</a>",
         submit: "Submit Event Request",
@@ -1230,6 +1251,7 @@
         lblFile: "Adjuntar Documento del Evento",
         fileBox: "Haga clic o arrastre su archivo aquí para adjuntarlo a Drive",
         sec5: "<i class='fa-solid fa-file-contract'></i> 6. Instrucciones Especiales y Términos",
+        sec7: "<i class='fa-solid fa-circle-info'></i> 7. Información General",
         notes: "Instrucciones Especiales, Canciones o Notas",
         terms: "Acepto los <a href='https://www.salsarichmond.com/event-planners-promoter' target='_blank' style='color: var(--accent-gold); text-decoration: underline;'>Términos de Servicio</a> y <a href='https://www.tradicion.org/services' target='_blank' style='color: var(--accent-gold); text-decoration: underline;'>Políticas de Reserva</a>",
         submit: "Enviar Solicitud de Evento",
@@ -1318,6 +1340,7 @@
       document.getElementById('fileBoxText').textContent = t.fileBox;
 
       document.getElementById('sec5Title').innerHTML = t.sec5;
+      document.getElementById('sec7Title').innerHTML = t.sec7;
       document.getElementById('lblNotes').textContent = t.notes;
       document.getElementById('lblTerms').innerHTML = t.terms + ' <span class="required">*</span>';
 
