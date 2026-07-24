@@ -978,10 +978,10 @@
           <i class="fa-solid fa-music"></i> 4. Services Requested
         </div>
 
-        <!-- Q18: Performance Services Dropdown -->
+        <!-- Q18: Performance Services Dropdown & Multi-Select Checkboxes Grid -->
         <div class="form-group full-width">
           <label for="perfServicesSelect" id="lblPerfServices">Which of our PERFORMANCE SERVICES will you need?</label>
-          <select id="perfServicesSelect" name="perfServicesSelect">
+          <select id="perfServicesSelect" name="perfServicesSelect" style="margin-bottom: 12px;">
             <option value="None">None</option>
             <option value="Dance Performance - Afro Puerto Rican Folk - Bomba">Dance Performance - Afro Puerto Rican Folk - Bomba</option>
             <option value="Dance Performance - Puerto Rican - Plena">Dance Performance - Puerto Rican - Plena</option>
@@ -1003,11 +1003,35 @@
             <option value="General Performance - Folk Dresses">General Performance - Folk Dresses</option>
             <option value="General Performance - Mexico - MIX">General Performance - Mexico - MIX</option>
           </select>
+
+          <!-- Multi-Select Checkboxes Grid for Performance Services -->
+          <label style="font-size: 0.85rem; color: var(--accent-gold); margin-top: 8px; margin-bottom: 6px;" id="lblPerfCheckboxesNotice">Or check all performance options that apply below:</label>
+          <div class="options-grid" id="perfServicesGrid">
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Afro Puerto Rican Folk - Bomba"> Dance Performance - Afro Puerto Rican Folk - Bomba</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Puerto Rican - Plena"> Dance Performance - Puerto Rican - Plena</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Puerto Rican - Seis"> Dance Performance - Puerto Rican - Seis</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Puerto Rican - Danza, Mazurca, Valz"> Dance Performance - Puerto Rican - Danza, Mazurca, Valz</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Cuba - Salsa Rueda"> Dance Performance - Cuba - Salsa Rueda</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Mexico - Day of the Dead Celebration"> Dance Performance - Mexico - Day of the Dead Celebration</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Mexico - Danza de los Viejitos de Michoacán"> Dance Performance - Mexico - Danza de los Viejitos de Michoacán</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Mexico - Coco dance performance - Our Interpretation of Miguelito"> Dance Performance - Mexico - Coco dance performance - Our Interpretation of Miguelito</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Mexico - Valz de la Llorona"> Dance Performance - Mexico - Valz de la Llorona</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Salvador - Cumbia. El Sombrero Azul"> Dance Performance - Salvador - Cumbia. El Sombrero Azul</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Salvador - Las Comaleras"> Dance Performance - Salvador - Las Comaleras</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Columbia - Cumbia. La Pollera Colorá"> Dance Performance - Columbia - Cumbia. La Pollera Colorá</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="General Performance - Puerto Rican Folk Characters Meet and Greet"> General Performance - Puerto Rican Folk Characters Meet and Greet</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="General Dance Performance Salsa, Merengue and Bachata Rueda dance performance"> General Dance Performance Salsa, Merengue and Bachata Rueda dance performance</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="General Performance - Puerto Rican Folk Characters Explanation and Meet and Greet"> General Performance - Puerto Rican Folk Characters Explanation and Meet and Greet</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="General Performance - Folk Characters Meet and Greet"> General Performance - Folk Characters Meet and Greet</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="General Performance - Latin American Singers"> General Performance - Latin American Singers</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="General Performance - Folk Dresses"> General Performance - Folk Dresses</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="General Performance - Mexico - MIX"> General Performance - Mexico - MIX</label>
+          </div>
         </div>
 
         <!-- Other Performance Services Text Input -->
         <div class="form-group full-width">
-          <label for="otherPerfServices" id="lblOtherPerfServices">Any other PERFORMANCE SERVICES you wish , but are not listed above?</label>
+          <label for="otherPerfServices" id="lblOtherPerfServices">Any other PERFORMANCE SERVICES you wish, but are not listed above?</label>
           <input type="text" id="otherPerfServices" name="otherPerfServices" placeholder="Describe any custom performance services..." spellcheck="true">
         </div>
 
@@ -1435,7 +1459,13 @@
         invitedToAttend: document.getElementById('invitedToAttend')?.value || '',
         performerProvisions: document.getElementById('performerProvisionsSelect')?.value || '',
         provisions: getCheckedValues('provisions'),
-        performanceServices: document.getElementById('perfServicesSelect') ? document.getElementById('perfServicesSelect').value : getCheckedValues('perfServices'),
+        performanceServices: (function() {
+          const checked = getCheckedValues('perfServices');
+          const sel = document.getElementById('perfServicesSelect')?.value;
+          if (checked && sel && sel !== 'None') return `${sel}, ${checked}`;
+          if (checked) return checked;
+          return sel || '';
+        })(),
         otherPerfServices: document.getElementById('otherPerfServices')?.value.trim() || '',
         lessonServices: document.getElementById('lessonServicesSelect') ? document.getElementById('lessonServicesSelect').value : getCheckedValues('lessonServices'),
         otherServices: getCheckedValues('otherServices'),
