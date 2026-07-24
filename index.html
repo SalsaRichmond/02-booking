@@ -914,15 +914,31 @@
           <i class="fa-solid fa-music"></i> 4. Services Requested
         </div>
 
-        <!-- Q18: Performance Services -->
-        <div class="form-group">
-          <label id="lblPerfServices">Performance Services Needed</label>
-          <div class="options-grid">
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Stage Performance"> Stage Performance</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Interactive Animation"> Interactive Animation</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Opening Act"> Opening Act</label>
-            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Festival Headliner"> Festival Headliner</label>
-          </div>
+        <!-- Q18: Performance Services Dropdown -->
+        <div class="form-group full-width">
+          <label for="perfServicesSelect" id="lblPerfServices">Which of our PERFORMANCE SERVICES will you need?</label>
+          <select id="perfServicesSelect" name="perfServicesSelect">
+            <option value="None">None</option>
+            <option value="Dance Performance - Afro Puerto Rican Folk - Bomba">Dance Performance - Afro Puerto Rican Folk - Bomba</option>
+            <option value="Dance Performance - Puerto Rican - Plena">Dance Performance - Puerto Rican - Plena</option>
+            <option value="Dance Performance - Puerto Rican - Seis">Dance Performance - Puerto Rican - Seis</option>
+            <option value="Dance Performance - Puerto Rican - Danza, Mazurca, Valz">Dance Performance - Puerto Rican - Danza, Mazurca, Valz</option>
+            <option value="Dance Performance - Cuba - Salsa Rueda">Dance Performance - Cuba - Salsa Rueda</option>
+            <option value="Dance Performance - Mexico - Day of the Dead Celebration">Dance Performance - Mexico - Day of the Dead Celebration</option>
+            <option value="Dance Performance - Mexico - Danza de los Viejitos de Michoacán">Dance Performance - Mexico - Danza de los Viejitos de Michoacán</option>
+            <option value="Dance Performance - Mexico - Coco dance performance - Our Interpretation of Miguelito">Dance Performance - Mexico - Coco dance performance - Our Interpretation of Miguelito</option>
+            <option value="Dance Performance - Mexico - Valz de la Llorona">Dance Performance - Mexico - Valz de la Llorona</option>
+            <option value="Dance Performance - Salvador - Cumbia. El Sombrero Azul">Dance Performance - Salvador - Cumbia. El Sombrero Azul</option>
+            <option value="Dance Performance - Salvador - Las Comaleras">Dance Performance - Salvador - Las Comaleras</option>
+            <option value="Dance Performance - Columbia - Cumbia. La Pollera Colorá">Dance Performance - Columbia - Cumbia. La Pollera Colorá</option>
+            <option value="General Performance - Puerto Rican Folk Characters Meet and Greet">General Performance - Puerto Rican Folk Characters Meet and Greet</option>
+            <option value="General Dance Performance Salsa, Merengue and Bachata Rueda dance performance">General Dance Performance Salsa, Merengue and Bachata Rueda dance performance</option>
+            <option value="General Performance - Puerto Rican Folk Characters Explanation and Meet and Greet">General Performance - Puerto Rican Folk Characters Explanation and Meet and Greet</option>
+            <option value="General Performance - Folk Characters Meet and Greet">General Performance - Folk Characters Meet and Greet</option>
+            <option value="General Performance - Latin American Singers">General Performance - Latin American Singers</option>
+            <option value="General Performance - Folk Dresses">General Performance - Folk Dresses</option>
+            <option value="General Performance - Mexico - MIX">General Performance - Mexico - MIX</option>
+          </select>
         </div>
 
         <!-- Q19: Dance Lesson Services -->
@@ -1069,7 +1085,7 @@
         sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Large Public Event Details, 501(c) & Promotions",
         sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Small Private Event Specifications & Hospitality",
         sec4: "<i class='fa-solid fa-music'></i> 4. Services Requested",
-        perfServices: "Performance Services Needed",
+        perfServices: "Which of our PERFORMANCE SERVICES will you need?",
         lessonServices: "Dance Lesson Services Needed",
         otherServices: "Additional Services Needed",
         secFile: "<i class='fa-solid fa-paperclip'></i> 5. File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
@@ -1116,7 +1132,7 @@
         sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Detalles de Eventos Públicos Grandes, 501(c) y Promoción",
         sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Especificaciones de Eventos Privados y Hospitalidad",
         sec4: "<i class='fa-solid fa-music'></i> 4. Servicios Solicitados",
-        perfServices: "Servicios de Espectáculo / Baile",
+        perfServices: "¿Cuál de nuestros SERVICIOS DE ESPECTÁCULO necesitará?",
         lessonServices: "Talleres y Clases de Baile",
         otherServices: "Servicios Adicionales Requeridos",
         secFile: "<i class='fa-solid fa-paperclip'></i> 5. Archivos Adjuntos (Folleto / Plano / Carta 501c)",
@@ -1294,7 +1310,7 @@
         budgetAmount: document.getElementById('budgetAmount')?.value.trim() || '',
         invitedToAttend: document.getElementById('invitedToAttend')?.value || '',
         provisions: getCheckedValues('provisions'),
-        performanceServices: getCheckedValues('perfServices'),
+        performanceServices: document.getElementById('perfServicesSelect') ? document.getElementById('perfServicesSelect').value : getCheckedValues('perfServices'),
         lessonServices: getCheckedValues('lessonServices'),
         otherServices: getCheckedValues('otherServices'),
         attachedFile: uploadedFileData,
