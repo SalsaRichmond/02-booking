@@ -950,6 +950,12 @@
           </select>
         </div>
 
+        <!-- Other Performance Services Text Input -->
+        <div class="form-group full-width">
+          <label for="otherPerfServices" id="lblOtherPerfServices">Any other PERFORMANCE SERVICES you wish, but are not listed above?</label>
+          <input type="text" id="otherPerfServices" name="otherPerfServices" placeholder="Describe any custom performance services..." spellcheck="true">
+        </div>
+
         <!-- Q19: Dance Lesson Services -->
         <div class="form-group">
           <label id="lblLessonServices">Dance Lesson Services Needed</label>
@@ -1320,6 +1326,7 @@
         invitedToAttend: document.getElementById('invitedToAttend')?.value || '',
         provisions: getCheckedValues('provisions'),
         performanceServices: document.getElementById('perfServicesSelect') ? document.getElementById('perfServicesSelect').value : getCheckedValues('perfServices'),
+        otherPerfServices: document.getElementById('otherPerfServices')?.value.trim() || '',
         lessonServices: getCheckedValues('lessonServices'),
         otherServices: getCheckedValues('otherServices'),
         attachedFile: uploadedFileData,

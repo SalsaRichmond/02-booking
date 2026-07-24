@@ -941,6 +941,12 @@
           </select>
         </div>
 
+        <!-- Other Performance Services Text Input -->
+        <div class="form-group full-width">
+          <label for="otherPerfServices" id="lblOtherPerfServices">Any other PERFORMANCE SERVICES you wish , but are not listed above?</label>
+          <input type="text" id="otherPerfServices" name="otherPerfServices" placeholder="Describe any custom performance services..." spellcheck="true">
+        </div>
+
         <!-- Q19: Dance Lesson Services -->
         <div class="form-group">
           <label id="lblLessonServices">Dance Lesson Services Needed</label>
@@ -1086,6 +1092,7 @@
         sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Small Private Event Specifications & Hospitality",
         sec4: "<i class='fa-solid fa-music'></i> 4. Services Requested",
         perfServices: "Which of our PERFORMANCE SERVICES will you need?",
+        otherPerfServices: "Any other PERFORMANCE SERVICES you wish , but are not listed above?",
         lessonServices: "Dance Lesson Services Needed",
         otherServices: "Additional Services Needed",
         secFile: "<i class='fa-solid fa-paperclip'></i> 5. File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
@@ -1133,6 +1140,7 @@
         sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Especificaciones de Eventos Privados y Hospitalidad",
         sec4: "<i class='fa-solid fa-music'></i> 4. Servicios Solicitados",
         perfServices: "¿Cuál de nuestros SERVICIOS DE ESPECTÁCULO necesitará?",
+        otherPerfServices: "¿Algún otro SERVICIO DE ESPECTÁCULO que desee y no esté listado arriba?",
         lessonServices: "Talleres y Clases de Baile",
         otherServices: "Servicios Adicionales Requeridos",
         secFile: "<i class='fa-solid fa-paperclip'></i> 5. Archivos Adjuntos (Folleto / Plano / Carta 501c)",
@@ -1216,6 +1224,7 @@
 
       document.getElementById('sec4Title').innerHTML = t.sec4;
       document.getElementById('lblPerfServices').textContent = t.perfServices;
+      document.getElementById('lblOtherPerfServices').textContent = t.otherPerfServices;
       document.getElementById('lblLessonServices').textContent = t.lessonServices;
       document.getElementById('lblOtherServices').textContent = t.otherServices;
 
@@ -1311,6 +1320,7 @@
         invitedToAttend: document.getElementById('invitedToAttend')?.value || '',
         provisions: getCheckedValues('provisions'),
         performanceServices: document.getElementById('perfServicesSelect') ? document.getElementById('perfServicesSelect').value : getCheckedValues('perfServices'),
+        otherPerfServices: document.getElementById('otherPerfServices')?.value.trim() || '',
         lessonServices: getCheckedValues('lessonServices'),
         otherServices: getCheckedValues('otherServices'),
         attachedFile: uploadedFileData,
