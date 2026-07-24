@@ -1035,10 +1035,10 @@
           <input type="text" id="otherPerfServices" name="otherPerfServices" placeholder="Describe any custom performance services..." spellcheck="true">
         </div>
 
-        <!-- Q19: Dance Lesson Services Dropdown -->
+        <!-- Q19: Dance Lesson Services Dropdown & Multi-Select Grid -->
         <div class="form-group full-width">
           <label for="lessonServicesSelect" id="lblLessonServices">Which of our DANCE LESSON SERVICES will you need?</label>
-          <select id="lessonServicesSelect" name="lessonServicesSelect">
+          <select id="lessonServicesSelect" name="lessonServicesSelect" style="margin-bottom: 12px;">
             <option value="None">None</option>
             <option value="Dance Lessons - Salsa Guy's Line Dance lesson Salsa, Merengue, Bachata and Chacha">Dance Lessons - Salsa Guy's Line Dance lesson Salsa, Merengue, Bachata and Chacha</option>
             <option value="Dance Lesson - Puerto Rican Folk - Bomba y Plena (Live Music)">Dance Lesson - Puerto Rican Folk - Bomba y Plena (Live Music)</option>
@@ -1053,6 +1053,23 @@
             <option value="Dance Lessons - Wedding 1st Dance">Dance Lessons - Wedding 1st Dance</option>
             <option value="Dance Lessons for Children">Dance Lessons for Children</option>
           </select>
+
+          <!-- Multi-Select Checkboxes Grid for Dance Lesson Services -->
+          <label style="font-size: 0.85rem; color: var(--accent-gold); margin-top: 8px; margin-bottom: 6px;" id="lblLessonCheckboxesNotice">Or check all dance lesson options that apply below:</label>
+          <div class="options-grid" id="lessonServicesGrid">
+            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Dance Lessons - Salsa Guy's Line Dance lesson Salsa, Merengue, Bachata and Chacha"> Dance Lessons - Salsa Guy's Line Dance lesson Salsa, Merengue, Bachata and Chacha</label>
+            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Dance Lesson - Puerto Rican Folk - Bomba y Plena (Live Music)"> Dance Lesson - Puerto Rican Folk - Bomba y Plena (Live Music)</label>
+            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Dance Lesson - Merengue - Dominican Republic"> Dance Lesson - Merengue - Dominican Republic</label>
+            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Dance Lesson - Bachata - Dominican Republic"> Dance Lesson - Bachata - Dominican Republic</label>
+            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Dance Lesson - Salsa - Puerto Rico"> Dance Lesson - Salsa - Puerto Rico</label>
+            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Dance Lessons - Cuba - Rueda"> Dance Lessons - Cuba - Rueda</label>
+            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Dance Lessons - Choreographies for Wedding or Sweet Fifteen (Quinceañero)"> Dance Lessons - Choreographies for Wedding or Sweet Fifteen (Quinceañero)</label>
+            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Dance Lessons - All Salsa, Merengue and Bachata"> Dance Lessons - All Salsa, Merengue and Bachata</label>
+            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Dance Lessons for Team Building"> Dance Lessons for Team Building</label>
+            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Dance Lessons - Virtual"> Dance Lessons - Virtual</label>
+            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Dance Lessons - Wedding 1st Dance"> Dance Lessons - Wedding 1st Dance</label>
+            <label class="checkbox-item"><input type="checkbox" name="lessonServices" value="Dance Lessons for Children"> Dance Lessons for Children</label>
+          </div>
         </div>
 
         <!-- Q20 & Q26: Other Services (MC, DJ, Lectures) -->
@@ -1467,7 +1484,13 @@
           return sel || '';
         })(),
         otherPerfServices: document.getElementById('otherPerfServices')?.value.trim() || '',
-        lessonServices: document.getElementById('lessonServicesSelect') ? document.getElementById('lessonServicesSelect').value : getCheckedValues('lessonServices'),
+        lessonServices: (function() {
+          const checked = getCheckedValues('lessonServices');
+          const sel = document.getElementById('lessonServicesSelect')?.value;
+          if (checked && sel && sel !== 'None') return `${sel}, ${checked}`;
+          if (checked) return checked;
+          return sel || '';
+        })(),
         otherServices: getCheckedValues('otherServices'),
         attachedFile: uploadedFileData,
         notes: document.getElementById('notes').value.trim(),
