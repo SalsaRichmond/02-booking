@@ -714,10 +714,17 @@
             </select>
           </div>
 
-          <!-- Q21: Time Required -->
+          <!-- Q21: Time Required Dropdown -->
           <div class="form-group">
-            <label for="durationRequired" id="lblDuration">Time Required from Us (Hours/Minutes)</label>
-            <input type="text" id="durationRequired" name="durationRequired" placeholder="e.g. 2 Hours (1 hr lesson + 1 hr show)">
+            <label for="durationRequired" id="lblDuration">How much <strong>TIME</strong> do you require from us?</label>
+            <select id="durationRequired" name="durationRequired">
+              <option value="15 Minutes">15 Minutes</option>
+              <option value="30 Minutes">30 Minutes</option>
+              <option value="45 Minutes">45 Minutes</option>
+              <option value="60 Minutes">60 Minutes</option>
+              <option value="More than one hour">More than one hour</option>
+              <option value="Multiple presentations during the day">Multiple presentations during the day</option>
+            </select>
           </div>
 
           <!-- Q22: Audience Participation -->
