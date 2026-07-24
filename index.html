@@ -983,6 +983,13 @@
           <label for="perfServicesSelect" id="lblPerfServices">Which of our PERFORMANCE SERVICES will you need?</label>
           <select id="perfServicesSelect" name="perfServicesSelect" style="margin-bottom: 12px;">
             <option value="None">None</option>
+            <option value="Stage Performance">Stage Performance</option>
+            <option value="Interactive (AUDIENCE PARTICIPATION)">Interactive (AUDIENCE PARTICIPATION)</option>
+            <option value="Opening Act">Opening Act</option>
+            <option value="Festival Headliner">Festival Headliner</option>
+            <option value="Main Act / Showcase">Main Act / Showcase</option>
+            <option value="Background Performance">Background Performance</option>
+            <option value="Meet & Greet / Photo Op">Meet & Greet / Photo Op</option>
             <option value="Dance Performance - Afro Puerto Rican Folk - Bomba">Dance Performance - Afro Puerto Rican Folk - Bomba</option>
             <option value="Dance Performance - Puerto Rican - Plena">Dance Performance - Puerto Rican - Plena</option>
             <option value="Dance Performance - Puerto Rican - Seis">Dance Performance - Puerto Rican - Seis</option>
@@ -1007,6 +1014,13 @@
           <!-- Multi-Select Checkboxes Grid for Performance Services -->
           <label style="font-size: 0.85rem; color: var(--accent-gold); margin-top: 8px; margin-bottom: 6px;" id="lblPerfCheckboxesNotice">Or check all performance options that apply below:</label>
           <div class="options-grid" id="perfServicesGrid">
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Stage Performance"> Stage Performance</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Interactive (AUDIENCE PARTICIPATION)"> Interactive (AUDIENCE PARTICIPATION)</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Opening Act"> Opening Act</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Festival Headliner"> Festival Headliner</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Main Act / Showcase"> Main Act / Showcase</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Background Performance"> Background Performance</label>
+            <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Meet & Greet / Photo Op"> Meet & Greet / Photo Op</label>
             <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Afro Puerto Rican Folk - Bomba"> Dance Performance - Afro Puerto Rican Folk - Bomba</label>
             <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Puerto Rican - Plena"> Dance Performance - Puerto Rican - Plena</label>
             <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Dance Performance - Puerto Rican - Seis"> Dance Performance - Puerto Rican - Seis</label>
@@ -1192,7 +1206,7 @@
           uploadedFileData = {
             fileName: file.name,
             mimeType: file.type,
-            base64: evt.target.result.split(',')[1]
+            base64: evt.result.split(',')[1]
           };
         };
         reader.readAsDataURL(file);
