@@ -1633,25 +1633,61 @@ function handleFormSubmitJson(data) {
   const headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
   let newRow = new Array(headers.length).fill("");
   
-  const nameIdx = getHeaderIndex(headers, ["Your Name", "Full Name", "Client Name", "Name"]);
-  const emailIdx = getHeaderIndex(headers, ["Email Address", "Email"]);
-  const eventNameIdx = getHeaderIndex(headers, ["What is the NAME of the event?", "NAME of the event", "Event Name", "Name of event", "Event Title", "Type of event", "Event"]);
-  const dateIdx = getHeaderIndex(headers, ["Please confirm the DATE of your event:", "confirm the DATE", "Event Date", "Date of event", "Date"]);
-  const timeIdx = getHeaderIndex(headers, ["Please confirm the TIME of your event:", "confirm the TIME", "Event Time", "Time of event", "Time"]);
-  const addrIdx = getHeaderIndex(headers, ["Where will the event take place? (ADDRESS)", "Where will the event take place", "Address", "Location"]);
-  
-  if (nameIdx > -1) newRow[nameIdx] = data.clientName || "";
-  if (emailIdx > -1) newRow[emailIdx] = data.clientEmail || "";
-  if (eventNameIdx > -1) newRow[eventNameIdx] = data.eventName || "";
-  if (dateIdx > -1) newRow[dateIdx] = data.eventDate || "";
-  if (timeIdx > -1) newRow[timeIdx] = data.eventTime || "";
-  if (addrIdx > -1) newRow[addrIdx] = data.eventAddress || "";
-  
+  const fieldHeaderMap = [
+    { key: "clientName", aliases: ["Your Name", "Full Name", "Client Name", "Name"] },
+    { key: "clientEmail", aliases: ["Email Address", "Email"] },
+    { key: "clientPhone", aliases: ["What is the best phone number to contact you?", "Phone", "Phone Number", "Contact Phone"] },
+    { key: "representType", aliases: ["Who do you represent?", "Represent", "Organization Type"] },
+    { key: "eventName", aliases: ["What is the NAME of the event?", "NAME of the event", "Event Name", "Name of event", "Event Title"] },
+    { key: "eventTypeScale", aliases: ["Is your event a large public event or a small private event?", "Event Scale", "Public or Private"] },
+    { key: "eventWebsites", aliases: ["What are the WEBSITES for event and organization?", "Websites", "Event Website"] },
+    { key: "eventPurpose", aliases: ["What is the PURPOSE of this event?", "Purpose of event", "Event Purpose"] },
+    { key: "hearAboutUs", aliases: ["How did you HEAR of us?", "How heard", "Referral Source"] },
+    { key: "eventDescription", aliases: ["DESCRIBE your event.", "Describe event", "Event Description"] },
+    { key: "eventDate", aliases: ["Please confirm the DATE of your event:", "confirm the DATE", "Event Date", "Date of event", "Date"] },
+    { key: "eventTime", aliases: ["Please confirm the TIME of your event:", "confirm the TIME", "Event Time", "Time of event", "Time"] },
+    { key: "eventAddress", aliases: ["Where will the event take place? (ADDRESS)", "Where will the event take place", "Address", "Location"] },
+    { key: "expectedAttendance", aliases: ["How many people are you expecting will ATTENDING?", "Attendees", "Expected Attendance"] },
+    { key: "admissionType", aliases: ["What type of event ADMISSION is it?", "Admission Type", "Admission"] },
+    { key: "durationRequired", aliases: ["How much TIME do you require from us?", "Duration Required", "Time Required"] },
+    { key: "audienceParticipation", aliases: ["Expecting AUDIENCE PARTICIPATION?", "Audience Participation"] },
+    { key: "performanceAreaSize", aliases: ["How large is the AREA for our performance or lesson?", "Performance Area Size", "Area Size"] },
+    { key: "surfaceType", aliases: ["On what SURFACE will the performance or class take place?", "Surface Type", "Floor Type"] },
+    { key: "venueSetting", aliases: ["Where will it take PLACE?", "Venue Setting", "Indoor/Outdoor"] },
+    { key: "soundSystem", aliases: ["About the SOUND SYSTEM", "Sound System Equipment", "Sound System"] },
+    { key: "audienceAges", aliases: ["Who is your AUDIENCE:", "Audience Age Groups", "Age Groups"] },
+    { key: "nonProfitName", aliases: ["FOR 501(C) ONLY - Which 501(C) do you represent?", "501c Non Profit Name", "501(c) Organization"] },
+    { key: "taxLetter", aliases: ["FOR 501(C) ONLY - Are you able to provide a TAX DEDUCTIBILITY LETTER?", "Tax Deductibility Letter", "Tax Letter"] },
+    { key: "boothSpace", aliases: ["Will you provide a BOOTH/EXHIBITOR space (10 x 10 Tent) to promote our services?", "Booth Space", "Exhibitor Booth"] },
+    { key: "promoInclude", aliases: ["Will you INCLUDE OUR INFORMATION and logo on all promotional materials, including social media?", "Include Logo on Promo", "Promo Include"] },
+    { key: "allowHelpPromote", aliases: ["Are we allowed to HELP PROMOTE the event?", "Allow Help Promote", "Promote Event"] },
+    { key: "videoRights", aliases: ["Can we get COPIES of video footage and pictures of our participation?", "Video Footage & Photos", "Video Rights"] },
+    { key: "contingencyPlan", aliases: ["What is the CONTINGENCY PLAN? Please include alternate locations, dates, times.", "Do you have a CONTINGENCY PLAN?", "Contingency Plan"] },
+    { key: "privateGatheringType", aliases: ["TYPE of Private Gathering", "Private Gathering Type"] },
+    { key: "badgeAccess", aliases: ["Will a BADGE or ID be issued to performers to access the performance area?", "Badge Access", "ID Badge"] },
+    { key: "dressingRoomInstructions", aliases: ["Will we have a place to change COSTUMES if needed? If so, please provide instructions.", "Dressing Room Instructions", "Costume Change Room"] },
+    { key: "budgetAmount", aliases: ["What is your budget?", "Confirm you have a BUDGET for our participation.", "Budget Amount", "Budget"] },
+    { key: "invitedToAttend", aliases: ["Are we INVITED TO ATTEND the event?", "Invited to Attend"] },
+    { key: "provisions", aliases: ["WILL YOU PROVIDE the performers with:", "Performer Provisions", "Provisions"] },
+    { key: "performanceServices", aliases: ["Which of our PERFORMANCE SERVICES will you need?", "Performance Services Needed", "Performance Services"] },
+    { key: "lessonServices", aliases: ["Which of our DANCE LESSON SERVICES will you need?", "Dance Lesson Services Needed", "Lesson Services"] },
+    { key: "otherServices", aliases: ["What OTHER SERVICES will you need?", "Additional Services Needed", "Other Services"] },
+    { key: "notes", aliases: ["SPECIAL REQUESTS or Song Preferences", "Special Instructions, Song Requests or Notes", "Notes", "Special Requests"] }
+  ];
+
+  fieldHeaderMap.forEach(item => {
+    let colIdx = getHeaderIndex(headers, item.aliases);
+    if (colIdx > -1 && data[item.key] !== undefined && data[item.key] !== null) {
+      newRow[colIdx] = data[item.key];
+    }
+  });
+
   sheet.appendRow(newRow);
   const rowNum = sheet.getLastRow();
   
   sanitizeAndPopulateSheet(sheet);
   
+  const mainFolder = DriveApp.getFolderById(CONFIG.FOLDER_ID);
   if (data.attachedFile && data.attachedFile.base64) {
     try {
       const bytes = Utilities.base64Decode(data.attachedFile.base64);
