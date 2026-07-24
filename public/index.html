@@ -152,20 +152,21 @@
       cursor: pointer;
     }
 
-    /* Header Styling & El Profe Logo Badge */
+    /* Header Styling & El Patrón Logo Badge */
     .profe-logo {
-      width: 130px;
-      height: 130px;
+      width: 140px;
+      height: 140px;
       object-fit: cover;
       border-radius: 50%;
-      border: 3px solid var(--accent-gold);
-      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4);
+      border: 3px solid #38BDF8;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.6), 0 0 50px rgba(56, 189, 248, 0.2);
       margin: 0 auto 15px auto;
       display: block;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .profe-logo:hover {
-      transform: scale(1.06) rotate(2deg);
+      transform: scale(1.06);
+      box-shadow: 0 0 35px rgba(56, 189, 248, 0.8), 0 0 60px rgba(56, 189, 248, 0.4);
     }
 
     .brand-header {
@@ -554,8 +555,8 @@
     
     <!-- Brand Header -->
     <div class="brand-header">
-      <img src="logo.png" alt="El Patrón AI - Salsa Guy Richmond" class="profe-logo">
-      <div class="brand-badge"><i class="fa-solid fa-crown"></i> El Patrón AI — Salsa Guy Richmond, LLC</div>
+      <img src="logo.png" alt="El Patrón - Tradición AI" class="profe-logo">
+      <div class="brand-badge" style="border-color: #38BDF8; color: #38BDF8; background: rgba(56, 189, 248, 0.12);"><i class="fa-solid fa-sparkles"></i> El Patrón — Tradición AI</div>
       <h1 class="brand-title" id="txtTitle">Tell me about you and your event!</h1>
       
       <div class="notice-box" id="txtNotice">
