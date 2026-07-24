@@ -564,6 +564,18 @@
         • <strong>Friday – Sunday:</strong> Available for both Live Performances and Dance Lessons.<br>
         • <strong>Monday – Thursday:</strong> Dedicated exclusively to Dance Lessons (No performances accepted).
       </div>
+
+      <!-- Press Kit Placeholder Card -->
+      <div class="press-kit-box" id="pressKitBox" style="background: rgba(56, 189, 248, 0.1); border: 1px dashed #38BDF8; border-radius: 12px; padding: 14px 20px; font-size: 0.92rem; color: #38BDF8; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; text-align: left;">
+        <div>
+          <i class="fa-solid fa-folder-open" style="font-size: 1.2rem; margin-right: 8px;"></i>
+          <strong id="lblPressKitTitle">Press Kit & Media Assets Placeholder:</strong>
+          <span id="lblPressKitDesc" style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">Official Bios, High-Res Logos, Performance Photos & Promotional Materials</span>
+        </div>
+        <a href="https://www.salsarichmond.com" target="_blank" id="btnPressKit" style="padding: 8px 16px; background: rgba(56, 189, 248, 0.2); border: 1px solid #38BDF8; border-radius: 20px; color: #F8FAFC; text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='#38BDF8'; this.style.color='#000';" onmouseout="this.style.background='rgba(56, 189, 248, 0.2)'; this.style.color='#F8FAFC';">
+          <i class="fa-solid fa-download"></i> <span id="btnPressKitText">View / Download Press Kit</span>
+        </a>
+      </div>
     </div>
 
     <!-- Booking Form Card -->
@@ -1152,6 +1164,9 @@
         successDesc: "Thank you for choosing Salsa Guy Richmond, LLC. Your questionnaire has been logged, calendar reservation is pending, and custom proposal docs are generating.",
         report: "Print / Save Summary Report",
         reset: "Submit Another Request",
+        pressKitTitle: "Press Kit & Media Assets Placeholder:",
+        pressKitDesc: "Official Bios, High-Res Logos, Performance Photos & Promotional Materials",
+        pressKitBtnText: "View / Download Press Kit",
         langBtn: "Español 🇪🇸"
       },
       es: {
@@ -1199,6 +1214,9 @@
         successDesc: "Gracias por elegir Salsa Guy Richmond, LLC. Su cuestionario ha sido registrado, la reserva de calendario está pendiente y los documentos de propuesta se están generando.",
         report: "Imprimir / Guardar Informe",
         reset: "Enviar Otra Solicitud",
+        pressKitTitle: "Kit de Prensa y Archivos Multimedia (Espacio Reservado):",
+        pressKitDesc: "Biografía Oficial, Logotipos HD, Fotos de Espectáculos y Material Promocional",
+        pressKitBtnText: "Ver / Descargar Kit de Prensa",
         langBtn: "English 🇺🇸"
       }
     };
@@ -1279,6 +1297,10 @@
       document.getElementById('sec5Title').innerHTML = t.sec5;
       document.getElementById('lblNotes').textContent = t.notes;
       document.getElementById('lblTerms').innerHTML = t.terms + ' <span class="required">*</span>';
+
+      document.getElementById('lblPressKitTitle').textContent = t.pressKitTitle;
+      document.getElementById('lblPressKitDesc').textContent = t.pressKitDesc;
+      document.getElementById('btnPressKitText').textContent = t.pressKitBtnText;
 
       document.getElementById('btnSubmitText').textContent = t.submit;
       document.getElementById('txtSuccessTitle').textContent = t.successTitle;
