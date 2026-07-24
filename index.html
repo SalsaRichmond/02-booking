@@ -946,14 +946,28 @@
               </select>
             </div>
 
-            <!-- Q50: Performer Provisions Checkboxes -->
+            <!-- Q50: Performer Provisions Dropdown -->
             <div class="form-group full-width">
-              <label id="lblProvisions">Performer Provisions Provided</label>
+              <label for="performerProvisionsSelect" id="lblProvisions">WILL YOU PROVIDE the performers with:</label>
+              <select id="performerProvisionsSelect" name="performerProvisionsSelect">
+                <option value="Water and/or Beverages">Water and/or Beverages</option>
+                <option value="Meals / Food, Water and Beverages">Meals / Food, Water and Beverages</option>
+                <option value="Vouchers / Meal Tickets for Food, Water and Beverages">Vouchers / Meal Tickets for Food, Water and Beverages</option>
+                <option value="Full Hospitality (Food, Water, Dressing Room & Parking)">Full Hospitality (Food, Water, Dressing Room & Parking)</option>
+                <option value="Custom / Negotiated Provisions">Custom / Negotiated Provisions</option>
+                <option value="None of the above">None of the above</option>
+              </select>
+            </div>
+
+            <!-- Specific Hospitality & Performer Amenities Checkboxes -->
+            <div class="form-group full-width">
+              <label id="lblProvisionsCheckboxes">Additional Performer Amenities Provided:</label>
               <div class="options-grid">
-                <label class="checkbox-item"><input type="checkbox" name="provisions" value="Drinking Water / Refreshments" checked> Drinking Water / Refreshments</label>
-                <label class="checkbox-item"><input type="checkbox" name="provisions" value="Designated Parking Space" checked> Designated Parking Space</label>
-                <label class="checkbox-item"><input type="checkbox" name="provisions" value="Private Dressing Room"> Private Dressing Room</label>
-                <label class="checkbox-item"><input type="checkbox" name="provisions" value="Meal / Food Provision"> Meal / Food Provision</label>
+                <label class="checkbox-item"><input type="checkbox" name="provisions" value="Drinking Water & Refreshments" checked> Drinking Water & Refreshments</label>
+                <label class="checkbox-item"><input type="checkbox" name="provisions" value="Designated Performer Parking" checked> Designated Performer Parking</label>
+                <label class="checkbox-item"><input type="checkbox" name="provisions" value="Private Dressing Room / Green Room"> Private Dressing Room / Green Room</label>
+                <label class="checkbox-item"><input type="checkbox" name="provisions" value="Hot Meal / Catering"> Hot Meal / Catering</label>
+                <label class="checkbox-item"><input type="checkbox" name="provisions" value="Food / Drink Vouchers"> Food / Drink Vouchers</label>
               </div>
             </div>
           </div>
@@ -1389,6 +1403,7 @@
         hasBudget: document.getElementById('hasBudget')?.value || '',
         budgetAmount: document.getElementById('budgetAmount')?.value.trim() || '',
         invitedToAttend: document.getElementById('invitedToAttend')?.value || '',
+        performerProvisions: document.getElementById('performerProvisionsSelect')?.value || '',
         provisions: getCheckedValues('provisions'),
         performanceServices: document.getElementById('perfServicesSelect') ? document.getElementById('perfServicesSelect').value : getCheckedValues('perfServices'),
         otherPerfServices: document.getElementById('otherPerfServices')?.value.trim() || '',
