@@ -742,10 +742,20 @@
             <input type="text" id="performanceAreaSize" name="performanceAreaSize" placeholder="e.g. 20ft x 30ft Stage / Dance Floor">
           </div>
 
-          <!-- Q24: Surface Type -->
+          <!-- Q24: Surface Type Dropdown -->
           <div class="form-group">
-            <label for="surfaceType" id="lblSurface">Surface Floor Type</label>
-            <input type="text" id="surfaceType" name="surfaceType" placeholder="e.g. Wood Dance Floor, Concrete, Grass...">
+            <label for="surfaceType" id="lblSurface">On what <strong>SURFACE</strong> will the performance or class take place?</label>
+            <select id="surfaceType" name="surfaceType">
+              <option value="Asphalt">Asphalt</option>
+              <option value="Carpet">Carpet</option>
+              <option value="Cement">Cement</option>
+              <option value="Cement - Polished">Cement - Polished</option>
+              <option value="Grass">Grass</option>
+              <option value="Linoleum">Linoleum</option>
+              <option value="Plywood - Improved dance floor">Plywood - Improved dance floor</option>
+              <option value="Stage">Stage</option>
+              <option value="Wood Floor">Wood Floor</option>
+            </select>
           </div>
 
           <!-- Q45: Indoor / Outdoor Location -->
@@ -1121,7 +1131,7 @@
         duration: "How much TIME do you require from us?",
         audiencePart: "Interactive (AUDIENCE PARTICIPATION)",
         areaSize: "Size of Performance / Class Area",
-        surface: "Surface Floor Type",
+        surface: "On what SURFACE will the performance or class take place?",
         venueSetting: "Venue Location Setting",
         soundSystem: "Sound System Equipment",
         audienceAges: "Audience Age Groups Expected",
@@ -1168,7 +1178,7 @@
         duration: "¿Cuánto TIEMPO requiere de nosotros?",
         audiencePart: "Interactivo (PARTICIPACIÓN DEL PÚBLICO)",
         areaSize: "Tamaño del Área de Baile / Escenario",
-        surface: "Tipo de Piso / Superficie",
+        surface: "¿En qué SUPERFICIE se llevará a cabo el espectáculo o clase?",
         venueSetting: "Ubicación / Entorno del Lugar",
         soundSystem: "Equipo de Sistema de Sonido",
         audienceAges: "Edades Esperadas de la Audiencia",
