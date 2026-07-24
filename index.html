@@ -922,9 +922,18 @@
               <input type="text" id="dressingRoomInstructions" name="dressingRoomInstructions" placeholder="e.g. Private Green Room on 2nd Floor">
             </div>
 
+            <!-- Confirm Budget Dropdown -->
+            <div class="form-group">
+              <label for="hasBudget">Confirm you have a <strong>BUDGET</strong> for our participation.</label>
+              <select id="hasBudget" name="hasBudget">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
             <!-- Q47 & Q48: Budget Details -->
             <div class="form-group">
-              <label for="budgetAmount">Confirmed Budget for Performance / Workshop</label>
+              <label for="budgetAmount">Confirmed Budget Amount for Performance / Workshop</label>
               <input type="text" id="budgetAmount" name="budgetAmount" placeholder="e.g. $500 - $1,000">
             </div>
 
@@ -1377,6 +1386,7 @@
         privateGatheringType: document.getElementById('privateGatheringType')?.value || '',
         badgeAccess: document.getElementById('badgeAccess')?.value || '',
         dressingRoomInstructions: document.getElementById('dressingRoomInstructions')?.value.trim() || '',
+        hasBudget: document.getElementById('hasBudget')?.value || '',
         budgetAmount: document.getElementById('budgetAmount')?.value.trim() || '',
         invitedToAttend: document.getElementById('invitedToAttend')?.value || '',
         provisions: getCheckedValues('provisions'),
