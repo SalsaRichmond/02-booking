@@ -1652,7 +1652,18 @@ function handleFormSubmitJson(data) {
   
   sanitizeAndPopulateSheet(sheet);
   
-  const mainFolder = DriveApp.getFolderById(CONFIG.FOLDER_ID);
+  if (data.attachedFile && data.attachedFile.base64) {
+    try {
+      const bytes = Utilities.base64Decode(data.attachedFile.base64);
+      const blob = Utilities.newBlob(bytes, data.attachedFile.mimeType || 'application/octet-stream', data.attachedFile.fileName || 'Event_Attachment');
+      const dateStr = data.eventDate || "Undated";
+      const eventFolder = getOrCreateEventFolder(mainFolder, dateStr, data.eventName || "Event");
+      eventFolder.createFile(blob);
+    } catch (fileErr) {
+      console.warn("File attachment upload error: ", fileErr);
+    }
+  }
+
   const updatedRowData = sheet.getRange(rowNum, 1, 1, sheet.getLastColumn()).getValues()[0];
   
   processRow(sheet, rowNum, updatedRowData, mainFolder, headers, true);

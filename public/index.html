@@ -290,6 +290,35 @@
       min-height: 100px;
     }
 
+    /* File Upload Box (H1.7) */
+    .file-upload-box {
+      border: 2px dashed var(--input-border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: center;
+      background: var(--input-bg);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .file-upload-box:hover {
+      border-color: var(--accent-gold);
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    .file-upload-icon {
+      font-size: 2rem;
+      color: var(--accent-gold);
+      margin-bottom: 8px;
+    }
+
+    .file-info {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: var(--primary-accent);
+      font-weight: 600;
+    }
+
     /* Checkbox & Radio Groups */
     .options-grid {
       display: grid;
@@ -365,7 +394,7 @@
       transform: none;
     }
 
-    /* Success Card */
+    /* Success Card & Reports (H1.5) */
     .success-card {
       display: none;
       text-align: center;
@@ -418,7 +447,33 @@
       font-family: monospace;
       font-size: 1.1rem;
       font-weight: 700;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
+    }
+
+    .action-buttons-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .report-btn {
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
+      border: none;
+      border-radius: var(--radius-md);
+      color: #FFF;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .report-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
     }
 
     .reset-btn {
@@ -504,9 +559,10 @@
         </div>
         
         <div class="grid-2">
+          <!-- H1.6 Real-Time Spell Checker enabled (spellcheck="true") -->
           <div class="form-group">
             <label for="clientName" id="lblClientName">Your Name <span class="required">*</span></label>
-            <input type="text" id="clientName" name="clientName" placeholder="e.g. Maria Santos" required>
+            <input type="text" id="clientName" name="clientName" placeholder="e.g. Maria Santos" spellcheck="true" required>
           </div>
           
           <div class="form-group">
@@ -532,7 +588,7 @@
 
           <div class="form-group">
             <label for="eventName" id="lblEventName">Name of the Event <span class="required">*</span></label>
-            <input type="text" id="eventName" name="eventName" placeholder="e.g. Richmond Salsa Festival 2026" required>
+            <input type="text" id="eventName" name="eventName" placeholder="e.g. Richmond Salsa Festival 2026" spellcheck="true" required>
           </div>
 
           <div class="form-group">
@@ -546,7 +602,7 @@
 
           <div class="form-group full-width">
             <label for="eventDescription" id="lblDescription">Describe Your Event</label>
-            <textarea id="eventDescription" name="eventDescription" placeholder="Provide background on theme, venue, guest flow..."></textarea>
+            <textarea id="eventDescription" name="eventDescription" placeholder="Provide background on theme, venue, guest flow..." spellcheck="true"></textarea>
           </div>
 
           <!-- H1.4 Customer Email Receipt Checkbox -->
@@ -576,7 +632,7 @@
 
           <div class="form-group full-width">
             <label for="eventAddress" id="lblEventAddress">Where will the event take place? (Full Address) <span class="required">*</span></label>
-            <input type="text" id="eventAddress" name="eventAddress" placeholder="e.g. 123 Main St, Richmond, VA 23220" required>
+            <input type="text" id="eventAddress" name="eventAddress" placeholder="e.g. 123 Main St, Richmond, VA 23220" spellcheck="true" required>
           </div>
         </div>
 
@@ -651,14 +707,29 @@
           </div>
         </div>
 
-        <!-- Section 5: Special Notes & Terms -->
+        <!-- H1.7 File Upload Integration -->
+        <div class="section-title" id="secFileTitle">
+          <i class="fa-solid fa-paperclip"></i> 5. File Attachments (Flyer / Floor Plan / 501c Tax Letter)
+        </div>
+
+        <div class="form-group full-width">
+          <label id="lblFileUpload">Upload Event Document / Attachment <span class="hint">(PDF, PNG, JPG - Max 10MB)</span></label>
+          <div class="file-upload-box" id="dropZone" onclick="document.getElementById('fileInput').click();">
+            <div class="file-upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+            <div id="fileBoxText">Click or Drag & Drop File Here to Attach to Drive</div>
+            <div class="file-info" id="fileSelectedName"></div>
+            <input type="file" id="fileInput" style="display: none;" accept=".pdf,.jpg,.png,.jpeg,.doc,.docx">
+          </div>
+        </div>
+
+        <!-- Section 6: Special Notes & Terms -->
         <div class="section-title" id="sec5Title">
-          <i class="fa-solid fa-file-contract"></i> 5. Special Instructions & Terms
+          <i class="fa-solid fa-file-contract"></i> 6. Special Instructions & Terms
         </div>
 
         <div class="form-group">
           <label for="notes" id="lblNotes">Special Instructions, Song Requests or Notes</label>
-          <textarea id="notes" name="notes" placeholder="Tell us any special requests, song choices, or event guidelines..."></textarea>
+          <textarea id="notes" name="notes" placeholder="Tell us any special requests, song choices, or event guidelines..." spellcheck="true"></textarea>
         </div>
 
         <div class="form-group">
@@ -674,7 +745,7 @@
         </button>
       </form>
 
-      <!-- Success Screen -->
+      <!-- Success Screen & H1.5 Reports -->
       <div class="success-card" id="successCard">
         <div class="success-icon">
           <i class="fa-solid fa-check"></i>
@@ -682,8 +753,16 @@
         <h2 class="success-title" id="txtSuccessTitle">Event Request Received!</h2>
         <p class="success-text" id="txtSuccessDesc">Thank you for choosing Salsa Guy Richmond, LLC. Your questionnaire has been logged, calendar reservation is pending, and custom proposal docs are generating.</p>
         <div class="event-id-badge" id="eventIdDisplay">Event ID: Syncing...</div>
-        <div>
-          <button class="reset-btn" id="resetBtn"><i class="fa-solid fa-plus"></i> <span id="btnResetText">Submit Another Request</span></button>
+        
+        <div class="action-buttons-group">
+          <!-- H1.5 Reports Feature: Printable / Downloadable PDF Summary -->
+          <button type="button" class="report-btn" id="downloadReportBtn" onclick="window.print();">
+            <i class="fa-solid fa-file-pdf"></i> <span id="btnReportText">Print / Save Summary Report</span>
+          </button>
+          
+          <button type="button" class="reset-btn" id="resetBtn">
+            <i class="fa-solid fa-plus"></i> <span id="btnResetText">Submit Another Request</span>
+          </button>
         </div>
       </div>
 
@@ -694,6 +773,27 @@
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzg9Tr13gNlaEbFVnGxPIvqO5HpydONu5URI4MVR7GU_vjlZTUllgNxVOy2t6Rvyhlk/exec";
 
     let currentLang = 'en';
+    let uploadedFileData = null;
+
+    // H1.7 File Upload Handler
+    const fileInput = document.getElementById('fileInput');
+    const fileSelectedName = document.getElementById('fileSelectedName');
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        fileSelectedName.textContent = `Attached: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          uploadedFileData = {
+            fileName: file.name,
+            mimeType: file.type,
+            base64: evt.target.result.split(',')[1]
+          };
+        };
+        reader.readAsDataURL(file);
+      }
+    });
 
     // H1.3 Language Translations Dictionary
     const i18n = {
@@ -718,12 +818,16 @@
         sec4: "<i class='fa-solid fa-music'></i> 4. Services Requested",
         perfServices: "Performance Services Needed",
         lessonServices: "Dance Lesson Services Needed",
-        sec5: "<i class='fa-solid fa-file-contract'></i> 5. Special Instructions & Terms",
+        secFile: "<i class='fa-solid fa-paperclip'></i> 5. File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
+        lblFile: "Upload Event Document / Attachment",
+        fileBox: "Click or Drag & Drop File Here to Attach to Drive",
+        sec5: "<i class='fa-solid fa-file-contract'></i> 6. Special Instructions & Terms",
         notes: "Special Instructions, Song Requests or Notes",
         terms: "I agree to the Terms of Service & Booking Privacy Guidelines",
         submit: "Submit Event Request",
         successTitle: "Event Request Received!",
         successDesc: "Thank you for choosing Salsa Guy Richmond, LLC. Your questionnaire has been logged, calendar reservation is pending, and custom proposal docs are generating.",
+        report: "Print / Save Summary Report",
         reset: "Submit Another Request",
         langBtn: "Español 🇪🇸"
       },
@@ -748,12 +852,16 @@
         sec4: "<i class='fa-solid fa-music'></i> 4. Servicios Solicitados",
         perfServices: "Servicios de Espectáculo / Baile",
         lessonServices: "Talleres y Clases de Baile",
-        sec5: "<i class='fa-solid fa-file-contract'></i> 5. Instrucciones Especiales y Términos",
+        secFile: "<i class='fa-solid fa-paperclip'></i> 5. Archivos Adjuntos (Folleto / Plano / Carta 501c)",
+        lblFile: "Adjuntar Documento del Evento",
+        fileBox: "Haga clic o arrastre su archivo aquí para adjuntarlo a Drive",
+        sec5: "<i class='fa-solid fa-file-contract'></i> 6. Instrucciones Especiales y Términos",
         notes: "Instrucciones Especiales, Canciones o Notas",
         terms: "Acepto los Términos de Servicio y Políticas de Reserva",
         submit: "Enviar Solicitud de Evento",
         successTitle: "¡Solicitud de Evento Recibida!",
         successDesc: "Gracias por elegir Salsa Guy Richmond, LLC. Su cuestionario ha sido registrado, la reserva de calendario está pendiente y los documentos de propuesta se están generando.",
+        report: "Imprimir / Guardar Informe",
         reset: "Enviar Otra Solicitud",
         langBtn: "English 🇺🇸"
       }
@@ -815,6 +923,10 @@
       document.getElementById('lblPerfServices').textContent = t.perfServices;
       document.getElementById('lblLessonServices').textContent = t.lessonServices;
 
+      document.getElementById('secFileTitle').innerHTML = t.secFile;
+      document.getElementById('lblFileUpload').childNodes[0].nodeValue = t.lblFile + " ";
+      document.getElementById('fileBoxText').textContent = t.fileBox;
+
       document.getElementById('sec5Title').innerHTML = t.sec5;
       document.getElementById('lblNotes').textContent = t.notes;
       document.getElementById('lblTerms').childNodes[0].nodeValue = t.terms + " ";
@@ -822,6 +934,7 @@
       document.getElementById('btnSubmitText').textContent = t.submit;
       document.getElementById('txtSuccessTitle').textContent = t.successTitle;
       document.getElementById('txtSuccessDesc').textContent = t.successDesc;
+      document.getElementById('btnReportText').textContent = t.report;
       document.getElementById('btnResetText').textContent = t.reset;
       langBtnText.textContent = t.langBtn;
     });
@@ -881,6 +994,7 @@
         privateGatheringType: document.getElementById('privateGatheringType')?.value || '',
         performanceServices: getCheckedValues('perfServices'),
         lessonServices: getCheckedValues('lessonServices'),
+        attachedFile: uploadedFileData,
         notes: document.getElementById('notes').value.trim(),
         serviceCategory: document.getElementById('eventTypeScale').value
       };
@@ -929,6 +1043,8 @@
 
     resetBtn.addEventListener('click', () => {
       bookingForm.reset();
+      uploadedFileData = null;
+      fileSelectedName.textContent = "";
       updateConditionalSections();
       bookingForm.style.display = 'block';
       successCard.style.display = 'none';
