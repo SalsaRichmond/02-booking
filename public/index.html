@@ -700,6 +700,82 @@
       padding: 6px;
     }
 
+
+    /* Native <details> Settings Dropdown */
+    details.settings-details {
+      position: relative;
+      display: inline-block;
+      z-index: 99999;
+    }
+    details.settings-details summary {
+      list-style: none;
+      outline: none;
+      cursor: pointer;
+      background: rgba(245, 158, 11, 0.18);
+      border: 1px solid var(--accent-gold);
+      color: var(--accent-gold);
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+    details.settings-details summary::-webkit-details-marker {
+      display: none;
+    }
+    details.settings-details[open] summary {
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+    }
+    .settings-dropdown-box {
+      position: absolute;
+      right: 0;
+      top: 48px;
+      background: #0F172A !important;
+      border: 1px solid var(--accent-gold) !important;
+      border-radius: 14px;
+      padding: 16px;
+      min-width: 230px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.85);
+      z-index: 999999 !important;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .settings-dropdown-box select,
+    .settings-dropdown-box option,
+    .settings-dropdown-box button {
+      color: #F8FAFC !important;
+      background-color: #1E293B !important;
+      border: 1px solid rgba(245, 158, 11, 0.4) !important;
+      font-size: 0.88rem !important;
+      border-radius: 8px !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    .settings-dropdown-box select option {
+      color: #F8FAFC !important;
+      background-color: #0F172A !important;
+      padding: 6px;
+    }
+
+    /* Footer CSS */
+    footer.app-footer {
+      position: relative !important;
+      clear: both !important;
+      display: block !important;
+      width: 100% !important;
+      max-width: 960px !important;
+      margin: 50px auto 20px auto !important;
+      padding-top: 25px !important;
+      border-top: 1px solid var(--card-border) !important;
+      text-align: center !important;
+      font-size: 0.88rem !important;
+      color: var(--text-muted) !important;
+    }
+
 </style>
 <style>
   /* Interactive Spell Checker Modal Styles */
@@ -749,11 +825,11 @@
     
     <!-- Top Controls Row with Settings Dropdown -->
     <div class="top-controls-row">
-      <div class="settings-dropdown-wrapper" style="position: relative; display: inline-block;">
-        <button type="button" class="control-btn" id="settingsMenuBtn" onclick="toggleSettingsMenu(event)" style="background: rgba(245, 158, 11, 0.18); border: 1px solid var(--accent-gold); color: var(--accent-gold); font-weight: 700; padding: 8px 18px; border-radius: 30px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+      <details class="settings-details">
+        <summary>
           <i class="fa-solid fa-gear"></i> <span>Settings</span> <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem;"></i>
-        </button>
-        <div class="settings-dropdown-menu" id="settingsDropdownMenu">
+        </summary>
+        <div class="settings-dropdown-box">
           <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; display: flex; align-items: center; gap: 6px;">
             <i class="fa-solid fa-sliders"></i> Preferences
           </div>
@@ -775,7 +851,7 @@
             <i class="fa-solid fa-moon" id="themeIcon"></i> <span id="themeBtnText">Night Mode</span>
           </button>
         </div>
-      </div>
+      </details>
     </div>
 
 
@@ -1886,7 +1962,7 @@
     </div>
 
     <!-- Footer Links -->
-    <footer style="text-align: center; margin: 40px auto 20px auto; padding-top: 20px; border-top: 1px solid var(--card-border); font-size: 0.88rem; color: var(--text-muted); width: 100%; max-width: 960px; clear: both;">
+    <footer class="app-footer">
       © 2026 Salsa Guy Richmond, LLC. All rights reserved. &nbsp;|&nbsp; 
       <a href="https://www.salsarichmond.com/contact-info/terms" target="_blank" style="color: var(--accent-gold); text-decoration: underline; margin: 0 4px;">Terms of Service</a> &nbsp;|&nbsp; 
       <a href="https://www.salsarichmond.com/contact-info/privacy-policy" target="_blank" style="color: var(--accent-gold); text-decoration: underline; margin: 0 4px;">Privacy Policy</a>
