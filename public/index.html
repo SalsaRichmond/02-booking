@@ -2455,7 +2455,362 @@
       }
     };
 
-    function changeLanguage(langCode) {
+    
+    // Comprehensive Option Translation Maps for Dropdown Selects
+    const selectOptionTranslations = {
+      en: {
+        defaultSelect: "-- Select Option --",
+        representType: {
+          "Dance Studio": "Dance Studio",
+          "Educational Institution": "Educational Institution",
+          "Event Planning Company": "Event Planning Company",
+          "Government": "Government",
+          "I'm a Dancer Instructor": "I'm a Dancer Instructor",
+          "Nonprofit Organization 501(C)": "Nonprofit Organization 501(C)",
+          "Private Sector Business": "Private Sector Business",
+          "Religious Institution": "Religious Institution",
+          "Restaurant": "Restaurant",
+          "Talent Agency": "Talent Agency",
+          "Yourself": "Yourself"
+        },
+        eventTypeScale: {
+          "3A. Large Event Details": "3A. Large Event Details",
+          "3B. Small Event Details": "3B. Small Event Details",
+          "3C. Outside of the United States of America": "3C. Outside of the United States of America"
+        },
+        hearAboutUs: {
+          "Google Search": "Google Search",
+          "Social Media (Instagram / Facebook / TikTok)": "Social Media (Instagram / Facebook / TikTok)",
+          "Referral / Word of Mouth": "Referral / Word of Mouth",
+          "Previous Event / Performance": "Previous Event / Performance",
+          "Flyer / Poster / Print": "Flyer / Poster / Print",
+          "Other": "Other"
+        },
+        regionalLocation: {
+          "Yes, Commonwealth of Virginia (Domestic)": "Yes, Commonwealth of Virginia (Domestic)",
+          "No, Out-of-State (USA Domestic Travel)": "No, Out-of-State (USA Domestic Travel)",
+          "No, International (Outside USA)": "No, International (Outside USA)"
+        },
+        admissionType: {
+          "Free / Open to Public": "Free / Open to Public",
+          "Ticketed / Paid Admission": "Ticketed / Paid Admission",
+          "Private Invitation Only": "Private Invitation Only"
+        },
+        durationRequired: {
+          "30 Minutes": "30 Minutes",
+          "45 Minutes": "45 Minutes",
+          "60 Minutes": "60 Minutes",
+          "90 Minutes": "90 Minutes",
+          "2 Hours": "2 Hours",
+          "Half-Day / Multiple Sets": "Half-Day / Multiple Sets",
+          "Full-Day Event": "Full-Day Event"
+        },
+        audienceParticipation: {
+          "Yes": "Yes",
+          "No": "No"
+        },
+        surfaceType: {
+          "Wooden Dance Floor": "Wooden Dance Floor",
+          "Stage": "Stage",
+          "Carpet": "Carpet",
+          "Concrete / Tile": "Concrete / Tile",
+          "Grass / Outdoor Ground": "Grass / Outdoor Ground",
+          "Other": "Other"
+        },
+        venueSetting: {
+          "Indoors": "Indoors",
+          "Outdoors (Covered Stage)": "Outdoors (Covered Stage)",
+          "Outdoors (Uncovered)": "Outdoors (Uncovered)"
+        },
+        soundSystem: {
+          "Venue provides PA system and microphone": "Venue provides PA system and microphone",
+          "Salsa Guy Richmond must bring portable PA system": "Salsa Guy Richmond must bring portable PA system",
+          "Sound system not needed": "Sound system not needed"
+        },
+        audienceAgesSelect: {
+          "Every Age Group": "Every Age Group",
+          "Children & Youth": "Children & Youth",
+          "Adults (18+)": "Adults (18+)",
+          "Seniors": "Seniors"
+        },
+        performerProvisionsSelect: {
+          "Full Hospitality (Food, Water, Dressing Room & Parking)": "Full Hospitality (Food, Water, Dressing Room & Parking)",
+          "Water & Parking Provided": "Water & Parking Provided",
+          "Parking Only": "Parking Only",
+          "None": "None"
+        }
+      },
+      es: {
+        defaultSelect: "-- Seleccionar Opción --",
+        representType: {
+          "Dance Studio": "Estudio de Baile",
+          "Educational Institution": "Institución Educativa",
+          "Event Planning Company": "Empresa de Planificación de Eventos",
+          "Government": "Gobierno / Entidad Gubernamental",
+          "I'm a Dancer Instructor": "Instructor o Bailarín",
+          "Nonprofit Organization 501(C)": "Organización Sin Fines de Lucro 501(c)",
+          "Private Sector Business": "Empresa del Sector Privado",
+          "Religious Institution": "Institución Religiosa",
+          "Restaurant": "Restaurante",
+          "Talent Agency": "Agencia de Talentos",
+          "Yourself": "Usted Mismo / Particular"
+        },
+        eventTypeScale: {
+          "3A. Large Event Details": "3A. Detalles de Eventos Públicos Grandes",
+          "3B. Small Event Details": "3B. Especificaciones de Eventos Privados Pequeños",
+          "3C. Outside of the United States of America": "3C. Fuera de los Estados Unidos de América"
+        },
+        hearAboutUs: {
+          "Google Search": "Búsqueda en Google",
+          "Social Media (Instagram / Facebook / TikTok)": "Redes Sociales (Instagram / Facebook / TikTok)",
+          "Referral / Word of Mouth": "Recomendación / Boca a Boca",
+          "Previous Event / Performance": "Evento / Espectáculo Anterior",
+          "Flyer / Poster / Print": "Folleto / Cartel / Impreso",
+          "Other": "Otro"
+        },
+        regionalLocation: {
+          "Yes, Commonwealth of Virginia (Domestic)": "Sí, Estado de Virginia (Nacional)",
+          "No, Out-of-State (USA Domestic Travel)": "No, Fuera del Estado (Viaje Nacional en EE. UU.)",
+          "No, International (Outside USA)": "No, Internacional (Fuera de EE. UU.)"
+        },
+        admissionType: {
+          "Free / Open to Public": "Gratuito / Abierto al Público",
+          "Ticketed / Paid Admission": "Con Entrada / Admisión de Pago",
+          "Private Invitation Only": "Solo Invitación Privada"
+        },
+        durationRequired: {
+          "30 Minutes": "30 Minutos",
+          "45 Minutes": "45 Minutos",
+          "60 Minutes": "60 Minutos",
+          "90 Minutes": "90 Minutos",
+          "2 Hours": "2 Horas",
+          "Half-Day / Multiple Sets": "Medio Día / Múltiples Pases",
+          "Full-Day Event": "Evento de Día Completo"
+        },
+        audienceParticipation: {
+          "Yes": "Sí",
+          "No": "No"
+        },
+        surfaceType: {
+          "Wooden Dance Floor": "Pista de Baile de Madera",
+          "Stage": "Escenario",
+          "Carpet": "Alfombra",
+          "Concrete / Tile": "Concreto / Baldosa",
+          "Grass / Outdoor Ground": "Césped / Terreno al Aire Libre",
+          "Other": "Otro"
+        },
+        venueSetting: {
+          "Indoors": "Interior",
+          "Outdoors (Covered Stage)": "Exterior (Escenario Techado)",
+          "Outdoors (Uncovered)": "Exterior (Sin Techo)"
+        },
+        soundSystem: {
+          "Venue provides PA system and microphone": "El lugar proporciona sistema de sonido y micrófono",
+          "Salsa Guy Richmond must bring portable PA system": "Salsa Guy Richmond debe llevar equipo portátil",
+          "Sound system not needed": "No se requiere sistema de sonido"
+        },
+        audienceAgesSelect: {
+          "Every Age Group": "Todas las Edades",
+          "Children & Youth": "Niños y Jóvenes",
+          "Adults (18+)": "Adultos (18+)",
+          "Seniors": "Adultos Mayores"
+        },
+        performerProvisionsSelect: {
+          "Full Hospitality (Food, Water, Dressing Room & Parking)": "Hospitalidad Completa (Comida, Agua, Camerino y Estacionamiento)",
+          "Water & Parking Provided": "Agua y Estacionamiento Proporcionados",
+          "Parking Only": "Solo Estacionamiento",
+          "None": "Ninguno"
+        }
+      },
+      fr: {
+        defaultSelect: "-- Choisir une option --",
+        representType: {
+          "Dance Studio": "Studio de Danse",
+          "Educational Institution": "Établissement d'Enseignement",
+          "Event Planning Company": "Agence d'Événementiel",
+          "Government": "Gouvernement",
+          "I'm a Dancer Instructor": "Instructeur ou Danseur",
+          "Nonprofit Organization 501(C)": "Organisation à But Non Lucratif",
+          "Private Sector Business": "Entreprise Privée",
+          "Religious Institution": "Institution Religieuse",
+          "Restaurant": "Restaurant",
+          "Talent Agency": "Agence d'Artistes",
+          "Yourself": "Vous-même"
+        },
+        eventTypeScale: {
+          "3A. Large Event Details": "3A. Détails Grands Événements Publics",
+          "3B. Small Event Details": "3B. Événements Privés",
+          "3C. Outside of the United States of America": "3C. Hors des États-Unis d'Amérique"
+        },
+        hearAboutUs: {
+          "Google Search": "Recherche Google",
+          "Social Media (Instagram / Facebook / TikTok)": "Réseaux Sociaux",
+          "Referral / Word of Mouth": "Bouche à Oreille",
+          "Previous Event / Performance": "Événement Précédent",
+          "Flyer / Poster / Print": "Affiche / Dépliant",
+          "Other": "Autre"
+        },
+        regionalLocation: {
+          "Yes, Commonwealth of Virginia (Domestic)": "Oui, État de Virginie (USA)",
+          "No, Out-of-State (USA Domestic Travel)": "Non, Hors de Virginie (Voyage USA)",
+          "No, International (Outside USA)": "Non, International (Hors USA)"
+        },
+        admissionType: {
+          "Free / Open to Public": "Gratuit / Ouvert au Public",
+          "Ticketed / Paid Admission": "Entrée Payante",
+          "Private Invitation Only": "Sur Invitation Privée"
+        },
+        durationRequired: {
+          "30 Minutes": "30 Minutes",
+          "45 Minutes": "45 Minutes",
+          "60 Minutes": "60 Minutes",
+          "90 Minutes": "90 Minutes",
+          "2 Hours": "2 Heures",
+          "Half-Day / Multiple Sets": "Demi-journée",
+          "Full-Day Event": "Journée Entière"
+        },
+        audienceParticipation: {
+          "Yes": "Oui",
+          "No": "Non"
+        },
+        surfaceType: {
+          "Wooden Dance Floor": "Parquet de Danse en Bois",
+          "Stage": "Scène",
+          "Carpet": "Moquette",
+          "Concrete / Tile": "Béton / Carrelage",
+          "Grass / Outdoor Ground": "Pelouse / Extérieur",
+          "Other": "Autre"
+        },
+        venueSetting: {
+          "Indoors": "Intérieur",
+          "Outdoors (Covered Stage)": "Extérieur (Scène Couverte)",
+          "Outdoors (Uncovered)": "Extérieur (Non Couvert)"
+        },
+        soundSystem: {
+          "Venue provides PA system and microphone": "Le lieu fournit la sonorisation et micro",
+          "Salsa Guy Richmond must bring portable PA system": "Salsa Guy Richmond apporte la sonorisation",
+          "Sound system not needed": "Sonorisation non nécessaire"
+        },
+        audienceAgesSelect: {
+          "Every Age Group": "Tous Âges",
+          "Children & Youth": "Enfants et Jeunes",
+          "Adults (18+)": "Adultes (18+)",
+          "Seniors": "Seniors"
+        },
+        performerProvisionsSelect: {
+          "Full Hospitality (Food, Water, Dressing Room & Parking)": "Hospitalité Complète (Repas, Eau, Loge & Parking)",
+          "Water & Parking Provided": "Eau et Parking Fournis",
+          "Parking Only": "Parking Uniquement",
+          "None": "Aucun"
+        }
+      },
+      de: {
+        defaultSelect: "-- Option wählen --",
+        representType: {
+          "Dance Studio": "Tanzstudio",
+          "Educational Institution": "Bildungseinrichtung",
+          "Event Planning Company": "Eventagentur",
+          "Government": "Behörde / Regierung",
+          "I'm a Dancer Instructor": "Tanzlehrer oder Tänzer",
+          "Nonprofit Organization 501(C)": "Gemeinnützige Organisation",
+          "Private Sector Business": "Privatunternehmen",
+          "Religious Institution": "Religiöse Einrichtung",
+          "Restaurant": "Restaurant",
+          "Talent Agency": "Künstleragentur",
+          "Yourself": "Sie selbst"
+        },
+        eventTypeScale: {
+          "3A. Large Event Details": "3A. Details für große öffentliche Events",
+          "3B. Small Event Details": "3B. Private Veranstaltungen",
+          "3C. Outside of the United States of America": "3C. Außerhalb der USA"
+        },
+        hearAboutUs: {
+          "Google Search": "Google-Suche",
+          "Social Media (Instagram / Facebook / TikTok)": "Soziale Medien",
+          "Referral / Word of Mouth": "Empfehlung / Mundpropaganda",
+          "Previous Event / Performance": "Frühere Veranstaltung",
+          "Flyer / Poster / Print": "Flyer / Poster",
+          "Other": "Sonstiges"
+        },
+        regionalLocation: {
+          "Yes, Commonwealth of Virginia (Domestic)": "Ja, Virginia (USA)",
+          "No, Out-of-State (USA Domestic Travel)": "Nein, außerhalb von Virginia (USA)",
+          "No, International (Outside USA)": "Nein, International (Außerhalb der USA)"
+        },
+        admissionType: {
+          "Free / Open to Public": "Kostenlos / Öffentlich",
+          "Ticketed / Paid Admission": "Kostenpflichtig / Ticket",
+          "Private Invitation Only": "Nur auf private Einladung"
+        },
+        durationRequired: {
+          "30 Minutes": "30 Minuten",
+          "45 Minutes": "45 Minuten",
+          "60 Minutes": "60 Minuten",
+          "90 Minutes": "90 Minuten",
+          "2 Hours": "2 Stunden",
+          "Half-Day / Multiple Sets": "Halbtags",
+          "Full-Day Event": "Ganztägig"
+        },
+        audienceParticipation: {
+          "Yes": "Ja",
+          "No": "Nein"
+        },
+        surfaceType: {
+          "Wooden Dance Floor": "Holztanzfläche",
+          "Stage": "Bühne",
+          "Carpet": "Teppichboden",
+          "Concrete / Tile": "Beton / Fliesen",
+          "Grass / Outdoor Ground": "Rasen / Außenbereich",
+          "Other": "Sonstiges"
+        },
+        venueSetting: {
+          "Indoors": "Innenbereich",
+          "Outdoors (Covered Stage)": "Außenbereich (Überdachte Bühne)",
+          "Outdoors (Uncovered)": "Außenbereich (Unüberdacht)"
+        },
+        soundSystem: {
+          "Venue provides PA system and microphone": "Veranstaltungsort stellt Tonanlage & Mikrofon",
+          "Salsa Guy Richmond must bring portable PA system": "Salsa Guy Richmond bringt mobile Tonanlage mit",
+          "Sound system not needed": "Keine Tonanlage erforderlich"
+        },
+        audienceAgesSelect: {
+          "Every Age Group": "Alle Altersgruppen",
+          "Children & Youth": "Kinder & Jugendliche",
+          "Adults (18+)": "Erwachsene (18+)",
+          "Seniors": "Senioren"
+        },
+        performerProvisionsSelect: {
+          "Full Hospitality (Food, Water, Dressing Room & Parking)": "Vollverpflegung (Essen, Wasser, Umkleideraum & Parkplatz)",
+          "Water & Parking Provided": "Wasser & Parkplatz vorhanden",
+          "Parking Only": "Nur Parkplatz",
+          "None": "Keine"
+        }
+      }
+    };
+
+    function translateAllSelectOptions(langCode) {
+      const optMap = selectOptionTranslations[langCode] || selectOptionTranslations.en;
+      const defaultText = optMap.defaultSelect || "-- Select Option --";
+
+      for (const [selectId, translations] of Object.entries(optMap)) {
+        if (selectId === 'defaultSelect') continue;
+        const selectEl = document.getElementById(selectId);
+        if (!selectEl) continue;
+
+        Array.from(selectEl.options).forEach(opt => {
+          if (!opt.value || opt.value.startsWith('--')) {
+            opt.textContent = defaultText;
+          } else {
+            const val = opt.value;
+            if (translations[val]) {
+              opt.textContent = translations[val];
+            }
+          }
+        });
+      }
+    }
+
+function changeLanguage(langCode) {
       currentLang = langCode || 'en';
       const t = fullDict[currentLang] || fullDict.en;
 
@@ -2548,6 +2903,8 @@
       setTxt('btnReportText', t.reportBtn);
       setTxt('btnVisitSalsaText', t.visitSalsa);
       setTxt('btnVisitTradicionText', t.visitTradicion);
+
+      translateAllSelectOptions(langCode);
 
       // Dynamically trigger Google Translate for full page option/label translation
       if (window.googleTranslateElementInit) {
