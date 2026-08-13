@@ -3487,19 +3487,7 @@ function changeLanguage(langCode) {
       }
     }
 
-    // Connect eventTypeScale to toggleCountryField
-    const origUpdateConditionalSections = updateConditionalSections;
-    updateConditionalSections = function() {
-      origUpdateConditionalSections();
-      const scaleVal = document.getElementById('eventTypeScale')?.value;
-      const isIntlSel = document.getElementById('isInternational');
-      if (scaleVal === 'International: Outside of the USA') {
-        if (isIntlSel && isIntlSel.value !== 'Yes') {
-          isIntlSel.value = 'Yes';
-          toggleCountryField();
-        }
-      }
-    };
+    
 
     
     
@@ -3629,6 +3617,9 @@ function updateConditionalSections() {
       const largePublicSection = document.getElementById('largePublicSection');
       const smallPrivateSection = document.getElementById('smallPrivateSection');
       const internationalBlock = document.getElementById('internationalBlock');
+      const isIntlSel = document.getElementById('isInternational');
+      const countryGrp = document.getElementById('countryGroup');
+      const destCountry = document.getElementById('destinationCountry');
 
       // Hide all by default until a selection is made
       if (largePublicSection) largePublicSection.style.display = 'none';
@@ -3642,9 +3633,15 @@ function updateConditionalSections() {
       } else if (val.includes('3C') || val === '3C. Outside of the United States of America' || val === 'International: Outside of the USA' || val.includes('Fuera') || val.includes('Outside')) {
         if (largePublicSection) largePublicSection.style.display = 'block';
         if (internationalBlock) internationalBlock.style.display = 'block';
+        
         const regLoc = document.getElementById('regionalLocation');
         if (regLoc && (!regLoc.value || regLoc.value.startsWith('--'))) {
           regLoc.value = 'No, International (Outside USA)';
+        }
+        if (isIntlSel) {
+          isIntlSel.value = 'Yes';
+          if (countryGrp) countryGrp.style.display = 'block';
+          if (destCountry) destCountry.required = true;
         }
       }
     }
