@@ -2524,38 +2524,38 @@ function handleRegionalLocationChange(val) {
     }
 
 function updateConditionalSections() {
-      const val = eventTypeScale.value;
+      const scaleEl = document.getElementById('eventTypeScale');
+      const val = scaleEl ? scaleEl.value : '';
+      const largePublicSection = document.getElementById('largePublicSection');
+      const smallPrivateSection = document.getElementById('smallPrivateSection');
       const internationalBlock = document.getElementById('internationalBlock');
+
       if (val === '3A. Large Event Details' || val === 'Large Public Event') {
-        largePublicSection.style.display = 'block';
-        smallPrivateSection.style.display = 'none';
+        if (largePublicSection) largePublicSection.style.display = 'block';
+        if (smallPrivateSection) smallPrivateSection.style.display = 'none';
+        if (internationalBlock) internationalBlock.style.display = 'none';
       } else if (val === '3B. Small Event Details' || val === 'Small Private Event') {
-        largePublicSection.style.display = 'none';
-        smallPrivateSection.style.display = 'block';
-      } else if (val === '3C. Outside of the United States of America' || val === 'Outside of the United States of America') {
-        largePublicSection.style.display = 'block';
-        smallPrivateSection.style.display = 'none';
+        if (largePublicSection) largePublicSection.style.display = 'none';
+        if (smallPrivateSection) smallPrivateSection.style.display = 'block';
+        if (internationalBlock) internationalBlock.style.display = 'none';
+      } else if (val === '3C. Outside of the United States of America' || val === 'Outside of the United States of America' || val === 'International: Outside of the USA') {
+        if (largePublicSection) largePublicSection.style.display = 'block';
+        if (smallPrivateSection) smallPrivateSection.style.display = 'none';
         if (internationalBlock) internationalBlock.style.display = 'block';
         const regLoc = document.getElementById('regionalLocation');
         if (regLoc && !regLoc.value) regLoc.value = 'No, International (Outside USA)';
       } else {
-        largePublicSection.style.display = 'block';
-        smallPrivateSection.style.display = 'block';
-      }
-    } else if (val === 'Small Private Event') {
-        largePublicSection.style.display = 'none';
-        smallPrivateSection.style.display = 'block';
-      } else if (val === 'International: Outside of the USA') {
-        largePublicSection.style.display = 'block';
-        smallPrivateSection.style.display = 'none';
-      } else {
-        largePublicSection.style.display = 'block';
-        smallPrivateSection.style.display = 'block';
+        if (largePublicSection) largePublicSection.style.display = 'block';
+        if (smallPrivateSection) smallPrivateSection.style.display = 'block';
+        if (internationalBlock) internationalBlock.style.display = 'none';
       }
     }
 
-    eventTypeScale.addEventListener('change', updateConditionalSections);
-    updateConditionalSections();
+    const eventTypeScaleEl = document.getElementById('eventTypeScale');
+    if (eventTypeScaleEl) {
+      eventTypeScaleEl.addEventListener('change', updateConditionalSections);
+      updateConditionalSections();
+    }
 
     function getCheckedValues(name) {
       return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value).join(", ");
