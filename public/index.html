@@ -3630,24 +3630,22 @@ function updateConditionalSections() {
       const smallPrivateSection = document.getElementById('smallPrivateSection');
       const internationalBlock = document.getElementById('internationalBlock');
 
-      if (val === '3A. Large Event Details' || val === 'Large Public Event') {
+      // Hide all by default until a selection is made
+      if (largePublicSection) largePublicSection.style.display = 'none';
+      if (smallPrivateSection) smallPrivateSection.style.display = 'none';
+      if (internationalBlock) internationalBlock.style.display = 'none';
+
+      if (val.includes('3A') || val === '3A. Large Event Details' || val === 'Large Public Event' || val.includes('Grandes') || val.includes('Public')) {
         if (largePublicSection) largePublicSection.style.display = 'block';
-        if (smallPrivateSection) smallPrivateSection.style.display = 'none';
-        if (internationalBlock) internationalBlock.style.display = 'none';
-      } else if (val === '3B. Small Event Details' || val === 'Small Private Event') {
-        if (largePublicSection) largePublicSection.style.display = 'none';
+      } else if (val.includes('3B') || val === '3B. Small Event Details' || val === 'Small Private Event' || val.includes('Pequeños') || val.includes('Privad')) {
         if (smallPrivateSection) smallPrivateSection.style.display = 'block';
-        if (internationalBlock) internationalBlock.style.display = 'none';
-      } else if (val === '3C. Outside of the United States of America' || val === 'Outside of the United States of America' || val === 'International: Outside of the USA') {
+      } else if (val.includes('3C') || val === '3C. Outside of the United States of America' || val === 'International: Outside of the USA' || val.includes('Fuera') || val.includes('Outside')) {
         if (largePublicSection) largePublicSection.style.display = 'block';
-        if (smallPrivateSection) smallPrivateSection.style.display = 'none';
         if (internationalBlock) internationalBlock.style.display = 'block';
         const regLoc = document.getElementById('regionalLocation');
-        if (regLoc && !regLoc.value) regLoc.value = 'No, International (Outside USA)';
-      } else {
-        if (largePublicSection) largePublicSection.style.display = 'block';
-        if (smallPrivateSection) smallPrivateSection.style.display = 'block';
-        if (internationalBlock) internationalBlock.style.display = 'none';
+        if (regLoc && (!regLoc.value || regLoc.value.startsWith('--'))) {
+          regLoc.value = 'No, International (Outside USA)';
+        }
       }
     }
 
