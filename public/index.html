@@ -2157,40 +2157,17 @@
       }
     };
 
-    function changeLanguage(langCode) {
-      const t = langDict[langCode] || langDict.en;
-      if (t.title && document.getElementById('mainHeaderTitle')) document.getElementById('mainHeaderTitle').textContent = t.title;
-      if (t.sec1 && document.getElementById('sec1Title')) document.getElementById('sec1Title').innerHTML = '<i class="fa-solid fa-user-circle"></i> ' + t.sec1;
-      if (t.sec2 && document.getElementById('sec2Title')) document.getElementById('sec2Title').innerHTML = '<i class="fa-solid fa-calendar-check"></i> ' + t.sec2;
-      if (t.sec3a && document.getElementById('sec3aTitle')) document.getElementById('sec3aTitle').innerHTML = '<i class="fa-solid fa-bullhorn"></i> ' + t.sec3a;
-      if (t.sec3b && document.getElementById('sec3bTitle')) document.getElementById('sec3bTitle').innerHTML = '<i class="fa-solid fa-cake-candles"></i> ' + t.sec3b;
-      if (t.sec4 && document.getElementById('sec4Title')) document.getElementById('sec4Title').innerHTML = '<i class="fa-solid fa-music"></i> ' + t.sec4;
-      if (t.sec5 && document.getElementById('sec5Title')) document.getElementById('sec5Title').innerHTML = '<i class="fa-solid fa-file-contract"></i> ' + t.sec5;
-      if (t.secFile && document.getElementById('secFileTitle')) document.getElementById('secFileTitle').innerHTML = '<i class="fa-solid fa-paperclip"></i> ' + t.secFile;
-      if (t.sec7 && document.getElementById('sec7Title')) document.getElementById('sec7Title').innerHTML = '<i class="fa-solid fa-circle-info"></i> ' + t.sec7;
-      if (t.isInternational && document.getElementById('lblIsInternational')) document.getElementById('lblIsInternational').innerHTML = t.isInternational;
-      if (t.destinationCountry && document.getElementById('lblDestinationCountry')) document.getElementById('lblDestinationCountry').innerHTML = t.destinationCountry + ' <span class="required">*</span>';
-      if (t.submit && document.getElementById('btnSubmitText')) document.getElementById('btnSubmitText').textContent = t.submit;
-      
-      // Also update Google Translate widget if present for full page translation
-      if (window.googleTranslateElementInit) {
-        const gtCombo = document.querySelector('.goog-te-combo');
-        if (gtCombo) {
-          gtCombo.value = langCode;
-          gtCombo.dispatchEvent(new Event('change'));
-        }
-      }
-    }
-
-    // H1.3 Language Translations Dictionary (All 51 Fields)
-    const i18n = {
+    
+    // Comprehensive Multilingual Translation Engine (All Titles, Questions, Options & Responses)
+    const fullDict = {
       en: {
+        settingsTitle: "Settings",
         title: "Tell me about you and your event!",
-        notice: "<i class='fa-solid fa-calendar-days'></i> <strong>Schedule Availability Notice:</strong><br>• <strong>Friday – Sunday:</strong> Available for both Live Performances and Dance Lessons.<br>• <strong>Monday – Thursday:</strong> Dedicated exclusively to Dance Lessons (No performances accepted).",
+        notice: "<i class='fa-solid fa-calendar-days'></i> <strong>Schedule Availability Notice:</strong><br>• <strong>Friday – Sunday:</strong> Available for both Live Performances and Dance Lessons.<br>• <strong>Monday – Thursday:</strong> Dedicated exclusively to Dance Lessons within the USA (Live performances are not accepted on weekdays domestically).<br><span style='font-size: 0.85rem; font-style: italic; color: var(--text-muted); display: block; margin-top: 6px;'>*(Note: This weekday performance restriction does not apply to international requests; international live performances are evaluated on a case-by-case basis).*</span>",
         sec1: "<i class='fa-solid fa-user-circle'></i> 1. Contact & Organization Info",
-        name: "Your Name",
-        email: "Email Address",
-        phone: "Best Contact Phone Number",
+        clientName: "Your Name",
+        clientEmail: "Email Address",
+        clientPhone: "Best Contact Phone Number",
         represent: "Who do you represent?",
         eventName: "Name of the Event",
         eventScale: "Is your event a large public event or a small private event?",
@@ -2198,11 +2175,19 @@
         purpose: "Purpose of this Event",
         hearAbout: "How did you HEAR of us?",
         description: "Describe Your Event",
-        emailReceipt: "📧 Send instant Event ID confirmation receipt to my email",
+        isInternational: "Are services requested OUTSIDE of the USA?",
+        destinationCountry: "Select Destination Country",
         sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Date, Time & Logistics",
-        date: "Event Date",
-        time: "Start Time",
-        address: "Where will the event take place? (ADDRESS)",
+        eventDate: "Event Date",
+        eventTime: "Start Time",
+        eventAddress: "Where will the event take place? (ADDRESS)",
+        regionalLocation: "Is this event located within the Commonwealth of Virginia (USA)?",
+        outOfStateLogistics: "Out-of-State Travel & Logistics Arrangement",
+        intlVenue: "Specific Country, City, & Venue Name",
+        intlLogistics: "International Travel & Lodging Logistics",
+        visaSupport: "Visa & Legal Documentation Support",
+        currency: "Preferred Currency & Payment Terms",
+        customsNotes: "Costumes, Props & Customs Considerations",
         attendance: "Expected Number of Attendees",
         admission: "Type of Event Admission",
         duration: "How much TIME do you require from us?",
@@ -2212,127 +2197,357 @@
         venueSetting: "Venue Location Setting",
         soundSystem: "Sound System Equipment",
         audienceAges: "Audience Age Groups Expected",
+        provisions: "WILL YOU PROVIDE the performers with:",
         sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Large Public Event Details, 501(c) & Promotions",
         sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Small Private Event Specifications & Hospitality",
         sec4: "<i class='fa-solid fa-music'></i> 4. Services Requested",
-        perfServices: "Performance Services Needed",
-        lessonServices: "Dance Lesson Services Needed",
+        perfServices: "Which of our PERFORMANCE SERVICES will you need?",
+        otherPerfServices: "Any other PERFORMANCE SERVICES you wish, but are not listed above?",
+        lessonServices: "Which of our DANCE LESSON SERVICES will you need?",
         otherServices: "Additional Services Needed",
         secFile: "<i class='fa-solid fa-paperclip'></i> 5. File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
-        lblFile: "Upload Event Document / Attachment",
-        fileBox: "Click or Drag & Drop File Here to Attach to Drive",
+        fileUpload: "Upload Event Document / Attachment",
+        fileBoxText: "Click or Drag & Drop File Here to Attach to Drive",
         sec5: "<i class='fa-solid fa-file-contract'></i> 6. Special Instructions & Terms",
-        sec7: "<i class='fa-solid fa-circle-info'></i> 7. General Information",
         notes: "Special Instructions, Song Requests or Notes",
+        sec7: "<i class='fa-solid fa-circle-info'></i> 7. General Information",
+        hiringPerformers: "HIRING SIMILAR PERFORMERS",
+        genInfoP1: "While you may be tempted to hire similar performances, I truly believe that incorporating different styles and specialties can greatly enhance your event experience in multiple ways. First and foremost, offering a variety of performances will keep your guests engaged and captivated throughout the entire event. By avoiding repetition or monotony, I ensure that attendees remain entertained and have a truly memorable experience.",
+        genInfoP2: "Furthermore, diverse performances cater to a broader audience, attracting individuals with varying interests and preferences. By providing a mix of entertainment options, I ensure that everyone finds something appealing and feels included in the festivities. This inclusive approach guarantees a more enjoyable and satisfying experience for all attendees.",
+        genInfoP3: "I understand that you may have already considered these points, and I would be absolutely delighted to discuss further how my unique and engaging performances can complement your event. It will simplify the logistics of the event, making it easier for you to plan and execute. I am confident that I can deliver a truly exceptional and unforgettable experience for your guests.",
         terms: "I agree to the <a href='https://www.salsarichmond.com/contact-info/terms' target='_blank' style='color: var(--primary-accent); font-weight: 600; text-decoration: underline;'>Terms of Service</a> & <a href='https://www.salsarichmond.com/contact-info/privacy-policy' target='_blank' style='color: var(--primary-accent); font-weight: 600; text-decoration: underline;'>Privacy Policy</a>",
-        submit: "Submit Event Request",
-        successTitle: "Event Request Received!",
-        successDesc: "Thank you for choosing Salsa Guy Richmond, LLC. Your questionnaire has been logged, calendar reservation is pending, and custom proposal docs are generating.",
-        report: "Print / Save Summary Report",
-        reset: "Submit Another Request",
-        editRequest: "Edit Submitted Request",
-        visitSalsa: "Go to Salsa Richmond",
-        visitTradicion: "Go to Tradición",
-        askAnother: "What would you like to do next?",
+        emailReceipt: "📧 Send instant Event ID confirmation receipt to my email",
+        submitBtn: "Submit Event Request",
         pressKitTitle: "Press Kits & Media Assets:",
         pressKitDesc: "Official Bios, High-Res Logos, Performance Photos & Promotional Materials",
-        pressKitSalsaBtnText: "Salsa Guy Press Kit",
-        pressKitTradicionBtnText: "Tradición Press Kit",
-        langBtn: "Español 🇪🇸",
-        scalePublic: "Large Public Event",
-        scalePrivate: "Small Private Event",
-        scaleIntl: "International: Outside of the USA",
-        lessons: [
-          "None",
-          "Salsa Guy's Line Dance lesson Salsa, Merengue, Bachata and Chacha",
-          "Puerto Rican Folk - Bomba y Plena (Live Music)",
-          "Merengue - Dominican Republic",
-          "Bachata - Dominican Republic",
-          "Salsa - Puerto Rico",
-          "Cuba - Rueda",
-          "Choreographies for Wedding or Sweet Fifteen (Quinceañero)",
-          "All Salsa, Merengue and Bachata",
-          "for Team Building",
-          "Virtual",
-          "Wedding 1st Dance",
-          "for Children"
-        ],
+        pressKitSalsa: "Salsa Guy Press Kit",
+        pressKitTradicion: "Tradición Press Kit",
+        successTitle: "Event Request Received!",
+        successDesc: "Thank you for choosing Salsa Guy Richmond, LLC. Your questionnaire has been logged, calendar reservation is pending, and custom proposal docs are generating.",
+        askAnother: "What would you like to do next?",
+        resetBtn: "Submit Another Request",
+        editBtn: "Edit Submitted Request",
+        reportBtn: "Print / Save Summary Report",
+        visitSalsa: "Go to Salsa Richmond",
+        visitTradicion: "Go to Tradición"
       },
       es: {
+        settingsTitle: "Configuración",
         title: "¡Cuéntame sobre ti y tu evento!",
-        notice: "<i class='fa-solid fa-calendar-days'></i> <strong>Aviso de Disponibilidad:</strong><br>• <strong>Viernes – Domingo:</strong> Disponible para Espectáculos en Vivo y Clases de Baile.<br>• <strong>Lunes – Jueves:</strong> Dedicado exclusivamente a Clases de Baile (No espectáculos).",
+        notice: "<i class='fa-solid fa-calendar-days'></i> <strong>Aviso de Disponibilidad de Horarios:</strong><br>• <strong>Viernes – Domingo:</strong> Disponible para Presentaciones en Vivo y Clases de Baile.<br>• <strong>Lunes – Jueves:</strong> Dedicado exclusivamente a Clases de Baile dentro de EE. UU. (No se aceptan presentaciones los días laborables a nivel nacional).<br><span style='font-size: 0.85rem; font-style: italic; color: var(--text-muted); display: block; margin-top: 6px;'>*(Nota: Esta restricción no aplica para solicitudes internacionales; se evalúan caso por caso).*</span>",
         sec1: "<i class='fa-solid fa-user-circle'></i> 1. Información de Contacto y Organización",
-        name: "Su Nombre Completo",
-        email: "Correo Electrónico",
-        phone: "Teléfono de Contacto Principal",
+        clientName: "Su Nombre",
+        clientEmail: "Correo Electrónico",
+        clientPhone: "Mejor Teléfono de Contacto",
         represent: "¿A quién representa?",
         eventName: "Nombre del Evento",
-        eventScale: "¿Es un evento público grande o un evento privado pequeño?",
-        websites: "Sitios Web del Evento y Organización",
-        purpose: "Propósito del Evento",
+        eventScale: "¿Su evento es público grande o privado pequeño?",
+        websites: "Sitios Web del Evento u Organización",
+        purpose: "Propósito de este Evento",
         hearAbout: "¿Cómo se enteró de nosotros?",
         description: "Describa su Evento",
-        emailReceipt: "📧 Enviar confirmación instantánea con ID del Evento a mi correo",
+        isInternational: "¿Los servicios son requeridos FUERA de EE. UU.?",
+        destinationCountry: "Seleccione el País de Destino",
         sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Fecha, Hora y Logística",
-        date: "Fecha del Evento",
-        time: "Hora de Inicio",
-        address: "¿Dónde se llevará a cabo el evento? (Dirección)",
+        eventDate: "Fecha del Evento",
+        eventTime: "Hora de Inicio",
+        eventAddress: "¿Dónde se llevará a cabo el evento? (Dirección)",
+        regionalLocation: "¿Este evento es dentro del Estado de Virginia (EE. UU.)?",
+        outOfStateLogistics: "Logística y Viaje Fuera del Estado",
+        intlVenue: "País, Ciudad y Nombre del Lugar Específico",
+        intlLogistics: "Logística de Vuelos Internacionales y Alojamiento",
+        visaSupport: "Soporte de Visa y Documentación Legal",
+        currency: "Moneda Preferida y Términos de Pago",
+        customsNotes: "Consideraciones de Vestuario, Utilería y Aduanas",
         attendance: "Número Estimado de Asistentes",
         admission: "Tipo de Entrada al Evento",
         duration: "¿Cuánto TIEMPO requiere de nosotros?",
         audiencePart: "Interactivo (PARTICIPACIÓN DEL PÚBLICO)",
         areaSize: "Tamaño del Área de Baile / Escenario",
-        surface: "¿En qué SUPERFICIE se llevará a cabo el espectáculo o clase?",
-        venueSetting: "Ubicación / Entorno del Lugar",
+        surface: "¿En qué SUPERFICIE se realizará el espectáculo o clase?",
+        venueSetting: "Ubicación del Lugar (Interior / Exterior)",
         soundSystem: "Equipo de Sistema de Sonido",
-        audienceAges: "Edades Esperadas de la Audiencia",
+        audienceAges: "Edades Esperadas del Público",
+        provisions: "¿PROVEERÁ a los artistas con:",
         sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Detalles de Eventos Públicos Grandes, 501(c) y Promoción",
-        sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Especificaciones de Eventos Privados y Hospitalidad",
+        sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Especificaciones de Eventos Privados Pequeños y Hospitalidad",
         sec4: "<i class='fa-solid fa-music'></i> 4. Servicios Solicitados",
         perfServices: "¿Cuál de nuestros SERVICIOS DE ESPECTÁCULO necesitará?",
+        otherPerfServices: "¿Algún otro SERVICIO DE ESPECTÁCULO que desee y no esté listado?",
         lessonServices: "¿Cuál de nuestros SERVICIOS DE CLASES DE BAILE necesitará?",
-        otherServices: "Servicios Adicionales Requeridos",
+        otherServices: "Servicios Adicionales Necesarios",
         secFile: "<i class='fa-solid fa-paperclip'></i> 5. Archivos Adjuntos (Folleto / Plano / Carta 501c)",
-        lblFile: "Adjuntar Documento del Evento",
-        fileBox: "Haga clic o arrastre su archivo aquí para adjuntarlo a Drive",
+        fileUpload: "Subir Documento del Evento",
+        fileBoxText: "Haga clic o arrastre su archivo aquí para adjuntarlo a Drive",
         sec5: "<i class='fa-solid fa-file-contract'></i> 6. Instrucciones Especiales y Términos",
-        sec7: "<i class='fa-solid fa-circle-info'></i> 7. Información General",
         notes: "Instrucciones Especiales, Canciones o Notas",
+        sec7: "<i class='fa-solid fa-circle-info'></i> 7. Información General",
+        hiringPerformers: "CONTRATACIÓN DE ARTISTAS SIMILARES",
+        genInfoP1: "Si bien puede verse tentado a contratar espectáculos similares, creo firmemente que incorporar diferentes estilos y especialidades mejorará enormemente la experiencia de su evento. Ofrecer una variedad mantendrá a sus invitados fascinados durante todo el evento.",
+        genInfoP2: "Además, las presentaciones diversas satisfacen a un público más amplio. Al brindar una combinación de entretenimiento, aseguro que todos encuentren algo atractivo y se sientan incluidos en la festividad.",
+        genInfoP3: "Entiendo que ya haya considerado estos puntos y me encantaría discutir más cómo mis actuaciones únicas pueden complementar su evento de manera inolvidable.",
         terms: "Acepto los <a href='https://www.salsarichmond.com/contact-info/terms' target='_blank' style='color: var(--primary-accent); font-weight: 600; text-decoration: underline;'>Términos de Servicio</a> y la <a href='https://www.salsarichmond.com/contact-info/privacy-policy' target='_blank' style='color: var(--primary-accent); font-weight: 600; text-decoration: underline;'>Política de Privacidad</a>",
-        submit: "Enviar Solicitud de Evento",
-        successTitle: "¡Solicitud de Evento Recibida!",
-        successDesc: "Gracias por elegir Salsa Guy Richmond, LLC. Su cuestionario ha sido registrado, la reserva de calendario está pendiente y los documentos de propuesta se están generando.",
-        report: "Imprimir / Guardar Informe",
-        reset: "Enviar Otra Solicitud",
-        editRequest: "Editar Solicitud Enviada",
-        visitSalsa: "Ir a Salsa Richmond",
-        visitTradicion: "Ir a Tradición",
-        askAnother: "¿Qué le gustaría hacer a continuación?",
+        emailReceipt: "📧 Enviar recibo con ID de Evento instantáneo a mi correo",
+        submitBtn: "Enviar Solicitud de Evento",
         pressKitTitle: "Kits de Prensa y Archivos Multimedia:",
         pressKitDesc: "Biografía Oficial, Logotipos HD, Fotos de Espectáculos y Material Promocional",
-        pressKitSalsaBtnText: "Kit de Prensa - Salsa Guy",
-        pressKitTradicionBtnText: "Kit de Prensa - Tradición",
-        langBtn: "English 🇺🇸",
-        scalePublic: "Evento Público Grande",
-        scalePrivate: "Evento Privado Pequeño",
-        scaleIntl: "Internacional: Fuera de EE. UU.",
-        lessons: [
-          "Ninguno",
-          "Clase de Baile en Línea de Salsa Guy (Salsa, Merengue, Bachata y Chachachá)",
-          "Folclore Puertorriqueño - Bomba y Plena (Música en Vivo)",
-          "Merengue - República Dominicana",
-          "Bachata - República Dominicana",
-          "Salsa - Puerto Rico",
-          "Cuba - Rueda",
-          "Coreografías para Bodas o Quinceañeros",
-          "Toda la Salsa, Merengue y Bachata",
-          "Para Construcción de Equipos (Team Building)",
-          "Virtual",
-          "Primer Baile de Bodas",
-          "Para Niños"
-        ],
+        pressKitSalsa: "Kit de Prensa - Salsa Guy",
+        pressKitTradicion: "Kit de Prensa - Tradición",
+        successTitle: "¡Solicitud de Evento Recibida!",
+        successDesc: "Gracias por elegir Salsa Guy Richmond, LLC. Su cuestionario ha sido registrado, la reserva de calendario está pendiente y los documentos de propuesta se están generando.",
+        askAnother: "¿Qué le gustaría hacer a continuación?",
+        resetBtn: "Enviar Otra Solicitud",
+        editBtn: "Editar Solicitud Enviada",
+        reportBtn: "Imprimir / Guardar Informe",
+        visitSalsa: "Ir a Salsa Richmond",
+        visitTradicion: "Ir a Tradición"
+      },
+      fr: {
+        settingsTitle: "Paramètres",
+        title: "Parlez-moi de vous et de votre événement !",
+        notice: "<i class='fa-solid fa-calendar-days'></i> <strong>Avis de Disponibilité :</strong><br>• <strong>Vendredi – Dimanche :</strong> Disponible pour spectacles et cours de danse.<br>• <strong>Lundi – Jeudi :</strong> Dédié exclusivement aux cours de danse aux USA.",
+        sec1: "<i class='fa-solid fa-user-circle'></i> 1. Informations de Contact et Organisation",
+        clientName: "Votre Nom",
+        clientEmail: "Adresse E-mail",
+        clientPhone: "Numéro de Téléphone",
+        represent: "Qui représentez-vous ?",
+        eventName: "Nom de l'Événement",
+        eventScale: "S'agit-il d'un grand événement public ou privé ?",
+        websites: "Sites Web de l'Événement ou Organisation",
+        purpose: "Objectif de cet Événement",
+        hearAbout: "Comment avez-vous entendu parler de nous ?",
+        description: "Décrivez votre Événement",
+        isInternational: "Services demandés HORS des USA ?",
+        destinationCountry: "Sélectionnez le Pays de Destination",
+        sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Date, Heure et Logistique",
+        eventDate: "Date de l'Événement",
+        eventTime: "Heure de Début",
+        eventAddress: "Adresse du Lieu de l'Événement",
+        regionalLocation: "L'événement est-il situé en Virginie (USA) ?",
+        outOfStateLogistics: "Logistique de Voyage Hors État",
+        intlVenue: "Pays, Ville et Nom du Lieu Spécifique",
+        intlLogistics: "Logistique des Vols Internationaux et Hébergement",
+        visaSupport: "Support de Visa et Documents Légaux",
+        currency: "Devise Préférée et Conditions de Paiement",
+        customsNotes: "Costumes, Accessoires et Douanes",
+        attendance: "Nombre d'Participants Attendu",
+        admission: "Type d'Admission à l'Événement",
+        duration: "Combien de TEMPS demandez-vous ?",
+        audiencePart: "Interactif (PARTICIPATION DU PUBLIC)",
+        areaSize: "Taille de la Scène / Piste de Danse",
+        surface: "Sur quelle SURFACE aura lieu le spectacle ?",
+        venueSetting: "Cadre du Lieu (Intérieur / Extérieur)",
+        soundSystem: "Équipement de Système Sonore",
+        audienceAges: "Tranches d'Âge Attendues",
+        provisions: "FOURNIREZ-VOUS aux artistes :",
+        sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Détails Grands Événements Publics",
+        sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Événements Privés et Hospitalité",
+        sec4: "<i class='fa-solid fa-music'></i> 4. Services Demandés",
+        perfServices: "Quels SERVICES DE SPECTACLE désirez-vous ?",
+        otherPerfServices: "Autres services de spectacle souhaités ?",
+        lessonServices: "Quels COURS DE DANSE désirez-vous ?",
+        otherServices: "Services Supplémentaires Nécessaires",
+        secFile: "<i class='fa-solid fa-paperclip'></i> 5. Fichiers Joints",
+        fileUpload: "Télécharger un Document d'Événement",
+        fileBoxText: "Cliquez ou glissez votre fichier ici",
+        sec5: "<i class='fa-solid fa-file-contract'></i> 6. Instructions Spéciales",
+        notes: "Instructions Spéciales ou Chansons Demandées",
+        sec7: "<i class='fa-solid fa-circle-info'></i> 7. Informations Générales",
+        hiringPerformers: "ENGAGER DES ARTISTES SIMILAIRES",
+        genInfoP1: "Offrir une variété de performances captivera vos invités tout au long de l'événement.",
+        genInfoP2: "Une variété de divertissements garantit une expérience mémorable pour tous.",
+        genInfoP3: "Je serais ravi de discuter de la façon dont nos prestations uniques enrichiront votre événement.",
+        terms: "J'accepte les Conditions d'Utilisation et la Politique de Confidentialité",
+        emailReceipt: "📧 Envoyer un reçu instantané à mon e-mail",
+        submitBtn: "Soumettre la Demande d'Événement",
+        pressKitTitle: "Kits de Presse et Médias:",
+        pressKitDesc: "Bios Officielles, Logos HD et Photos de Spectacle",
+        pressKitSalsa: "Kit de Presse - Salsa Guy",
+        pressKitTradicion: "Kit de Presse - Tradición",
+        successTitle: "Demande d'Événement Reçue !",
+        successDesc: "Merci d'avoir choisi Salsa Guy Richmond, LLC. Votre questionnaire a été enregistré.",
+        askAnother: "Que souhaitez-vous faire ensuite ?",
+        resetBtn: "Soumettre une autre demande",
+        editBtn: "Modifier la demande soumise",
+        reportBtn: "Imprimer / Enregistrer le rapport",
+        visitSalsa: "Visiter Salsa Richmond",
+        visitTradicion: "Visiter Tradición"
+      },
+      de: {
+        settingsTitle: "Einstellungen",
+        title: "Erzählen Sie uns von Ihrer Veranstaltung!",
+        notice: "<i class='fa-solid fa-calendar-days'></i> <strong>Verfügbarkeitshinweis:</strong><br>• <strong>Freitag – Sonntag:</strong> Verfügbar für Live-Auftritte und Tanzkurse.<br>• <strong>Montag – Donnerstag:</strong> Ausschließlich Tanzkurse in den USA.",
+        sec1: "<i class='fa-solid fa-user-circle'></i> 1. Kontakt- und Organisationsdaten",
+        clientName: "Ihr Name",
+        clientEmail: "E-Mail-Adresse",
+        clientPhone: "Telefonnummer",
+        represent: "Wen vertreten Sie?",
+        eventName: "Name der Veranstaltung",
+        eventScale: "Große öffentliche oder kleine private Veranstaltung?",
+        websites: "Websites der Veranstaltung oder Organisation",
+        purpose: "Zweck dieser Veranstaltung",
+        hearAbout: "Wie haben Sie von uns erfahren?",
+        description: "Beschreiben Sie Ihre Veranstaltung",
+        isInternational: "Dienstleistungen AUßERHALB der USA gewünscht?",
+        destinationCountry: "Zielland auswählen",
+        sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Datum, Uhrzeit & Logistik",
+        eventDate: "Veranstaltungsdatum",
+        eventTime: "Startzeit",
+        eventAddress: "Veranstaltungsort (Adresse)",
+        regionalLocation: "Findet das Event in Virginia (USA) statt?",
+        outOfStateLogistics: "Logistik für Auftritte außerhalb von Virginia",
+        intlVenue: "Land, Stadt & Name des Veranstaltungsortes",
+        intlLogistics: "Internationale Flug- & Unterkunftlogistik",
+        visaSupport: "Visum- & rechtliche Unterstützung",
+        currency: "Bevorzugte Währung & Zahlungsbedingungen",
+        customsNotes: "Kostüme, Requisiten & Zollbestimmungen",
+        attendance: "Erwartete Teilnehmerzahl",
+        admission: "Art des Einlasses",
+        duration: "Wie viel ZEIT benötigen Sie von uns?",
+        audiencePart: "Interaktiv (PUBLIKUMSBETEILIGUNG)",
+        areaSize: "Größe der Tanzfläche / Bühne",
+        surface: "Auf welcher OBERFLÄCHE findet der Auftritt statt?",
+        venueSetting: "Veranstaltungsort (Innen / Außen)",
+        soundSystem: "Musikanlage & Tonausstattung",
+        audienceAges: "Erwartete Altersgruppen",
+        provisions: "BIETEN SIE den Künstlern:",
+        sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Details für große öffentliche Events",
+        sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Private Veranstaltungen & Gastfreundschaft",
+        sec4: "<i class='fa-solid fa-music'></i> 4. Gewünschte Dienstleistungen",
+        perfServices: "Welche SHOW-DIENSTLEISTUNGEN benötigen Sie?",
+        otherPerfServices: "Weitere gewünschte Show-Dienste?",
+        lessonServices: "Welche TANZKURS-DIENSTLEISTUNGEN benötigen Sie?",
+        otherServices: "Zusätzliche Dienstleistungen",
+        secFile: "<i class='fa-solid fa-paperclip'></i> 5. Dateianhänge",
+        fileUpload: "Veranstaltungsdokument hochladen",
+        fileBoxText: "Klicken oder Datei hierher ziehen",
+        sec5: "<i class='fa-solid fa-file-contract'></i> 6. Besondere Hinweise & Bedingungen",
+        notes: "Besondere Wünsche oder Musikwünsche",
+        sec7: "<i class='fa-solid fa-circle-info'></i> 7. Allgemeine Informationen",
+        hiringPerformers: "ÄHNLICHE KÜNSTLER BUCHEN",
+        genInfoP1: "Eine Vielzahl von Auftritten hält Ihre Gäste während der gesamten Veranstaltung begeistert.",
+        genInfoP2: "Verschiedene Darbietungen sprechen ein breiteres Publikum an.",
+        genInfoP3: "Ich freue mich darauf zu besprechen, wie unsere Auftritte Ihr Event bereichern werden.",
+        terms: "Ich stimme den Nutzungsbedingungen und der Datenschutzrichtlinie zu",
+        emailReceipt: "📧 Sofortige Bestätigungs-E-Mail mit Event-ID senden",
+        submitBtn: "Veranstaltungsanfrage absenden",
+        pressKitTitle: "Pressemappen & Medien:",
+        pressKitDesc: "Offizielle Bios, HD-Logos & Auftrittsfotos",
+        pressKitSalsa: "Pressemappe - Salsa Guy",
+        pressKitTradicion: "Pressemappe - Tradición",
+        successTitle: "Veranstaltungsanfrage erhalten!",
+        successDesc: "Vielen Dank, dass Sie sich für Salsa Guy Richmond, LLC entschieden haben.",
+        askAnother: "Was möchten Sie als Nächstes tun?",
+        resetBtn: "Weitere Anfrage senden",
+        editBtn: "Gesendete Anfrage bearbeiten",
+        reportBtn: "Zusammenfassung drucken / speichern",
+        visitSalsa: "Zu Salsa Richmond",
+        visitTradicion: "Zu Tradición"
       }
     };
+
+    function changeLanguage(langCode) {
+      currentLang = langCode || 'en';
+      const t = fullDict[currentLang] || fullDict.en;
+
+      // Update text helper
+      const setTxt = (id, val, isHTML = false) => {
+        const el = document.getElementById(id);
+        if (el && val) {
+          if (isHTML) el.innerHTML = val;
+          else if (el.childNodes.length > 0 && el.childNodes[0].nodeType === 3) {
+            el.childNodes[0].nodeValue = val + (val.endsWith('*') ? '' : ' ');
+          } else {
+            el.textContent = val;
+          }
+        }
+      };
+
+      setTxt('lblSettingsTitle', t.settingsTitle);
+      setTxt('txtTitle', t.title);
+      setTxt('txtNotice', t.notice, true);
+      setTxt('sec1Title', t.sec1, true);
+      setTxt('lblClientName', t.clientName);
+      setTxt('lblClientEmail', t.clientEmail);
+      setTxt('lblClientPhone', t.clientPhone);
+      setTxt('lblRepresent', t.represent);
+      setTxt('lblEventName', t.eventName);
+      setTxt('lblEventScale', t.eventScale);
+      setTxt('lblWebsites', t.websites);
+      setTxt('lblPurpose', t.purpose);
+      setTxt('lblHearAbout', t.hearAbout);
+      setTxt('lblDescription', t.description);
+      setTxt('lblIsInternational', t.isInternational);
+      setTxt('lblDestinationCountry', t.destinationCountry);
+
+      setTxt('sec2Title', t.sec2, true);
+      setTxt('lblEventDate', t.eventDate);
+      setTxt('lblEventTime', t.eventTime);
+      setTxt('lblEventAddress', t.eventAddress);
+      setTxt('lblRegionalLocation', t.regionalLocation);
+      setTxt('lblOutOfStateLogistics', t.outOfStateLogistics);
+      setTxt('lblIntlVenue', t.intlVenue);
+      setTxt('lblIntlLogistics', t.intlLogistics);
+      setTxt('lblVisaSupport', t.visaSupport);
+      setTxt('lblCurrency', t.currency);
+      setTxt('lblCustomsNotes', t.customsNotes);
+      setTxt('lblAttendance', t.attendance);
+      setTxt('lblAdmission', t.admission);
+      setTxt('lblDuration', t.duration);
+      setTxt('lblAudiencePart', t.audiencePart);
+      setTxt('lblAreaSize', t.areaSize);
+      setTxt('lblSurface', t.surface);
+      setTxt('lblVenueSetting', t.venueSetting);
+      setTxt('lblSoundSystem', t.soundSystem);
+      setTxt('lblAudienceAges', t.audienceAges);
+      setTxt('lblProvisions', t.provisions);
+
+      setTxt('sec3aTitle', t.sec3a, true);
+      setTxt('sec3bTitle', t.sec3b, true);
+      setTxt('sec4Title', t.sec4, true);
+      setTxt('lblPerfServices', t.perfServices);
+      setTxt('lblOtherPerfServices', t.otherPerfServices);
+      setTxt('lblLessonServices', t.lessonServices);
+      setTxt('lblOtherServices', t.otherServices);
+
+      setTxt('secFileTitle', t.secFile, true);
+      setTxt('lblFileUpload', t.fileUpload);
+      setTxt('fileBoxText', t.fileBoxText);
+      setTxt('sec5Title', t.sec5, true);
+      setTxt('lblNotes', t.notes);
+      setTxt('sec7Title', t.sec7, true);
+      setTxt('lblHiringPerformers', t.hiringPerformers);
+      setTxt('lblGenInfoP1', t.genInfoP1);
+      setTxt('lblGenInfoP2', t.genInfoP2);
+      setTxt('lblGenInfoP3', t.genInfoP3);
+      setTxt('lblTerms', t.terms, true);
+      setTxt('lblEmailReceipt', t.emailReceipt);
+      setTxt('btnSubmitText', t.submitBtn);
+
+      setTxt('lblPressKitTitle', t.pressKitTitle);
+      setTxt('lblPressKitDesc', t.pressKitDesc);
+      setTxt('btnPressKitSalsaText', t.pressKitSalsa);
+      setTxt('btnPressKitTradicionText', t.pressKitTradicion);
+
+      setTxt('txtSuccessTitle', t.successTitle);
+      setTxt('txtSuccessDesc', t.successDesc);
+      setTxt('txtAskAnother', t.askAnother, true);
+      setTxt('btnResetText', t.resetBtn);
+      setTxt('btnEditText', t.editBtn);
+      setTxt('btnReportText', t.reportBtn);
+      setTxt('btnVisitSalsaText', t.visitSalsa);
+      setTxt('btnVisitTradicionText', t.visitTradicion);
+
+      // Trigger Google Translate for full page automatic translation if available
+      if (window.googleTranslateElementInit) {
+        const gtCombo = document.querySelector('.goog-te-combo');
+        if (gtCombo) {
+          gtCombo.value = langCode;
+          gtCombo.dispatchEvent(new Event('change'));
+        }
+      }
+    }
+
 
     // H1.1 Day / Night Mode Toggle
     const themeToggleBtn = document.getElementById('themeToggleBtn');
