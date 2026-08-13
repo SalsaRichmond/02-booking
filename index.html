@@ -1989,6 +1989,385 @@
   <script>
     const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzg9Tr13gNlaEbFVnGxPIvqO5HpydONu5URI4MVR7GU_vjlZTUllgNxVOy2t6Rvyhlk/exec";
 
+    const PERFORMANCE_DATA = {
+      coco_mexico: {
+        title: "A Selection of Dances from the Disney Movie COCO (Mexico)",
+        icon: "fa-film",
+        photo: "meet_greet_photo.png",
+        video: "https://www.youtube.com/watch?v=Gf0Ym9m2Mqo",
+        pitch: "Experience the magic of Disney-Pixar's COCO brought to life! Featuring favorite characters like Miguel, Hector, and Imelda dancing to iconic hit songs from the movie including 'Un Poco Loco' and 'Proud Corazón'.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Iconic Character Costumes & Mask Performances</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Energy Choreography to Popular Movie Hits</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Interactive Audience Engagement & Family Friendly</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Perfect for Festivals, Schools & Day of the Dead Celebrations</li>
+        `,
+        quote: `"Depicts the Mexican holiday Día de los Muertos featuring characters like Miguel, Hector, and Imelda from the Disney-Pixar movie Coco, dancing to popular songs from the film."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 to 10 Performers (Requires sound system & large space)</li>
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers (Requires sound system)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 to 10 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.u2ev1fpxfe3"
+      },
+      viejitos_mexico: {
+        title: "El Baile de los Viejitos (The Dance of The Old Men) (Mexico)",
+        icon: "fa-person-cane",
+        photo: "meet_greet_photo.png",
+        video: "https://www.youtube.com/watch?v=f7KjIcjl0GQ",
+        pitch: "A beloved, hilarious traditional folk dance from Michoacán, Mexico! Dancers wear clay masks of smiling old men and wooden canes, starting with comical slow movements before bursting into energetic tap dancing.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Michoacán Clay Masks & Carved Canes</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Humorous Comical Transition to Fast Tap Dancing</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Crowd-Pleasing Mexican Folkloric Tradition</li>
+        `,
+        quote: `"Dancers wear clay masks depicting smiling old men and carry carved wooden canes. The dance starts slowly mimicking old age before transitioning into a fast-paced energetic tap dance."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 to 10 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 to 10 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.iz1tgf3gwi18"
+      },
+      llorona_mexico: {
+        title: "The Waltz of La Llorona (Weeping Woman) (Mexico)",
+        icon: "fa-ghost",
+        photo: "llorona.jpg",
+        pitch: "A hauntingly elegant and beautiful waltz depicting the legendary figure of La Llorona and La Catrina from Mexican folklore in stunning traditional attire.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Elegant Catrina & La Llorona Costume Artistry</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Hauntingly Beautiful Waltz Choreography</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Perfect for Cultural & Day of the Dead Festivities</li>
+        `,
+        quote: `"A hauntingly beautiful waltz that represents the legendary figure of La Llorona (or Catrina) from Mexican folklore."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 to 10 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 to 10 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.omqh83ecrbmx"
+      },
+      dia_muertos_mexico: {
+        title: "Día de los Muertos - Day of the Dead Celebration (Mexico)",
+        icon: "fa-skull",
+        photo: "dia_muertos.jpg",
+        pitch: "A vibrant, festive celebration honoring Día de los Muertos! Combines traditional Mexican folkloric dance styles, elaborate face paint, and joyful musical tribute.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Festive Day of the Dead Choreography & Attire</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Rich Mexican Folkloric Musical Showcase</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Great for Community & Cultural Celebrations</li>
+        `,
+        quote: `"A festive celebration dance honoring the Day of the Dead, combining various traditional Mexican folkloric dance and musical styles."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 to 10 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 to 10 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.mxgg2sd19z8r"
+      },
+      salsa_rueda_cuba: {
+        title: "Salsa Rueda (Cuba)",
+        icon: "fa-compact-disc",
+        photo: "meet_greet_photo.png",
+        video: "https://www.youtube.com/watch?v=5gHSoTPZs_g",
+        pitch: "The thrilling Cuban Rueda de Casino! Couples dance in a synchronized circle, executing exciting turn patterns called out dynamically in real-time by a designated leader.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Synchronized Circular Cuban Rueda Choreography</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Dynamic Caller Leading Fast Turn Patterns</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Energy Festival & Party Favorite</li>
+        `,
+        quote: `"Originated in Cuba in the 1950s. Couples dance in a circle, executing synchronized moves called out by a designated leader."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 to 10 Performers (5-10 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 Performers (3-10 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.4i00j5hmn4fs"
+      },
+      bomba_puerto_rico: {
+        title: "Bomba (Puerto Rico)",
+        icon: "fa-drum",
+        photo: "meet_greet_photo.png",
+        video: "https://www.youtube.com/watch?v=W6UqWWK2a2Y",
+        pitch: "An ancient Afro-Puerto Rican musical tradition dating to the 17th century! An interactive dialogue where the dancer's improvised movements challenge and command the lead subidor drum.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Interactive Dancer-Drummer Dialogue & Challenge</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Traditional Costumes & Skirt Work</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Powerful Afro-Puerto Rican Heritage Showcase</li>
+        `,
+        quote: `"An ancient Afro-Puerto Rican dance and music style dating back to the 17th century, characterized by an interactive dialogue where the dancer's movements challenge and dictate the rhythm played by the lead drummer."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 8 Performers (12 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 Performers (3-10 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.v4lswcm84zw"
+      },
+      plena_puerto_rico: {
+        title: "Plena (Puerto Rico)",
+        icon: "fa-guitar",
+        photo: "meet_greet_photo.png",
+        video: "https://www.youtube.com/watch?v=7IWBN8jGqqc",
+        pitch: "The 'sung newspaper' of Puerto Rico! Developed in coastal Ponce, Plena combines panderos (hand drums) with narrative songs telling stories of daily community life.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Pandero (Hand Drum) Rhythms & Singing</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Vibrant Storytelling & Festive Dance Movements</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Joyful Coastal Puerto Rican Folklórico</li>
+        `,
+        quote: `"Developed in the coastal barrios of Ponce around the late 19th/early 20th century. Often referred to as the 'sung newspaper' because its lyrics narrate daily life events."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 8 Performers (12 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 Performers (3-10 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.120b1nf06hcf"
+      },
+      seis_puerto_rico: {
+        title: "Seis (Puerto Rico)",
+        icon: "fa-sun",
+        photo: "meet_greet_photo.png",
+        video: "https://www.youtube.com/watch?v=hk9HGffnRnI",
+        pitch: "The rich traditional music of Puerto Rico's mountain farmers (jíbaros)! Features Spanish colonial footwork, vibrant costumes, and the 10-string Puerto Rican cuatro.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Jíbaro Mountain Folk Attire</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Spanish Colonial Footwork & Cuatro Melodies</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Traditional Festival & Celebration Performance</li>
+        `,
+        quote: `"The traditional music of Puerto Rico's mountain farmers (jíbaros), featuring Spanish colonial roots and the cuatro guitar."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 8 Performers (3 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 Performers (3 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.8blubd79glpf"
+      },
+      danza_puerto_rico: {
+        title: "Danza (Puerto Rico)",
+        icon: "fa-fan",
+        photo: "meet_greet_photo.png",
+        video: "https://www.youtube.com/watch?v=i5UXooi4pLg",
+        pitch: "An aristocratic 19th-century ballroom dance from Ponce! Dancers glide in formal gowns and tuxedos, using handheld fans to convey subtle messages in classical elegance.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Society Formal Gowns & Ballroom Elegance</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Handheld Fan Language & Classical Choreography</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Historical Puerto Rican Cultural Heritage</li>
+        `,
+        quote: `"A formal ballroom dance that emerged in Ponce around 1870, influenced by the Cuban habanera and classical European waltzes."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 8 to 10 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 10 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.ynlss9y2an4i"
+      },
+      cumbia_salvador: {
+        title: "Cumbia (El Salvador)",
+        icon: "fa-music",
+        photo: "meet_greet_photo.png",
+        video: "https://www.youtube.com/watch?v=SKPAjpP-AI4",
+        pitch: "Set to the legendary Salvadoran anthem 'El Sombrero Azul'! A festive performance fusing indigenous melodies with upbeat clave rhythms and bright brass horn arrangements.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Performance Set to 'El Sombrero Azul'</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Vibrant Salvadoran Costumes & Energetic Steps</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Central American Pride & Cultural Celebration</li>
+        `,
+        quote: `"Based on the popular Salvadoran song 'El Sombrero Azul,' this dance fuses indigenous melodies with African clave rhythms."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 10 Performers (3 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 to 6 Performers (3 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.3jbwxosjacst"
+      },
+      comaleras_salvador: {
+        title: "Las Comaleras (El Salvador)",
+        icon: "fa-utensils",
+        photo: "meet_greet_photo.png",
+        video: "https://www.youtube.com/watch?v=5w46af6It4U",
+        pitch: "A delightful rural Salvadoran folk dance celebrating women who bake tortillas over traditional clay comales griddles with expressive theatrical storytelling.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Traditional Clay Comales & Tortilla Making Props</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Expressive Rural Folk Choreography</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Salvadoran Country Costumes</li>
+        `,
+        quote: `"A rural folk dance celebrating Salvadoran women who work over traditional clay comales (griddles), mimicking the process of shaping and cooking tortillas."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 Performers (3 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 Performers (3 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.ad9yggt7cmxc"
+      },
+      cortadoras_salvador: {
+        title: "Las Cortadoras (El Salvador) COMING SOON",
+        icon: "fa-wheat-awn",
+        photo: "cortadoras.jpg",
+        pitch: "Depicts farmworkers harvesting agricultural crops in rural El Salvador. Performers wear traditional colorful skirts and utilize harvest baskets and props!",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Salvadoran Harvest Skirts & Baskets Showcase</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Agricultural Folk Choreography</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Central American Cultural Heritage</li>
+        `,
+        quote: `"Depicts farmworkers harvesting agricultural crops in rural El Salvador. Performers wear traditional colorful costumes and utilize props like harvest baskets."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 Performers (3 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 Performers (3 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.p5sjlz8viodw"
+      },
+      cumbia_colombia: {
+        title: "Cumbia (Colombia)",
+        icon: "fa-fire",
+        photo: "meet_greet_photo.png",
+        video: "https://www.youtube.com/watch?v=ePVSPGNmTjg",
+        pitch: "The timeless courtship dance of Colombia's Caribbean coast! Partners dance gracefully without touching, displaying candle-lit romance, swaying hips, and majestic skirt work.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Colombian Coastal Courtship Choreography</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Candle Props & Flowing Traditional Costumes</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Elegance Romance & Rhythmic Flute Melodies</li>
+        `,
+        quote: `"A courtship dance from the coastal regions of Colombia. Danced in couples where partners do not touch, mimicking amorous conquest."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 4 to 6 Performers (3-6 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 Performers (3-6 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.adfdbqcu00up"
+      },
+      pollera_colora_colombia: {
+        title: "Cumbia \"La Pollera Colorá\" (Colombia)",
+        icon: "fa-shirt",
+        photo: "meet_greet_photo.png",
+        video: "https://www.youtube.com/watch?v=8x7pBNlXPcc",
+        pitch: "Named after the famous 'brightly colored skirt'! Set to the legendary 1960s Colombian cumbia anthem with explosive skirt movement and festive energy.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Iconic Bright Red & Gold Pollera Skirts</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Choreographed to the Classic 1960s Cumbia Hit</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Showstopping Visual & Musical Festival Act</li>
+        `,
+        quote: `"Named after the 'brightly colored skirt' which serves as the traditional dress for women in Colombia, set to the famous cumbia song of the same name."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 10 Performers (3-6 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 to 6 Performers (3-6 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.lrrar6hw8e9w"
+      },
+      mapale_colombia: {
+        title: "El Mapalé (Colombia)",
+        icon: "fa-fish",
+        photo: "mapale.jpg",
+        pitch: "An explosive, high-speed Afro-Colombian dance! Mimics the frantic wriggling of the mapalé fish caught out of water with rapid drum beats and athletic acrobatics.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Speed Afro-Colombian Drumming & Movement</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Athletic Wriggling & Rapid Hip isolations</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Vibrant Afro-Caribbean Coast Attire</li>
+        `,
+        quote: `"A fast-paced, high-energy Afro-Colombian dance from the Caribbean coast. Named after a fish that wriggles out of water, mimicking these movements to rapid drum beats."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.u6muchltmued"
+      },
+      tango_argentina: {
+        title: "Tango (Argentina)",
+        icon: "fa-heart",
+        photo: "meet_greet_photo.png",
+        video: "https://www.youtube.com/watch?v=c2Lfe6EUuzA",
+        pitch: "The sensual, passionate Argentine Tango from Buenos Aires! Characterized by intimate partner connection, dramatic leg wraps (ganchos), and intricate footwork.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Intimate & Dramatic Buenos Aires Ballroom Tango</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Intricate Footwork, Ganchos & Boleos</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Elegant Formal Evening Attire</li>
+        `,
+        quote: `"Originating in Buenos Aires in the late 19th century, Argentine Tango is an intimate, improvisational partner dance characterized by intricate footwork."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Duo Ensemble:</strong> 2 Dancers</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 to 10 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.9o6kw0vhisrt"
+      },
+      ladies_in_red: {
+        title: "Salsa Performance Group (Ladies in Red)",
+        icon: "fa-gem",
+        photo: "ladies_in_red.jpg",
+        pitch: "A glamorous all-female performance ensemble showcasing synchronized Salsa, Bachata, and Cha-cha in dazzling red sequin gowns!",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Dazzling Red Sequin Costume Showcase</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Synchronized Salsa, Bachata & Cha-Cha Styling</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Impact Stage Show for Galas & Events</li>
+        `,
+        quote: `"An all-female performance group showcasing Salsa, Bachata, and Cha-cha in vibrant red costumes."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 3 to 4 Performers (3-10 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 Performers (3-10 mins)</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.3mokvxbrgbuk"
+      },
+      meet_greet_photo: {
+        title: "Folk Characters Meet & Greet (Puerto Rico & Mexico)",
+        icon: "fa-camera-retro",
+        photo: "meet_greet_photo.png",
+        pitch: "Our Meet & Greet and Photo Op experiences allow guests to interact directly with performers, take memorable photos in full authentic folk costumes, and bring extra warmth and cultural engagement to your event!",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Puerto Rican & Latin Folk Character Interaction</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Vibrant High-Res Photo Ops for Guests & VIPs</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Cultural Costume Showcase & Storytelling</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Perfect for Festivals, Corporate Events & Private Parties</li>
+        `,
+        quote: `"The traditional folk characters from Puerto Rico, Mexico, and Latin America are dressed in full authentic folk attire and facilitate event promotion and public engagement, allowing the public and guests to pose with the performers for pictures and unforgettable photo ops."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 5 to 8 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-book-open" style="color: #38BDF8;"></i> <strong>Folk Character Showcase:</strong> Includes brief cultural explanation & festival history</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.9ozfl2xso0dr"
+      },
+      folk_characters_show: {
+        title: "Folk Characters Show (Puerto Rico)",
+        icon: "fa-masks-theater",
+        photo: "meet_greet_photo.png",
+        pitch: "A theatrical presentation outlining the history and folklore of Puerto Rican festival characters, featuring up to six masked Cabezudos & Vejigantes!",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Theatrical History Presentation & Storytelling</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Up to 6 Masked Cabezudos & Vejigantes Characters</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Interactive Parade & Stage Production</li>
+        `,
+        quote: `"A theatrical presentation outlining the history and meaning of traditional Puerto Rican festival characters, specifically the masked Cabezudos."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 5 to 6 Performers (up to 30 mins)</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.owfw8w80w5rn"
+      },
+      singer_mexico: {
+        title: "Singer - Alma Ranchera (Mexico)",
+        icon: "fa-microphone",
+        photo: "singer_mexico_v2.jpg",
+        pitch: "Vocal performance by artist Alma Ranchera in full charro attire! Performs legendary Mexican rancheras like 'Guadalajara', 'Volver Volver', and 'El Mariachi Loco'.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Mariachi / Charro Outfit Showcase</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Live Ranchera Vocals & Audience Interaction</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Repertoire of Beloved Mexican Classics</li>
+        `,
+        quote: `"Traditional Ranchera vocal performance by artist Alma Ranchera, wearing the iconic charro costume."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-microphone-lines" style="color: #EC4899;"></i> <strong>Vocal Soloist:</strong> Requires sound system</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 30 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.vw6lti8subow"
+      },
+      cantores_tradicion: {
+        title: "Los Cantores de Tradicion (Puerto Rican Christmas Parranda)",
+        icon: "fa-gifts",
+        photo: "cantores.jpg",
+        pitch: "The festive Puerto Rican Parranda caroling tradition! Featuring Christmas classics like 'Mi Burrito Sabanero', 'Los Peces En El Río', and 'Feliz Navidad'.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Traditional Puerto Rican Parranda Caroling</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Festive Percussion (Güiro, Maracas, Tambora) & Vocals</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Perfect for Holiday Parties & Christmas Events</li>
+        `,
+        quote: `"A holiday singing performance showcasing the Puerto Rican Parranda (caroling) tradition with classic Latin American Christmas songs."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-users" style="color: #EC4899;"></i> <strong>Musical Ensemble:</strong> Small space / sound system</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 15 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances#h.fogbsebxxaxb"
+      }
+    };
+
     let currentLang = 'en';
     let uploadedFileData = null;
 
@@ -3373,384 +3752,7 @@ function updateConditionalSections() {
     }
 
     // 21 Performance Services Dynamic Data Dictionary with Extracted Media & Links
-    const PERFORMANCE_DATA = {
-      coco_mexico: {
-        title: "A Selection of Dances from the Disney Movie COCO (Mexico)",
-        icon: "fa-film",
-        photo: "meet_greet_photo.png",
-        video: "https://www.youtube.com/watch?v=Gf0Ym9m2Mqo",
-        pitch: "Experience the magic of Disney-Pixar's COCO brought to life! Featuring favorite characters like Miguel, Hector, and Imelda dancing to iconic hit songs from the movie including 'Un Poco Loco' and 'Proud Corazón'.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Iconic Character Costumes & Mask Performances</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Energy Choreography to Popular Movie Hits</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Interactive Audience Engagement & Family Friendly</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Perfect for Festivals, Schools & Day of the Dead Celebrations</li>
-        `,
-        quote: `"Depicts the Mexican holiday Día de los Muertos featuring characters like Miguel, Hector, and Imelda from the Disney-Pixar movie Coco, dancing to popular songs from the film."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 to 10 Performers (Requires sound system & large space)</li>
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers (Requires sound system)</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 to 10 Minutes</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.u2ev1fpxfe3"
-      },
-      viejitos_mexico: {
-        title: "El Baile de los Viejitos (The Dance of The Old Men) (Mexico)",
-        icon: "fa-person-cane",
-        photo: "meet_greet_photo.png",
-        video: "https://www.youtube.com/watch?v=f7KjIcjl0GQ",
-        pitch: "A beloved, hilarious traditional folk dance from Michoacán, Mexico! Dancers wear clay masks of smiling old men and wooden canes, starting with comical slow movements before bursting into energetic tap dancing.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Michoacán Clay Masks & Carved Canes</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Humorous Comical Transition to Fast Tap Dancing</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Crowd-Pleasing Mexican Folkloric Tradition</li>
-        `,
-        quote: `"Dancers wear clay masks depicting smiling old men and carry carved wooden canes. The dance starts slowly mimicking old age before transitioning into a fast-paced energetic tap dance."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 to 10 Performers</li>
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 to 10 Minutes</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.iz1tgf3gwi18"
-      },
-      llorona_mexico: {
-        title: "The Waltz of La Llorona (Weeping Woman) (Mexico)",
-        icon: "fa-ghost",
-        photo: "llorona.jpg",
-        pitch: "A hauntingly elegant and beautiful waltz depicting the legendary figure of La Llorona and La Catrina from Mexican folklore in stunning traditional attire.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Elegant Catrina & La Llorona Costume Artistry</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Hauntingly Beautiful Waltz Choreography</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Perfect for Cultural & Day of the Dead Festivities</li>
-        `,
-        quote: `"A hauntingly beautiful waltz that represents the legendary figure of La Llorona (or Catrina) from Mexican folklore."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 to 10 Performers</li>
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 to 10 Minutes</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.omqh83ecrbmx"
-      },
-      dia_muertos_mexico: {
-        title: "Día de los Muertos - Day of the Dead Celebration (Mexico)",
-        icon: "fa-skull",
-        photo: "dia_muertos.jpg",
-        pitch: "A vibrant, festive celebration honoring Día de los Muertos! Combines traditional Mexican folkloric dance styles, elaborate face paint, and joyful musical tribute.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Festive Day of the Dead Choreography & Attire</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Rich Mexican Folkloric Musical Showcase</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Great for Community & Cultural Celebrations</li>
-        `,
-        quote: `"A festive celebration dance honoring the Day of the Dead, combining various traditional Mexican folkloric dance and musical styles."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 to 10 Performers</li>
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 to 10 Minutes</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.mxgg2sd19z8r"
-      },
-      salsa_rueda_cuba: {
-        title: "Salsa Rueda (Cuba)",
-        icon: "fa-compact-disc",
-        photo: "meet_greet_photo.png",
-        video: "https://www.youtube.com/watch?v=5gHSoTPZs_g",
-        pitch: "The thrilling Cuban Rueda de Casino! Couples dance in a synchronized circle, executing exciting turn patterns called out dynamically in real-time by a designated leader.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Synchronized Circular Cuban Rueda Choreography</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Dynamic Caller Leading Fast Turn Patterns</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Energy Festival & Party Favorite</li>
-        `,
-        quote: `"Originated in Cuba in the 1950s. Couples dance in a circle, executing synchronized moves called out by a designated leader."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 to 10 Performers (5-10 mins)</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 Performers (3-10 mins)</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.4i00j5hmn4fs"
-      },
-      bomba_puerto_rico: {
-        title: "Bomba (Puerto Rico)",
-        icon: "fa-drum",
-        photo: "meet_greet_photo.png",
-        video: "https://www.youtube.com/watch?v=W6UqWWK2a2Y",
-        pitch: "An ancient Afro-Puerto Rican musical tradition dating to the 17th century! An interactive dialogue where the dancer's improvised movements challenge and command the lead subidor drum.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Interactive Dancer-Drummer Dialogue & Challenge</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Traditional Costumes & Skirt Work</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Powerful Afro-Puerto Rican Heritage Showcase</li>
-        `,
-        quote: `"An ancient Afro-Puerto Rican dance and music style dating back to the 17th century, characterized by an interactive dialogue where the dancer's movements challenge and dictate the rhythm played by the lead drummer."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 8 Performers (12 mins)</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 Performers (3-10 mins)</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.v4lswcm84zw"
-      },
-      plena_puerto_rico: {
-        title: "Plena (Puerto Rico)",
-        icon: "fa-guitar",
-        photo: "meet_greet_photo.png",
-        video: "https://www.youtube.com/watch?v=7IWBN8jGqqc",
-        pitch: "The 'sung newspaper' of Puerto Rico! Developed in coastal Ponce, Plena combines panderos (hand drums) with narrative songs telling stories of daily community life.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Pandero (Hand Drum) Rhythms & Singing</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Vibrant Storytelling & Festive Dance Movements</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Joyful Coastal Puerto Rican Folklórico</li>
-        `,
-        quote: `"Developed in the coastal barrios of Ponce around the late 19th/early 20th century. Often referred to as the 'sung newspaper' because its lyrics narrate daily life events."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 8 Performers (12 mins)</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 Performers (3-10 mins)</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.120b1nf06hcf"
-      },
-      seis_puerto_rico: {
-        title: "Seis (Puerto Rico)",
-        icon: "fa-sun",
-        photo: "meet_greet_photo.png",
-        video: "https://www.youtube.com/watch?v=hk9HGffnRnI",
-        pitch: "The rich traditional music of Puerto Rico's mountain farmers (jíbaros)! Features Spanish colonial footwork, vibrant costumes, and the 10-string Puerto Rican cuatro.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Jíbaro Mountain Folk Attire</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Spanish Colonial Footwork & Cuatro Melodies</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Traditional Festival & Celebration Performance</li>
-        `,
-        quote: `"The traditional music of Puerto Rico's mountain farmers (jíbaros), featuring Spanish colonial roots and the cuatro guitar."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 8 Performers (3 mins)</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 Performers (3 mins)</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.8blubd79glpf"
-      },
-      danza_puerto_rico: {
-        title: "Danza (Puerto Rico)",
-        icon: "fa-fan",
-        photo: "meet_greet_photo.png",
-        video: "https://www.youtube.com/watch?v=i5UXooi4pLg",
-        pitch: "An aristocratic 19th-century ballroom dance from Ponce! Dancers glide in formal gowns and tuxedos, using handheld fans to convey subtle messages in classical elegance.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Society Formal Gowns & Ballroom Elegance</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Handheld Fan Language & Classical Choreography</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Historical Puerto Rican Cultural Heritage</li>
-        `,
-        quote: `"A formal ballroom dance that emerged in Ponce around 1870, influenced by the Cuban habanera and classical European waltzes."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 8 to 10 Performers</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 10 Minutes</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.ynlss9y2an4i"
-      },
-      cumbia_salvador: {
-        title: "Cumbia (El Salvador)",
-        icon: "fa-music",
-        photo: "meet_greet_photo.png",
-        video: "https://www.youtube.com/watch?v=SKPAjpP-AI4",
-        pitch: "Set to the legendary Salvadoran anthem 'El Sombrero Azul'! A festive performance fusing indigenous melodies with upbeat clave rhythms and bright brass horn arrangements.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Performance Set to 'El Sombrero Azul'</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Vibrant Salvadoran Costumes & Energetic Steps</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Central American Pride & Cultural Celebration</li>
-        `,
-        quote: `"Based on the popular Salvadoran song 'El Sombrero Azul,' this dance fuses indigenous melodies with African clave rhythms."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 10 Performers (3 mins)</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 to 6 Performers (3 mins)</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.3jbwxosjacst"
-      },
-      comaleras_salvador: {
-        title: "Las Comaleras (El Salvador)",
-        icon: "fa-utensils",
-        photo: "meet_greet_photo.png",
-        video: "https://www.youtube.com/watch?v=5w46af6It4U",
-        pitch: "A delightful rural Salvadoran folk dance celebrating women who bake tortillas over traditional clay comales griddles with expressive theatrical storytelling.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Traditional Clay Comales & Tortilla Making Props</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Expressive Rural Folk Choreography</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Salvadoran Country Costumes</li>
-        `,
-        quote: `"A rural folk dance celebrating Salvadoran women who work over traditional clay comales (griddles), mimicking the process of shaping and cooking tortillas."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 Performers (3 mins)</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 Performers (3 mins)</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.ad9yggt7cmxc"
-      },
-      cortadoras_salvador: {
-        title: "Las Cortadoras (El Salvador) COMING SOON",
-        icon: "fa-wheat-awn",
-        photo: "cortadoras.jpg",
-        pitch: "Depicts farmworkers harvesting agricultural crops in rural El Salvador. Performers wear traditional colorful skirts and utilize harvest baskets and props!",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Salvadoran Harvest Skirts & Baskets Showcase</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Agricultural Folk Choreography</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Central American Cultural Heritage</li>
-        `,
-        quote: `"Depicts farmworkers harvesting agricultural crops in rural El Salvador. Performers wear traditional colorful costumes and utilize props like harvest baskets."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 6 Performers (3 mins)</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 Performers (3 mins)</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.p5sjlz8viodw"
-      },
-      cumbia_colombia: {
-        title: "Cumbia (Colombia)",
-        icon: "fa-fire",
-        photo: "meet_greet_photo.png",
-        video: "https://www.youtube.com/watch?v=ePVSPGNmTjg",
-        pitch: "The timeless courtship dance of Colombia's Caribbean coast! Partners dance gracefully without touching, displaying candle-lit romance, swaying hips, and majestic skirt work.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Colombian Coastal Courtship Choreography</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Candle Props & Flowing Traditional Costumes</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Elegance Romance & Rhythmic Flute Melodies</li>
-        `,
-        quote: `"A courtship dance from the coastal regions of Colombia. Danced in couples where partners do not touch, mimicking amorous conquest."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 4 to 6 Performers (3-6 mins)</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 Performers (3-6 mins)</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.adfdbqcu00up"
-      },
-      pollera_colora_colombia: {
-        title: "Cumbia \"La Pollera Colorá\" (Colombia)",
-        icon: "fa-shirt",
-        photo: "meet_greet_photo.png",
-        video: "https://www.youtube.com/watch?v=8x7pBNlXPcc",
-        pitch: "Named after the famous 'brightly colored skirt'! Set to the legendary 1960s Colombian cumbia anthem with explosive skirt movement and festive energy.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Iconic Bright Red & Gold Pollera Skirts</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Choreographed to the Classic 1960s Cumbia Hit</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Showstopping Visual & Musical Festival Act</li>
-        `,
-        quote: `"Named after the 'brightly colored skirt' which serves as the traditional dress for women in Colombia, set to the famous cumbia song of the same name."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 10 Performers (3-6 mins)</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 4 to 6 Performers (3-6 mins)</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.lrrar6hw8e9w"
-      },
-      mapale_colombia: {
-        title: "El Mapalé (Colombia)",
-        icon: "fa-fish",
-        photo: "mapale.jpg",
-        pitch: "An explosive, high-speed Afro-Colombian dance! Mimics the frantic wriggling of the mapalé fish caught out of water with rapid drum beats and athletic acrobatics.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Speed Afro-Colombian Drumming & Movement</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Athletic Wriggling & Rapid Hip isolations</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Vibrant Afro-Caribbean Coast Attire</li>
-        `,
-        quote: `"A fast-paced, high-energy Afro-Colombian dance from the Caribbean coast. Named after a fish that wriggles out of water, mimicking these movements to rapid drum beats."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 Minutes</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.u6muchltmued"
-      },
-      tango_argentina: {
-        title: "Tango (Argentina)",
-        icon: "fa-heart",
-        photo: "meet_greet_photo.png",
-        video: "https://www.youtube.com/watch?v=c2Lfe6EUuzA",
-        pitch: "The sensual, passionate Argentine Tango from Buenos Aires! Characterized by intimate partner connection, dramatic leg wraps (ganchos), and intricate footwork.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Intimate & Dramatic Buenos Aires Ballroom Tango</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Intricate Footwork, Ganchos & Boleos</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Elegant Formal Evening Attire</li>
-        `,
-        quote: `"Originating in Buenos Aires in the late 19th century, Argentine Tango is an intimate, improvisational partner dance characterized by intricate footwork."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Duo Ensemble:</strong> 2 Dancers</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 3 to 10 Minutes</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.9o6kw0vhisrt"
-      },
-      ladies_in_red: {
-        title: "Salsa Performance Group (Ladies in Red)",
-        icon: "fa-gem",
-        photo: "ladies_in_red.jpg",
-        pitch: "A glamorous all-female performance ensemble showcasing synchronized Salsa, Bachata, and Cha-cha in dazzling red sequin gowns!",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Dazzling Red Sequin Costume Showcase</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Synchronized Salsa, Bachata & Cha-Cha Styling</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> High-Impact Stage Show for Galas & Events</li>
-        `,
-        quote: `"An all-female performance group showcasing Salsa, Bachata, and Cha-cha in vibrant red costumes."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 3 to 4 Performers (3-10 mins)</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 Performers (3-10 mins)</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.3mokvxbrgbuk"
-      },
-      meet_greet_photo: {
-        title: "Folk Characters Meet & Greet (Puerto Rico & Mexico)",
-        icon: "fa-camera-retro",
-        photo: "meet_greet_photo.png",
-        pitch: "Our Meet & Greet and Photo Op experiences allow guests to interact directly with performers, take memorable photos in full authentic folk costumes, and bring extra warmth and cultural engagement to your event!",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Puerto Rican & Latin Folk Character Interaction</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Vibrant High-Res Photo Ops for Guests & VIPs</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Cultural Costume Showcase & Storytelling</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Perfect for Festivals, Corporate Events & Private Parties</li>
-        `,
-        quote: `"The traditional folk characters from Puerto Rico, Mexico, and Latin America are dressed in full authentic folk attire and facilitate event promotion and public engagement, allowing the public and guests to pose with the performers for pictures and unforgettable photo ops."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 5 to 8 Performers</li>
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-book-open" style="color: #38BDF8;"></i> <strong>Folk Character Showcase:</strong> Includes brief cultural explanation & festival history</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.9ozfl2xso0dr"
-      },
-      folk_characters_show: {
-        title: "Folk Characters Show (Puerto Rico)",
-        icon: "fa-masks-theater",
-        photo: "meet_greet_photo.png",
-        pitch: "A theatrical presentation outlining the history and folklore of Puerto Rican festival characters, featuring up to six masked Cabezudos & Vejigantes!",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Theatrical History Presentation & Storytelling</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Up to 6 Masked Cabezudos & Vejigantes Characters</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Interactive Parade & Stage Production</li>
-        `,
-        quote: `"A theatrical presentation outlining the history and meaning of traditional Puerto Rican festival characters, specifically the masked Cabezudos."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 5 to 6 Performers (up to 30 mins)</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-user-group" style="color: #10B981;"></i> <strong>Small Ensemble:</strong> 2 to 4 Performers</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.owfw8w80w5rn"
-      },
-      singer_mexico: {
-        title: "Singer - Alma Ranchera (Mexico)",
-        icon: "fa-microphone",
-        photo: "singer_mexico_v2.jpg",
-        pitch: "Vocal performance by artist Alma Ranchera in full charro attire! Performs legendary Mexican rancheras like 'Guadalajara', 'Volver Volver', and 'El Mariachi Loco'.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Authentic Mariachi / Charro Outfit Showcase</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Live Ranchera Vocals & Audience Interaction</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Repertoire of Beloved Mexican Classics</li>
-        `,
-        quote: `"Traditional Ranchera vocal performance by artist Alma Ranchera, wearing the iconic charro costume."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-microphone-lines" style="color: #EC4899;"></i> <strong>Vocal Soloist:</strong> Requires sound system</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 30 Minutes</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.vw6lti8subow"
-      },
-      cantores_tradicion: {
-        title: "Los Cantores de Tradicion (Puerto Rican Christmas Parranda)",
-        icon: "fa-gifts",
-        photo: "cantores.jpg",
-        pitch: "The festive Puerto Rican Parranda caroling tradition! Featuring Christmas classics like 'Mi Burrito Sabanero', 'Los Peces En El Río', and 'Feliz Navidad'.",
-        included: `
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Traditional Puerto Rican Parranda Caroling</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Festive Percussion (Güiro, Maracas, Tambora) & Vocals</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Perfect for Holiday Parties & Christmas Events</li>
-        `,
-        quote: `"A holiday singing performance showcasing the Puerto Rican Parranda (caroling) tradition with classic Latin American Christmas songs."`,
-        ensemble: `
-          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-users" style="color: #EC4899;"></i> <strong>Musical Ensemble:</strong> Small space / sound system</li>
-          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 15 Minutes</li>
-        `,
-        link: "https://www.tradicion.org/presentations/performances#h.fogbsebxxaxb"
-      }
-    };
+    
 
     // Helper function to extract YouTube Embed URL
     function getEmbedUrl(url) {
