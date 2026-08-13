@@ -753,6 +753,49 @@
       padding: 6px;
     }
 
+    
+    /* High Contrast Settings Dropdown Font Colors */
+    .settings-dropdown-box label,
+    .settings-dropdown-box .setting-label {
+      color: #CBD5E1 !important;
+      font-size: 0.78rem !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.3px !important;
+    }
+    .settings-dropdown-box .saved-badge {
+      color: #10B981 !important;
+      font-weight: 700 !important;
+      font-size: 0.7rem !important;
+    }
+    .settings-dropdown-box select,
+    .settings-dropdown-box option,
+    .settings-dropdown-box button {
+      color: #FFFFFF !important;
+      background-color: #1E293B !important;
+      border: 1px solid rgba(245, 158, 11, 0.5) !important;
+      font-size: 0.88rem !important;
+      border-radius: 8px !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      font-weight: 600 !important;
+    }
+    .settings-dropdown-box select option {
+      color: #FFFFFF !important;
+      background-color: #0F172A !important;
+      padding: 8px !important;
+    }
+    #resetDefaultsBtn {
+      color: #E2E8F0 !important;
+      border: 1px dashed rgba(245, 158, 11, 0.5) !important;
+      background: rgba(30, 41, 59, 0.8) !important;
+      font-weight: 600 !important;
+    }
+    #resetDefaultsBtn:hover {
+      background: rgba(245, 158, 11, 0.2) !important;
+      color: #F59E0B !important;
+      border-color: #F59E0B !important;
+    }
+
     /* Footer CSS */
     footer.app-footer {
       position: relative !important;
@@ -824,12 +867,12 @@
         <div class="settings-dropdown-box">
           <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; display: flex; align-items: center; justify-content: space-between;">
             <span><i class="fa-solid fa-sliders"></i> Preferences</span>
-            <span style="font-size: 0.68rem; color: var(--text-muted); font-weight: 400;">Saved</span>
+            <span class="saved-badge">✓ Saved</span>
           </div>
 
           <!-- Real-Time Spell Check Assistant -->
           <div style="display: flex; flex-direction: column; gap: 4px;">
-            <label style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin: 0;">Assistant</label>
+            <label class="setting-label">Assistant</label>
             <button type="button" class="control-btn" id="spellCheckBtn" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: var(--accent-gold); width: 100%; justify-content: flex-start; padding: 7px 12px; font-size: 0.85rem;" onclick="openSpellCheckModal();">
               <i class="fa-solid fa-spell-check"></i> <span id="spellCheckBtnText">Spell Check</span> <span id="typoBadge" style="display:none; background:#DC2626; color:#FFF; font-size:0.7rem; font-weight:700; padding:1px 5px; border-radius:8px; margin-left:auto;">0</span>
             </button>
@@ -837,7 +880,7 @@
 
           <!-- Language Selector -->
           <div style="display: flex; flex-direction: column; gap: 4px;">
-            <label for="langSelect" style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin: 0;">Language</label>
+            <label for="langSelect" class="setting-label">Language</label>
             <select class="theme-select" id="langSelect" style="width: 100%; border-color: var(--accent-gold); color: var(--accent-gold); font-weight: 700; font-size: 0.85rem; padding: 7px 10px;" onchange="changeLanguage(this.value); saveUserSettings();">
               <option value="en">🌐 English us 🇺🇸</option>
               <option value="es">🌐 Español 🇪🇸</option>
@@ -848,7 +891,7 @@
 
           <!-- Color Theme Selector -->
           <div style="display: flex; flex-direction: column; gap: 4px;">
-            <label for="colorSchemeSelect" style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin: 0;">Color Theme</label>
+            <label for="colorSchemeSelect" class="setting-label">Color Theme</label>
             <select class="theme-select" id="colorSchemeSelect" style="width: 100%; font-size: 0.85rem; padding: 7px 10px;" onchange="saveUserSettings();">
               <option value="crimson">🔥 Crimson Fire</option>
               <option value="salsa-passion">💃 Salsa Passion</option>
@@ -858,7 +901,7 @@
 
           <!-- Mode Toggle -->
           <div style="display: flex; flex-direction: column; gap: 4px;">
-            <label style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin: 0;">Display Mode</label>
+            <label class="setting-label">Display Mode</label>
             <button type="button" class="control-btn" id="themeToggleBtn" style="width: 100%; justify-content: flex-start; padding: 7px 12px; font-size: 0.85rem;">
               <i class="fa-solid fa-moon" id="themeIcon"></i> <span id="themeBtnText">Night Mode</span>
             </button>
