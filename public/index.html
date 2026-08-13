@@ -658,6 +658,48 @@
       width: 100%;
     }
 
+
+    /* Settings Dropdown Menu CSS */
+    .settings-dropdown-wrapper {
+      position: relative;
+      display: inline-block;
+      z-index: 9999;
+    }
+    .settings-dropdown-menu {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 48px;
+      background: #0F172A !important;
+      border: 1px solid var(--accent-gold) !important;
+      border-radius: 14px;
+      padding: 16px;
+      min-width: 230px;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.85);
+      z-index: 99999 !important;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .settings-dropdown-menu.active {
+      display: flex !important;
+    }
+    .settings-dropdown-menu select,
+    .settings-dropdown-menu option,
+    .settings-dropdown-menu button {
+      color: #F8FAFC !important;
+      background-color: #1E293B !important;
+      border: 1px solid rgba(245, 158, 11, 0.4) !important;
+      font-size: 0.88rem !important;
+      border-radius: 8px !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+    }
+    .settings-dropdown-menu select option {
+      color: #F8FAFC !important;
+      background-color: #0F172A !important;
+      padding: 6px;
+    }
+
 </style>
 <style>
   /* Interactive Spell Checker Modal Styles */
@@ -711,7 +753,7 @@
         <button type="button" class="control-btn" id="settingsMenuBtn" onclick="toggleSettingsMenu(event)" style="background: rgba(245, 158, 11, 0.18); border: 1px solid var(--accent-gold); color: var(--accent-gold); font-weight: 700; padding: 8px 18px; border-radius: 30px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
           <i class="fa-solid fa-gear"></i> <span>Settings</span> <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem;"></i>
         </button>
-        <div class="settings-dropdown-menu" id="settingsDropdownMenu" style="display: none; position: absolute; right: 0; top: 45px; background: rgba(15, 23, 42, 0.96); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border: 1px solid var(--accent-gold); border-radius: 14px; padding: 14px; min-width: 220px; box-shadow: 0 12px 35px rgba(0,0,0,0.7); z-index: 1000; flex-direction: column; gap: 10px;">
+        <div class="settings-dropdown-menu" id="settingsDropdownMenu">
           <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; display: flex; align-items: center; gap: 6px;">
             <i class="fa-solid fa-sliders"></i> Preferences
           </div>
@@ -1844,11 +1886,11 @@
     </div>
 
     <!-- Footer Links -->
-    <div style="text-align: center; margin-top: 25px; font-size: 0.88rem; color: var(--text-muted);">
+    <footer style="text-align: center; margin: 40px auto 20px auto; padding-top: 20px; border-top: 1px solid var(--card-border); font-size: 0.88rem; color: var(--text-muted); width: 100%; max-width: 960px; clear: both;">
       © 2026 Salsa Guy Richmond, LLC. All rights reserved. &nbsp;|&nbsp; 
       <a href="https://www.salsarichmond.com/contact-info/terms" target="_blank" style="color: var(--accent-gold); text-decoration: underline; margin: 0 4px;">Terms of Service</a> &nbsp;|&nbsp; 
       <a href="https://www.salsarichmond.com/contact-info/privacy-policy" target="_blank" style="color: var(--accent-gold); text-decoration: underline; margin: 0 4px;">Privacy Policy</a>
-    </div>
+    </footer>
   </div>
 
   <script>
@@ -2355,10 +2397,13 @@
     
     
     function toggleSettingsMenu(e) {
-      if (e) e.stopPropagation();
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
       const menu = document.getElementById('settingsDropdownMenu');
       if (menu) {
-        menu.style.display = (menu.style.display === 'none' || !menu.style.display) ? 'flex' : 'none';
+        menu.classList.toggle('active');
       }
     }
 
@@ -2366,7 +2411,7 @@
       const menu = document.getElementById('settingsDropdownMenu');
       const btn = document.getElementById('settingsMenuBtn');
       if (menu && btn && !btn.contains(e.target) && !menu.contains(e.target)) {
-        menu.style.display = 'none';
+        menu.classList.remove('active');
       }
     });
   
