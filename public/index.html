@@ -1980,8 +1980,8 @@
       <!-- Footer Links -->
       <footer class="app-footer">
         © 2026 Salsa Guy Richmond, LLC. All rights reserved. &nbsp;|&nbsp; 
-        <a href="https://www.salsarichmond.com/contact-info/terms" target="_blank" style="color: var(--accent-gold); text-decoration: underline; margin: 0 4px;">Terms of Service</a> &nbsp;|&nbsp; 
-        <a href="https://www.salsarichmond.com/contact-info/privacy-policy" target="_blank" style="color: var(--accent-gold); text-decoration: underline; margin: 0 4px;">Privacy Policy</a>
+        <a href="https://www.salsarichmond.com/contact-info/terms" target="_blank" id="lblFooterTerms" style="color: var(--accent-gold); text-decoration: underline; margin: 0 4px;">Terms of Service</a> &nbsp;|&nbsp; 
+        <a href="https://www.salsarichmond.com/contact-info/privacy-policy" target="_blank" id="lblFooterPrivacy" style="color: var(--accent-gold); text-decoration: underline; margin: 0 4px;">Privacy Policy</a>
       </footer>
 
     </div>
@@ -2159,6 +2159,7 @@
 
     
     // Comprehensive Multilingual Translation Engine (All Titles, Questions, Options & Responses)
+    
     const fullDict = {
       en: {
         settingsTitle: "Settings",
@@ -2216,6 +2217,8 @@
         genInfoP2: "Furthermore, diverse performances cater to a broader audience, attracting individuals with varying interests and preferences. By providing a mix of entertainment options, I ensure that everyone finds something appealing and feels included in the festivities. This inclusive approach guarantees a more enjoyable and satisfying experience for all attendees.",
         genInfoP3: "I understand that you may have already considered these points, and I would be absolutely delighted to discuss further how my unique and engaging performances can complement your event. It will simplify the logistics of the event, making it easier for you to plan and execute. I am confident that I can deliver a truly exceptional and unforgettable experience for your guests.",
         terms: "I agree to the <a href='https://www.salsarichmond.com/contact-info/terms' target='_blank' style='color: var(--primary-accent); font-weight: 600; text-decoration: underline;'>Terms of Service</a> & <a href='https://www.salsarichmond.com/contact-info/privacy-policy' target='_blank' style='color: var(--primary-accent); font-weight: 600; text-decoration: underline;'>Privacy Policy</a>",
+        footerTerms: "Terms of Service",
+        footerPrivacy: "Privacy Policy",
         emailReceipt: "📧 Send instant Event ID confirmation receipt to my email",
         submitBtn: "Submit Event Request",
         pressKitTitle: "Press Kits & Media Assets:",
@@ -2287,6 +2290,8 @@
         genInfoP2: "Además, las presentaciones diversas satisfacen a un público más amplio. Al brindar una combinación de entretenimiento, aseguro que todos encuentren algo atractivo y se sientan incluidos en la festividad.",
         genInfoP3: "Entiendo que ya haya considerado estos puntos y me encantaría discutir más cómo mis actuaciones únicas pueden complementar su evento de manera inolvidable.",
         terms: "Acepto los <a href='https://www.salsarichmond.com/contact-info/terms' target='_blank' style='color: var(--primary-accent); font-weight: 600; text-decoration: underline;'>Términos de Servicio</a> y la <a href='https://www.salsarichmond.com/contact-info/privacy-policy' target='_blank' style='color: var(--primary-accent); font-weight: 600; text-decoration: underline;'>Política de Privacidad</a>",
+        footerTerms: "Términos de Servicio",
+        footerPrivacy: "Política de Privacidad",
         emailReceipt: "📧 Enviar recibo con ID de Evento instantáneo a mi correo",
         submitBtn: "Enviar Solicitud de Evento",
         pressKitTitle: "Kits de Prensa y Archivos Multimedia:",
@@ -2358,6 +2363,8 @@
         genInfoP2: "Une variété de divertissements garantit une expérience mémorable pour tous.",
         genInfoP3: "Je serais ravi de discuter de la façon dont nos prestations uniques enrichiront votre événement.",
         terms: "J'accepte les Conditions d'Utilisation et la Politique de Confidentialité",
+        footerTerms: "Conditions d'Utilisation",
+        footerPrivacy: "Politique de Confidentialité",
         emailReceipt: "📧 Envoyer un reçu instantané à mon e-mail",
         submitBtn: "Soumettre la Demande d'Événement",
         pressKitTitle: "Kits de Presse et Médias:",
@@ -2429,6 +2436,8 @@
         genInfoP2: "Verschiedene Darbietungen sprechen ein breiteres Publikum an.",
         genInfoP3: "Ich freue mich darauf zu besprechen, wie unsere Auftritte Ihr Event bereichern werden.",
         terms: "Ich stimme den Nutzungsbedingungen und der Datenschutzrichtlinie zu",
+        footerTerms: "Nutzungsbedingungen",
+        footerPrivacy: "Datenschutzrichtlinie",
         emailReceipt: "📧 Sofortige Bestätigungs-E-Mail mit Event-ID senden",
         submitBtn: "Veranstaltungsanfrage absenden",
         pressKitTitle: "Pressemappen & Medien:",
@@ -2521,6 +2530,8 @@
       setTxt('lblGenInfoP2', t.genInfoP2);
       setTxt('lblGenInfoP3', t.genInfoP3);
       setTxt('lblTerms', t.terms, true);
+      setTxt('lblFooterTerms', t.footerTerms);
+      setTxt('lblFooterPrivacy', t.footerPrivacy);
       setTxt('lblEmailReceipt', t.emailReceipt);
       setTxt('btnSubmitText', t.submitBtn);
 
@@ -2538,7 +2549,7 @@
       setTxt('btnVisitSalsaText', t.visitSalsa);
       setTxt('btnVisitTradicionText', t.visitTradicion);
 
-      // Trigger Google Translate for full page automatic translation if available
+      // Dynamically trigger Google Translate for full page option/label translation
       if (window.googleTranslateElementInit) {
         const gtCombo = document.querySelector('.goog-te-combo');
         if (gtCombo) {
@@ -2547,6 +2558,7 @@
         }
       }
     }
+
 
 
     // H1.1 Day / Night Mode Toggle
