@@ -817,30 +817,56 @@
     
     <!-- Top Controls Row with Settings Dropdown -->
     <div class="top-controls-row">
-      <details class="settings-details">
-        <summary>
-          <i class="fa-solid fa-gear"></i> <span>Settings</span> <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem;"></i>
+      <details class="settings-details" id="settingsDetails">
+        <summary id="settingsSummary">
+          <i class="fa-solid fa-gear"></i> <span id="lblSettingsTitle">Settings</span> <span id="mainTypoBadge" style="display:none; background:#DC2626; color:#FFF; font-size:0.7rem; font-weight:700; padding:1px 6px; border-radius:10px;">0</span> <i class="fa-solid fa-chevron-down" style="font-size: 0.75rem;"></i>
         </summary>
         <div class="settings-dropdown-box">
-          <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; display: flex; align-items: center; gap: 6px;">
-            <i class="fa-solid fa-sliders"></i> Preferences
+          <div style="font-size: 0.75rem; font-weight: 700; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; display: flex; align-items: center; justify-content: space-between;">
+            <span><i class="fa-solid fa-sliders"></i> Preferences</span>
+            <span style="font-size: 0.68rem; color: var(--text-muted); font-weight: 400;">Saved</span>
           </div>
-          <button type="button" class="control-btn" id="spellCheckBtn" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: var(--accent-gold); width: 100%; justify-content: flex-start; padding: 7px 12px; font-size: 0.85rem;" onclick="openSpellCheckModal();">
-            <i class="fa-solid fa-spell-check"></i> <span id="spellCheckBtnText">Spell Check</span> <span id="typoBadge" style="display:none; background:#DC2626; color:#FFF; font-size:0.7rem; font-weight:700; padding:1px 5px; border-radius:8px; margin-left:auto;">0</span>
-          </button>
-          <select class="theme-select" id="langSelect" style="width: 100%; border-color: var(--accent-gold); color: var(--accent-gold); font-weight: 700; font-size: 0.85rem; padding: 7px 10px;" onchange="changeLanguage(this.value)">
-            <option value="en">🌐 English us 🇺🇸</option>
-            <option value="es">🌐 Español 🇪🇸</option>
-            <option value="fr">🌐 Français 🇫🇷</option>
-            <option value="de">🌐 Deutsch 🇩🇪</option>
-          </select>
-          <select class="theme-select" id="colorSchemeSelect" style="width: 100%; font-size: 0.85rem; padding: 7px 10px;">
-            <option value="crimson">🔥 Crimson Fire</option>
-            <option value="salsa-passion">💃 Salsa Passion</option>
-            <option value="tropical-palm">🌴 Tropical Palm</option>
-          </select>
-          <button type="button" class="control-btn" id="themeToggleBtn" style="width: 100%; justify-content: flex-start; padding: 7px 12px; font-size: 0.85rem;">
-            <i class="fa-solid fa-moon" id="themeIcon"></i> <span id="themeBtnText">Night Mode</span>
+
+          <!-- Real-Time Spell Check Assistant -->
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <label style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin: 0;">Assistant</label>
+            <button type="button" class="control-btn" id="spellCheckBtn" style="background: rgba(245, 158, 11, 0.15); border-color: rgba(245, 158, 11, 0.4); color: var(--accent-gold); width: 100%; justify-content: flex-start; padding: 7px 12px; font-size: 0.85rem;" onclick="openSpellCheckModal();">
+              <i class="fa-solid fa-spell-check"></i> <span id="spellCheckBtnText">Spell Check</span> <span id="typoBadge" style="display:none; background:#DC2626; color:#FFF; font-size:0.7rem; font-weight:700; padding:1px 5px; border-radius:8px; margin-left:auto;">0</span>
+            </button>
+          </div>
+
+          <!-- Language Selector -->
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <label for="langSelect" style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin: 0;">Language</label>
+            <select class="theme-select" id="langSelect" style="width: 100%; border-color: var(--accent-gold); color: var(--accent-gold); font-weight: 700; font-size: 0.85rem; padding: 7px 10px;" onchange="changeLanguage(this.value); saveUserSettings();">
+              <option value="en">🌐 English us 🇺🇸</option>
+              <option value="es">🌐 Español 🇪🇸</option>
+              <option value="fr">🌐 Français 🇫🇷</option>
+              <option value="de">🌐 Deutsch 🇩🇪</option>
+            </select>
+          </div>
+
+          <!-- Color Theme Selector -->
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <label for="colorSchemeSelect" style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin: 0;">Color Theme</label>
+            <select class="theme-select" id="colorSchemeSelect" style="width: 100%; font-size: 0.85rem; padding: 7px 10px;" onchange="saveUserSettings();">
+              <option value="crimson">🔥 Crimson Fire</option>
+              <option value="salsa-passion">💃 Salsa Passion</option>
+              <option value="tropical-palm">🌴 Tropical Palm</option>
+            </select>
+          </div>
+
+          <!-- Mode Toggle -->
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <label style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin: 0;">Display Mode</label>
+            <button type="button" class="control-btn" id="themeToggleBtn" style="width: 100%; justify-content: flex-start; padding: 7px 12px; font-size: 0.85rem;">
+              <i class="fa-solid fa-moon" id="themeIcon"></i> <span id="themeBtnText">Night Mode</span>
+            </button>
+          </div>
+
+          <!-- Reset Defaults Button -->
+          <button type="button" id="resetDefaultsBtn" style="margin-top: 4px; background: transparent; border: 1px dashed rgba(255,255,255,0.2); color: var(--text-muted); padding: 5px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--accent-gold)'; this.style.color='var(--accent-gold)';" onmouseout="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.color='var(--text-muted)';" onclick="resetUserSettings();">
+            <i class="fa-solid fa-rotate-left"></i> Reset to Defaults
           </button>
         </div>
       </details>
@@ -2314,6 +2340,7 @@
     const themeBtnText = document.getElementById('themeBtnText');
 
     themeToggleBtn.addEventListener('click', () => {
+        saveUserSettings();
       const currentTheme = document.documentElement.getAttribute('data-theme');
       if (currentTheme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'light');
@@ -2513,6 +2540,75 @@ function handleRegionalLocationChange(val) {
         if (isIntlSel) isIntlSel.value = 'No';
       }
     }
+
+
+    // LocalStorage User Settings Persistence & Auto-Close Handler
+    function saveUserSettings() {
+      try {
+        const lang = document.getElementById('langSelect')?.value || 'en';
+        const colorScheme = document.getElementById('colorSchemeSelect')?.value || 'crimson';
+        const isNight = document.body.classList.contains('light-theme') ? 'light' : 'night';
+        localStorage.setItem('sgr_user_lang', lang);
+        localStorage.setItem('sgr_user_theme', colorScheme);
+        localStorage.setItem('sgr_user_mode', isNight);
+      } catch(e) {}
+    }
+
+    function loadUserSettings() {
+      try {
+        const savedLang = localStorage.getItem('sgr_user_lang');
+        const savedTheme = localStorage.getItem('sgr_user_theme');
+        const savedMode = localStorage.getItem('sgr_user_mode');
+
+        if (savedLang && document.getElementById('langSelect')) {
+          document.getElementById('langSelect').value = savedLang;
+          changeLanguage(savedLang);
+        }
+        if (savedTheme && document.getElementById('colorSchemeSelect')) {
+          document.getElementById('colorSchemeSelect').value = savedTheme;
+          document.body.setAttribute('data-theme', savedTheme);
+        }
+        if (savedMode === 'light') {
+          document.body.classList.add('light-theme');
+          const themeIcon = document.getElementById('themeIcon');
+          const themeBtnText = document.getElementById('themeBtnText');
+          if (themeIcon) themeIcon.className = 'fa-solid fa-sun';
+          if (themeBtnText) themeBtnText.textContent = 'Day Mode';
+        }
+      } catch(e) {}
+    }
+
+    function resetUserSettings() {
+      try {
+        localStorage.removeItem('sgr_user_lang');
+        localStorage.removeItem('sgr_user_theme');
+        localStorage.removeItem('sgr_user_mode');
+      } catch(e) {}
+      if (document.getElementById('langSelect')) document.getElementById('langSelect').value = 'en';
+      if (document.getElementById('colorSchemeSelect')) document.getElementById('colorSchemeSelect').value = 'crimson';
+      changeLanguage('en');
+      document.body.setAttribute('data-theme', 'crimson');
+      document.body.classList.remove('light-theme');
+      const themeIcon = document.getElementById('themeIcon');
+      const themeBtnText = document.getElementById('themeBtnText');
+      if (themeIcon) themeIcon.className = 'fa-solid fa-moon';
+      if (themeBtnText) themeBtnText.textContent = 'Night Mode';
+      const details = document.getElementById('settingsDetails');
+      if (details) details.removeAttribute('open');
+    }
+
+    // Auto-close settings details dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      const details = document.getElementById('settingsDetails');
+      if (details && details.hasAttribute('open')) {
+        if (!details.contains(e.target)) {
+          details.removeAttribute('open');
+        }
+      }
+    });
+
+    // Load saved settings on startup
+    document.addEventListener('DOMContentLoaded', loadUserSettings);
 
 function updateConditionalSections() {
       const scaleEl = document.getElementById('eventTypeScale');
