@@ -1125,22 +1125,21 @@
 
         <!-- SECTION 4: CONDITIONAL EVENT DETAILS -->
         <div class="section-title" id="sec4TitleMain">
-          <i class="fa-solid fa-sliders"></i> 4 Conditional Event Details (Sections 4A, 4B, 4C)
+          <i class="fa-solid fa-sliders"></i> 4. Conditional Event Details
         </div>
 
-        <!-- DYNAMIC SECTION: Large Public Event (Q27-Q34) -->
+        <!-- 4A. Large Public Event Details, 501(c) & Promotions -->
         <div id="largePublicSection" class="conditional-block" style="display: none;">
           <div class="section-title" id="sec3aTitle">
             <i class="fa-solid fa-bullhorn"></i> 4A. Large Public Event Details, 501(c) & Promotions
           </div>
 
           <div class="grid-2">
-            <!-- Performance Services Frequency (Recurring / Nonrecurring) -->
             <div class="form-group">
-              <label for="serviceRecurrence">Will the <strong>PERFORMANCE SERVICES</strong> be ...</label>
+              <label for="serviceRecurrence" id="lblServiceRecurrence">Will the PERFORMANCE SERVICES be...</label>
               <select id="serviceRecurrence" name="serviceRecurrence">
                 <option value="" selected disabled>-- Select Option --</option>
-            <option value="Nonrecurring - One time">Nonrecurring - One time</option>
+                <option value="Nonrecurring - One time">Nonrecurring - One time</option>
                 <option value="Recurring">Recurring</option>
                 <option value="Recurring Weekly">Recurring Weekly</option>
                 <option value="Recurring Monthly">Recurring Monthly</option>
@@ -1148,127 +1147,142 @@
               </select>
             </div>
 
-            <!-- Q27: 501(c) Organization Name -->
             <div class="form-group">
-              <label for="nonProfitName">501(c) Non-Profit Name (If Applicable)</label>
+              <label for="nonProfitName" id="lblNonProfitName">501(c) Non-Profit Name (If Applicable)</label>
               <input type="text" id="nonProfitName" name="nonProfitName" placeholder="Organization Tax Name">
             </div>
 
-            <!-- Q28: Tax Deductibility Letter -->
             <div class="form-group">
-              <label for="taxLetter">Can you provide a Tax Deductibility Letter?</label>
+              <label for="taxLetter" id="lblTaxLetter">Can you provide a Tax Deductibility Letter?</label>
               <select id="taxLetter" name="taxLetter">
                 <option value="" selected disabled>-- Select Option --</option>
-            <option value="Yes">Yes</option>
+                <option value="Yes">Yes</option>
                 <option value="No">No</option>
                 <option value="Not Applicable">Not Applicable</option>
               </select>
             </div>
 
-            <!-- Q29: Booth Space -->
             <div class="form-group">
-              <label for="boothSpace">Provide a Booth/Exhibitor Space (10x10 Tent)?</label>
+              <label for="boothSpace" id="lblBoothSpace">Provide a Booth/Exhibitor Space (10×10 Tent)?</label>
               <select id="boothSpace" name="boothSpace">
                 <option value="" selected disabled>-- Select Option --</option>
-            <option value="Yes">Yes</option>
+                <option value="Yes">Yes</option>
                 <option value="No">No</option>
                 <option value="Not Applicable">Not Applicable</option>
               </select>
             </div>
 
-            <!-- Q30: Promo & Logo Inclusion -->
             <div class="form-group">
-              <label for="promoInclude">Include our logo on promo materials & social media?</label>
+              <label for="promoInclude" id="lblPromoInclude">Include our logo on promo materials & social media?</label>
               <select id="promoInclude" name="promoInclude">
                 <option value="" selected disabled>-- Select Option --</option>
-            <option value="Yes">Yes</option>
+                <option value="Yes">Yes</option>
                 <option value="No">No</option>
                 <option value="Not Applicable">Not Applicable</option>
               </select>
             </div>
 
-            <!-- Q31: Allow Help Promote -->
             <div class="form-group">
-              <label for="allowHelpPromote">Allowed to help promote the event?</label>
+              <label for="allowHelpPromote" id="lblAllowHelpPromote">Allowed to help promote the event?</label>
               <select id="allowHelpPromote" name="allowHelpPromote">
                 <option value="" selected disabled>-- Select Option --</option>
-            <option value="Yes">Yes</option>
+                <option value="Yes">Yes</option>
                 <option value="No">No</option>
                 <option value="Not Applicable">Not Applicable</option>
               </select>
             </div>
 
-            <!-- Q32: Video & Picture Footage Copies -->
             <div class="form-group">
-              <label for="videoRights">Provide copies of video footage and photos?</label>
+              <label for="videoRights" id="lblVideoRights">Provide copies of video footage and photos?</label>
               <select id="videoRights" name="videoRights">
                 <option value="" selected disabled>-- Select Option --</option>
-            <option value="Yes">Yes</option>
+                <option value="Yes">Yes</option>
                 <option value="No">No</option>
                 <option value="Not Applicable">Not Applicable</option>
               </select>
             </div>
 
-            <!-- Q33 & Q34: Contingency Plan -->
             <div class="form-group full-width">
-              <label for="contingencyPlan">Weather / Contingency Plan (Alternate Location, Rain Date, Time)</label>
-              <textarea id="contingencyPlan" name="contingencyPlan" placeholder="Describe backup indoor location, rain date..." spellcheck="true"></textarea>
+              <label for="contingencyPlan" id="lblContingencyPlan">Weather / Contingency Plan (Alternate Location, Rain Date, Time adjustments)</label>
+              <textarea id="contingencyPlan" name="contingencyPlan" placeholder="Describe backup indoor location, rain date, time adjustments..." spellcheck="true"></textarea>
             </div>
           </div>
         </div>
 
-        <!-- DYNAMIC SECTION: Small Private Event (Q39, Q44-Q50) -->
+        <!-- 4B. Small Private Event Specifications & Hospitality -->
         <div id="smallPrivateSection" class="conditional-block" style="display: none;">
           <div class="section-title" id="sec3bTitle">
             <i class="fa-solid fa-cake-candles"></i> 4B. Small Private Event Specifications & Hospitality
           </div>
 
           <div class="grid-2">
-            <!-- Q39: Type of Private Gathering -->
             <div class="form-group">
-              <label for="privateGatheringType">Type of Private Gathering</label>
+              <label for="privateGatheringType" id="lblPrivateGatheringType">Type of Private Gathering (e.g., Birthday, Wedding, Quinceañera, Anniversary, House Gathering)</label>
               <select id="privateGatheringType" name="privateGatheringType">
                 <option value="" selected disabled>-- Select Option --</option>
-            <option value="Birthday Party">Birthday Party</option>
+                <option value="Birthday Party">Birthday Party</option>
                 <option value="Wedding / Anniversary">Wedding / Anniversary</option>
+                <option value="Quinceañera">Quinceañera</option>
+                <option value="House Gathering">House Gathering</option>
                 <option value="Private Dance Lesson">Private Dance Lesson</option>
                 <option value="Other Private Event">Other Private Event</option>
               </select>
             </div>
 
-            <!-- Q44: Badge / ID Pass Access -->
             <div class="form-group">
-              <label for="badgeAccess">Will a <strong>BADGE or ID</strong> be required for performers?</label>
-              <select id="badgeAccess" name="badgeAccess">
-                <option value="" selected disabled>-- Select Option --</option>
-            <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
-
-            <!-- Q46: Costume Change Room Instructions -->
-            <div class="form-group">
-              <label for="dressingRoomInstructions">Dressing Room / Costume Changing Instructions</label>
-              <input type="text" id="dressingRoomInstructions" name="dressingRoomInstructions" placeholder="e.g. Private Green Room on 2nd Floor">
-            </div>
-
-
-
-            <!-- Q49: Invited to Attend -->
-            <div class="form-group">
-              <label for="invitedToAttend">Are performers invited to attend/stay for the event?</label>
+              <label for="invitedToAttend" id="lblInvitedToAttend">Are performers invited to attend/stay for the event?</label>
               <select id="invitedToAttend" name="invitedToAttend">
                 <option value="" selected disabled>-- Select Option --</option>
-            <option value="Yes">Yes</option>
+                <option value="Yes">Yes</option>
                 <option value="No">No</option>
               </select>
             </div>
-
-
           </div>
         </div>
 
-        <!-- SECTION 4: SERVICES REQUESTED (Q18, Q19, Q20, Q26) -->
+        <!-- 4C. International Logistics (Outside USA) -->
+        <div id="internationalBlock" class="conditional-block" style="display: none;">
+          <div class="section-title" id="sec3cTitle">
+            <i class="fa-solid fa-globe"></i> 4C. International Logistics (Outside USA)
+          </div>
+
+          <div class="grid-2">
+            <div class="form-group full-width">
+              <label for="intlVenueName" id="lblIntlVenueName">Specific Country, City, & Venue Name <span class="required">*</span></label>
+              <input type="text" id="intlVenueName" name="intlVenueName" placeholder="e.g. San José, Costa Rica - Teatro Nacional" spellcheck="true">
+            </div>
+
+            <div class="form-group full-width">
+              <label for="intlLogistics" id="lblIntlLogistics">International Travel & Lodging Logistics <span class="required">*</span> <span class="hint">(Flights, ground transport, hotel arrangements)</span></label>
+              <textarea id="intlLogistics" name="intlLogistics" placeholder="Describe flight arrangements, airport transfers, hotel accommodations..." spellcheck="true"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="intlVisaSupport" id="lblIntlVisaSupport">Visa & Legal Documentation Support</label>
+              <select id="intlVisaSupport" name="intlVisaSupport">
+                <option value="" selected disabled>-- Select Option --</option>
+                <option value="Yes - Full Legal & Visa Support Provided">Yes - Full Legal & Visa Support Provided</option>
+                <option value="No - Assistance Needed">No - Assistance Needed</option>
+                <option value="Work Visa Handled">Work Visa Handled</option>
+                <option value="P-3 / Cultural Performer Visa Support Needed">P-3 / Cultural Performer Visa Support Needed</option>
+                <option value="Not Applicable">Not Applicable</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="intlPaymentTerms" id="lblIntlPaymentTerms">Preferred Currency & Payment Terms</label>
+              <input type="text" id="intlPaymentTerms" name="intlPaymentTerms" placeholder="e.g. USD / Wire Transfer / 50% Deposit">
+            </div>
+
+            <div class="form-group full-width">
+              <label for="intlCustomsConsiderations" id="lblIntlCustoms">Costumes, Props & Customs Considerations <span class="hint">(Custom wardrobe transport or local provisions)</span></label>
+              <textarea id="intlCustomsConsiderations" name="intlCustomsConsiderations" placeholder="Details regarding wardrobe customs clearance, instruments, sound props..." spellcheck="true"></textarea>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- SECTION 5: SERVICES REQUESTED -->
         <div class="section-title" id="sec4Title">
           <i class="fa-solid fa-music"></i> 4. Services Requested
         </div>
