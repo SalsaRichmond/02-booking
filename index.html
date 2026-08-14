@@ -940,13 +940,13 @@
     <div class="form-card" id="formCard">
       <form id="bookingForm">
         
-        <!-- SECTION 1: CONTACT & ORGANIZATION INFO -->
+        
+        <!-- SECTION 1: CONTACT & ORGANIZER INFORMATION -->
         <div class="section-title" id="sec1Title">
-          <i class="fa-solid fa-user-circle"></i> 1 Contact & Organizer Information
+          <i class="fa-solid fa-user-circle"></i> 1. Contact & Organizer Information
         </div>
         
         <div class="grid-2">
-          <!-- H1.6 Real-Time Spell Checker enabled (spellcheck="true") -->
           <div class="form-group">
             <label for="clientName" id="lblClientName">Your Name <span class="required">*</span></label>
             <input type="text" id="clientName" name="clientName" placeholder="e.g. Maria Santos" spellcheck="true" required>
@@ -963,10 +963,11 @@
           </div>
 
           <div class="form-group">
-            <label for="representType" id="lblRepresent">Who do you represent?</label>
+            <label for="representType" id="lblRepresent">Who do you represent? (Organization / Business / Self)</label>
             <select id="representType" name="representType">
               <option value="" selected disabled>-- Select Option --</option>
-            <option value="Dance Studio">Dance Studio</option>
+              <option value="Organization / Business / Self">Organization / Business / Self</option>
+              <option value="Dance Studio">Dance Studio</option>
               <option value="Educational Institution">Educational Institution</option>
               <option value="Event Planning Company">Event Planning Company</option>
               <option value="Government">Government</option>
@@ -981,38 +982,11 @@
           </div>
 
           <div class="form-group">
-            <label for="eventName" id="lblEventName">Name of the Event <span class="required">*</span></label>
-            <input type="text" id="eventName" name="eventName" placeholder="e.g. Richmond Salsa Festival 2026" spellcheck="true" required>
-          </div>
-
-          <div class="form-group">
-            <label for="eventTypeScale" id="lblEventScale">Is your event a large public event or a small private event? <span class="required">*</span></label>
-            <select id="eventTypeScale" name="eventTypeScale" required>
-        <option value="" selected disabled>-- Select Option --</option>
-        <option value="Option A: Large / Public Event">Option A: Large / Public Event → (Triggers Section 4A: Large Public Event Details)</option>
-        <option value="Option B: Small / Private Gathering">Option B: Small / Private Gathering → (Triggers Section 4B: Small Private Event Specifications)</option>
-        <option value="Option C: International Event">Option C: International Event → (Triggers Section 4C: International Logistics)</option>
-      </select>
-          </div>
-
-          <!-- Q8: Event Websites -->
-          <div class="form-group">
-            <label for="eventWebsites" id="lblWebsites">Websites for Event & Organization</label>
-            <input type="url" id="eventWebsites" name="eventWebsites" placeholder="https://www.example.com">
-          </div>
-
-          <!-- Q9: Purpose of Event -->
-          <div class="form-group">
-            <label for="eventPurpose" id="lblPurpose">Purpose of this Event</label>
-            <input type="text" id="eventPurpose" name="eventPurpose" placeholder="e.g. Cultural Celebration, Fundraiser..." spellcheck="true">
-          </div>
-
-          <!-- Q10: How did you hear about us -->
-          <div class="form-group">
             <label for="hearAboutUs" id="lblHearAbout">How did you HEAR of us?</label>
             <select id="hearAboutUs" name="hearAboutUs">
               <option value="" selected disabled>-- Select Option --</option>
-            <option value="Email">Email</option>
+              <option value="Social Media / Word of Mouth / Prior Event / Search">Social Media / Word of Mouth / Prior Event / Search</option>
+              <option value="Email">Email</option>
               <option value="We have done business before">We have done business before</option>
               <option value="Facebook Ads">Facebook Ads</option>
               <option value="Facebook post/group">Facebook post/group</option>
@@ -1029,236 +1003,40 @@
               <option value="Youtube Ads">Youtube Ads</option>
             </select>
           </div>
-
-          <div class="form-group full-width">
-            <label for="eventDescription" id="lblDescription">Describe Your Event</label>
-            <textarea id="eventDescription" name="eventDescription" placeholder="Provide background on theme, venue, guest flow..." spellcheck="true"></textarea>
-          </div>
-
-          <!-- International Request & Destination Country (Full Width) -->
-        <div class="form-group full-width" style="margin-top: 15px; margin-bottom: 22px; width: 100%;">
-          <label for="isInternational" id="lblIsInternational" style="display: block; font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">
-            Are services requested <strong>OUTSIDE of the USA</strong>?
-          </label>
-          <select id="isInternational" name="isInternational" onchange="toggleCountryField()" style="width: 100%;">
-            <option value="" selected disabled>-- Select Option --</option>
-            <option value="No">No (United States)</option>
-            <option value="Yes">Yes (International Request)</option>
-          </select>
         </div>
 
-        <div class="form-group full-width" id="countryGroup" style="display: none; margin-bottom: 22px; width: 100%;">
-          <label for="destinationCountry" id="lblDestinationCountry" style="display: block; font-size: 0.95rem; font-weight: 700; color: var(--text-main); margin-bottom: 8px;">
-            Select Destination Country <span class="required">*</span>
-          </label>
-          <select id="destinationCountry" name="destinationCountry" style="width: 100%;">
-            <option value="" selected disabled>-- Select Option --</option>
-            <option value="Afghanistan">Afghanistan</option>
-            <option value="Albania">Albania</option>
-            <option value="Algeria">Algeria</option>
-            <option value="Andorra">Andorra</option>
-            <option value="Angola">Angola</option>
-            <option value="Antigua & Barbuda">Antigua & Barbuda</option>
-            <option value="Argentina">Argentina</option>
-            <option value="Armenia">Armenia</option>
-            <option value="Australia">Australia</option>
-            <option value="Austria">Austria</option>
-            <option value="Azerbaijan">Azerbaijan</option>
-            <option value="Bahamas">Bahamas</option>
-            <option value="Bahrain">Bahrain</option>
-            <option value="Bangladesh">Bangladesh</option>
-            <option value="Barbados">Barbados</option>
-            <option value="Belarus">Belarus</option>
-            <option value="Belgium">Belgium</option>
-            <option value="Belize">Belize</option>
-            <option value="Benin">Benin</option>
-            <option value="Bhutan">Bhutan</option>
-            <option value="Bolivia">Bolivia</option>
-            <option value="Bosnia & Herzegovina">Bosnia & Herzegovina</option>
-            <option value="Botswana">Botswana</option>
-            <option value="Brazil">Brazil</option>
-            <option value="Brunei">Brunei</option>
-            <option value="Bulgaria">Bulgaria</option>
-            <option value="Burkina Faso">Burkina Faso</option>
-            <option value="Burundi">Burundi</option>
-            <option value="Cambodia">Cambodia</option>
-            <option value="Cameroon">Cameroon</option>
-            <option value="Canada">Canada</option>
-            <option value="Cape Verde">Cape Verde</option>
-            <option value="Central African Republic">Central African Republic</option>
-            <option value="Chad">Chad</option>
-            <option value="Chile">Chile</option>
-            <option value="China">China</option>
-            <option value="Colombia">Colombia</option>
-            <option value="Comoros">Comoros</option>
-            <option value="Congo">Congo</option>
-            <option value="Costa Rica">Costa Rica</option>
-            <option value="Croatia">Croatia</option>
-            <option value="Cuba">Cuba</option>
-            <option value="Cyprus">Cyprus</option>
-            <option value="Czech Republic">Czech Republic</option>
-            <option value="Denmark">Denmark</option>
-            <option value="Djibouti">Djibouti</option>
-            <option value="Dominica">Dominica</option>
-            <option value="Dominican Republic">Dominican Republic</option>
-            <option value="Ecuador">Ecuador</option>
-            <option value="Egypt">Egypt</option>
-            <option value="El Salvador">El Salvador</option>
-            <option value="Equatorial Guinea">Equatorial Guinea</option>
-            <option value="Eritrea">Eritrea</option>
-            <option value="Estonia">Estonia</option>
-            <option value="Eswatini">Eswatini</option>
-            <option value="Ethiopia">Ethiopia</option>
-            <option value="Fiji">Fiji</option>
-            <option value="Finland">Finland</option>
-            <option value="France">France</option>
-            <option value="Gabon">Gabon</option>
-            <option value="Gambia">Gambia</option>
-            <option value="Georgia">Georgia</option>
-            <option value="Germany">Germany</option>
-            <option value="Ghana">Ghana</option>
-            <option value="Greece">Greece</option>
-            <option value="Grenada">Grenada</option>
-            <option value="Guatemala">Guatemala</option>
-            <option value="Guinea">Guinea</option>
-            <option value="Guyana">Guyana</option>
-            <option value="Haiti">Haiti</option>
-            <option value="Honduras">Honduras</option>
-            <option value="Hungary">Hungary</option>
-            <option value="Iceland">Iceland</option>
-            <option value="India">India</option>
-            <option value="Indonesia">Indonesia</option>
-            <option value="Iran">Iran</option>
-            <option value="Iraq">Iraq</option>
-            <option value="Ireland">Ireland</option>
-            <option value="Israel">Israel</option>
-            <option value="Italy">Italy</option>
-            <option value="Ivory Coast">Ivory Coast</option>
-            <option value="Jamaica">Jamaica</option>
-            <option value="Japan">Japan</option>
-            <option value="Jordan">Jordan</option>
-            <option value="Kazakhstan">Kazakhstan</option>
-            <option value="Kenya">Kenya</option>
-            <option value="Kiribati">Kiribati</option>
-            <option value="Kosovo">Kosovo</option>
-            <option value="Kuwait">Kuwait</option>
-            <option value="Kyrgyzstan">Kyrgyzstan</option>
-            <option value="Laos">Laos</option>
-            <option value="Latvia">Latvia</option>
-            <option value="Lebanon">Lebanon</option>
-            <option value="Lesotho">Lesotho</option>
-            <option value="Liberia">Liberia</option>
-            <option value="Libya">Libya</option>
-            <option value="Liechtenstein">Liechtenstein</option>
-            <option value="Lithuania">Lithuania</option>
-            <option value="Luxembourg">Luxembourg</option>
-            <option value="Madagascar">Madagascar</option>
-            <option value="Malawi">Malawi</option>
-            <option value="Malaysia">Malaysia</option>
-            <option value="Maldives">Maldives</option>
-            <option value="Mali">Mali</option>
-            <option value="Malta">Malta</option>
-            <option value="Marshall Islands">Marshall Islands</option>
-            <option value="Mauritania">Mauritania</option>
-            <option value="Mauritius">Mauritius</option>
-            <option value="Mexico">Mexico</option>
-            <option value="Micronesia">Micronesia</option>
-            <option value="Moldova">Moldova</option>
-            <option value="Monaco">Monaco</option>
-            <option value="Mongolia">Mongolia</option>
-            <option value="Montenegro">Montenegro</option>
-            <option value="Morocco">Morocco</option>
-            <option value="Mozambique">Mozambique</option>
-            <option value="Myanmar">Myanmar</option>
-            <option value="Namibia">Namibia</option>
-            <option value="Nauru">Nauru</option>
-            <option value="Nepal">Nepal</option>
-            <option value="Netherlands">Netherlands</option>
-            <option value="New Zealand">New Zealand</option>
-            <option value="Nicaragua">Nicaragua</option>
-            <option value="Niger">Niger</option>
-            <option value="Nigeria">Nigeria</option>
-            <option value="North Macedonia">North Macedonia</option>
-            <option value="Norway">Norway</option>
-            <option value="Oman">Oman</option>
-            <option value="Pakistan">Pakistan</option>
-            <option value="Palau">Palau</option>
-            <option value="Palestine">Palestine</option>
-            <option value="Panama">Panama</option>
-            <option value="Papua New Guinea">Papua New Guinea</option>
-            <option value="Paraguay">Paraguay</option>
-            <option value="Peru">Peru</option>
-            <option value="Philippines">Philippines</option>
-            <option value="Poland">Poland</option>
-            <option value="Portugal">Portugal</option>
-            <option value="Qatar">Qatar</option>
-            <option value="Romania">Romania</option>
-            <option value="Russia">Russia</option>
-            <option value="Rwanda">Rwanda</option>
-            <option value="Saint Kitts & Nevis">Saint Kitts & Nevis</option>
-            <option value="Saint Lucia">Saint Lucia</option>
-            <option value="Saint Vincent & Grenadines">Saint Vincent & Grenadines</option>
-            <option value="Samoa">Samoa</option>
-            <option value="San Marino">San Marino</option>
-            <option value="Sao Tome & Principe">Sao Tome & Principe</option>
-            <option value="Saudi Arabia">Saudi Arabia</option>
-            <option value="Senegal">Senegal</option>
-            <option value="Serbia">Serbia</option>
-            <option value="Seychelles">Seychelles</option>
-            <option value="Sierra Leone">Sierra Leone</option>
-            <option value="Singapore">Singapore</option>
-            <option value="Slovakia">Slovakia</option>
-            <option value="Slovenia">Slovenia</option>
-            <option value="Solomon Islands">Solomon Islands</option>
-            <option value="Somalia">Somalia</option>
-            <option value="South Africa">South Africa</option>
-            <option value="South Korea">South Korea</option>
-            <option value="South Sudan">South Sudan</option>
-            <option value="Spain">Spain</option>
-            <option value="Sri Lanka">Sri Lanka</option>
-            <option value="Sudan">Sudan</option>
-            <option value="Suriname">Suriname</option>
-            <option value="Sweden">Sweden</option>
-            <option value="Switzerland">Switzerland</option>
-            <option value="Syria">Syria</option>
-            <option value="Taiwan">Taiwan</option>
-            <option value="Tajikistan">Tajikistan</option>
-            <option value="Tanzania">Tanzania</option>
-            <option value="Thailand">Thailand</option>
-            <option value="Timor-Leste">Timor-Leste</option>
-            <option value="Togo">Togo</option>
-            <option value="Tonga">Tonga</option>
-            <option value="Trinidad & Tobago">Trinidad & Tobago</option>
-            <option value="Tunisia">Tunisia</option>
-            <option value="Turkey">Turkey</option>
-            <option value="Turkmenistan">Turkmenistan</option>
-            <option value="Tuvalu">Tuvalu</option>
-            <option value="Uganda">Uganda</option>
-            <option value="Ukraine">Ukraine</option>
-            <option value="United Arab Emirates">United Arab Emirates</option>
-            <option value="United Kingdom">United Kingdom</option>
-            <option value="United States">United States</option>
-            <option value="Uruguay">Uruguay</option>
-            <option value="Uzbekistan">Uzbekistan</option>
-            <option value="Vanuatu">Vanuatu</option>
-            <option value="Vatican City">Vatican City</option>
-            <option value="Venezuela">Venezuela</option>
-            <option value="Vietnam">Vietnam</option>
-            <option value="Yemen">Yemen</option>
-            <option value="Zambia">Zambia</option>
-            <option value="Zimbabwe">Zimbabwe</option>
-          </select>
-        </div>
 
-          
-        </div>
-
-        <!-- SECTION 2: DATE, TIME, LOCATION & LOGISTICS -->
+        <!-- SECTION 2: EVENT OVERVIEW & SCHEDULE -->
         <div class="section-title" id="sec2Title">
           <i class="fa-solid fa-calendar-check"></i> 2 Event Overview & Schedule
         </div>
         
         <div class="grid-2">
+          <div class="form-group">
+            <label for="eventName" id="lblEventName">Name of the Event <span class="required">*</span></label>
+            <input type="text" id="eventName" name="eventName" placeholder="e.g. Richmond Salsa Festival 2026" spellcheck="true" required>
+          </div>
+
+          <div class="form-group">
+            <label for="eventPurpose" id="lblPurpose">Purpose of this Event (e.g., Cultural Celebration, Fundraiser, Corporate, Gala)</label>
+            <input type="text" id="eventPurpose" name="eventPurpose" placeholder="e.g. Cultural Celebration, Fundraiser, Gala..." spellcheck="true">
+          </div>
+
+          <div class="form-group">
+            <label for="eventWebsites" id="lblWebsites">Websites for Event & Organization</label>
+            <input type="url" id="eventWebsites" name="eventWebsites" placeholder="https://www.example.com">
+          </div>
+
+          <div class="form-group">
+            <label for="expectedAttendance" id="lblAttendance">Expected Number of Attendees</label>
+            <input type="number" id="expectedAttendance" name="expectedAttendance" placeholder="e.g. 250">
+          </div>
+
+          <div class="form-group full-width">
+            <label for="eventDescription" id="lblDescription">Describe Your Event (Provide background on theme, venue vibe, guest flow, program schedule)</label>
+            <textarea id="eventDescription" name="eventDescription" placeholder="Provide background on theme, venue vibe, guest flow, program schedule..." spellcheck="true"></textarea>
+          </div>
+
           <div class="form-group">
             <label for="eventDate" id="lblEventDate">Event Date <span class="required">*</span></label>
             <div style="position: relative;">
@@ -1275,211 +1053,12 @@
             </div>
           </div>
 
-          <div class="form-group full-width">
-            <label for="eventAddress" id="lblEventAddress">Where will the event take place? (ADDRESS) <span class="required">*</span></label>
-            <input type="text" id="eventAddress" name="eventAddress" placeholder="e.g. 123 Main St, Richmond, VA 23220" spellcheck="true" required>
-          </div>
-
-          <!-- SECTION 3: LOCATION & EVENT CLASSIFICATION ROUTING -->
-        <div class="section-title" id="sec3Title">
-          <i class="fa-solid fa-compass"></i> 3 Location & Event Classification Routing
-        </div>
-
-        <!-- Geographic Location Subheader -->
-        <div style="font-size: 1.05rem; font-weight: 700; color: var(--accent-gold); margin-top: 10px; margin-bottom: 12px;"><i class="fa-solid fa-map-location-dot"></i> Geographic Location</div>
-          <div class="form-group full-width">
-            <label for="regionalLocation" id="lblRegionalLocation">Is this event located within the Commonwealth of Virginia (USA)? <span class="required">*</span></label>
-            <select id="regionalLocation" name="regionalLocation" required onchange="handleRegionalLocationChange(this.value)">
-              <option value="" selected disabled>-- Select Option --</option>
-              <option value="Yes (Within Virginia, USA)">Yes (Within Virginia, USA)</option>
-              <option value="No, Out-of-State (Within USA, outside VA)">No, Out-of-State (Within USA, outside VA)</option>
-              <option value="No, International (Outside USA)">No, International (Outside USA) → (Triggers Section 4C: International Logistics)</option>
-            </select>
-          </div>
-
-          <!-- CONDITIONAL FOLLOW-UP: OUT-OF-STATE -->
-          <div id="outOfStateBlock" class="form-group full-width" style="display: none; background: rgba(56, 189, 248, 0.08); border: 1px solid #38BDF8; padding: 18px; border-radius: var(--radius-md);">
-            <label for="outOfStateLogistics" id="lblOutOfStateLogistics" style="color: #38BDF8; font-weight: 700;">Out-of-State Travel & Logistics Arrangement <span class="required">*</span></label>
-            <select id="outOfStateLogistics" name="outOfStateLogistics">
-              <option value="" selected disabled>-- Select Option --</option>
-              <option value="Host organization covers/books all flights and lodging">Host organization covers/books all flights and lodging</option>
-              <option value="Stipend / Per diem provided for travel and accommodation">Stipend / Per diem provided for travel and accommodation</option>
-              <option value="Requires direct negotiation / Custom travel provisions">Requires direct negotiation / Custom travel provisions</option>
-            </select>
-          </div>
-
-          <!-- CONDITIONAL FOLLOW-UP: INTERNATIONAL -->
-          <div id="internationalBlock" class="form-group full-width" style="display: none; background: rgba(245, 158, 11, 0.08); border: 1px solid var(--accent-gold); padding: 20px; border-radius: var(--radius-md);">
-            <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif;"><i class="fa-solid fa-globe"></i> 4C. International Logistics (Outside USA)</h4>
-            <div class="grid-2">
-              <div class="form-group full-width">
-                <label for="intlVenueName" id="lblIntlVenue">Specific Country, City, & Venue Name <span class="required">*</span></label>
-                <input type="text" id="intlVenueName" name="intlVenueName" placeholder="e.g., San José, Costa Rica - Teatro Nacional">
-              </div>
-              <div class="form-group full-width">
-                <label for="intlLogistics" id="lblIntlLogistics">International Travel & Lodging Logistics <span class="required">*</span></label>
-                <select id="intlLogistics" name="intlLogistics">
-                  <option value="" selected disabled>-- Select Option --</option>
-                  <option value="Host organization covers all international flights & lodging">Host organization covers all international flights & lodging</option>
-                  <option value="Per diem / Stipend provided for travel arrangements">Per diem / Stipend provided for travel arrangements</option>
-                  <option value="Requires direct coordination / discussion">Requires direct coordination / discussion</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="visaSupport" id="lblVisaSupport">Visa & Legal Documentation Support</label>
-                <select id="visaSupport" name="visaSupport">
-                  <option value="" selected disabled>-- Select Option --</option>
-                  <option value="Host will provide official invitation letter and visa support">Host will provide official invitation letter and visa support</option>
-                  <option value="Standard entry applies / No special work visa needed">Standard entry applies / No special work visa needed</option>
-                  <option value="Unsure / Need guidance">Unsure / Need guidance</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="preferredCurrency" id="lblCurrency">Preferred Currency & Payment Terms</label>
-                <input type="text" id="preferredCurrency" name="preferredCurrency" placeholder="e.g., USD via International Wire Transfer">
-              </div>
-              <div class="form-group full-width">
-                <label for="customsNotes" id="lblCustomsNotes">Costumes, Props & Customs Considerations</label>
-                <textarea id="customsNotes" name="customsNotes" placeholder="Briefly note if custom wardrobe/props are traveling or if local provisions apply…"></textarea>
-              </div>
-            </div>
-          </div>
-
-          
-
-          <!-- Q15: Attendance Count -->
           <div class="form-group">
-            <label for="expectedAttendance" id="lblAttendance">Expected Number of Attendees</label>
-            <input type="number" id="expectedAttendance" name="expectedAttendance" placeholder="e.g. 250">
-          </div>
-
-          <!-- Q17: Admission Type -->
-          <div class="form-group">
-            <label for="admissionType" id="lblAdmission">Type of Event Admission</label>
-            <select id="admissionType" name="admissionType">
-              <option value="" selected disabled>-- Select Option --</option>
-            <option value="Free / Open to Public">Free / Open to Public</option>
-              <option value="Ticketed / Paid Admission">Ticketed / Paid Admission</option>
-              <option value="Private Event">Private Event</option>
-            </select>
-          </div>
-
-          <!-- Confirm Budget Dropdown -->
-          <div class="form-group">
-            <label for="hasBudget">Confirm you have a <strong>BUDGET</strong> for our participation. <span class="required">*</span></label>
-            <select id="hasBudget" name="hasBudget" required>
-              <option value="" selected disabled>-- Select Option --</option>
-            <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-          </div>
-
-          <!-- Confirmed Budget Amount -->
-          <div class="form-group">
-            <label for="budgetAmount">Confirmed Budget Amount for Performance / Workshop</label>
-            <input type="text" id="budgetAmount" name="budgetAmount" placeholder="e.g. $500 - $1,000">
-          </div>
-
-          <!-- Q21: Time Required Dropdown -->
-          <div class="form-group">
-            <label for="durationRequired" id="lblDuration">How much <strong>TIME</strong> do you require from us?</label>
-            <select id="durationRequired" name="durationRequired">
-              <option value="" selected disabled>-- Select Option --</option>
-            <option value="15 Minutes">15 Minutes</option>
-              <option value="30 Minutes">30 Minutes</option>
-              <option value="45 Minutes">45 Minutes</option>
-              <option value="60 Minutes">60 Minutes</option>
-              <option value="More than one hour">More than one hour</option>
-              <option value="Multiple presentations during the day">Multiple presentations during the day</option>
-            </select>
-          </div>
-
-          <!-- Q22: Audience Participation -->
-          <div class="form-group">
-            <label for="audienceParticipation" id="lblAudiencePart">Interactive (AUDIENCE PARTICIPATION)</label>
-            <select id="audienceParticipation" name="audienceParticipation">
-              <option value="" selected disabled>-- Select Option --</option>
-            <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-          </div>
-
-          <!-- General Formats Block (Moved to Section 2) -->
-          <div class="form-group full-width">
-            <label style="color: var(--accent-gold); font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-              <i class="fa-solid fa-star"></i> General Formats
-            </label>
-            <div class="options-grid">
-              <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Stage Performance"> Stage Performance</label>
-              
-              <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Opening Act"> Opening Act</label>
-              <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Festival Headliner"> Festival Headliner</label>
-              <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Main Act / Showcase"> Main Act / Showcase</label>
-              <label class="checkbox-item"><input type="checkbox" name="perfServices" value="Background Performance"> Background Performance</label>
-            </div>
-          </div>
-
-          <!-- Q23: Performance Area Size -->
-          <div class="form-group">
-            <label for="performanceAreaSize" id="lblAreaSize">Size of Performance / Class Area</label>
-            <input type="text" id="performanceAreaSize" name="performanceAreaSize" placeholder="e.g. 20ft x 30ft Stage / Dance Floor">
-          </div>
-
-          <!-- Q24: Surface Type Dropdown -->
-          <div class="form-group">
-            <label for="surfaceType" id="lblSurface">On what <strong>SURFACE</strong> will the performance or class take place?</label>
-            <select id="surfaceType" name="surfaceType">
-              <option value="" selected disabled>-- Select Option --</option>
-            <option value="Asphalt">Asphalt</option>
-              <option value="Carpet">Carpet</option>
-              <option value="Cement">Cement</option>
-              <option value="Cement - Polished">Cement - Polished</option>
-              <option value="Grass">Grass</option>
-              <option value="Linoleum">Linoleum</option>
-              <option value="Plywood - Improved dance floor">Plywood - Improved dance floor</option>
-              <option value="Stage">Stage</option>
-              <option value="Wood Floor">Wood Floor</option>
-            </select>
-          </div>
-
-          <!-- Q45: Indoor / Outdoor Location -->
-          <div class="form-group">
-            <label for="venueSetting" id="lblVenueSetting">Venue Location Setting</label>
-            <select id="venueSetting" name="venueSetting">
-              <option value="" selected disabled>-- Select Option --</option>
-            <option value="Indoors">Indoors</option>
-              <option value="Outdoors">Outdoors</option>
-              <option value="Outdoor Under Cover Area">Outdoor Under Cover Area</option>
-            </select>
-          </div>
-
-          <!-- Q44: Badge / ID Pass Access -->
-          <div class="form-group">
-            <label for="badgeAccess">Will a <strong>BADGE or ID</strong> be required for performers?</label>
-            <select id="badgeAccess" name="badgeAccess">
-              <option value="" selected disabled>-- Select Option --</option>
-            <option value="Yes">Yes</option>
-              <option value="No">No</option>
-            </select>
-          </div>
-
-          <!-- Q25: Sound System Details -->
-          <div class="form-group full-width">
-            <label for="soundSystem" id="lblSoundSystem">Sound System Equipment</label>
-            <select id="soundSystem" name="soundSystem">
-              <option value="" selected disabled>-- Select Option --</option>
-            <option value="Professional sound system and technician provided by venue">Professional sound system and technician provided by venue</option>
-              <option value="Basic sound system provided, we need to plug in">Basic sound system provided, we need to plug in</option>
-              <option value="We need to provide our own sound system">We need to provide our own sound system</option>
-            </select>
-          </div>
-
-          <!-- Q16: Target Audience Age Groups Dropdown -->
-          <div class="form-group full-width">
             <label for="audienceAgesSelect" id="lblAudienceAges">Audience Age Groups Expected</label>
             <select id="audienceAgesSelect" name="audienceAgesSelect">
               <option value="" selected disabled>-- Select Option --</option>
-            <option value="Every Age Group">Every Age Group (All Ages Welcome)</option>
+              <option value="All Ages / Family-Friendly / Adults Only / Youth">All Ages / Family-Friendly / Adults Only / Youth</option>
+              <option value="Every Age Group">Every Age Group (All Ages Welcome)</option>
               <option value="Toddlers (1-3 yrs)">Toddlers (1-3 yrs)</option>
               <option value="Preschoolers (3-5 yrs)">Preschoolers (3-5 yrs)</option>
               <option value="School-age (6-12 yrs)">School-age (6-12 yrs)</option>
@@ -1491,17 +1070,54 @@
             </select>
           </div>
 
-          <!-- Q50: Performer Provisions Dropdown -->
-          <div class="form-group full-width">
-            <label for="performerProvisionsSelect" id="lblProvisions">WILL YOU PROVIDE the performers with:</label>
-            <select id="performerProvisionsSelect" name="performerProvisionsSelect">
+          <div class="form-group">
+            <label for="admissionType" id="lblAdmission">Type of Event Admission (Free Admission / Ticketed Event / Private by Invitation)</label>
+            <select id="admissionType" name="admissionType">
               <option value="" selected disabled>-- Select Option --</option>
-            <option value="Water and/or Beverages">Water and/or Beverages</option>
-              <option value="Meals / Food, Water and Beverages">Meals / Food, Water and Beverages</option>
-              <option value="Vouchers / Meal Tickets for Food, Water and Beverages">Vouchers / Meal Tickets for Food, Water and Beverages</option>
-              <option value="Full Hospitality (Food, Water, Dressing Room & Parking)">Full Hospitality (Food, Water, Dressing Room & Parking)</option>
-              <option value="Custom / Negotiated Provisions">Custom / Negotiated Provisions</option>
-              <option value="None of the above">None of the above</option>
+              <option value="Free Admission / Ticketed Event / Private by Invitation">Free Admission / Ticketed Event / Private by Invitation</option>
+              <option value="Free / Open to Public">Free / Open to Public</option>
+              <option value="Ticketed / Paid Admission">Ticketed / Paid Admission</option>
+              <option value="Private Invitation Only">Private Invitation Only</option>
+            </select>
+          </div>
+        </div>
+
+
+        <!-- SECTION 3: LOCATION & EVENT CLASSIFICATION ROUTING -->
+        <div class="section-title" id="sec3Title">
+          <i class="fa-solid fa-compass"></i> 3 Location & Event Classification Routing
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
+          <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-map-location-dot"></i> Geographic Location</h4>
+          
+          <div class="grid-2">
+            <div class="form-group full-width">
+              <label for="regionalLocation" id="lblRegionalLocation">Is this event located within the Commonwealth of Virginia (USA)? <span class="required">*</span></label>
+              <select id="regionalLocation" name="regionalLocation" required onchange="handleRegionalLocationChange(this.value)">
+                <option value="" selected disabled>-- Select Option --</option>
+                <option value="Yes (Within Virginia, USA)">Yes (Within Virginia, USA)</option>
+                <option value="No, Out-of-State (Within USA, outside VA)">No, Out-of-State (Within USA, outside VA)</option>
+                <option value="No, International (Outside USA)">No, International (Outside USA) ➔ (Triggers Section 4C: International Logistics)</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="eventAddress" id="lblEventAddress">Where will the event take place? (Full Address or Venue Name) <span class="required">*</span></label>
+              <input type="text" id="eventAddress" name="eventAddress" placeholder="e.g., 123 Main St, Richmond, VA 23220 or Venue Name" spellcheck="true" required>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
+          <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-tags"></i> Event Classification</h4>
+          
+          <div class="form-group full-width">
+            <label for="eventTypeScale" id="lblEventScale">Select Event Classification: <span class="required">*</span></label>
+            <select id="eventTypeScale" name="eventTypeScale" required>
+              <option value="" selected disabled>-- Select Option --</option>
+              <option value="Option A: Large / Public Event">Option A: Large / Public Event ➔ (Triggers Section 4A: Large Public Event Details, 501(c) & Promotions)</option>
+              <option value="Option B: Small / Private Gathering">Option B: Small / Private Gathering ➔ (Triggers Section 4B: Small Private Event Specifications & Hospitality)</option>
             </select>
           </div>
         </div>
@@ -2527,8 +2143,8 @@
     // Multi-Language Translation Engine for All 10 Major Languages
     const langDict = {
       en: {
-        title: "Tell me about you and your event!",
-        sec1: "1 Contact & Organizer Information",
+        title: "Event Request & Booking Questionnaire",
+        sec1: "1. Contact & Organizer Information",
         sec2: "2 Event Overview & Schedule",
         sec3a: "4A. Large Public Event Details, 501(c) & Promotions",
         sec3b: "4B. Small Private Event Specifications & Hospitality",
@@ -2676,11 +2292,11 @@
         settingsTitle: "Settings",
         title: "Tell me about you and your event!",
         notice: "<i class='fa-solid fa-calendar-days'></i> <strong>Schedule Availability Notice:</strong><br>• <strong>Friday – Sunday:</strong> Available for both Live Performances and Dance Lessons.<br>• <strong>Monday – Thursday:</strong> Dedicated exclusively to Dance Lessons within the USA (Live performances are not accepted on weekdays domestically).<br><span style='font-size: 0.85rem; font-style: italic; color: var(--text-muted); display: block; margin-top: 6px;'>*(Note: This weekday performance restriction does not apply to international requests; international live performances are evaluated on a case-by-case basis).*</span>",
-        sec1: "<i class='fa-solid fa-user-circle'></i> 1. Contact & Organization Info",
+        sec1: "<i class='fa-solid fa-user-circle'></i> 1. Contact & Organizer Information",
         clientName: "Your Name",
         clientEmail: "Email Address",
         clientPhone: "Best Contact Phone Number",
-        represent: "Who do you represent?",
+        represent: "Who do you represent? (Organization / Business / Self)",
         eventName: "Name of the Event",
         eventScale: "Is your event a large public event or a small private event?",
         websites: "Websites for Event & Organization",
