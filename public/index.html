@@ -3614,6 +3614,7 @@ function handleRegionalLocationChange(val) {
 function updateConditionalSections() {
       const scaleEl = document.getElementById('eventTypeScale');
       const val = scaleEl ? scaleEl.value : '';
+      const idx = scaleEl ? scaleEl.selectedIndex : -1;
       const largePublicSection = document.getElementById('largePublicSection');
       const smallPrivateSection = document.getElementById('smallPrivateSection');
       const internationalBlock = document.getElementById('internationalBlock');
@@ -3626,11 +3627,11 @@ function updateConditionalSections() {
       if (smallPrivateSection) smallPrivateSection.style.display = 'none';
       if (internationalBlock) internationalBlock.style.display = 'none';
 
-      if (val.includes('3A') || val === '3A. Large Event Details' || val === 'Large Public Event' || val.includes('Grandes') || val.includes('Public')) {
+      if (idx === 1 || val.includes('3A') || val === '3A. Large Event Details' || val === 'Large Public Event' || val.includes('Grandes') || val.includes('Public')) {
         if (largePublicSection) largePublicSection.style.display = 'block';
-      } else if (val.includes('3B') || val === '3B. Small Event Details' || val === 'Small Private Event' || val.includes('Pequeños') || val.includes('Privad')) {
+      } else if (idx === 2 || val.includes('3B') || val === '3B. Small Event Details' || val === 'Small Private Event' || val.includes('Pequeños') || val.includes('Privad')) {
         if (smallPrivateSection) smallPrivateSection.style.display = 'block';
-      } else if (val.includes('3C') || val === '3C. Outside of the United States of America' || val === 'International: Outside of the USA' || val.includes('Fuera') || val.includes('Outside')) {
+      } else if (idx === 3 || val.includes('3C') || val === '3C. Outside of the United States of America' || val === 'International: Outside of the USA' || val.includes('Fuera') || val.includes('Outside')) {
         if (largePublicSection) largePublicSection.style.display = 'block';
         if (internationalBlock) internationalBlock.style.display = 'block';
         
