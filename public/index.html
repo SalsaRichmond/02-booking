@@ -1916,9 +1916,81 @@
           </div>
         </div>
 
+        
         <!-- SECTION 6: TECHNICAL, VENUE & HOSPITALITY LOGISTICS -->
         <div class="section-title" id="sec6Title">
           <i class="fa-solid fa-toolbox"></i> 6 Technical, Venue & Hospitality Logistics
+        </div>
+
+        <div class="grid-2">
+          <!-- 1. Venue Location Setting -->
+          <div class="form-group">
+            <label for="venueSetting" id="lblVenueSetting">Venue Location Setting</label>
+            <select id="venueSetting" name="venueSetting">
+              <option value="" selected disabled>-- Select Option --</option>
+              <option value="Indoor">Indoor</option>
+              <option value="Outdoor Covered">Outdoor Covered</option>
+              <option value="Outdoor Open">Outdoor Open</option>
+            </select>
+          </div>
+
+          <!-- 2. Performance Surface -->
+          <div class="form-group">
+            <label for="performanceSurface" id="lblPerformanceSurface">On what SURFACE will performance take place?</label>
+            <select id="performanceSurface" name="performanceSurface">
+              <option value="" selected disabled>-- Select Option --</option>
+              <option value="Wood Dance Floor">Wood Dance Floor</option>
+              <option value="Stage">Stage</option>
+              <option value="Concrete">Concrete</option>
+              <option value="Carpet">Carpet</option>
+              <option value="Grass">Grass</option>
+            </select>
+          </div>
+
+          <!-- 3. Size of Performance Area -->
+          <div class="form-group">
+            <label for="performanceArea" id="lblPerformanceArea">Size of Performance / Class Area</label>
+            <input type="text" id="performanceArea" name="performanceArea" placeholder="e.g., 20ft × 30ft Stage / Dance Floor">
+          </div>
+
+          <!-- 4. Sound System Equipment -->
+          <div class="form-group">
+            <label for="soundEquipment" id="lblSoundEquipment">Sound System Equipment</label>
+            <select id="soundEquipment" name="soundEquipment">
+              <option value="" selected disabled>-- Select Option --</option>
+              <option value="Provided by Venue">Provided by Venue</option>
+              <option value="Performer Must Provide PA">Performer Must Provide PA</option>
+            </select>
+          </div>
+
+          <!-- 5. Performer Badge / ID -->
+          <div class="form-group">
+            <label for="badgeRequired" id="lblBadgeRequired">Will a BADGE or ID be required for performers?</label>
+            <select id="badgeRequired" name="badgeRequired">
+              <option value="" selected disabled>-- Select Option --</option>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+
+          <!-- 6. Hospitality Provided -->
+          <div class="form-group">
+            <label for="hospitalityProvided" id="lblHospitalityProvided">WILL YOU PROVIDE the performers with:</label>
+            <select id="hospitalityProvided" name="hospitalityProvided">
+              <option value="" selected disabled>-- Select Option --</option>
+              <option value="Water">Water</option>
+              <option value="Hospitality">Hospitality</option>
+              <option value="Meal">Meal</option>
+              <option value="Green Room">Green Room</option>
+              <option value="Full Hospitality (Water, Meal, Green Room)">Full Hospitality (Water, Meal, Green Room)</option>
+            </select>
+          </div>
+
+          <!-- 7. Dressing Room Instructions -->
+          <div class="form-group full-width">
+            <label for="dressingRoomDetails" id="lblDressingRoomDetails">Dressing Room / Costume Changing Instructions</label>
+            <textarea id="dressingRoomDetails" name="dressingRoomDetails" placeholder="e.g., Private Green Room on 2nd Floor with secure storage" spellcheck="true"></textarea>
+          </div>
         </div>
 
         <!-- SECTION 7: BUDGET, DOCUMENTS & SPECIAL TERMS -->
@@ -3707,8 +3779,13 @@ function updateConditionalSections() {
         audienceParticipation: document.getElementById('audienceParticipation').value,
         performanceAreaSize: document.getElementById('performanceAreaSize').value.trim(),
         surfaceType: document.getElementById('surfaceType').value.trim(),
-        venueSetting: document.getElementById('venueSetting').value,
-        soundSystem: document.getElementById('soundSystem').value,
+        venueSetting: document.getElementById('venueSetting')?.value || '',
+        performanceSurface: document.getElementById('performanceSurface')?.value || '',
+        performanceArea: document.getElementById('performanceArea')?.value || '',
+        soundEquipment: document.getElementById('soundEquipment')?.value || '',
+        badgeRequired: document.getElementById('badgeRequired')?.value || '',
+        hospitalityProvided: document.getElementById('hospitalityProvided')?.value || '',
+        dressingRoomDetails: document.getElementById('dressingRoomDetails')?.value || '',
         audienceAges: document.getElementById('audienceAgesSelect')?.value || '',
         serviceRecurrence: document.getElementById('serviceRecurrence')?.value || '',
         nonProfitName: document.getElementById('nonProfitName')?.value.trim() || '',
