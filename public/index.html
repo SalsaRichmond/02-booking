@@ -1284,257 +1284,294 @@
 
         <!-- SECTION 5: SERVICES REQUESTED -->
         <div class="section-title" id="sec4Title">
-          <i class="fa-solid fa-music"></i> 4. Services Requested
+          <i class="fa-solid fa-music"></i> 5. Services Requested
         </div>
 
-        <!-- Q18: Performance Services Multi-Select Checkboxes Grid -->
-        <div class="form-group full-width">
-          <label id="lblPerfServices">Which of our PERFORMANCE SERVICES will you need? <span class="hint">(Check all options that apply)</span></label>
+        <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
+          <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-masks-theater"></i> A. Performance Dance Repertoire <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">(Select all that apply)</span></h4>
 
-          
+          <!-- Q18: Performance Services Multi-Select Checkboxes Grid -->
+          <div class="form-group full-width">
+            <label id="lblPerfServices">Which of our PERFORMANCE SERVICES will you need? <span class="hint">(Check all options that apply)</span></label>
 
-          <!-- 2. MEXICO / NORTH AMERICAN DANCES -->
-          <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
-            🇲🇽 Mexico / North American Dances
-          </div>
-          <div class="options-grid">
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="A Selection of Dances from the Disney Movie COCO (Mexico)"> 
-                <span>A Selection of Dances from COCO (Mexico)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'coco_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
+            <!-- 1. MEXICO / NORTH AMERICAN DANCES -->
+            <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
+              🇲🇽 Mexico / North American Dances
+            </div>
+            <div class="options-grid">
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="A Selection of Dances from the Disney Movie COCO (Mexico)"> 
+                  <span>A Selection of Dances from COCO (Mexico)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'coco_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
 
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="El Baile de los Viejitos (The Dance of The Old Men) (Mexico)"> 
-                <span>El Baile de los Viejitos (Mexico)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'viejitos_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="El Baile de los Viejitos (The Dance of The Old Men) (Mexico)"> 
+                  <span>El Baile de los Viejitos (Mexico)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'viejitos_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
 
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="The Waltz of La Llorona (Weeping Woman) (Mexico)"> 
-                <span>The Waltz of La Llorona (Mexico)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'llorona_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="The Waltz of La Llorona (Weeping Woman) (Mexico)"> 
+                  <span>The Waltz of La Llorona (Mexico)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'llorona_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
 
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Día de los Muertos - Day of the Dead Celebration (Mexico)"> 
-                <span>Día de los Muertos Celebration (Mexico)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'dia_muertos_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
-          </div>
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Día de los Muertos - Day of the Dead Celebration (Mexico)"> 
+                  <span>Día de los Muertos Celebration (Mexico)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'dia_muertos_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
+            </div>
 
-          <!-- 3. CARIBBEAN DANCES -->
-          <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
-            🇨🇺 🇵🇷 Caribbean Dances (Cuba & Puerto Rico)
-          </div>
-          <div class="options-grid">
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Salsa Rueda (Cuba)"> 
-                <span>Salsa Rueda (Cuba)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'salsa_rueda_cuba')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
+            <!-- 2. CARIBBEAN DANCES -->
+            <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
+              🇨🇺 🇵🇷 Caribbean Dances (Cuba & Puerto Rico)
+            </div>
+            <div class="options-grid">
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Salsa Rueda (Cuba)"> 
+                  <span>Salsa Rueda (Cuba)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'salsa_rueda_cuba')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
 
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Bomba (Puerto Rico)"> 
-                <span>Bomba (Puerto Rico)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'bomba_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Bomba (Puerto Rico)"> 
+                  <span>Bomba (Puerto Rico)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'bomba_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
 
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Plena (Puerto Rico)"> 
-                <span>Plena (Puerto Rico)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'plena_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Plena (Puerto Rico)"> 
+                  <span>Plena (Puerto Rico)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'plena_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
 
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Seis (Puerto Rico)"> 
-                <span>Seis (Puerto Rico)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'seis_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Seis (Puerto Rico)"> 
+                  <span>Seis (Puerto Rico)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'seis_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
 
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Danza (Puerto Rico)"> 
-                <span>Danza (Puerto Rico)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'danza_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
-          </div>
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Danza (Puerto Rico)"> 
+                  <span>Danza (Puerto Rico)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'danza_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
+            </div>
 
-          <!-- 4. CENTRAL AMERICAN DANCES -->
-          <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
-            🇸🇻 Central American Dances (El Salvador)
-          </div>
-          <div class="options-grid">
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Cumbia (El Salvador)"> 
-                <span>Cumbia (El Salvador)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'cumbia_salvador')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
+            <!-- 3. CENTRAL AMERICAN DANCES -->
+            <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
+              🇸🇻 Central American Dances (El Salvador)
+            </div>
+            <div class="options-grid">
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Cumbia (El Salvador)"> 
+                  <span>Cumbia (El Salvador)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'cumbia_salvador')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
 
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Las Comaleras (El Salvador)"> 
-                <span>Las Comaleras (El Salvador)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'comaleras_salvador')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Las Comaleras (El Salvador)"> 
+                  <span>Las Comaleras (El Salvador)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'comaleras_salvador')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
 
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Las Cortadoras (El Salvador) COMING SOON"> 
-                <span>Las Cortadoras (El Salvador) <span style="font-size:0.75rem; color:var(--accent-gold);">(COMING SOON)</span></span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'cortadoras_salvador')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
-          </div>
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Las Cortadoras (El Salvador) COMING SOON"> 
+                  <span>Las Cortadoras (El Salvador) <span style="font-size:0.75rem; color:var(--accent-gold);">(COMING SOON)</span></span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'cortadoras_salvador')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
+            </div>
 
-          <!-- 5. SOUTH AMERICAN DANCES -->
-          <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
-            🇨🇴 🇦🇷 South American Dances (Colombia & Argentina)
-          </div>
-          <div class="options-grid">
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Cumbia (Colombia)"> 
-                <span>Cumbia (Colombia)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'cumbia_colombia')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
+            <!-- 4. SOUTH AMERICAN DANCES -->
+            <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
+              🇨🇴 🇦🇷 South American Dances (Colombia & Argentina)
+            </div>
+            <div class="options-grid">
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Cumbia (Colombia)"> 
+                  <span>Cumbia (Colombia)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'cumbia_colombia')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
 
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Cumbia &quot;La Pollera Colorá&quot; (Colombia)"> 
-                <span>Cumbia "La Pollera Colorá" (Colombia)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'pollera_colora_colombia')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Cumbia &quot;La Pollera Colorá&quot; (Colombia)"> 
+                  <span>Cumbia "La Pollera Colorá" (Colombia)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'pollera_colora_colombia')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
 
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="El Mapalé (Colombia)"> 
-                <span>El Mapalé (Colombia)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'mapale_colombia')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="El Mapalé (Colombia)"> 
+                  <span>El Mapalé (Colombia)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'mapale_colombia')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
 
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Tango (Argentina)"> 
-                <span>Tango (Argentina)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'tango_argentina')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
-          </div>
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Tango (Argentina)"> 
+                  <span>Tango (Argentina)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'tango_argentina')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
+            </div>
 
-          <!-- 6. THEATRICAL, PARADE & SINGING PERFORMANCES -->
-          <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
-            🎭 Theatrical, Parade & Singing Performances
-          </div>
-          <div class="options-grid">
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Salsa Performance Group (Ladies in Red)"> 
-                <span>Salsa Performance Group (Ladies in Red)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'ladies_in_red')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
+            <!-- 5. THEATRICAL, PARADE & SINGING PERFORMANCES -->
+            <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
+              🎭 Theatrical, Parade & Singing Performances
+            </div>
+            <div class="options-grid">
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Salsa Performance Group (Ladies in Red)"> 
+                  <span>Salsa Performance Group (Ladies in Red)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'ladies_in_red')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
 
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Folk Characters Meet & Greet (Puerto Rico & Mexico)"> 
-                <span>Folk Characters Meet & Greet (Puerto Rico & Mexico)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'meet_greet_photo')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Folk Characters Meet & Greet (Puerto Rico & Mexico)"> 
+                  <span>Folk Characters Meet & Greet (Puerto Rico & Mexico)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'meet_greet_photo')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
 
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Folk Characters Show (Puerto Rico)"> 
-                <span>Folk Characters Show (Puerto Rico)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'folk_characters_show')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Folk Characters Show (Puerto Rico)"> 
+                  <span>Folk Characters Show (Puerto Rico)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'folk_characters_show')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
 
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Singer - Alma Ranchera (Mexico)"> 
-                <span>Singer - Alma Ranchera (Mexico)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'singer_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Singer - Alma Ranchera (Mexico)"> 
+                  <span>Singer - Alma Ranchera (Mexico)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'singer_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
 
-            <label class="checkbox-item" style="justify-content: space-between;">
-              <span style="display: flex; align-items: center; gap: 8px;">
-                <input type="checkbox" name="perfServices" value="Los Cantores de Tradicion (Puerto Rican Christmas Parranda)"> 
-                <span>Los Cantores de Tradicion (Parranda)</span>
-              </span>
-              <span class="details-btn" onclick="openPerfModal(event, 'cantores_tradicion')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-            </label>
-          </div>
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Los Cantores de Tradicion (Puerto Rican Christmas Parranda)"> 
+                  <span>Los Cantores de Tradicion (Parranda)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'cantores_tradicion')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
+            </div>
 
-        </div>
-
-        <!-- Other Performance Services Text Input -->
-        <div class="form-group full-width">
-          <label for="otherPerfServices" id="lblOtherPerfServices">Any other PERFORMANCE SERVICES you wish, but are not listed above?</label>
-          <input type="text" id="otherPerfServices" name="otherPerfServices" placeholder="Describe any custom performance services..." spellcheck="true">
-        </div>
-
-        <!-- Q19: Dance Lesson Services Dropdown & Multi-Select Grid -->
-        <div class="form-group full-width">
-          <label for="lessonServicesSelect" id="lblLessonServices">Which of our DANCE LESSON SERVICES will you need?</label>
-          <select id="lessonServicesSelect" name="lessonServicesSelect" style="margin-bottom: 12px;">
-            <option value="" selected disabled>-- Select Option --</option>
-            <option value="None" id="optLesson0">None</option>
-            <option value="Salsa Guy's Line Dance lesson Salsa, Merengue, Bachata and Chacha" id="optLesson1">Salsa Guy's Line Dance lesson Salsa, Merengue, Bachata and Chacha</option>
-            <option value="Puerto Rican Folk - Bomba y Plena (Live Music)" id="optLesson2">Puerto Rican Folk - Bomba y Plena (Live Music)</option>
-            <option value="Merengue - Dominican Republic" id="optLesson3">Merengue - Dominican Republic</option>
-            <option value="Bachata - Dominican Republic" id="optLesson4">Bachata - Dominican Republic</option>
-            <option value="Salsa - Puerto Rico" id="optLesson5">Salsa - Puerto Rico</option>
-            <option value="Cuba - Rueda" id="optLesson6">Cuba - Rueda</option>
-            <option value="Choreographies for Wedding or Sweet Fifteen (Quinceañero)" id="optLesson7">Choreographies for Wedding or Sweet Fifteen (Quinceañero)</option>
-            <option value="All Salsa, Merengue and Bachata" id="optLesson8">All Salsa, Merengue and Bachata</option>
-            <option value="for Team Building" id="optLesson9">for Team Building</option>
-            <option value="Virtual" id="optLesson10">Virtual</option>
-            <option value="Wedding 1st Dance" id="optLesson11">Wedding 1st Dance</option>
-            <option value="for Children" id="optLesson12">for Children</option>
-          </select>
-
-          
-        </div>
-
-        <!-- Q20 & Q26: Other Services (MC, DJ, Lectures) -->
-        <div class="form-group">
-          <label id="lblOtherServices">Additional Services Needed</label>
-          <div class="options-grid">
-            <label class="checkbox-item"><input type="checkbox" name="otherServices" value="Master of Ceremonies (MC)"> Master of Ceremonies (MC)</label>
-            <label class="checkbox-item"><input type="checkbox" name="otherServices" value="DJ Services"> DJ Services</label>
-            <label class="checkbox-item"><input type="checkbox" name="otherServices" value="Cultural Presentation / Lecture"> Cultural Presentation / Lecture</label>
+            <!-- Other Performance Services Text Input -->
+            <div class="form-group full-width" style="margin-top: 20px;">
+              <label for="otherPerfServices" id="lblOtherPerfServices">Any other PERFORMANCE SERVICES you wish, but are not listed above?</label>
+              <input type="text" id="otherPerfServices" name="otherPerfServices" placeholder="Describe any custom performance services..." spellcheck="true">
+            </div>
           </div>
         </div>
 
-        <!-- SECTION 5: FILE ATTACHMENTS -->
+        <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
+          <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-graduation-cap"></i> B. Dance Instruction, Production Roles & Formats</h4>
+
+          <div class="grid-2">
+            <div class="form-group full-width">
+              <label for="lessonServicesSelect" id="lblLessonServices">Which of our DANCE LESSON SERVICES will you need?</label>
+              <select id="lessonServicesSelect" name="lessonServicesSelect">
+                <option value="" selected disabled>-- Select Option --</option>
+                <option value="None" id="optLesson0">None</option>
+                <option value="Salsa Guy's Line Dance lesson Salsa, Merengue, Bachata and Chacha" id="optLesson1">Salsa Guy's Line Dance lesson Salsa, Merengue, Bachata and Chacha</option>
+                <option value="Puerto Rican Folk - Bomba y Plena (Live Music)" id="optLesson2">Puerto Rican Folk - Bomba y Plena (Live Music)</option>
+                <option value="Merengue - Dominican Republic" id="optLesson3">Merengue - Dominican Republic</option>
+                <option value="Bachata - Dominican Republic" id="optLesson4">Bachata - Dominican Republic</option>
+                <option value="Salsa - Puerto Rico" id="optLesson5">Salsa - Puerto Rico</option>
+                <option value="Cuba - Rueda" id="optLesson6">Cuba - Rueda</option>
+                <option value="Choreographies for Wedding or Sweet Fifteen (Quinceañero)" id="optLesson7">Choreographies for Wedding or Sweet Fifteen (Quinceañero)</option>
+                <option value="All Salsa, Merengue and Bachata" id="optLesson8">All Salsa, Merengue and Bachata</option>
+                <option value="for Team Building" id="optLesson9">for Team Building</option>
+                <option value="Virtual" id="optLesson10">Virtual</option>
+                <option value="Wedding 1st Dance" id="optLesson11">Wedding 1st Dance</option>
+                <option value="for Children" id="optLesson12">for Children</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="audienceParticipation" id="lblAudienceParticipation">Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?</label>
+              <select id="audienceParticipation" name="audienceParticipation">
+                <option value="" selected disabled>-- Select Option --</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="serviceTimeSelect" id="lblServiceTime">How much TIME do you require from us? <span class="hint">(e.g., 30 min, 1 hour, Full day)</span></label>
+              <select id="serviceTimeSelect" name="serviceTimeSelect">
+                <option value="" selected disabled>-- Select Option --</option>
+                <option value="30 minutes">30 minutes</option>
+                <option value="1 hour">1 hour</option>
+                <option value="1.5 hours">1.5 hours</option>
+                <option value="2 hours">2 hours</option>
+                <option value="Half Day (3-4 hours)">Half Day (3-4 hours)</option>
+                <option value="Full Day (5+ hours)">Full Day (5+ hours)</option>
+              </select>
+            </div>
+
+            <div class="form-group full-width">
+              <label id="lblOtherServices">Additional Services Needed</label>
+              <div class="options-grid">
+                <label class="checkbox-item"><input type="checkbox" name="otherServices" value="Master of Ceremonies (MC)"> Master of Ceremonies (MC)</label>
+                <label class="checkbox-item"><input type="checkbox" name="otherServices" value="DJ Services"> DJ Services</label>
+                <label class="checkbox-item"><input type="checkbox" name="otherServices" value="Cultural Presentation / Lecture"> Cultural Presentation / Lecture</label>
+              </div>
+            </div>
+
+            <div class="form-group full-width">
+              <label id="lblGeneralFormats">General Formats</label>
+              <div class="options-grid">
+                <label class="checkbox-item"><input type="checkbox" name="generalFormats" value="Stage Performance"> Stage Performance</label>
+                <label class="checkbox-item"><input type="checkbox" name="generalFormats" value="Opening Act"> Opening Act</label>
+                <label class="checkbox-item"><input type="checkbox" name="generalFormats" value="Festival Headliner"> Festival Headliner</label>
+                <label class="checkbox-item"><input type="checkbox" name="generalFormats" value="Main Act / Showcase"> Main Act / Showcase</label>
+                <label class="checkbox-item"><input type="checkbox" name="generalFormats" value="Background Performance"> Background Performance</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- SECTION 6: FILE ATTACHMENTS -->
         <div class="section-title" id="secFileTitle">
-          <i class="fa-solid fa-paperclip"></i> 5. File Attachments (Flyer / Floor Plan / 501c Tax Letter)
+          <i class="fa-solid fa-paperclip"></i> 6. File Attachments (Flyer / Floor Plan / 501c Tax Letter)
         </div>
 
         <div class="form-group full-width">
@@ -1548,9 +1585,9 @@
         </div>
 
         
-        <!-- SECTION 6: TECHNICAL, VENUE & HOSPITALITY LOGISTICS -->
+        <!-- SECTION 7: TECHNICAL, VENUE & HOSPITALITY LOGISTICS -->
         <div class="section-title" id="sec6Title">
-          <i class="fa-solid fa-toolbox"></i> 6 Technical, Venue & Hospitality Logistics
+          <i class="fa-solid fa-toolbox"></i> 7. Technical, Venue & Hospitality Logistics
         </div>
 
         <div class="grid-2">
@@ -1624,9 +1661,9 @@
           </div>
         </div>
 
-        <!-- SECTION 7: BUDGET, DOCUMENTS & SPECIAL TERMS -->
+        <!-- SECTION 8: BUDGET, DOCUMENTS & SPECIAL TERMS -->
         <div class="section-title" id="sec5Title">
-          <i class="fa-solid fa-file-contract"></i> 7 Budget, Documents & Special Terms
+          <i class="fa-solid fa-file-contract"></i> 8. Budget, Documents & Special Terms
         </div>
 
         <!-- Q42: Special Requests -->
@@ -1635,9 +1672,9 @@
           <textarea id="notes" name="notes" placeholder="Tell us any special requests, song choices, or event guidelines..." spellcheck="true"></textarea>
         </div>
 
-        <!-- SECTION 7: GENERAL INFORMATION -->
+        <!-- SECTION 9: GENERAL INFORMATION -->
         <div class="section-title" id="sec7Title">
-          <i class="fa-solid fa-circle-info"></i> 7. General Information
+          <i class="fa-solid fa-circle-info"></i> 9. General Information
         </div>
 
         <div class="notice-box" id="txtGeneralInfo" style="background: rgba(30, 41, 59, 0.6); border: 1px solid var(--card-border); border-left: 4px solid var(--accent-gold); padding: 22px; border-radius: var(--radius-md); font-size: 0.94rem; line-height: 1.6; color: var(--text-main); margin-bottom: 30px;">
@@ -2162,10 +2199,11 @@
         sec2: "2. Event Overview & Schedule",
         sec3a: "4A. Large Public Event Details, 501(c) & Promotions",
         sec3b: "4B. Small Private Event Specifications & Hospitality",
-        sec4: "5 Services Requested",
-        sec5: "7 Budget, Documents & Special Terms",
-        secFile: "5. File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
-        sec7: "7 Budget, Documents & Special Terms",
+        sec4: "5. Services Requested",
+        sec6: "7. Technical, Venue & Hospitality Logistics",
+        sec5: "8. Budget, Documents & Special Terms",
+        secFile: "6. File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
+        sec7: "9. General Information",
         isInternational: "Are services requested OUTSIDE of the USA?",
         destinationCountry: "Select Destination Country",
         submit: "Submit Event Request"
@@ -2174,12 +2212,13 @@
         title: "¡Cuéntame sobre ti y tu evento!",
         sec1: "1. Información de Contacto y Organización",
         sec2: "2. Fecha, Hora y Logística",
-        sec3a: "3A. Detalles de Eventos Públicos Grandes, 501(c) y Promoción",
-        sec3b: "3B. Especificaciones de Eventos Privados y Hospitalidad",
-        sec4: "4. Servicios Solicitados",
-        sec5: "6. Instrucciones Especiales y Términos",
-        secFile: "5. Archivos Adjuntos (Folleto / Plano / Carta 501c)",
-        sec7: "7. Información General",
+        sec3a: "4A. Detalles de Eventos Públicos Grandes, 501(c) y Promoción",
+        sec3b: "4B. Especificaciones de Eventos Privados y Hospitalidad",
+        sec4: "5. Servicios Solicitados",
+        sec6: "7. Logística Técnica, Lugar y Hospitalidad",
+        sec5: "8. Instrucciones Especiales y Términos",
+        secFile: "6. Archivos Adjuntos (Folleto / Plano / Carta 501c)",
+        sec7: "9. Información General",
         isInternational: "¿Se solicitan servicios FUERA de EE. UU.?",
         destinationCountry: "Seleccione el País de Destino",
         submit: "Enviar Solicitud de Evento"
@@ -2188,12 +2227,13 @@
         title: "Parlez-moi de vous et de votre événement!",
         sec1: "1. Informations de Contact et d'Organisation",
         sec2: "2. Date, Heure et Logistique",
-        sec3a: "3A. Événement Public Majeur et Promotions",
-        sec3b: "3B. Événement Privé et Hospitalité",
-        sec4: "4. Services Demandés",
-        sec5: "6. Instructions Spéciales et Conditions",
-        secFile: "5. Pièces Jointes",
-        sec7: "7. Informations Générales",
+        sec3a: "4A. Événement Public Majeur et Promotions",
+        sec3b: "4B. Événement Privé et Hospitalité",
+        sec4: "5. Services Demandés",
+        sec6: "7. Logistique Technique et Accueil",
+        sec5: "8. Instructions Spéciales et Conditions",
+        secFile: "6. Pièces Jointes",
+        sec7: "9. Informations Générales",
         isInternational: "Services demandés HORS des États-Unis?",
         destinationCountry: "Sélectionnez le Pays de Destination",
         submit: "Soumettre la Demande d'Événement"
@@ -2202,12 +2242,13 @@
         title: "Erzählen Sie mir von Ihnen und Ihrer Veranstaltung!",
         sec1: "1. Kontakt- und Organisationsdaten",
         sec2: "2. Datum, Uhrzeit und Logistik",
-        sec3a: "3A. Große öffentliche Veranstaltung",
-        sec3b: "3B. Kleine private Veranstaltung",
-        sec4: "4. Angeforderte Dienstleistungen",
-        sec5: "6. Besondere Anweisungen & Bedingungen",
-        secFile: "5. Dateianhänge",
-        sec7: "7. Allgemeine Informationen",
+        sec3a: "4A. Große öffentliche Veranstaltung",
+        sec3b: "4B. Kleine private Veranstaltung",
+        sec4: "5. Angeforderte Dienstleistungen",
+        sec6: "7. Technische & Logistik",
+        sec5: "8. Besondere Anweisungen & Bedingungen",
+        secFile: "6. Dateianhänge",
+        sec7: "9. Allgemeine Informationen",
         isInternational: "Dienstleistungen AUSSERHALB der USA angefordert?",
         destinationCountry: "Zielland auswählen",
         submit: "Veranstaltungsanfrage absenden"
@@ -2216,12 +2257,12 @@
         title: "Raccontami di te e del tuo evento!",
         sec1: "1. Informazioni di Contatto e Organizzazione",
         sec2: "2. Data, Ora e Logistica",
-        sec3a: "3A. Dettagli Grande Evento Pubblico",
-        sec3b: "3B. Specifiche Evento Privato",
-        sec4: "4. Servizi Richiesti",
-        sec5: "6. Istruzioni Speciali e Termini",
-        secFile: "5. Allegati File",
-        sec7: "7. Informazioni Generali",
+        sec3a: "4A. Dettagli Grande Evento Pubblico",
+        sec3b: "4B. Specifiche Evento Privato",
+        sec4: "5. Servizi Richiesti",
+        sec5: "8. Istruzioni Speciali e Termini",
+        secFile: "6. Allegati File",
+        sec7: "9. Informazioni Generali",
         isInternational: "Servizi richiesti FUORI dagli USA?",
         destinationCountry: "Seleziona il Paese di Destinazione",
         submit: "Invia Richiesta Evento"
@@ -2230,12 +2271,12 @@
         title: "Fale-me sobre você e seu evento!",
         sec1: "1. Informações de Contato e Organização",
         sec2: "2. Data, Hora e Logística",
-        sec3a: "3A. Detalhes de Grande Evento Público",
-        sec3b: "3B. Especificações de Evento Privado",
-        sec4: "4. Serviços Solicitados",
-        sec5: "6. Instruções Especiais e Termos",
-        secFile: "5. Anexos de Arquivos",
-        sec7: "7. Informações Gerais",
+        sec3a: "4A. Detalhes de Grande Evento Público",
+        sec3b: "4B. Especificações de Evento Privado",
+        sec4: "5. Serviços Solicitados",
+        sec5: "8. Instruções Especiais e Termos",
+        secFile: "6. Anexos de Arquivos",
+        sec7: "9. Informações Gerais",
         isInternational: "Serviços solicitados FORA dos EUA?",
         destinationCountry: "Selecione o País de Destino",
         submit: "Enviar Solicitação de Evento"
@@ -2244,12 +2285,12 @@
         title: "Vertel me over jou en je evenement!",
         sec1: "1. Contact & Organisatie Informatie",
         sec2: "2. Datum, Tijd & Logistiek",
-        sec3a: "3A. Grote Openbare Evenementen",
-        sec3b: "3B. Kleine Privé Evenementen",
-        sec4: "4. Gevraagde Diensten",
-        sec5: "6. Speciale Instructies & Voorwaarden",
-        secFile: "5. Bijlagen",
-        sec7: "7. Algemene Informatie",
+        sec3a: "4A. Grote Openbare Evenementen",
+        sec3b: "4B. Kleine Privé Evenementen",
+        sec4: "5. Gevraagde Diensten",
+        sec5: "8. Speciale Instructies & Voorwaarden",
+        secFile: "6. Bijlagen",
+        sec7: "9. Algemene Informatie",
         isInternational: "Diensten aangevraagd BUITEN de VS?",
         destinationCountry: "Selecteer Bestemmingsland",
         submit: "Evenementaanvraag Indienen"
@@ -2258,12 +2299,12 @@
         title: "告诉我关于您和您的活动！",
         sec1: "1. 联系与组织信息",
         sec2: "2. 日期、时间与物流",
-        sec3a: "3A. 大型公开活动详情",
-        sec3b: "3B. 小型私人活动规格",
-        sec4: "4. 请求的服务",
-        sec5: "6. 特殊说明与条款",
-        secFile: "5. 文件附件",
-        sec7: "7. 一般信息",
+        sec3a: "4A. 大型公开活动详情",
+        sec3b: "4B. 小型私人活动规格",
+        sec4: "5. 请求的服务",
+        sec5: "8. 特殊说明与条款",
+        secFile: "6. 文件附件",
+        sec7: "9. 一般信息",
         isInternational: "是否在美国境外请求服务？",
         destinationCountry: "选择目的国家",
         submit: "提交活动申请"
@@ -2272,12 +2313,12 @@
         title: "あなたとイベントについて教えてください！",
         sec1: "1. 連絡先と組織情報",
         sec2: "2. 日時とロジスティクス",
-        sec3a: "3A. 大型パブリックイベント詳細",
-        sec3b: "3B. 小型プライベートイベント仕様",
-        sec4: "4. リクエストされたサービス",
-        sec5: "6. 特別な指示と利用規約",
-        secFile: "5. 添付ファイル",
-        sec7: "7. 一般情報",
+        sec3a: "4A. 大型パブリックイベント詳細",
+        sec3b: "4B. 小型プライベートイベント仕様",
+        sec4: "5. リクエストされたサービス",
+        sec5: "8. 特別な指示と利用規約",
+        secFile: "6. 添付ファイル",
+        sec7: "9. 一般情報",
         isInternational: "米国以外でのサービス依頼ですか？",
         destinationCountry: "目的地国を選択",
         submit: "イベントリクエストを送信"
@@ -2288,10 +2329,10 @@
         sec2: "2. التاريخ والوقت واللوجستيات",
         sec3a: "3أ. تفاصيل الفعاليات العامة الكبيرة",
         sec3b: "3ب. مواصفات الفعاليات الخاصة الصغيرة",
-        sec4: "4. الخدمات المطلوبة",
-        sec5: "6. تعليمات خاصة والشروط",
-        secFile: "5. المرفقات",
-        sec7: "7. معلومات عامة",
+        sec4: "5. الخدمات المطلوبة",
+        sec5: "8. تعليمات خاصة والشروط",
+        secFile: "6. المرفقات",
+        sec7: "9. معلومات عامة",
         isInternational: "هل الخدمات مطلوبة خارج الولايات المتحدة؟",
         destinationCountry: "اختر بلد الوجهة",
         submit: "إرسال طلب الفعالية"
@@ -2340,19 +2381,20 @@
         soundSystem: "Sound System Equipment",
         audienceAges: "Audience Age Groups Expected",
         provisions: "WILL YOU PROVIDE the performers with:",
-        sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Large Public Event Details, 501(c) & Promotions",
-        sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Small Private Event Specifications & Hospitality",
-        sec4: "<i class='fa-solid fa-music'></i> 4. Services Requested",
+        sec3a: "<i class='fa-solid fa-bullhorn'></i> 4A. Large Public Event Details, 501(c) & Promotions",
+        sec3b: "<i class='fa-solid fa-cake-candles'></i> 4B. Small Private Event Specifications & Hospitality",
+        sec4: "<i class='fa-solid fa-music'></i> 5. Services Requested",
         perfServices: "Which of our PERFORMANCE SERVICES will you need?",
         otherPerfServices: "Any other PERFORMANCE SERVICES you wish, but are not listed above?",
         lessonServices: "Which of our DANCE LESSON SERVICES will you need?",
         otherServices: "Additional Services Needed",
-        secFile: "<i class='fa-solid fa-paperclip'></i> 5. File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
+        secFile: "<i class='fa-solid fa-paperclip'></i> 6. File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
         fileUpload: "Upload Event Document / Attachment",
         fileBoxText: "Click or Drag & Drop File Here to Attach to Drive",
-        sec5: "<i class='fa-solid fa-file-contract'></i> 6. Special Instructions & Terms",
+        sec6: "<i class='fa-solid fa-toolbox'></i> 7. Technical, Venue & Hospitality Logistics",
+        sec5: "<i class='fa-solid fa-file-contract'></i> 8. Special Instructions & Terms",
         notes: "Special Instructions, Song Requests or Notes",
-        sec7: "<i class='fa-solid fa-circle-info'></i> 7. General Information",
+        sec7: "<i class='fa-solid fa-circle-info'></i> 9. General Information",
         hiringPerformers: "HIRING SIMILAR PERFORMERS",
         genInfoP1: "While you may be tempted to hire similar performances, I truly believe that incorporating different styles and specialties can greatly enhance your event experience in multiple ways. First and foremost, offering a variety of performances will keep your guests engaged and captivated throughout the entire event. By avoiding repetition or monotony, I ensure that attendees remain entertained and have a truly memorable experience.",
         genInfoP2: "Furthermore, diverse performances cater to a broader audience, attracting individuals with varying interests and preferences. By providing a mix of entertainment options, I ensure that everyone finds something appealing and feels included in the festivities. This inclusive approach guarantees a more enjoyable and satisfying experience for all attendees.",
@@ -2413,19 +2455,20 @@
         soundSystem: "Equipo de Sistema de Sonido",
         audienceAges: "Edades Esperadas del Público",
         provisions: "¿PROVEERÁ a los artistas con:",
-        sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Detalles de Eventos Públicos Grandes, 501(c) y Promoción",
-        sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Especificaciones de Eventos Privados Pequeños y Hospitalidad",
-        sec4: "<i class='fa-solid fa-music'></i> 4. Servicios Solicitados",
+        sec3a: "<i class='fa-solid fa-bullhorn'></i> 4A. Detalles de Eventos Públicos Grandes, 501(c) y Promoción",
+        sec3b: "<i class='fa-solid fa-cake-candles'></i> 4B. Especificaciones de Eventos Privados Pequeños y Hospitalidad",
+        sec4: "<i class='fa-solid fa-music'></i> 5. Servicios Solicitados",
         perfServices: "¿Cuál de nuestros SERVICIOS DE ESPECTÁCULO necesitará?",
         otherPerfServices: "¿Algún otro SERVICIO DE ESPECTÁCULO que desee y no esté listado?",
         lessonServices: "¿Cuál de nuestros SERVICIOS DE CLASES DE BAILE necesitará?",
         otherServices: "Servicios Adicionales Necesarios",
-        secFile: "<i class='fa-solid fa-paperclip'></i> 5. Archivos Adjuntos (Folleto / Plano / Carta 501c)",
+        secFile: "<i class='fa-solid fa-paperclip'></i> 6. Archivos Adjuntos (Folleto / Plano / Carta 501c)",
         fileUpload: "Subir Documento del Evento",
         fileBoxText: "Haga clic o arrastre su archivo aquí para adjuntarlo a Drive",
-        sec5: "<i class='fa-solid fa-file-contract'></i> 6. Instrucciones Especiales y Términos",
+        sec6: "<i class='fa-solid fa-toolbox'></i> 7. Logística Técnica, Lugar y Hospitalidad",
+        sec5: "<i class='fa-solid fa-file-contract'></i> 8. Instrucciones Especiales y Términos",
         notes: "Instrucciones Especiales, Canciones o Notas",
-        sec7: "<i class='fa-solid fa-circle-info'></i> 7. Información General",
+        sec7: "<i class='fa-solid fa-circle-info'></i> 9. Información General",
         hiringPerformers: "CONTRATACIÓN DE ARTISTAS SIMILARES",
         genInfoP1: "Si bien puede verse tentado a contratar espectáculos similares, creo firmemente que incorporar diferentes estilos y especialidades mejorará enormemente la experiencia de su evento. Ofrecer una variedad mantendrá a sus invitados fascinados durante todo el evento.",
         genInfoP2: "Además, las presentaciones diversas satisfacen a un público más amplio. Al brindar una combinación de entretenimiento, aseguro que todos encuentren algo atractivo y se sientan incluidos en la festividad.",
@@ -2486,19 +2529,19 @@
         soundSystem: "Équipement de Système Sonore",
         audienceAges: "Tranches d'Âge Attendues",
         provisions: "FOURNIREZ-VOUS aux artistes :",
-        sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Détails Grands Événements Publics",
-        sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Événements Privés et Hospitalité",
-        sec4: "<i class='fa-solid fa-music'></i> 4. Services Demandés",
+        sec3a: "<i class='fa-solid fa-bullhorn'></i> 4A. Détails Grands Événements Publics",
+        sec3b: "<i class='fa-solid fa-cake-candles'></i> 4B. Événements Privés et Hospitalité",
+        sec4: "<i class='fa-solid fa-music'></i> 5. Services Demandés",
         perfServices: "Quels SERVICES DE SPECTACLE désirez-vous ?",
         otherPerfServices: "Autres services de spectacle souhaités ?",
         lessonServices: "Quels COURS DE DANSE désirez-vous ?",
         otherServices: "Services Supplémentaires Nécessaires",
-        secFile: "<i class='fa-solid fa-paperclip'></i> 5. Fichiers Joints",
+        secFile: "<i class='fa-solid fa-paperclip'></i> 6. Fichiers Joints",
         fileUpload: "Télécharger un Document d'Événement",
         fileBoxText: "Cliquez ou glissez votre fichier ici",
-        sec5: "<i class='fa-solid fa-file-contract'></i> 6. Instructions Spéciales",
+        sec5: "<i class='fa-solid fa-file-contract'></i> 8. Instructions Spéciales",
         notes: "Instructions Spéciales ou Chansons Demandées",
-        sec7: "<i class='fa-solid fa-circle-info'></i> 7. Informations Générales",
+        sec7: "<i class='fa-solid fa-circle-info'></i> 9. Informations Générales",
         hiringPerformers: "ENGAGER DES ARTISTES SIMILAIRES",
         genInfoP1: "Offrir une variété de performances captivera vos invités tout au long de l'événement.",
         genInfoP2: "Une variété de divertissements garantit une expérience mémorable pour tous.",
@@ -2559,19 +2602,19 @@
         soundSystem: "Musikanlage & Tonausstattung",
         audienceAges: "Erwartete Altersgruppen",
         provisions: "BIETEN SIE den Künstlern:",
-        sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Details für große öffentliche Events",
-        sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Private Veranstaltungen & Gastfreundschaft",
-        sec4: "<i class='fa-solid fa-music'></i> 4. Gewünschte Dienstleistungen",
+        sec3a: "<i class='fa-solid fa-bullhorn'></i> 4A. Details für große öffentliche Events",
+        sec3b: "<i class='fa-solid fa-cake-candles'></i> 4B. Private Veranstaltungen & Gastfreundschaft",
+        sec4: "<i class='fa-solid fa-music'></i> 5. Gewünschte Dienstleistungen",
         perfServices: "Welche SHOW-DIENSTLEISTUNGEN benötigen Sie?",
         otherPerfServices: "Weitere gewünschte Show-Dienste?",
         lessonServices: "Welche TANZKURS-DIENSTLEISTUNGEN benötigen Sie?",
         otherServices: "Zusätzliche Dienstleistungen",
-        secFile: "<i class='fa-solid fa-paperclip'></i> 5. Dateianhänge",
+        secFile: "<i class='fa-solid fa-paperclip'></i> 6. Dateianhänge",
         fileUpload: "Veranstaltungsdokument hochladen",
         fileBoxText: "Klicken oder Datei hierher ziehen",
-        sec5: "<i class='fa-solid fa-file-contract'></i> 6. Besondere Hinweise & Bedingungen",
+        sec5: "<i class='fa-solid fa-file-contract'></i> 8. Besondere Hinweise & Bedingungen",
         notes: "Besondere Wünsche oder Musikwünsche",
-        sec7: "<i class='fa-solid fa-circle-info'></i> 7. Allgemeine Informationen",
+        sec7: "<i class='fa-solid fa-circle-info'></i> 9. Allgemeine Informationen",
         hiringPerformers: "ÄHNLICHE KÜNSTLER BUCHEN",
         genInfoP1: "Eine Vielzahl von Auftritten hält Ihre Gäste während der gesamten Veranstaltung begeistert.",
         genInfoP2: "Verschiedene Darbietungen sprechen ein breiteres Publikum an.",
@@ -3018,6 +3061,7 @@ function changeLanguage(langCode) {
       setTxt('secFileTitle', t.secFile, true);
       setTxt('lblFileUpload', t.fileUpload);
       setTxt('fileBoxText', t.fileBoxText);
+      setTxt('sec6Title', t.sec6, true);
       setTxt('sec5Title', t.sec5, true);
       setTxt('lblNotes', t.notes);
       setTxt('sec7Title', t.sec7, true);
@@ -3140,6 +3184,7 @@ function changeLanguage(langCode) {
       document.getElementById('lblFileUpload').childNodes[0].nodeValue = t.lblFile + " ";
       document.getElementById('fileBoxText').textContent = t.fileBox;
 
+      if (document.getElementById('sec6Title') && t.sec6) document.getElementById('sec6Title').innerHTML = t.sec6;
       document.getElementById('sec5Title').innerHTML = t.sec5;
       document.getElementById('sec7Title').innerHTML = t.sec7;
       document.getElementById('lblNotes').textContent = t.notes;
