@@ -1106,6 +1106,14 @@
               <label for="eventAddress" id="lblEventAddress">Where will the event take place? (Full Address or Venue Name) <span class="required">*</span></label>
               <input type="text" id="eventAddress" name="eventAddress" placeholder="(e.g., 123 Main St, Richmond, VA 23220 or Venue Name)" spellcheck="true" required>
             </div>
+
+            <!-- Out-of-State Travel & Logistics Conditional Block -->
+            <div id="outOfStateBlock" class="conditional-block" style="display: none; margin-top: 15px; grid-column: span 2;">
+              <div class="form-group full-width" style="margin-bottom: 0;">
+                <label for="outOfStateLogistics" id="lblOutOfStateLogistics">Out-of-State Travel & Logistics Arrangement <span class="required">*</span> <span class="hint">(Describe travel, flight/driving arrangements, hotel lodging, and per diem)</span></label>
+                <textarea id="outOfStateLogistics" name="outOfStateLogistics" placeholder="Describe flight/driving logistics, hotel accommodations, per diem, and arrival schedule..." spellcheck="true"></textarea>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -3282,21 +3290,34 @@ function handleRegionalLocationChange(val) {
       const intlVenueName = document.getElementById('intlVenueName');
       const intlLogistics = document.getElementById('intlLogistics');
       const isIntlSel = document.getElementById('isInternational');
+      const countryGrp = document.getElementById('countryGroup');
+      const destCountry = document.getElementById('destinationCountry');
 
-      if (val === 'No, Out-of-State (Within USA, outside VA)') {
+      if (!val) return;
+
+      const isOutState = val.includes('Out-of-State') || val.includes('Out-of-state') || val.includes('outside VA') || val.includes('USA Domestic Travel');
+      const isIntl = val.includes('International') || val.includes('Outside USA');
+
+      if (isOutState) {
         if (outOfStateBlock) outOfStateBlock.style.display = 'block';
         if (internationalBlock) internationalBlock.style.display = 'none';
         if (outOfStateLogistics) outOfStateLogistics.required = true;
         if (intlVenueName) intlVenueName.required = false;
         if (intlLogistics) intlLogistics.required = false;
         if (isIntlSel) isIntlSel.value = 'No';
-      } else if (val === 'No, International (Outside USA)') {
+        if (countryGrp) countryGrp.style.display = 'none';
+        if (destCountry) { destCountry.required = false; destCountry.value = ''; }
+      } else if (isIntl) {
         if (outOfStateBlock) outOfStateBlock.style.display = 'none';
         if (internationalBlock) internationalBlock.style.display = 'block';
         if (outOfStateLogistics) outOfStateLogistics.required = false;
         if (intlVenueName) intlVenueName.required = true;
         if (intlLogistics) intlLogistics.required = true;
-        if (isIntlSel) isIntlSel.value = 'Yes';
+        if (isIntlSel) {
+          isIntlSel.value = 'Yes';
+          if (countryGrp) countryGrp.style.display = 'block';
+          if (destCountry) destCountry.required = true;
+        }
       } else {
         if (outOfStateBlock) outOfStateBlock.style.display = 'none';
         if (internationalBlock) internationalBlock.style.display = 'none';
@@ -3304,6 +3325,8 @@ function handleRegionalLocationChange(val) {
         if (intlVenueName) intlVenueName.required = false;
         if (intlLogistics) intlLogistics.required = false;
         if (isIntlSel) isIntlSel.value = 'No';
+        if (countryGrp) countryGrp.style.display = 'none';
+        if (destCountry) { destCountry.required = false; destCountry.value = ''; }
       }
     }
 
@@ -3382,17 +3405,12 @@ function updateConditionalSections() {
       const val = scaleEl ? scaleEl.value : '';
       const idx = scaleEl ? scaleEl.selectedIndex : -1;
       const regVal = regEl ? regEl.value : '';
+
       const largePublicSection = document.getElementById('largePublicSection');
       const smallPrivateSection = document.getElementById('smallPrivateSection');
-      const internationalBlock = document.getElementById('internationalBlock');
-      const isIntlSel = document.getElementById('isInternational');
-      const countryGrp = document.getElementById('countryGroup');
-      const destCountry = document.getElementById('destinationCountry');
 
-      // Hide all by default until a selection is made
       if (largePublicSection) largePublicSection.style.display = 'none';
       if (smallPrivateSection) smallPrivateSection.style.display = 'none';
-      if (internationalBlock) internationalBlock.style.display = 'none';
 
       if (idx === 1 || val.includes('Option A') || val.includes('Large') || val.includes('Public') || val.includes('4A') || val.includes('3A')) {
         if (largePublicSection) largePublicSection.style.display = 'block';
@@ -3400,13 +3418,8 @@ function updateConditionalSections() {
         if (smallPrivateSection) smallPrivateSection.style.display = 'block';
       }
 
-      if (regVal === 'No, International (Outside USA)' || val.includes('3C') || val.includes('4C') || val.includes('International')) {
-        if (internationalBlock) internationalBlock.style.display = 'block';
-        if (isIntlSel) {
-          isIntlSel.value = 'Yes';
-          if (countryGrp) countryGrp.style.display = 'block';
-          if (destCountry) destCountry.required = true;
-        }
+      if (regVal) {
+        handleRegionalLocationChange(regVal);
       }
     }
 
