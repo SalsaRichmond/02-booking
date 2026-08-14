@@ -1501,7 +1501,7 @@
         </div>
 
         <!-- DYNAMIC SECTION: Large Public Event (Q27-Q34) -->
-        <div id="largePublicSection" class="conditional-block">
+        <div id="largePublicSection" class="conditional-block" style="display: none;">
           <div class="section-title" id="sec3aTitle">
             <i class="fa-solid fa-bullhorn"></i> 3A. Large Public Event Details, 501(c) & Promotions
           </div>
@@ -2418,7 +2418,8 @@
     const fileInput = document.getElementById('fileInput');
     const fileSelectedName = document.getElementById('fileSelectedName');
 
-    fileInput.addEventListener('change', (e) => {
+    if (fileInput) {
+      if (fileInput) fileInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (file) {
         fileSelectedName.textContent = `Attached: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
@@ -3352,7 +3353,7 @@ function changeLanguage(langCode) {
     const themeIcon = document.getElementById('themeIcon');
     const themeBtnText = document.getElementById('themeBtnText');
 
-    themeToggleBtn.addEventListener('click', () => {
+    if (themeToggleBtn) themeToggleBtn.addEventListener('click', () => {
         saveUserSettings();
       const currentTheme = document.documentElement.getAttribute('data-theme');
       if (currentTheme === 'dark') {
@@ -3368,7 +3369,7 @@ function changeLanguage(langCode) {
 
     // H1.2 Visual Theme Color Scheme Selector
     const colorSchemeSelect = document.getElementById('colorSchemeSelect');
-    colorSchemeSelect.addEventListener('change', (e) => {
+    if (colorSchemeSelect) colorSchemeSelect.addEventListener('change', (e) => {
       document.documentElement.setAttribute('data-color-scheme', e.target.value);
     });
 
@@ -3376,7 +3377,7 @@ function changeLanguage(langCode) {
     const langToggleBtn = document.getElementById('langToggleBtn');
     const langBtnText = document.getElementById('langBtnText');
 
-    langToggleBtn.addEventListener('click', () => {
+    if (langToggleBtn) langToggleBtn.addEventListener('click', () => {
       currentLang = currentLang === 'en' ? 'es' : 'en';
       const t = i18n[currentLang];
 
@@ -3656,7 +3657,7 @@ function updateConditionalSections() {
       return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value).join(", ");
     }
 
-    bookingForm.addEventListener('submit', async (e) => {
+    if (bookingForm) bookingForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       
       submitBtn.disabled = true;
@@ -3767,7 +3768,7 @@ function updateConditionalSections() {
       }
     });
 
-    resetBtn.addEventListener('click', () => {
+    if (resetBtn) resetBtn.addEventListener('click', () => {
       bookingForm.reset();
       uploadedFileData = null;
       fileSelectedName.textContent = "";
