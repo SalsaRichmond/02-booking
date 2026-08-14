@@ -1094,7 +1094,7 @@
           <div class="grid-2">
             <div class="form-group full-width">
               <label for="regionalLocation" id="lblRegionalLocation">Is this event located within the Commonwealth of Virginia (USA)? <span class="required">*</span></label>
-              <select id="regionalLocation" name="regionalLocation" required onchange="handleRegionalLocationChange(this.value)">
+              <select id="regionalLocation" name="regionalLocation" required onchange="handleRegionalLocationChange(this.value); updateConditionalSections();">
                 <option value="" selected disabled>-- Select Option --</option>
                 <option value="Yes (Within Virginia, USA)">Yes (Within Virginia, USA)</option>
                 <option value="No, Out-of-State (Within USA, outside VA)">No, Out-of-State (Within USA, outside VA)</option>
@@ -1114,7 +1114,7 @@
           
           <div class="form-group full-width">
             <label for="eventTypeScale" id="lblEventScale">Select Event Classification: <span class="required">*</span></label>
-            <select id="eventTypeScale" name="eventTypeScale" required>
+            <select id="eventTypeScale" name="eventTypeScale" required onchange="updateConditionalSections()">
               <option value="" selected disabled>-- Select Option --</option>
               <option value="Option A: Large / Public Event">Option A: Large / Public Event ➔ (Triggers Section 4A: Large Public Event Details, 501(c) & Promotions)</option>
               <option value="Option B: Small / Private Gathering">Option B: Small / Private Gathering ➔ (Triggers Section 4B: Small Private Event Specifications & Hospitality)</option>
@@ -3377,8 +3377,10 @@ function handleRegionalLocationChange(val) {
 
 function updateConditionalSections() {
       const scaleEl = document.getElementById('eventTypeScale');
+      const regEl = document.getElementById('regionalLocation');
       const val = scaleEl ? scaleEl.value : '';
       const idx = scaleEl ? scaleEl.selectedIndex : -1;
+      const regVal = regEl ? regEl.value : '';
       const largePublicSection = document.getElementById('largePublicSection');
       const smallPrivateSection = document.getElementById('smallPrivateSection');
       const internationalBlock = document.getElementById('internationalBlock');
@@ -3391,18 +3393,14 @@ function updateConditionalSections() {
       if (smallPrivateSection) smallPrivateSection.style.display = 'none';
       if (internationalBlock) internationalBlock.style.display = 'none';
 
-      if (idx === 1 || val.includes('3A') || val === '3A. Large Event Details' || val === 'Large Public Event' || val.includes('Grandes') || val.includes('Public')) {
+      if (idx === 1 || val.includes('Option A') || val.includes('Large') || val.includes('Public') || val.includes('4A') || val.includes('3A')) {
         if (largePublicSection) largePublicSection.style.display = 'block';
-      } else if (idx === 2 || val.includes('3B') || val === '3B. Small Event Details' || val === 'Small Private Event' || val.includes('Pequeños') || val.includes('Privad')) {
+      } else if (idx === 2 || val.includes('Option B') || val.includes('Small') || val.includes('Private') || val.includes('4B') || val.includes('3B')) {
         if (smallPrivateSection) smallPrivateSection.style.display = 'block';
-      } else if (idx === 3 || val.includes('3C') || val === '3C. Outside of the United States of America' || val === 'International: Outside of the USA' || val.includes('Fuera') || val.includes('Outside')) {
-        if (largePublicSection) largePublicSection.style.display = 'block';
+      }
+
+      if (regVal === 'No, International (Outside USA)' || val.includes('3C') || val.includes('4C') || val.includes('International')) {
         if (internationalBlock) internationalBlock.style.display = 'block';
-        
-        const regLoc = document.getElementById('regionalLocation');
-        if (regLoc && (!regLoc.value || regLoc.value.startsWith('--'))) {
-          regLoc.value = 'No, International (Outside USA)';
-        }
         if (isIntlSel) {
           isIntlSel.value = 'Yes';
           if (countryGrp) countryGrp.style.display = 'block';
