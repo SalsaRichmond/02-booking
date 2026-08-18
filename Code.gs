@@ -607,6 +607,13 @@ function handleFormSubmitJson(data) {
     }
   });
 
+  // Guarantee complete Timestamp based on exact time of submittal
+  const timestampIdx = getHeaderIndex(headers, ["Timestamp", "Date Submitted"]);
+  if (timestampIdx > -1 && (!newRow[timestampIdx] || newRow[timestampIdx] === "")) {
+    const tz = ss.getSpreadsheetTimeZone() || Session.getScriptTimeZone() || "America/New_York";
+    newRow[timestampIdx] = Utilities.formatDate(new Date(), tz, "M/d/yyyy H:mm:ss");
+  }
+
   sheet.appendRow(newRow);
   const rowNum = sheet.getLastRow();
 
