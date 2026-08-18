@@ -307,21 +307,22 @@ function mainAutomation() {
  * Processes a single row: formatting attachments, syncing Google Calendar, generating documents, and updating status.
  */
 function processRow(sheet, rowNum, rowData, folder, headers) {
-  const dateIdx = headers.indexOf("Please confirm the DATE of your event:");
-  const timeIdx = headers.indexOf("Please confirm the TIME of your event:");
-  const dowIdx = headers.indexOf("Day of the Week");
-  const addrIdx = headers.indexOf("Where will the event take place? (ADDRESS)");
-  const eventIdIdx = headers.indexOf("Event ID");
+  const dateIdx = getHeaderIndex(headers, ["Please confirm the DATE of your event:", "Event Date", "Date of event", "Date"]);
+  const timeIdx = getHeaderIndex(headers, ["Please confirm the TIME of your event:", "Event Time", "Time of event", "Time"]);
+  const dowIdx = getHeaderIndex(headers, ["Day of the Week", "Day of Week", "DOW"]);
+  const addrIdx = getHeaderIndex(headers, ["Where will the event take place? (ADDRESS)", "Event Address", "Address", "Location"]);
+  const eventIdIdx = getHeaderIndex(headers, ["Event ID", "Calendar Event ID"]);
   
-  const statusIdx = headers.indexOf("Status");
-  const internalStatusIdx = headers.indexOf("Internal Status");
-  const assignedToIdx = headers.indexOf("Assigned to");
+  const statusIdx = getHeaderIndex(headers, ["Status"]);
+  const internalStatusIdx = getHeaderIndex(headers, ["Internal Status"]);
+  const assignedToIdx = getHeaderIndex(headers, ["Assigned to", "Assigned To"]);
 
-  const propUrlIdx = headers.indexOf("MASTER Proposal Form URL");
-  const contUrlIdx = headers.indexOf("Master Contract Document URL");
-  const perfUrlIdx = headers.indexOf("Performance Information Document URL");
+  const propUrlIdx = getHeaderIndex(headers, ["MASTER Proposal Form URL", "Proposal Document URL", "Proposal URL"]);
+  const contUrlIdx = getHeaderIndex(headers, ["Master Contract Document URL", "Contract Document URL", "Contract URL"]);
+  const perfUrlIdx = getHeaderIndex(headers, ["Performance Information Document URL", "Performance Document URL", "Performance Info URL"]);
 
-  const eventName = rowData[headers.indexOf("What is the NAME of the event?")] || "Unnamed Event";
+  const eventNameIdx = getHeaderIndex(headers, ["What is the NAME of the event?", "Event Name", "Name of Event"]);
+  const eventName = (eventNameIdx > -1 && rowData[eventNameIdx]) ? rowData[eventNameIdx] : "Unnamed Event";
   
   // Format Uploaded File Links (Drive Attachment Link Handler)
   headers.forEach((h, i) => {
@@ -540,7 +541,10 @@ function handleFormSubmitJson(data) {
     { key: "clientEmail", aliases: ["Email Address", "Email"] },
     { key: "clientPhone", aliases: ["Phone Number", "Phone", "Telephone"] },
     { key: "contactPreference", aliases: ["Preferred Contact Method", "Contact Preference"] },
+    { key: "representType", aliases: ["Who do you represent?", "Represent Type", "Representing", "Representation"] },
     { key: "eventName", aliases: ["What is the NAME of the event?", "Event Name", "Name of Event"] },
+    { key: "eventTypeScale", aliases: ["Event Type Scale", "Scale of Event", "Event Scale", "Service Category / Scope", "Service Category"] },
+    { key: "eventWebsites", aliases: ["Event Website(s) / Social Media", "Event Website", "Website", "Event Links", "Websites"] },
     { key: "eventPurpose", aliases: ["What is the PURPOSE / THEME of your event?", "Event Purpose", "Purpose / Theme", "Theme"] },
     { key: "hearAboutUs", aliases: ["How did you HEAR ABOUT US?", "How did you hear about us", "Referral Source"] },
     { key: "eventDescription", aliases: ["DESCRIBE your event.", "Describe event", "Event Description"] },
@@ -559,9 +563,16 @@ function handleFormSubmitJson(data) {
     { key: "durationRequired", aliases: ["DURATION of Service Required", "Duration Required", "Duration"] },
     { key: "audienceParticipation", aliases: ["Expecting AUDIENCE PARTICIPATION?", "Interactive (AUDIENCE PARTICIPATION)", "Audience Participation"] },
     { key: "performanceAreaSize", aliases: ["How large is the AREA for our performance or lesson?", "Size of Performance / Class Area", "Performance Area Size", "Area Size"] },
+    { key: "performanceArea", aliases: ["How large is the AREA for our performance or lesson?", "Size of Performance / Class Area", "Performance Area Size", "Performance Area", "Area Size"] },
     { key: "surfaceType", aliases: ["On what SURFACE will the performance or class take place?", "Surface Type", "Floor Type"] },
+    { key: "performanceSurface", aliases: ["On what SURFACE will the performance or class take place?", "Performance Surface", "Surface Type", "Floor Type"] },
     { key: "venueSetting", aliases: ["Where will it take PLACE?", "Venue Location Setting", "Venue Setting", "Indoor/Outdoor"] },
     { key: "soundSystem", aliases: ["About the SOUND SYSTEM", "Sound System Equipment", "Sound System"] },
+    { key: "soundEquipment", aliases: ["About the SOUND SYSTEM", "Sound Equipment Provided", "Sound System Equipment", "Sound System"] },
+    { key: "badgeAccess", aliases: ["Will a BADGE or ID be required for performers?", "Will a BADGE or ID be issued to performers to access the performance area?", "Badge Access", "ID Badge"] },
+    { key: "badgeRequired", aliases: ["Will a BADGE or ID be required for performers?", "Will a BADGE or ID be issued to performers to access the performance area?", "Badge Required", "Badge Access", "ID Badge"] },
+    { key: "dressingRoomInstructions", aliases: ["Will we have a place to change COSTUMES if needed? If so, please provide instructions.", "Dressing Room Instructions", "Costume Change Room"] },
+    { key: "dressingRoomDetails", aliases: ["Will we have a place to change COSTUMES if needed? If so, please provide instructions.", "Dressing Room Details", "Dressing Room Instructions", "Costume Change Room"] },
     { key: "audienceAges", aliases: ["Who is your AUDIENCE:", "Audience Age Groups Expected", "Audience Age Groups", "Age Groups"] },
     { key: "serviceRecurrence", aliases: ["Will the PERFORMANCE SERVICES be ...", "Service Recurrence", "Recurrence"] },
     { key: "nonProfitName", aliases: ["FOR 501(C) ONLY - Which 501(C) do you represent?", "501c Non Profit Name", "501(c) Organization"] },
@@ -572,10 +583,9 @@ function handleFormSubmitJson(data) {
     { key: "videoRights", aliases: ["Can we get COPIES of video footage and pictures of our participation?", "Video Footage & Photos", "Video Rights"] },
     { key: "contingencyPlan", aliases: ["What is the CONTINGENCY PLAN? Please include alternate locations, dates, times.", "Do you have a CONTINGENCY PLAN?", "Contingency Plan"] },
     { key: "privateGatheringType", aliases: ["TYPE of Private Gathering", "Private Gathering Type"] },
-    { key: "badgeAccess", aliases: ["Will a BADGE or ID be required for performers?", "Will a BADGE or ID be issued to performers to access the performance area?", "Badge Access", "ID Badge"] },
-    { key: "dressingRoomInstructions", aliases: ["Will we have a place to change COSTUMES if needed? If so, please provide instructions.", "Dressing Room Instructions", "Costume Change Room"] },
     { key: "invitedToAttend", aliases: ["Are we INVITED TO ATTEND the event?", "Invited to Attend"] },
     { key: "performerProvisions", aliases: ["WILL YOU PROVIDE the performers with:", "Performer Provisions", "Provisions"] },
+    { key: "hospitalityProvided", aliases: ["WILL YOU PROVIDE the performers with:", "Hospitality Provided", "Performer Provisions", "Provisions", "Amenities"] },
     { key: "provisions", aliases: ["Additional Performer Amenities Provided:", "Hospitality Provisions", "Amenities"] },
     { key: "performanceServices", aliases: ["Which of our PERFORMANCE SERVICES will you need?", "Performance Services Needed", "Performance Services"] },
     { key: "otherPerfServices", aliases: ["Any other PERFORMANCE SERVICES you wish, but are not listed above?", "Other Performance Services"] },
