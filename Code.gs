@@ -627,7 +627,11 @@ function handleFormSubmitJson(data) {
   }
 
   const updatedRowData = sheet.getRange(rowNum, 1, 1, sheet.getLastColumn()).getValues()[0];
-  processRow(sheet, rowNum, updatedRowData, mainFolder, headers, true);
+  try {
+    processRow(sheet, rowNum, updatedRowData, mainFolder, headers, true);
+  } catch (procErr) {
+    console.warn("processRow non-fatal error during submit: ", procErr);
+  }
 
   const eventIdIdx = getHeaderIndex(headers, ["Event ID", "Calendar Event ID"]);
   const finalEventId = eventIdIdx > -1 ? sheet.getRange(rowNum, eventIdIdx + 1).getValue() : "";
