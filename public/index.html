@@ -1794,7 +1794,7 @@
     </div>
 
   <script>
-    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzg9Tr13gNlaEbFVnGxPIvqO5HpydONu5URI4MVR7GU_vjlZTUllgNxVOy2t6Rvyhlk/exec";
+    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxTqa49hIyO0oE32jgOIIvhL0u77UV47079_bSqvoewuk6Iquc5lRBIWcok7oG--UluKw/exec";
 
     const PERFORMANCE_DATA = {
       coco_mexico: {
@@ -2182,7 +2182,8 @@
     const fileInput = document.getElementById('fileInput');
     const fileSelectedName = document.getElementById('fileSelectedName');
 
-    if (fileInput) fileInput.addEventListener('change', (e) => {
+    if (fileInput) {
+      fileInput.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (file) {
         fileSelectedName.textContent = `Attached: ${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
@@ -2197,6 +2198,7 @@
         reader.readAsDataURL(file);
       }
     });
+    }
 
     
     // Multi-Language Translation Engine for All 10 Major Languages
@@ -2335,8 +2337,8 @@
         title: "أخبرني عن نفسك وعن فعاليتك!",
         sec1: "1. معلومات الاتصال والتنظيم",
         sec2: "2. التاريخ والوقت واللوجستيات",
-        sec3a: "3أ. تفاصيل الفعاليات العامة الكبيرة",
-        sec3b: "3ب. مواصفات الفعاليات الخاصة الصغيرة",
+        sec3a: "4أ. تفاصيل الفعاليات العامة الكبيرة",
+        sec3b: "4ب. مواصفات الفعاليات الخاصة الصغيرة",
         sec4: "5. الخدمات المطلوبة",
         sec5: "8. تعليمات خاصة والشروط",
         secFile: "6. المرفقات",
@@ -3483,23 +3485,6 @@ function updateConditionalSections() {
         videoRights: document.getElementById('videoRights')?.value || '',
         contingencyPlan: document.getElementById('contingencyPlan')?.value.trim() || '',
         privateGatheringType: document.getElementById('privateGatheringType')?.value || '',
-        badgeAccess: document.getElementById('badgeAccess')?.value || '',
-        dressingRoomInstructions: document.getElementById('dressingRoomInstructions')?.value.trim() || '',
-        hasBudget: document.getElementById('hasBudget')?.value || '',
-        budgetAmount: document.getElementById('budgetAmount')?.value.trim() || '',
-        invitedToAttend: document.getElementById('invitedToAttend')?.value || '',
-        performerProvisions: document.getElementById('performerProvisionsSelect')?.value || '',
-        performanceServices: getCheckedValues('perfServices'),
-        otherPerfServices: document.getElementById('otherPerfServices')?.value.trim() || '',
-        lessonServices: (function() {
-          const checked = getCheckedValues('lessonServices');
-          const sel = document.getElementById('lessonServicesSelect')?.value;
-          if (checked && sel && sel !== 'None') return `${sel}, ${checked}`;
-          if (checked) return checked;
-          return sel || '';
-        })(),
-        otherServices: getCheckedValues('otherServices'),
-        attachedFile: uploadedFileData,
         notes: document.getElementById('notes').value.trim(),
         serviceCategory: document.getElementById('eventTypeScale').value
       };
@@ -3519,8 +3504,7 @@ function updateConditionalSections() {
         else if (WEB_APP_URL && WEB_APP_URL.startsWith("http")) {
           const resp = await fetch(WEB_APP_URL, {
             method: 'POST',
-            mode: 'cors',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
             body: JSON.stringify(formData)
           });
           const result = await resp.json();
