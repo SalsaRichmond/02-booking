@@ -3430,6 +3430,21 @@ function updateConditionalSections() {
       updateConditionalSections();
     }
 
+    
+    function formatTimeAMPM(timeStr) {
+      if (!timeStr) return "";
+      if (timeStr.includes("AM") || timeStr.includes("PM") || timeStr.includes("am") || timeStr.includes("pm")) return timeStr;
+      const parts = timeStr.split(":");
+      if (parts.length < 2) return timeStr;
+      let hours = parseInt(parts[0], 10);
+      const minutes = parts[1].slice(0, 2);
+      if (isNaN(hours)) return timeStr;
+      const ampm = hours >= 12 ? "PM" : "AM";
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      return `${hours}:${minutes} ${ampm}`;
+    }
+
     function getCheckedValues(name) {
       return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value).join(", ");
     }
@@ -3441,6 +3456,7 @@ function updateConditionalSections() {
       submitBtn.innerHTML = `<span>Processing...</span> <i class="fa-solid fa-spinner fa-spin"></i>`;
 
       const formData = {
+        timestamp: new Date().toLocaleString("en-US", { timeZone: "America/New_York" }),
         clientName: document.getElementById('clientName')?.value.trim() || '',
         clientEmail: document.getElementById('clientEmail')?.value.trim() || '',
         clientPhone: document.getElementById('clientPhone')?.value.trim() || '',
@@ -3451,7 +3467,7 @@ function updateConditionalSections() {
         eventWebsites: document.getElementById('eventWebsites')?.value.trim() || '',
         eventDescription: document.getElementById('eventDescription')?.value.trim() || '',
         eventDate: document.getElementById('eventDate')?.value || '',
-        eventTime: document.getElementById('eventTime')?.value || '',
+        eventTime: formatTimeAMPM(document.getElementById('eventTime')?.value || ''),
         expectedAttendance: document.getElementById('expectedAttendance')?.value || '',
         audienceAges: document.getElementById('audienceAgesSelect')?.value || '',
         admissionType: document.getElementById('admissionType')?.value || '',
@@ -3475,6 +3491,11 @@ function updateConditionalSections() {
         intlPaymentTerms: document.getElementById('intlPaymentTerms')?.value || '',
         intlCustomsConsiderations: document.getElementById('intlCustomsConsiderations')?.value || '',
         performanceServices: getCheckedValues('perfServices'),
+        repertoireMexico: getCheckedValues('perfServices').includes('COCO') || getCheckedValues('perfServices').includes('Mexico') ? "Requested" : "",
+        repertoireCaribbean: getCheckedValues('perfServices').includes('Salsa') || getCheckedValues('perfServices').includes('Bachata') || getCheckedValues('perfServices').includes('Cuba') || getCheckedValues('perfServices').includes('Puerto Rico') ? "Requested" : "",
+        repertoireCentralAmerica: getCheckedValues('perfServices').includes('Cumbia') || getCheckedValues('perfServices').includes('El Salvador') ? "Requested" : "",
+        repertoireSouthAmerica: getCheckedValues('perfServices').includes('Tango') || getCheckedValues('perfServices').includes('Colombia') ? "Requested" : "",
+        repertoireTheatrical: getCheckedValues('perfServices').includes('Rueda') || getCheckedValues('perfServices').includes('Showcase') ? "Requested" : "",
         otherPerfServices: document.getElementById('otherPerfServices')?.value.trim() || '',
         lessonServices: document.getElementById('lessonServicesSelect')?.value || '',
         audienceParticipation: document.getElementById('audienceParticipation')?.value || '',
@@ -3488,6 +3509,8 @@ function updateConditionalSections() {
         badgeRequired: document.getElementById('badgeRequired')?.value || '',
         hospitalityProvided: document.getElementById('hospitalityProvided')?.value || '',
         dressingRoomDetails: document.getElementById('dressingRoomDetails')?.value || '',
+        hasBudget: document.getElementById('hasBudget')?.value || '',
+        confirmedBudget: document.getElementById('confirmedBudget')?.value || '',
         notes: document.getElementById('notes')?.value.trim() || '',
         termsAgreed: document.getElementById('termsCheck')?.checked ? "Agreed to Terms & Privacy Policy" : "No",
         sendEmailReceipt: document.getElementById('sendEmailReceipt')?.checked ? "Yes" : "No",
