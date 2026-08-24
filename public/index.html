@@ -3330,7 +3330,36 @@ function handleRegionalLocationChange(val) {
 
 
     // LocalStorage User Settings Persistence & Auto-Close Handler
-    function saveUserSettings() {
+        function updateConditionalSections() {
+      const scaleEl = document.getElementById('eventTypeScale');
+      const regEl = document.getElementById('regionalLocation');
+      const val = scaleEl ? scaleEl.value : '';
+      const idx = scaleEl ? scaleEl.selectedIndex : -1;
+      const regVal = regEl ? regEl.value : '';
+
+      const largePublicSection = document.getElementById('largePublicSection');
+      const smallPrivateSection = document.getElementById('smallPrivateSection');
+
+      if (largePublicSection) largePublicSection.style.display = 'none';
+      if (smallPrivateSection) smallPrivateSection.style.display = 'none';
+
+      if (idx === 1 || val.includes('Option A') || val.includes('Large') || val.includes('Public') || val.includes('4A') || val.includes('3A')) {
+        if (largePublicSection) largePublicSection.style.display = 'block';
+      } else if (idx === 2 || val.includes('Option B') || val.includes('Small') || val.includes('Private') || val.includes('4B') || val.includes('3B')) {
+        if (smallPrivateSection) smallPrivateSection.style.display = 'block';
+      }
+
+      if (regVal) {
+        handleRegionalLocationChange(regVal);
+      }
+    }
+
+    const eventTypeScaleEl = document.getElementById('eventTypeScale');
+    if (eventTypeScaleEl) {
+      eventTypeScaleEl.addEventListener('change', updateConditionalSections);
+    }
+
+function saveUserSettings() {
       try {
         const lang = document.getElementById('langSelect')?.value || 'en';
         const colorScheme = document.getElementById('colorSchemeSelect')?.value || 'crimson';
@@ -3543,6 +3572,7 @@ function handleRegionalLocationChange(val) {
     // Attach real-time input listener with debouncing (300ms)
     document.addEventListener('DOMContentLoaded', () => {
       loadUserSettings();
+      updateConditionalSections();
 
       const debouncedScan = debounce(() => {
         scanFormForTypos();
