@@ -1035,7 +1035,7 @@
 
         <!-- SECTION 2: EVENT OVERVIEW & SCHEDULE -->
         <div class="section-title" id="sec2Title">
-          <i class="fa-solid fa-calendar-check"></i> 2. Event Overview & Schedule
+          <i class="fa-solid fa-calendar-check"></i> 2. Event Overview, Schedule & Classification Routing
         </div>
         
         <div class="grid-2">
@@ -1107,10 +1107,7 @@
         </div>
 
 
-        <!-- SECTION 3: LOCATION & EVENT CLASSIFICATION ROUTING -->
-        <div class="section-title" id="sec3Title">
-          <i class="fa-solid fa-compass"></i> 3. Location & Event Classification Routing
-        </div>
+
 
         <div class="form-section-block" style=" border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
           <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-map-location-dot"></i> Geographic Location</h4>
@@ -1122,7 +1119,7 @@
                 <option value="" selected disabled>-- Select Option --</option>
                 <option value="Yes (Within Virginia, USA)">Yes (Within Virginia, USA)</option>
                 <option value="No, Out-of-State (Within USA, outside VA)">No, Out-of-State (Within USA, outside VA)</option>
-                <option value="No, International (Outside USA)">No, International (Outside USA) ➔ (Triggers Section 4C: International Logistics)</option>
+                <option value="No, International (Outside USA)">No, International (Outside USA) ➔ (Triggers Section 3C: International Logistics)</option>
               </select>
             </div>
 
@@ -1148,8 +1145,8 @@
             <label for="eventTypeScale" id="lblEventScale">Select Event Classification: <span class="required">*</span></label>
             <select id="eventTypeScale" name="eventTypeScale" required onchange="updateConditionalSections()">
               <option value="" selected disabled>-- Select Option --</option>
-              <option value="Option A: Large / Public Event">Option A: Large / Public Event ➔ (Triggers Section 4A: Large Public Event Details, 501(c) & Promotions)</option>
-              <option value="Option B: Small / Private Gathering">Option B: Small / Private Gathering ➔ (Triggers Section 4B: Small Private Event Specifications & Hospitality)</option>
+              <option value="Option A: Large / Public Event">Option A: Large / Public Event ➔ (Triggers Section 3A: Large Public Event Details, 501(c) & Promotions)</option>
+              <option value="Option B: Small / Private Gathering">Option B: Small / Private Gathering ➔ (Triggers Section 3B: Small Private Event Specifications & Hospitality)</option>
             </select>
           </div>
         </div>
@@ -1172,13 +1169,13 @@
 
         <!-- SECTION 4: CONDITIONAL EVENT DETAILS -->
         <div class="section-title" id="sec4TitleMain">
-          <i class="fa-solid fa-sliders"></i> 4. Conditional Event Details
+          <i class="fa-solid fa-sliders"></i> 3. Conditional Event Details
         </div>
 
-        <!-- 4A. Large Public Event Details, 501(c) & Promotions -->
+        <!-- 3A. Large Public Event Details, 501(c) & Promotions -->
         <div id="largePublicSection" class="conditional-block" style="display: none;">
           <div class="section-title" id="sec3aTitle">
-            <i class="fa-solid fa-bullhorn"></i> 4A. Large Public Event Details, 501(c) & Promotions
+            <i class="fa-solid fa-bullhorn"></i> 3A. Large Public Event Details, 501(c) & Promotions
           </div>
 
           <div class="grid-2">
@@ -1256,10 +1253,10 @@
           </div>
         </div>
 
-        <!-- 4B. Small Private Event Specifications & Hospitality -->
+        <!-- 3B. Small Private Event Specifications & Hospitality -->
         <div id="smallPrivateSection" class="conditional-block" style="display: none;">
           <div class="section-title" id="sec3bTitle">
-            <i class="fa-solid fa-cake-candles"></i> 4B. Small Private Event Specifications & Hospitality
+            <i class="fa-solid fa-cake-candles"></i> 3B. Small Private Event Specifications & Hospitality
           </div>
 
           <div class="grid-2">
@@ -1331,7 +1328,7 @@
 
         <!-- SECTION 5: SERVICES REQUESTED -->
         <div class="section-title" id="sec4Title">
-          <i class="fa-solid fa-music"></i> 5. Services Requested
+          <i class="fa-solid fa-music"></i> 4. Services Requested
         </div>
 
         <div id="performanceServicesBlock" style="display: none; transition: all 0.35s ease;">
@@ -1627,7 +1624,7 @@
         
         <!-- SECTION 6: TECHNICAL, VENUE & HOSPITALITY LOGISTICS -->
         <div class="section-title" id="sec6Title">
-          <i class="fa-solid fa-toolbox"></i> 6. Technical, Venue & Hospitality Logistics
+          <i class="fa-solid fa-toolbox"></i> 5. Technical, Venue & Hospitality Logistics
         </div>
 
         <div class="grid-2">
@@ -1703,7 +1700,7 @@
 
         <!-- SECTION 7: SPECIAL INSTRUCTIONS, TERMS & FILE ATTACHMENTS -->
         <div class="section-title" id="sec5Title">
-          <i class="fa-solid fa-file-contract"></i> 7. Special Instructions, Terms & File Attachments (Flyer / Floor Plan / 501c Tax Letter)
+          <i class="fa-solid fa-file-contract"></i> 6. Special Instructions, Terms & File Attachments (Flyer / Floor Plan / 501c Tax Letter)
         </div>
 
         <!-- Special Instructions & Notes -->
@@ -1725,7 +1722,7 @@
 
         <!-- SECTION 8: GENERAL INFORMATION -->
         <div class="section-title" id="sec7Title">
-          <i class="fa-solid fa-circle-info"></i> 8. General Information
+          <i class="fa-solid fa-circle-info"></i> 7. General Information
         </div>
 
         <div class="notice-box" id="txtGeneralInfo" class="form-section-block" style=" border: 1px solid var(--card-border); border-left: 4px solid var(--accent-gold); padding: 22px; border-radius: var(--radius-md); font-size: 0.94rem; line-height: 1.6; color: var(--text-main); margin-bottom: 30px;">
@@ -2398,7 +2395,7 @@
         description: "Purpose & Description of Your Event (Provide background on theme, venue vibe, guest flow, program schedule)",
         isInternational: "Are services requested OUTSIDE of the USA?",
         destinationCountry: "Select Destination Country",
-        sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Event Overview & Schedule",
+        sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Event Overview, Schedule & Classification Routing",
         eventDate: "Event Date",
         eventTime: "Start Time",
         eventAddress: "Where will the event take place? (ADDRESS)",
@@ -2419,9 +2416,9 @@
         soundSystem: "Sound System Equipment",
         audienceAges: "Audience Age Groups Expected",
         provisions: "WILL YOU PROVIDE the performers with:",
-        sec3a: "<i class='fa-solid fa-bullhorn'></i> 4A. Large Public Event Details, 501(c) & Promotions",
-        sec3b: "<i class='fa-solid fa-cake-candles'></i> 4B. Small Private Event Specifications & Hospitality",
-        sec4: "<i class='fa-solid fa-music'></i> 5. Services Requested",
+        sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Large Public Event Details, 501(c) & Promotions",
+        sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Small Private Event Specifications & Hospitality",
+        sec4: "<i class='fa-solid fa-music'></i> 4. Services Requested",
         perfServices: "Which of our PERFORMANCE SERVICES will you need?",
         otherPerfServices: "Any other PERFORMANCE SERVICES you wish, but are not listed above?",
         lessonServices: "Which of our DANCE LESSON SERVICES will you need?",
@@ -2429,10 +2426,10 @@
         secFile: "<i class='fa-solid fa-paperclip'></i> 6. File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
         fileUpload: "Upload Event Document / Attachment",
         fileBoxText: "Click or Drag & Drop File Here to Attach to Drive",
-        sec6: "<i class='fa-solid fa-toolbox'></i> 6. Technical, Venue & Hospitality Logistics",
-        sec5: "<i class='fa-solid fa-file-contract'></i> 7. Special Instructions, Terms & File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
+        sec6: "<i class='fa-solid fa-toolbox'></i> 5. Technical, Venue & Hospitality Logistics",
+        sec5: "<i class='fa-solid fa-file-contract'></i> 6. Special Instructions, Terms & File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
         notes: "Special Instructions, Song Requests or Notes",
-        sec7: "<i class='fa-solid fa-circle-info'></i> 8. General Information",
+        sec7: "<i class='fa-solid fa-circle-info'></i> 7. General Information",
         hiringPerformers: "HIRING SIMILAR PERFORMERS",
         genInfoP1: "While you may be tempted to hire similar performances, I truly believe that incorporating different styles and specialties can greatly enhance your event experience in multiple ways. First and foremost, offering a variety of performances will keep your guests engaged and captivated throughout the entire event. By avoiding repetition or monotony, I ensure that attendees remain entertained and have a truly memorable experience.",
         genInfoP2: "Furthermore, diverse performances cater to a broader audience, attracting individuals with varying interests and preferences. By providing a mix of entertainment options, I ensure that everyone finds something appealing and feels included in the festivities. This inclusive approach guarantees a more enjoyable and satisfying experience for all attendees.",
@@ -2495,7 +2492,7 @@
         provisions: "¿PROVEERÁ a los artistas con:",
         sec3a: "<i class='fa-solid fa-bullhorn'></i> 4A. Detalles de Eventos Públicos Grandes, 501(c) y Promoción",
         sec3b: "<i class='fa-solid fa-cake-candles'></i> 4B. Especificaciones de Eventos Privados Pequeños y Hospitalidad",
-        sec4: "<i class='fa-solid fa-music'></i> 5. Servicios Solicitados",
+        sec4: "<i class='fa-solid fa-music'></i> 4. Servicios Solicitados",
         perfServices: "¿Cuál de nuestros SERVICIOS DE ESPECTÁCULO necesitará?",
         otherPerfServices: "¿Algún otro SERVICIO DE ESPECTÁCULO que desee y no esté listado?",
         lessonServices: "¿Cuál de nuestros SERVICIOS DE CLASES DE BAILE necesitará?",
@@ -2503,10 +2500,10 @@
         secFile: "<i class='fa-solid fa-paperclip'></i> 6. Archivos Adjuntos (Folleto / Plano / Carta 501c)",
         fileUpload: "Subir Documento del Evento",
         fileBoxText: "Haga clic o arrastre su archivo aquí para adjuntarlo a Drive",
-        sec6: "<i class='fa-solid fa-toolbox'></i> 6. Logística Técnica, Lugar y Hospitalidad",
-        sec5: "<i class='fa-solid fa-file-contract'></i> 7. Instrucciones Especiales, Términos y Archivos Adjuntos (Folleto / Plano / Carta 501c)",
+        sec6: "<i class='fa-solid fa-toolbox'></i> 5. Logística Técnica, Lugar y Hospitalidad",
+        sec5: "<i class='fa-solid fa-file-contract'></i> 6. Instrucciones Especiales, Términos y Archivos Adjuntos (Folleto / Plano / Carta 501c)",
         notes: "Instrucciones Especiales, Canciones o Notas",
-        sec7: "<i class='fa-solid fa-circle-info'></i> 8. Información General",
+        sec7: "<i class='fa-solid fa-circle-info'></i> 7. Información General",
         hiringPerformers: "CONTRATACIÓN DE ARTISTAS SIMILARES",
         genInfoP1: "Si bien puede verse tentado a contratar espectáculos similares, creo firmemente que incorporar diferentes estilos y especialidades mejorará enormemente la experiencia de su evento. Ofrecer una variedad mantendrá a sus invitados fascinados durante todo el evento.",
         genInfoP2: "Además, las presentaciones diversas satisfacen a un público más amplio. Al brindar una combinación de entretenimiento, aseguro que todos encuentren algo atractivo y se sientan incluidos en la festividad.",
