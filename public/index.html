@@ -3330,7 +3330,169 @@ function handleRegionalLocationChange(val) {
 
 
     // LocalStorage User Settings Persistence & Auto-Close Handler
-        function updateConditionalSections() {
+        
+    // Complete Select Dropdown Options Multi-Language Translation Map
+    const selectTranslations = {
+      es: {
+        "-- Select Option --": "-- Seleccionar Opción --",
+        "Organization / Business / Self": "Organización / Empresa / Individual",
+        "Dance Studio": "Estudio de Baile",
+        "Educational Institution": "Institución Educativa",
+        "Event Planning Company": "Empresa de Planificación de Eventos",
+        "Government": "Gobierno / Entidad Pública",
+        "I'm a Dancer Instructor": "Soy Instructor de Baile",
+        "Nonprofit Organization 501(C)": "Organización Sin Fines de Lucro 501(c)",
+        "Private Sector Business": "Empresa del Sector Privado",
+        "Religious Institution": "Institución Religiosa",
+        "Restaurant": "Restaurante",
+        "Talent Agency": "Agencia de Talentos",
+        "Yourself": "Individual / Por su cuenta",
+        "Email": "Correo Electrónico",
+        "We have done business before": "Hemos hecho negocios antes",
+        "Facebook Ads": "Anuncios de Facebook",
+        "Facebook post/group": "Publicación o Grupo de Facebook",
+        "Google Ads": "Anuncios de Google",
+        "Instagram post/story": "Publicación o Historia de Instagram",
+        "Newspaper": "Periódico / Prensa",
+        "Social media": "Redes Sociales",
+        "Social media advertising": "Publicidad en Redes Sociales",
+        "Radio": "Radio",
+        "Search Engine": "Buscador (Google, Bing)",
+        "Twitter post": "Publicación en Twitter / X",
+        "TV": "Televisión",
+        "Word of mouth": "Recomendación / Boca a Boca",
+        "Youtube Ads": "Anuncios de YouTube",
+        "All Ages / Family-Friendly / Adults Only / Youth": "Todas las Edades / Familiar / Solo Adultos",
+        "Every Age Group (All Ages Welcome)": "Todas las Edades (Apto para Toda la Familia)",
+        "Toddlers (1-3 yrs)": "Bebés / Niños pequeños (1-3 años)",
+        "Preschoolers (3-5 yrs)": "Preescolares (3-5 años)",
+        "School-age (6-12 yrs)": "Escolares (6-12 años)",
+        "Adolescents (13-19 yrs)": "Adolescentes (13-19 años)",
+        "Young Adults (20-39 yrs)": "Jóvenes Adultos (20-39 años)",
+        "Middle-aged (40-59 yrs)": "Adultos de Edad Media (40-59 años)",
+        "Seniors (60+ yrs)": "Adultos Mayores (60+ años)",
+        "Adults Only (18+ / 21+)": "Solo Adultos (18+ / 21+)",
+        "Free / Open to Public": "Gratuito / Abierto al Público",
+        "Ticketed / Paid Admission": "Con Entradas / Admisión de Pago",
+        "Private Invitation Only": "Privado Solo por Invitación",
+        "Yes (Within Virginia, USA)": "Sí (Dentro de Virginia, EE. UU.)",
+        "No, Out-of-State (Within USA, outside VA)": "No, Fuera del Estado (Dentro de EE. UU., fuera de VA)",
+        "No, International (Outside USA) ➔ (Triggers Section 4C: International Logistics)": "No, Internacional (Fuera de EE. UU.) ➔ (Activa Sección 4C)",
+        "Option A: Large / Public Event ➔ (Triggers Section 4A: Large Public Event Details, 501(c) & Promotions)": "Opción A: Evento Grande / Público ➔ (Activa Sección 4A)",
+        "Option B: Small / Private Gathering ➔ (Triggers Section 4B: Small Private Event Specifications & Hospitality)": "Opción B: Reunión Pequeña / Privada ➔ (Activa Sección 4B)",
+        "Nonrecurring - One time": "Ocasional - Una sola vez",
+        "Recurring": "Recurrente",
+        "Recurring Weekly": "Recurrente Semanal",
+        "Recurring Monthly": "Recurrente Mensual",
+        "Recurring Yearly": "Recurrente Anual",
+        "Yes": "Sí",
+        "No": "No",
+        "Not Applicable": "No Aplica",
+        "Birthday Party": "Fiesta de Cumpleaños",
+        "Wedding / Anniversary": "Boda / Aniversario",
+        "Quinceañera": "Quinceañera",
+        "House Gathering": "Reunión Familiar en Casa",
+        "Private Dance Lesson": "Clase de Baile Privada",
+        "Other Private Event": "Otro Evento Privado",
+        "Yes - Full Legal & Visa Support Provided": "Sí - Soporte Legal y de Visa Completo Proporcionado",
+        "No - Assistance Needed": "No - Asistencia Requerida",
+        "Work Visa Handled": "Visa de Trabajo Tramitada",
+        "P-3 / Cultural Performer Visa Support Needed": "Soporte para Visa de Artista Cultural P-3 Requerido",
+        "None": "Ninguno",
+        "Salsa Guy's Line Dance lesson Salsa, Merengue, Bachata and Chacha": "Clase de Baile en Línea de Salsa Guy (Salsa, Merengue, Bachata y Chachachá)",
+        "Puerto Rican Folk - Bomba y Plena (Live Music)": "Folklore Puertorriqueño - Bomba y Plena (Música en Vivo)",
+        "Merengue - Dominican Republic": "Merengue - República Dominicana",
+        "Bachata - Dominican Republic": "Bachata - República Dominicana",
+        "Salsa - Puerto Rico": "Salsa - Puerto Rico",
+        "Cuba - Rueda": "Cuba - Rueda de Casino",
+        "Choreographies for Wedding or Sweet Fifteen (Quinceañero)": "Coreografías para Bodas o Quinceañeros",
+        "All Salsa, Merengue and Bachata": "Toda Salsa, Merengue y Bachata",
+        "for Team Building": "para Integración de Equipos (Team Building)",
+        "Virtual": "Virtual / En Línea",
+        "Wedding 1st Dance": "Primer Baile de Bodas",
+        "for Children": "para Niños",
+        "30 minutes": "30 minutos",
+        "1 hour": "1 hora",
+        "1.5 hours": "1.5 horas",
+        "2 hours": "2 horas",
+        "Half Day (3-4 hours)": "Medio Día (3-4 horas)",
+        "Full Day (5+ hours)": "Día Completo (5+ horas)",
+        "Indoor": "Interior / Bajo Techo",
+        "Outdoor Covered": "Exterior Cubierto",
+        "Outdoor Open": "Exterior al Aire Libre",
+        "Wood Dance Floor": "Pista de Baile de Madera",
+        "Stage": "Escenario",
+        "Concrete": "Concreto / Cemento",
+        "Carpet": "Alfombra",
+        "Grass": "Césped / Pasto",
+        "Provided by Venue": "Provisto por el Lugar del Evento",
+        "Performer Must Provide PA": "El Artista Debe Proveer Sistema de Sonido (PA)",
+        "Water": "Agua",
+        "Hospitality": "Hospitalidad / Bocadillos",
+        "Meal": "Comida",
+        "Green Room": "Camerino / Sala de Espera",
+        "Full Hospitality (Water, Meal, Green Room)": "Hospitalidad Completa (Agua, Comida y Camerino)"
+      },
+      fr: {
+        "-- Select Option --": "-- Sélectionner una option --",
+        "Yes": "Oui",
+        "No": "Non",
+        "Not Applicable": "Non applicable",
+        "Nonrecurring - One time": "Non récurrent - Une seule fois",
+        "Recurring": "Récurrent",
+        "Indoor": "Intérieur",
+        "Outdoor Covered": "Extérieur couvert",
+        "Outdoor Open": "Extérieur plein air",
+        "Wood Dance Floor": "Plancher de danse en bois",
+        "Stage": "Scène",
+        "Concrete": "Béton",
+        "Carpet": "Moquette",
+        "Grass": "Pelouse",
+        "Provided by Venue": "Fourni par la salle",
+        "Performer Must Provide PA": "L'artiste doit fournir la sonorisation"
+      },
+      de: {
+        "-- Select Option --": "-- Option auswählen --",
+        "Yes": "Ja",
+        "No": "Nein",
+        "Not Applicable": "Nicht zutreffend",
+        "Nonrecurring - One time": "Einmalig",
+        "Recurring": "Wiederkehrend",
+        "Indoor": "Innenbereich",
+        "Outdoor Covered": "Außenbereich überdacht",
+        "Outdoor Open": "Freiluftbereich",
+        "Wood Dance Floor": "Holztanzfläche",
+        "Stage": "Bühne",
+        "Concrete": "Beton",
+        "Carpet": "Teppich",
+        "Grass": "Rasen",
+        "Provided by Venue": "Vom Veranstaltungsort bereitgestellt",
+        "Performer Must Provide PA": "Künstler muss Anlage stellen"
+      }
+    };
+
+    function translateAllSelectOptions(lang) {
+      const selects = document.querySelectorAll('select');
+      selects.forEach(sel => {
+        // Skip theme and language control selectors
+        if (sel.id === 'langSelect' || sel.id === 'colorSchemeSelect') return;
+
+        Array.from(sel.options).forEach(opt => {
+          if (!opt.dataset.origText) {
+            opt.dataset.origText = opt.textContent.trim();
+          }
+          const origText = opt.dataset.origText;
+
+          if (lang === 'en' || !selectTranslations[lang] || !selectTranslations[lang][origText]) {
+            opt.textContent = origText;
+          } else {
+            opt.textContent = selectTranslations[lang][origText];
+          }
+        });
+      });
+    }
+
+    function updateConditionalSections() {
       const scaleEl = document.getElementById('eventTypeScale');
       const regEl = document.getElementById('regionalLocation');
       const val = scaleEl ? scaleEl.value : '';
@@ -3572,6 +3734,7 @@ function saveUserSettings() {
     // Attach real-time input listener with debouncing (300ms)
     document.addEventListener('DOMContentLoaded', () => {
       loadUserSettings();
+      translateAllSelectOptions(currentLang);
       updateConditionalSections();
 
       const debouncedScan = debounce(() => {
