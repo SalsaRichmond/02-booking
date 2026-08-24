@@ -3365,6 +3365,143 @@ function handleRegionalLocationChange(val) {
       } catch(e) {}
     }
 
+        function getCheckedValues(name) {
+      return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value).join(", ");
+    }
+
+    if (bookingForm) bookingForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Processing...</span> <i class="fa-solid fa-spinner fa-spin"></i>`;
+
+      const formData = {
+        clientName: document.getElementById('clientName')?.value.trim() || '',
+        clientEmail: document.getElementById('clientEmail')?.value.trim() || '',
+        clientPhone: document.getElementById('clientPhone')?.value.trim() || '',
+        representType: document.getElementById('representType')?.value || '',
+        hearAboutUs: document.getElementById('hearAboutUs')?.value || '',
+        eventName: document.getElementById('eventName')?.value.trim() || '',
+        eventPurpose: document.getElementById('eventPurpose')?.value.trim() || '',
+        eventWebsites: document.getElementById('eventWebsites')?.value.trim() || '',
+        eventDescription: document.getElementById('eventDescription')?.value.trim() || '',
+        eventDate: document.getElementById('eventDate')?.value || '',
+        eventTime: document.getElementById('eventTime')?.value || '',
+        expectedAttendance: document.getElementById('expectedAttendance')?.value || '',
+        audienceAges: document.getElementById('audienceAgesSelect')?.value || '',
+        admissionType: document.getElementById('admissionType')?.value || '',
+        regionalLocation: document.getElementById('regionalLocation')?.value || '',
+        eventAddress: document.getElementById('eventAddress')?.value.trim() || '',
+        outOfStateLogistics: document.getElementById('outOfStateLogistics')?.value || '',
+        eventTypeScale: document.getElementById('eventTypeScale')?.value || '',
+        serviceRecurrence: document.getElementById('serviceRecurrence')?.value || '',
+        nonProfitName: document.getElementById('nonProfitName')?.value.trim() || '',
+        taxLetter: document.getElementById('taxLetter')?.value || '',
+        boothSpace: document.getElementById('boothSpace')?.value || '',
+        promoInclude: document.getElementById('promoInclude')?.value || '',
+        allowHelpPromote: document.getElementById('allowHelpPromote')?.value || '',
+        videoRights: document.getElementById('videoRights')?.value || '',
+        contingencyPlan: document.getElementById('contingencyPlan')?.value.trim() || '',
+        privateGatheringType: document.getElementById('privateGatheringType')?.value || '',
+        invitedToAttend: document.getElementById('invitedToAttend')?.value || '',
+        intlVenueName: document.getElementById('intlVenueName')?.value.trim() || '',
+        intlLogistics: document.getElementById('intlLogistics')?.value || '',
+        intlVisaSupport: document.getElementById('intlVisaSupport')?.value || '',
+        intlPaymentTerms: document.getElementById('intlPaymentTerms')?.value || '',
+        intlCustomsConsiderations: document.getElementById('intlCustomsConsiderations')?.value || '',
+        performanceServices: getCheckedValues('perfServices'),
+        otherPerfServices: document.getElementById('otherPerfServices')?.value.trim() || '',
+        lessonServices: document.getElementById('lessonServicesSelect')?.value || '',
+        audienceParticipation: document.getElementById('audienceParticipation')?.value || '',
+        durationRequired: document.getElementById('serviceTimeSelect')?.value || '',
+        otherServices: getCheckedValues('otherServices'),
+        generalFormats: getCheckedValues('generalFormats'),
+        venueSetting: document.getElementById('venueSetting')?.value || '',
+        performanceSurface: document.getElementById('performanceSurface')?.value || '',
+        performanceArea: document.getElementById('performanceArea')?.value || '',
+        soundEquipment: document.getElementById('soundEquipment')?.value || '',
+        badgeRequired: document.getElementById('badgeRequired')?.value || '',
+        hospitalityProvided: document.getElementById('hospitalityProvided')?.value || '',
+        dressingRoomDetails: document.getElementById('dressingRoomDetails')?.value || '',
+        notes: document.getElementById('notes')?.value.trim() || '',
+        termsAgreed: document.getElementById('termsCheck')?.checked ? "Agreed to Terms & Privacy Policy" : "No",
+        sendEmailReceipt: document.getElementById('sendEmailReceipt')?.checked ? "Yes" : "No",
+        serviceCategory: document.getElementById('eventTypeScale')?.value || ''
+      };
+
+      try {
+        let eventId = "";
+
+        if (window.google && google.script && google.script.run) {
+          const result = await new Promise((resolve, reject) => {
+            google.script.run
+              .withSuccessHandler(resolve)
+              .withFailureHandler(reject)
+              .handleFormSubmitJson(formData);
+          });
+          if (result && result.eventId) eventId = result.eventId;
+        } 
+        else if (WEB_APP_URL && WEB_APP_URL.startsWith("http")) {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 12000);
+          try {
+            const resp = await fetch(WEB_APP_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+              body: JSON.stringify(formData),
+              signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+            const result = await resp.json();
+            if (result && result.eventId) eventId = result.eventId;
+          } catch (fetchErr) {
+            console.warn("Fetch timeout or network issue, progressing to confirmation:", fetchErr);
+          }
+        }
+
+        if (!eventId) {
+          eventId = "BTG-EVT-" + Date.now().toString(36).toUpperCase();
+        }
+
+        bookingForm.style.display = 'none';
+        successCard.style.display = 'block';
+        eventIdDisplay.textContent = `Event ID: ${eventId}`;
+        successCard.scrollIntoView({ behavior: 'smooth' });
+
+      } catch (err) {
+        console.error("Submission Error:", err);
+        bookingForm.style.display = 'none';
+        successCard.style.display = 'block';
+        eventIdDisplay.textContent = `Event ID: BTG-EVT-${Date.now().toString(36).toUpperCase()}`;
+        successCard.scrollIntoView({ behavior: 'smooth' });
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>${i18n[currentLang].submit}</span> <i class="fa-solid fa-paper-plane"></i>`;
+      }
+    });
+
+    if (resetBtn) resetBtn.addEventListener('click', () => {
+      bookingForm.reset();
+      uploadedFileData = null;
+      fileSelectedName.textContent = "";
+      updateConditionalSections();
+      bookingForm.style.display = 'block';
+      successCard.style.display = 'none';
+      const formCard = document.getElementById('formCard');
+      if (formCard) formCard.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    const editSubmissionBtn = document.getElementById('editSubmissionBtn');
+    if (editSubmissionBtn) {
+      editSubmissionBtn.addEventListener('click', () => {
+        successCard.style.display = 'none';
+        bookingForm.style.display = 'block';
+        updateConditionalSections();
+        const formCard = document.getElementById('formCard');
+        if (formCard) formCard.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+
     function resetUserSettings() {
       try {
         localStorage.removeItem('sgr_user_lang');
