@@ -1044,10 +1044,7 @@
             <input type="text" id="eventName" name="eventName" placeholder="e.g. Richmond Salsa Festival 2026" spellcheck="true" required>
           </div>
 
-          <div class="form-group">
-            <label for="eventPurpose" id="lblPurpose">Purpose of this Event</label>
-            <input type="text" id="eventPurpose" name="eventPurpose" placeholder="e.g. Cultural Celebration, Fundraiser, Gala..." spellcheck="true">
-          </div>
+
 
           <div class="form-group full-width">
             <label for="eventWebsites" id="lblWebsites">Websites for Event & Organization</label>
@@ -1055,7 +1052,7 @@
           </div>
 
           <div class="form-group full-width">
-            <label for="eventDescription" id="lblDescription">Describe Your Event (Provide background on theme, venue vibe, guest flow, program schedule)</label>
+            <label for="eventDescription" id="lblDescription">Purpose & Description of Your Event (Provide background on theme, venue vibe, guest flow, program schedule)</label>
             <textarea id="eventDescription" name="eventDescription" placeholder="Provide background on theme, venue vibe, guest flow, program schedule..." spellcheck="true"></textarea>
           </div>
 
@@ -2398,7 +2395,7 @@
         websites: "Websites for Event & Organization",
         purpose: "Purpose of this Event",
         hearAbout: "How did you HEAR of us?",
-        description: "Describe Your Event (Provide background on theme, venue vibe, guest flow, program schedule)",
+        description: "Purpose & Description of Your Event (Provide background on theme, venue vibe, guest flow, program schedule)",
         isInternational: "Are services requested OUTSIDE of the USA?",
         destinationCountry: "Select Destination Country",
         sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Event Overview & Schedule",
@@ -3640,7 +3637,7 @@ function saveUserSettings() {
         representType: document.getElementById('representType')?.value || '',
         hearAboutUs: document.getElementById('hearAboutUs')?.value || '',
         eventName: document.getElementById('eventName')?.value.trim() || '',
-        eventPurpose: document.getElementById('eventPurpose')?.value.trim() || '',
+        eventPurpose: document.getElementById('eventDescription')?.value.trim() || '',
         eventWebsites: document.getElementById('eventWebsites')?.value.trim() || '',
         eventDescription: document.getElementById('eventDescription')?.value.trim() || '',
         eventDate: document.getElementById('eventDate')?.value || '',
