@@ -354,8 +354,20 @@
       box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
     }
 
-    select option { background: var(--input-bg);
-      color: #F8FAFC;
+    /* Universal High Contrast Select Dropdown Options */
+    select option {
+      color: var(--text-main) !important;
+      background-color: var(--input-bg) !important;
+      padding: 10px !important;
+      font-weight: 600 !important;
+    }
+    [data-theme="light"] select option {
+      background-color: #FFFFFF !important;
+      color: #0F172A !important;
+    }
+    [data-theme="dark"] select option {
+      background-color: #1E293B !important;
+      color: #F8FAFC !important;
     }
 
     textarea {
