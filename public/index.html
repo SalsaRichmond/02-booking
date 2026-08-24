@@ -27,7 +27,9 @@
       --bg-gradient-1: #31101A;
       --bg-gradient-2: #0F172A;
       --bg-gradient-3: #080C14;
-      --card-bg: rgba(30, 41, 59, 0.85);
+      --card-bg: rgba(20, 26, 38, 0.85);
+      --sub-card-bg: rgba(255, 255, 255, 0.04);
+      --sub-card-border: rgba(255, 255, 255, 0.1);
       --card-border: rgba(255, 255, 255, 0.12);
       --text-main: #F8FAFC;
       --text-muted: #94A3B8;
@@ -68,16 +70,18 @@
 
     /* Light Mode Overrides */
     [data-theme="light"] {
-      --bg-gradient-1: #FFF5F5;
-      --bg-gradient-2: #F1F5F9;
-      --bg-gradient-3: #E2E8F0;
-      --card-bg: rgba(255, 255, 255, 0.92);
-      --card-border: rgba(0, 0, 0, 0.1);
+      --bg-gradient-1: #FFFFFF;
+      --bg-gradient-2: #FFF5F5;
+      --bg-gradient-3: #FAF8F8;
+      --card-bg: #FFFFFF;
+      --card-border: rgba(220, 38, 38, 0.12);
+      --sub-card-bg: #FFFFFF;
+      --sub-card-border: rgba(0, 0, 0, 0.08);
       --text-main: #0F172A;
       --text-muted: #475569;
       --input-bg: #FFFFFF;
       --input-border: #CBD5E1;
-      --shadow-glow: 0 10px 30px -10px rgba(220, 38, 38, 0.15);
+      --shadow-glow: 0 10px 30px -10px rgba(220, 38, 38, 0.1);
     }
 
     * {
@@ -350,8 +354,7 @@
       box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
     }
 
-    select option {
-      background: #1E293B;
+    select option { background: var(--input-bg);
       color: #F8FAFC;
     }
 
@@ -598,7 +601,7 @@
       flex-wrap: wrap;
     }
     .header-settings-panel {
-      background: rgba(15, 23, 42, 0.65);
+      background: var(--sub-card-bg);
       border: 1px solid var(--accent-gold);
       border-radius: 12px;
       padding: 12px 16px;
@@ -662,7 +665,7 @@
       position: absolute;
       right: 0;
       top: 48px;
-      background: #0F172A !important;
+      background: var(--card-bg) !important;
       border: 1px solid var(--accent-gold) !important;
       border-radius: 14px;
       padding: 16px;
@@ -679,7 +682,7 @@
     .settings-dropdown-menu option,
     .settings-dropdown-menu button {
       color: #F8FAFC !important;
-      background-color: #1E293B !important;
+      background-color: var(--input-bg) !important;
       border: 1px solid rgba(245, 158, 11, 0.4) !important;
       font-size: 0.88rem !important;
       border-radius: 8px !important;
@@ -688,7 +691,7 @@
     }
     .settings-dropdown-menu select option {
       color: #F8FAFC !important;
-      background-color: #0F172A !important;
+      background-color: var(--card-bg) !important;
       padding: 6px;
     }
 
@@ -725,7 +728,7 @@
       position: absolute;
       right: 0;
       top: 48px;
-      background: #0F172A !important;
+      background: var(--card-bg) !important;
       border: 1px solid var(--accent-gold) !important;
       border-radius: 14px;
       padding: 16px;
@@ -740,7 +743,7 @@
     .settings-dropdown-box option,
     .settings-dropdown-box button {
       color: #F8FAFC !important;
-      background-color: #1E293B !important;
+      background-color: var(--input-bg) !important;
       border: 1px solid rgba(245, 158, 11, 0.4) !important;
       font-size: 0.88rem !important;
       border-radius: 8px !important;
@@ -749,7 +752,7 @@
     }
     .settings-dropdown-box select option {
       color: #F8FAFC !important;
-      background-color: #0F172A !important;
+      background-color: var(--card-bg) !important;
       padding: 6px;
     }
 
@@ -771,7 +774,7 @@
     .settings-dropdown-box option,
     .settings-dropdown-box button {
       color: #FFFFFF !important;
-      background-color: #1E293B !important;
+      background-color: var(--input-bg) !important;
       border: 1px solid rgba(245, 158, 11, 0.5) !important;
       font-size: 0.88rem !important;
       border-radius: 8px !important;
@@ -781,13 +784,13 @@
     }
     .settings-dropdown-box select option {
       color: #FFFFFF !important;
-      background-color: #0F172A !important;
+      background-color: var(--card-bg) !important;
       padding: 8px !important;
     }
     #resetDefaultsBtn {
       color: #E2E8F0 !important;
       border: 1px dashed rgba(245, 158, 11, 0.5) !important;
-      background: rgba(30, 41, 59, 0.8) !important;
+      background: var(--sub-card-bg) !important;
       font-weight: 600 !important;
     }
     #resetDefaultsBtn:hover {
@@ -815,7 +818,7 @@
 <style>
   /* Interactive Spell Checker Modal Styles */
   .spell-issue-card {
-    background: rgba(15, 23, 42, 0.7);
+    background: var(--sub-card-bg);
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 12px;
     padding: 14px 18px;
@@ -1085,7 +1088,7 @@
           <i class="fa-solid fa-compass"></i> 3. Location & Event Classification Routing
         </div>
 
-        <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
+        <div class="form-section-block" style=" border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
           <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-map-location-dot"></i> Geographic Location</h4>
           
           <div class="grid-2">
@@ -1114,7 +1117,7 @@
           </div>
         </div>
 
-        <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
+        <div class="form-section-block" style=" border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
           <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-tags"></i> Event Classification</h4>
           
           <div class="form-group full-width">
@@ -1128,7 +1131,7 @@
         </div>
 
         <!-- Relocated Service Category Selector (Section 3 Routing) -->
-        <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
+        <div class="form-section-block" style=" border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
           <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-list-check"></i> Service Category Selection</h4>
           
           <div class="form-group full-width" style="margin-bottom: 0;">
@@ -1308,7 +1311,7 @@
         </div>
 
         <div id="performanceServicesBlock" style="display: none; transition: all 0.35s ease;">
-        <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
+        <div class="form-section-block" style=" border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
           <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-masks-theater"></i> A. Performance Dance Repertoire <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">(Select all that apply)</span></h4>
 
           <!-- Q18: Performance Services Multi-Select Checkboxes Grid -->
@@ -1524,7 +1527,7 @@
         </div> <!-- End #performanceServicesBlock -->
 
         <div id="instructionServicesBlock" style="display: none; transition: all 0.35s ease;">
-        <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
+        <div class="form-section-block" style=" border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
           <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-graduation-cap"></i> B. Dance Instruction, Production Roles & Formats</h4>
 
           <div class="grid-2">
@@ -1703,7 +1706,7 @@
           <i class="fa-solid fa-circle-info"></i> 9. General Information
         </div>
 
-        <div class="notice-box" id="txtGeneralInfo" style="background: rgba(30, 41, 59, 0.6); border: 1px solid var(--card-border); border-left: 4px solid var(--accent-gold); padding: 22px; border-radius: var(--radius-md); font-size: 0.94rem; line-height: 1.6; color: var(--text-main); margin-bottom: 30px;">
+        <div class="notice-box" id="txtGeneralInfo" class="form-section-block" style=" border: 1px solid var(--card-border); border-left: 4px solid var(--accent-gold); padding: 22px; border-radius: var(--radius-md); font-size: 0.94rem; line-height: 1.6; color: var(--text-main); margin-bottom: 30px;">
           <h4 style="color: var(--accent-gold); font-family: 'Outfit', sans-serif; font-size: 1.1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
             <i class="fa-solid fa-masks-theater"></i> <span id="lblHiringPerformers">HIRING SIMILAR PERFORMERS</span>
           </h4>
