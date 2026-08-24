@@ -1768,22 +1768,7 @@
           <span id="btnSubmitText">Submit Event Request</span> <i class="fa-solid fa-paper-plane"></i>
         </button>
 
-      <!-- Press Kit Card -->
-      <div class="press-kit-box" id="pressKitBox" style="background: rgba(56, 189, 248, 0.1); border: 1px dashed #38BDF8; border-radius: 12px; padding: 14px 20px; font-size: 0.92rem; color: #38BDF8; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; text-align: left;">
-        <div>
-          <i class="fa-solid fa-folder-open" style="font-size: 1.2rem; margin-right: 8px;"></i>
-          <strong id="lblPressKitTitle">Press Kits & Media Assets:</strong>
-          <span id="lblPressKitDesc" style="display: block; font-size: 0.85rem; color: var(--text-muted); margin-top: 2px;">Official Bios, High-Res Logos, Performance Photos & Promotional Materials</span>
-        </div>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <a href="https://www.salsarichmond.com/contact-info/press-kit" target="_blank" id="btnPressKitSalsa" style="padding: 8px 16px; background: rgba(56, 189, 248, 0.2); border: 1px solid #38BDF8; border-radius: 20px; color: #F8FAFC; text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='#38BDF8'; this.style.color='#000';" onmouseout="this.style.background='rgba(56, 189, 248, 0.2)'; this.style.color='#F8FAFC';">
-            <i class="fa-solid fa-download"></i> <span id="btnPressKitSalsaText">Salsa Guy Press Kit</span>
-          </a>
-          <a href="https://www.tradicion.org/contact-info/press-kit" target="_blank" id="btnPressKitTradicion" style="padding: 8px 16px; background: rgba(56, 189, 248, 0.2); border: 1px solid #38BDF8; border-radius: 20px; color: #F8FAFC; text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: all 0.2s ease;" onmouseover="this.style.background='#38BDF8'; this.style.color='#000';" onmouseout="this.style.background='rgba(56, 189, 248, 0.2)'; this.style.color='#F8FAFC';">
-            <i class="fa-solid fa-download"></i> <span id="btnPressKitTradicionText">Tradición Press Kit</span>
-          </a>
-        </div>
-      </div>
+
     </div>
       </form>
 
@@ -3131,8 +3116,8 @@ function changeLanguage(langCode) {
       setTxt('lblEmailReceipt', t.emailReceipt);
       setTxt('btnSubmitText', t.submitBtn);
 
-      setTxt('lblPressKitTitle', t.pressKitTitle);
-      setTxt('lblPressKitDesc', t.pressKitDesc);
+      if (document.getElementById('lblPressKitTitle')) setTxt('lblPressKitTitle', t.pressKitTitle);
+      if (document.getElementById('lblPressKitDesc')) setTxt('lblPressKitDesc', t.pressKitDesc);
       setTxt('btnPressKitSalsaText', t.pressKitSalsa);
       setTxt('btnPressKitTradicionText', t.pressKitTradicion);
 
@@ -3248,8 +3233,8 @@ function changeLanguage(langCode) {
       document.getElementById('lblNotes').textContent = t.notes;
       document.getElementById('lblTerms').innerHTML = t.terms + ' <span class="required">*</span>';
 
-      document.getElementById('lblPressKitTitle').textContent = t.pressKitTitle;
-      document.getElementById('lblPressKitDesc').textContent = t.pressKitDesc;
+      if (document.getElementById('lblPressKitTitle')) document.getElementById('lblPressKitTitle').textContent = t.pressKitTitle;
+      if (document.getElementById('lblPressKitDesc')) document.getElementById('lblPressKitDesc').textContent = t.pressKitDesc;
       if (document.getElementById('btnPressKitSalsaText')) document.getElementById('btnPressKitSalsaText').textContent = t.pressKitSalsaBtnText;
       if (document.getElementById('btnPressKitTradicionText')) document.getElementById('btnPressKitTradicionText').textContent = t.pressKitTradicionBtnText;
 
