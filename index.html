@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-color-scheme="crimson">
+<html lang="en" data-theme="light" data-color-scheme="crimson">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -853,7 +853,7 @@
   }
 </style>
 </head>
-<body>
+<body class="light-theme">
 
   <div class="container">
 
@@ -903,7 +903,7 @@
           <div style="display: flex; flex-direction: column; gap: 4px;">
             <label class="setting-label">Display Mode</label>
             <button type="button" class="control-btn" id="themeToggleBtn" style="width: 100%; justify-content: flex-start; padding: 7px 12px; font-size: 0.85rem;">
-              <i class="fa-solid fa-moon" id="themeIcon"></i> <span id="themeBtnText">Night Mode</span>
+              <i class="fa-solid fa-sun" id="themeIcon"></i> <span id="themeBtnText">Day Mode</span>
             </button>
           </div>
 
@@ -3144,17 +3144,19 @@ function changeLanguage(langCode) {
     const themeBtnText = document.getElementById('themeBtnText');
 
     if (themeToggleBtn) themeToggleBtn.addEventListener('click', () => {
-        saveUserSettings();
-      const currentTheme = document.documentElement.getAttribute('data-theme');
-      if (currentTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'light');
-        themeIcon.className = 'fa-solid fa-sun';
-        themeBtnText.textContent = 'Day Mode';
-      } else {
+      const isCurrentlyLight = document.body.classList.contains('light-theme') || document.documentElement.getAttribute('data-theme') === 'light';
+      if (isCurrentlyLight) {
+        document.body.classList.remove('light-theme');
         document.documentElement.setAttribute('data-theme', 'dark');
         themeIcon.className = 'fa-solid fa-moon';
         themeBtnText.textContent = 'Night Mode';
+      } else {
+        document.body.classList.add('light-theme');
+        document.documentElement.setAttribute('data-theme', 'light');
+        themeIcon.className = 'fa-solid fa-sun';
+        themeBtnText.textContent = 'Day Mode';
       }
+      saveUserSettings();
     });
 
     // H1.2 Visual Theme Color Scheme Selector
@@ -3589,10 +3591,18 @@ function saveUserSettings() {
           document.getElementById('colorSchemeSelect').value = savedTheme;
           document.body.setAttribute('data-theme', savedTheme);
         }
-        if (savedMode === 'light') {
+        
+        const themeIcon = document.getElementById('themeIcon');
+        const themeBtnText = document.getElementById('themeBtnText');
+
+        if (savedMode === 'night') {
+          document.body.classList.remove('light-theme');
+          document.documentElement.setAttribute('data-theme', 'dark');
+          if (themeIcon) themeIcon.className = 'fa-solid fa-moon';
+          if (themeBtnText) themeBtnText.textContent = 'Night Mode';
+        } else {
           document.body.classList.add('light-theme');
-          const themeIcon = document.getElementById('themeIcon');
-          const themeBtnText = document.getElementById('themeBtnText');
+          document.documentElement.setAttribute('data-theme', 'light');
           if (themeIcon) themeIcon.className = 'fa-solid fa-sun';
           if (themeBtnText) themeBtnText.textContent = 'Day Mode';
         }
@@ -3748,11 +3758,12 @@ function saveUserSettings() {
       if (document.getElementById('colorSchemeSelect')) document.getElementById('colorSchemeSelect').value = 'crimson';
       changeLanguage('en');
       document.body.setAttribute('data-theme', 'crimson');
-      document.body.classList.remove('light-theme');
+      document.body.classList.add('light-theme');
+      document.documentElement.setAttribute('data-theme', 'light');
       const themeIcon = document.getElementById('themeIcon');
       const themeBtnText = document.getElementById('themeBtnText');
-      if (themeIcon) themeIcon.className = 'fa-solid fa-moon';
-      if (themeBtnText) themeBtnText.textContent = 'Night Mode';
+      if (themeIcon) themeIcon.className = 'fa-solid fa-sun';
+      if (themeBtnText) themeBtnText.textContent = 'Day Mode';
       const details = document.getElementById('settingsDetails');
       if (details) details.removeAttribute('open');
     }
