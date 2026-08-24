@@ -1625,25 +1625,12 @@
 
         </div> <!-- End #instructionServicesBlock -->
 
-        <!-- SECTION 6: FILE ATTACHMENTS -->
-        <div class="section-title" id="secFileTitle">
-          <i class="fa-solid fa-paperclip"></i> 6. File Attachments (Flyer / Floor Plan / 501c Tax Letter)
-        </div>
 
-        <div class="form-group full-width">
-          <label id="lblFileUpload">Upload Event Document / Attachment <span class="hint">(PDF, PNG, JPG - Max 10MB)</span></label>
-          <div class="file-upload-box" id="dropZone" onclick="document.getElementById('fileInput').click();">
-            <div class="file-upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
-            <div id="fileBoxText">Click or Drag & Drop File Here to Attach to Drive</div>
-            <div class="file-info" id="fileSelectedName"></div>
-            <input type="file" id="fileInput" style="display: none;" accept=".pdf,.jpg,.png,.jpeg,.doc,.docx">
-          </div>
-        </div>
 
         
-        <!-- SECTION 7: TECHNICAL, VENUE & HOSPITALITY LOGISTICS -->
+        <!-- SECTION 6: TECHNICAL, VENUE & HOSPITALITY LOGISTICS -->
         <div class="section-title" id="sec6Title">
-          <i class="fa-solid fa-toolbox"></i> 7. Technical, Venue & Hospitality Logistics
+          <i class="fa-solid fa-toolbox"></i> 6. Technical, Venue & Hospitality Logistics
         </div>
 
         <div class="grid-2">
@@ -1717,20 +1704,31 @@
           </div>
         </div>
 
-        <!-- SECTION 8: BUDGET, DOCUMENTS & SPECIAL TERMS -->
+        <!-- SECTION 7: SPECIAL INSTRUCTIONS, TERMS & FILE ATTACHMENTS -->
         <div class="section-title" id="sec5Title">
-          <i class="fa-solid fa-file-contract"></i> 8. Budget, Documents & Special Terms
+          <i class="fa-solid fa-file-contract"></i> 7. Special Instructions, Terms & File Attachments (Flyer / Floor Plan / 501c Tax Letter)
         </div>
 
-        <!-- Q42: Special Requests -->
-        <div class="form-group">
+        <!-- Special Instructions & Notes -->
+        <div class="form-group full-width">
           <label for="notes" id="lblNotes">Special Instructions, Song Requests or Notes</label>
           <textarea id="notes" name="notes" placeholder="Tell us any special requests, song choices, or event guidelines..." spellcheck="true"></textarea>
         </div>
 
-        <!-- SECTION 9: GENERAL INFORMATION -->
+        <!-- File Upload Box -->
+        <div class="form-group full-width" style="margin-top: 15px;">
+          <label id="lblFileUpload">Upload Event Document / Attachment <span class="hint">(PDF, PNG, JPG - Max 10MB)</span></label>
+          <div class="file-upload-box" id="dropZone" onclick="document.getElementById('fileInput').click();">
+            <div class="file-upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+            <div id="fileBoxText">Click or Drag & Drop File Here to Attach to Drive</div>
+            <div class="file-info" id="fileSelectedName"></div>
+            <input type="file" id="fileInput" style="display: none;" accept=".pdf,.jpg,.png,.jpeg,.doc,.docx">
+          </div>
+        </div>
+
+        <!-- SECTION 8: GENERAL INFORMATION -->
         <div class="section-title" id="sec7Title">
-          <i class="fa-solid fa-circle-info"></i> 9. General Information
+          <i class="fa-solid fa-circle-info"></i> 8. General Information
         </div>
 
         <div class="notice-box" id="txtGeneralInfo" class="form-section-block" style=" border: 1px solid var(--card-border); border-left: 4px solid var(--accent-gold); padding: 22px; border-radius: var(--radius-md); font-size: 0.94rem; line-height: 1.6; color: var(--text-main); margin-bottom: 30px;">
@@ -2449,10 +2447,10 @@
         secFile: "<i class='fa-solid fa-paperclip'></i> 6. File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
         fileUpload: "Upload Event Document / Attachment",
         fileBoxText: "Click or Drag & Drop File Here to Attach to Drive",
-        sec6: "<i class='fa-solid fa-toolbox'></i> 7. Technical, Venue & Hospitality Logistics",
-        sec5: "<i class='fa-solid fa-file-contract'></i> 8. Special Instructions & Terms",
+        sec6: "<i class='fa-solid fa-toolbox'></i> 6. Technical, Venue & Hospitality Logistics",
+        sec5: "<i class='fa-solid fa-file-contract'></i> 7. Special Instructions, Terms & File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
         notes: "Special Instructions, Song Requests or Notes",
-        sec7: "<i class='fa-solid fa-circle-info'></i> 9. General Information",
+        sec7: "<i class='fa-solid fa-circle-info'></i> 8. General Information",
         hiringPerformers: "HIRING SIMILAR PERFORMERS",
         genInfoP1: "While you may be tempted to hire similar performances, I truly believe that incorporating different styles and specialties can greatly enhance your event experience in multiple ways. First and foremost, offering a variety of performances will keep your guests engaged and captivated throughout the entire event. By avoiding repetition or monotony, I ensure that attendees remain entertained and have a truly memorable experience.",
         genInfoP2: "Furthermore, diverse performances cater to a broader audience, attracting individuals with varying interests and preferences. By providing a mix of entertainment options, I ensure that everyone finds something appealing and feels included in the festivities. This inclusive approach guarantees a more enjoyable and satisfying experience for all attendees.",
@@ -2523,10 +2521,10 @@
         secFile: "<i class='fa-solid fa-paperclip'></i> 6. Archivos Adjuntos (Folleto / Plano / Carta 501c)",
         fileUpload: "Subir Documento del Evento",
         fileBoxText: "Haga clic o arrastre su archivo aquí para adjuntarlo a Drive",
-        sec6: "<i class='fa-solid fa-toolbox'></i> 7. Logística Técnica, Lugar y Hospitalidad",
-        sec5: "<i class='fa-solid fa-file-contract'></i> 8. Instrucciones Especiales y Términos",
+        sec6: "<i class='fa-solid fa-toolbox'></i> 6. Logística Técnica, Lugar y Hospitalidad",
+        sec5: "<i class='fa-solid fa-file-contract'></i> 7. Instrucciones Especiales, Términos y Archivos Adjuntos (Folleto / Plano / Carta 501c)",
         notes: "Instrucciones Especiales, Canciones o Notas",
-        sec7: "<i class='fa-solid fa-circle-info'></i> 9. Información General",
+        sec7: "<i class='fa-solid fa-circle-info'></i> 8. Información General",
         hiringPerformers: "CONTRATACIÓN DE ARTISTAS SIMILARES",
         genInfoP1: "Si bien puede verse tentado a contratar espectáculos similares, creo firmemente que incorporar diferentes estilos y especialidades mejorará enormemente la experiencia de su evento. Ofrecer una variedad mantendrá a sus invitados fascinados durante todo el evento.",
         genInfoP2: "Además, las presentaciones diversas satisfacen a un público más amplio. Al brindar una combinación de entretenimiento, aseguro que todos encuentren algo atractivo y se sientan incluidos en la festividad.",
