@@ -1292,6 +1292,20 @@
           <i class="fa-solid fa-music"></i> 5. Services Requested
         </div>
 
+        <!-- Primary Service Category Selector -->
+        <div class="form-group full-width" style="background: rgba(15, 23, 42, 0.65); border: 1px solid var(--accent-gold); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
+          <label for="serviceTypeRequested" id="lblServiceTypeRequested" style="font-size: 1.05rem; font-weight: 700; color: var(--accent-gold); margin-bottom: 10px; display: block;">
+            What type of service(s) are you requesting for your event? <span class="required">*</span>
+          </label>
+          <select id="serviceTypeRequested" name="serviceTypeRequested" required onchange="toggleServiceCategories(this.value)" style="border: 1px solid var(--accent-gold); font-weight: 600; font-size: 0.98rem; padding: 14px;">
+            <option value="" selected disabled>-- Select Service Category --</option>
+            <option value="Performance Only">Performance Only (Dance Show / Live Music / Characters)</option>
+            <option value="Dance Instruction Only">Dance Instruction / Workshop Only</option>
+            <option value="Both Performance & Dance Instruction">Both Performance & Dance Instruction</option>
+          </select>
+        </div>
+
+        <div id="performanceServicesBlock" style="transition: all 0.35s ease;">
         <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
           <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-masks-theater"></i> A. Performance Dance Repertoire <span style="font-size: 0.85rem; font-weight: normal; color: var(--text-muted);">(Select all that apply)</span></h4>
 
@@ -1505,6 +1519,9 @@
           </div>
         </div>
 
+        </div> <!-- End #performanceServicesBlock -->
+
+        <div id="instructionServicesBlock" style="transition: all 0.35s ease;">
         <div style="background: rgba(15, 23, 42, 0.4); border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
           <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-graduation-cap"></i> B. Dance Instruction, Production Roles & Formats</h4>
 
@@ -1573,6 +1590,8 @@
           </div>
         </div>
 
+
+        </div> <!-- End #instructionServicesBlock -->
 
         <!-- SECTION 6: FILE ATTACHMENTS -->
         <div class="section-title" id="secFileTitle">
@@ -3492,6 +3511,28 @@ function handleRegionalLocationChange(val) {
       });
     }
 
+    
+    function toggleServiceCategories(val) {
+      const perfBlock = document.getElementById('performanceServicesBlock');
+      const instBlock = document.getElementById('instructionServicesBlock');
+      
+      if (!perfBlock || !instBlock) return;
+
+      if (val === 'Performance Only') {
+        perfBlock.style.display = 'block';
+        instBlock.style.display = 'none';
+      } else if (val === 'Dance Instruction Only') {
+        perfBlock.style.display = 'none';
+        instBlock.style.display = 'block';
+      } else if (val === 'Both Performance & Dance Instruction') {
+        perfBlock.style.display = 'block';
+        instBlock.style.display = 'block';
+      } else {
+        perfBlock.style.display = 'block';
+        instBlock.style.display = 'block';
+      }
+    }
+
     function updateConditionalSections() {
       const scaleEl = document.getElementById('eventTypeScale');
       const regEl = document.getElementById('regionalLocation');
@@ -3567,6 +3608,7 @@ function saveUserSettings() {
       submitBtn.innerHTML = `<span>Processing...</span> <i class="fa-solid fa-spinner fa-spin"></i>`;
 
       const formData = {
+        serviceTypeRequested: document.getElementById("serviceTypeRequested")?.value || "",
         clientName: document.getElementById('clientName')?.value.trim() || '',
         clientEmail: document.getElementById('clientEmail')?.value.trim() || '',
         clientPhone: document.getElementById('clientPhone')?.value.trim() || '',
