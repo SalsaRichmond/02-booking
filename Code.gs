@@ -74,7 +74,7 @@ function setupMasterHeaders() {
 
   const masterHeaders = [
     // 1. Contact & Organizer Information
-    "Timestamp",
+    "Submission Date",
     "Your Name",
     "Email Address",
     "Best Contact Phone Number",
@@ -234,7 +234,7 @@ function colorCodeHeaders() {
     const colNum = i + 1;
     const cell = sheet.getRange(1, colNum);
     
-    if (h.includes("Timestamp") || h.includes("Name") || h.includes("Email") || h.includes("event?")) {
+    if (h.includes("Submission Date") || h.includes("Timestamp") || h.includes("Name") || h.includes("Email") || h.includes("event?")) {
       cell.setBackground("#fce5cd"); // Soft Peach
     } else if (h.includes("URL") || h.includes("Document") || h.includes("Event ID") || h.includes("Upload") || h.includes("Attachment") || h.includes("Flyer")) {
       cell.setBackground("#f4cccc"); // Soft Red
@@ -536,7 +536,7 @@ function handleFormSubmitJson(data) {
   let newRow = new Array(headers.length).fill("");
 
   const fieldHeaderMap = [
-    { key: "timestamp", aliases: ["Timestamp", "Date Submitted"] },
+    { key: "timestamp", aliases: ["Submission Date", "Timestamp", "Date Submitted", "Date", "Submission Timestamp"] },
     { key: "clientName", aliases: ["Your Name", "Full Name", "Client Name", "Name"] },
     { key: "organizationName", aliases: ["Organization / Company Name", "Organization Name", "Organization", "Company"] },
     { key: "clientEmail", aliases: ["Email Address", "Email"] },
@@ -607,8 +607,8 @@ function handleFormSubmitJson(data) {
     }
   });
 
-  // Guarantee complete Timestamp based on exact time of submittal
-  const timestampIdx = getHeaderIndex(headers, ["Timestamp", "Date Submitted"]);
+  // Guarantee complete Timestamp / Submission Date based on exact time of submittal
+  const timestampIdx = getHeaderIndex(headers, ["Submission Date", "Timestamp", "Date Submitted", "Date", "Submission Timestamp"]);
   if (timestampIdx > -1 && (!newRow[timestampIdx] || newRow[timestampIdx] === "")) {
     const tz = ss.getSpreadsheetTimeZone() || Session.getScriptTimeZone() || "America/New_York";
     newRow[timestampIdx] = Utilities.formatDate(new Date(), tz, "M/d/yyyy H:mm:ss");
