@@ -42,6 +42,8 @@ function onOpen() {
     .addItem('🚀 RUN FULL AUTOMATION', 'mainAutomation')
     .addItem('🎯 UPDATE SELECTED ROW ONLY', 'reGenerateDocs')
     .addSeparator()
+    .addItem('📄 UPDATE MASTER DOC TEMPLATES', 'updateMasterTemplates')
+    .addSeparator()
     .addItem('🎨 COLOR CODE HEADERS', 'colorCodeHeaders')
     .addItem('🔍 DIAGNOSE SHEET (Check Headers)', 'diagnoseSheet')
     .addSeparator()
@@ -77,6 +79,7 @@ function setupMasterHeaders() {
   const masterHeaders = [
     // 1. Contact & Organizer Information
     "Submission Date",
+    "Event ID",
     "Your Name",
     "Email Address",
     "Best Contact Phone Number",
@@ -85,6 +88,7 @@ function setupMasterHeaders() {
 
     // 2. Event Overview & Schedule
     "What is the NAME of the event?",
+    "Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title",
     "Purpose of this Event",
     "Websites for Event & Organization",
     "Describe Your Event",
@@ -153,7 +157,6 @@ function setupMasterHeaders() {
     "Terms of Service & Privacy Policy Agreement",
 
     // Automation & Management Tracking Columns
-    "Event ID",
     "Day of the Week",
     "MASTER Proposal Form URL",
     "Master Contract Document URL",
@@ -278,6 +281,7 @@ function reGenerateDocs() {
 
 /**
  * Batch-processes all active, unsynced rows in the sheet.
+ * Includes a 5-minute safety timeout guard to prevent Google Apps Script limit errors.
  */
 function mainAutomation() {
   const ss = getSpreadsheet();
@@ -290,18 +294,33 @@ function mainAutomation() {
   const statusIdx = headers.indexOf("Status");
   const eventNameIdx = headers.indexOf("What is the NAME of the event?");
 
+  const startTime = Date.now();
+  let processedCount = 0;
+
   for (let i = 1; i < data.length; i++) {
     const eventName = data[i][eventNameIdx] || "";
     const status = statusIdx > -1 ? data[i][statusIdx] : "";
     
     if (eventName === "" || status === "Synced") continue;
     
+    // Safety guard: Stop at 5 minutes (300,000 ms) to stay well under Apps Script's 6-minute hard limit
+    if (Date.now() - startTime > 300000) {
+      console.warn("Script approaching 5-minute execution limit. Stopping batch loop gracefully.");
+      SpreadsheetApp.getUi().alert(`⏳ Processed ${processedCount} row(s). Batch paused to prevent Google limit error. Run '🚀 RUN FULL AUTOMATION' again to process remaining rows.`);
+      return;
+    }
+
     try { 
       processRow(sheet, i + 1, data[i], folder, headers); 
-      Utilities.sleep(300);
+      processedCount++;
+      Utilities.sleep(100);
     } catch (e) { 
       console.error(`Error processing row ${i + 1}: ` + e.message); 
     }
+  }
+
+  if (processedCount > 0) {
+    SpreadsheetApp.getUi().alert(`🚀 Automation complete! Successfully processed ${processedCount} row(s).`);
   }
 }
 
@@ -428,27 +447,258 @@ function processRow(sheet, rowNum, rowData, folder, headers) {
 }
 
 /**
+ * Safely replaces all occurrences of searchText with literal replacementValue in a DocumentApp element.
+ * Escapes Java regex special characters in search text and escapes $ and \ in replacement text.
+ */
+function safeReplaceText(element, searchText, replacementValue) {
+  if (!element || !searchText) return;
+  const safeValue = (replacementValue === null || replacementValue === undefined) ? "" : replacementValue.toString();
+  // Escape all 14 regex special characters in search text
+  const escapedSearch = searchText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  // Escape $ and \ in replacement value for Java regex replacement
+  const safeReplacement = safeValue.replace(/\\/g, "\\\\").replace(/\$/g, "\\$");
+  try {
+    element.replaceText(escapedSearch, safeReplacement);
+  } catch (e) {
+    console.warn("replaceText error for '" + searchText + "': " + e.message);
+  }
+}
+
+/**
+ * Formats any date input (Date object, timestamp, or date string) into "MMM dd, yyyy" format (e.g. Aug 25, 2026).
+ */
+function formatDateValue(val) {
+  if (!val) return "TBD";
+  let d = null;
+  if (val instanceof Date) {
+    d = val;
+  } else if (typeof val === "string" || typeof val === "number") {
+    const str = val.toString().trim();
+    if (!str || str.toLowerCase() === "tbd") return "TBD";
+    const parsed = new Date(str);
+    if (!isNaN(parsed.getTime())) {
+      d = parsed;
+    }
+  }
+  
+  if (d && !isNaN(d.getTime())) {
+    return Utilities.formatDate(d, Session.getScriptTimeZone(), "MMM dd, yyyy");
+  }
+  return val.toString();
+}
+
+/**
  * Creates individual document copy from master template and replaces placeholders with row data.
+ * Formats all dates as "MMM dd, yyyy" and eliminates all brackets.
  */
 function createDoc(templateId, type, eventName, rowData, folder, isValidDate, eDate, headers) {
   try {
     const copy = DriveApp.getFileById(templateId).makeCopy(`${type} - ${eventName}`, folder);
     const doc = DocumentApp.openById(copy.getId());
     const elems = [doc.getBody(), doc.getHeader(), doc.getFooter()].filter(e => e != null);
-    
+
+    // Build key-value map of header to formatted row value
+    const dataMap = {};
     headers.forEach((h, i) => {
-      let val = (h.includes("TIME")) ? extractTimeOnly(rowData[i]) : rowData[i];
-      if (h.includes("DATE")) val = (isValidDate) ? Utilities.formatDate(eDate, Session.getScriptTimeZone(), "MMMM dd, yyyy") : "TBD";
-      const safeVal = (val === null || val === undefined) ? "" : val.toString();
-      
-      const escapedH = h.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      
-      elems.forEach(e => {
-        e.replaceText(escapedH, safeVal);
-        e.replaceText("{{" + escapedH + "}}", safeVal);
-        e.replaceText("<" + escapedH + ">", safeVal);
-      });
+      let val = rowData[i];
+      if (h.toUpperCase().includes("TIME")) {
+        val = extractTimeOnly(val);
+      } else if (h.toUpperCase().includes("DATE") || val instanceof Date) {
+        val = formatDateValue(val);
+      } else if (val === null || val === undefined) {
+        val = "";
+      } else {
+        val = val.toString();
+      }
+      dataMap[h] = val;
     });
+
+    const formattedToday = formatDateValue(new Date());
+
+    // Dictionary of all tag aliases mapping to values or headers
+    const tagMap = {
+      // Dates
+      "Today's Date": formattedToday,
+      "Submission Date": formatDateValue(dataMap["Submission Date"]) || formattedToday,
+
+      // Contact & Coordinator
+      "Your Name": dataMap["Your Name"] || "",
+      "Your Name 2": dataMap["Your Name"] || "",
+      "Client Name": dataMap["Your Name"] || "",
+      "Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title": dataMap["Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title"] || dataMap["Your Name"] || "",
+      "Who is the COORDINATOR and or decision maker for this event? Name and Title:": dataMap["Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title"] || dataMap["Your Name"] || "",
+      "Event Planner / Coordinator": dataMap["Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title"] || dataMap["Your Name"] || "",
+      "Event Planner/Coordinator": dataMap["Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title"] || dataMap["Your Name"] || "",
+      "Event Planner": dataMap["Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title"] || dataMap["Your Name"] || "",
+      "Coordinator": dataMap["Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title"] || dataMap["Your Name"] || "",
+      "Email Address": dataMap["Email Address"] || "",
+      "Best Contact Phone Number": dataMap["Best Contact Phone Number"] || "",
+      "Who do you represent? (Organization / Business / Self)": dataMap["Who do you represent? (Organization / Business / Self)"] || "",
+      "Organization Name": dataMap["Who do you represent? (Organization / Business / Self)"] || "",
+
+      // Event Details
+      "What is the NAME of the event?": dataMap["What is the NAME of the event?"] || eventName,
+      "Event Name": dataMap["What is the NAME of the event?"] || eventName,
+      "NAME of the event": dataMap["What is the NAME of the event?"] || eventName,
+      "Event": dataMap["What is the NAME of the event?"] || eventName,
+      "Purpose of this Event": dataMap["Purpose of this Event"] || "",
+      "Websites for Event & Organization": dataMap["Websites for Event & Organization"] || "",
+      "Website 2": dataMap["Websites for Event & Organization"] || "",
+      "Describe Your Event": dataMap["Describe Your Event"] || "",
+      "Please confirm the DATE of your event:": formatDateValue(dataMap["Please confirm the DATE of your event:"]) || (isValidDate ? formatDateValue(eDate) : "TBD"),
+      "Event Date": formatDateValue(dataMap["Please confirm the DATE of your event:"]) || (isValidDate ? formatDateValue(eDate) : "TBD"),
+      "Please confirm the TIME of your event:": dataMap["Please confirm the TIME of your event:"] || "TBD",
+      "Event Time": dataMap["Please confirm the TIME of your event:"] || "TBD",
+
+      // Attendance & Audience
+      "Expected Number of Attendees": dataMap["Expected Number of Attendees"] || "",
+      "How many people are you expecting will ATTEND?": dataMap["Expected Number of Attendees"] || "",
+      "How many people are you expecting will ATTENDING?": dataMap["Expected Number of Attendees"] || "",
+      "Expected attendance": dataMap["Expected Number of Attendees"] || "",
+      "Audience Age Groups Expected": dataMap["Audience Age Groups Expected"] || "",
+      "Who is your AUDIENCE:": dataMap["Audience Age Groups Expected"] || "",
+      "Audience": dataMap["Audience Age Groups Expected"] || "",
+
+      // Admission
+      "Type of Event Admission": dataMap["Type of Event Admission"] || "",
+      "What type of event ADMISSION is it?": dataMap["Type of Event Admission"] || "",
+      "Type of Event": dataMap["Type of Event Admission"] || "",
+
+      // Location
+      "Where will the event take place? (ADDRESS)": dataMap["Where will the event take place? (ADDRESS)"] || "",
+      "Event Address": dataMap["Where will the event take place? (ADDRESS)"] || "",
+      "Address": dataMap["Where will the event take place? (ADDRESS)"] || "",
+
+      // Classification & Recurrence
+      "Select Event Classification:": dataMap["Select Event Classification:"] || "",
+      "Will the PERFORMANCE SERVICES be...": dataMap["Will the PERFORMANCE SERVICES be..."] || "",
+
+      // Promotions, Media & 501c
+      "501(c) Non-Profit Name (If Applicable)": dataMap["501(c) Non-Profit Name (If Applicable)"] || "",
+      "Can you provide a Tax Deductibility Letter?": dataMap["Can you provide a Tax Deductibility Letter?"] || "",
+      "Provide a Booth/Exhibitor Space (10×10 Tent)?": dataMap["Provide a Booth/Exhibitor Space (10×10 Tent)?"] || "",
+      "Will you provide a BOOTH/EXHIBITOR space (10 x 10 Tent) to promote our services?": dataMap["Provide a Booth/Exhibitor Space (10×10 Tent)?"] || "",
+      "Will you provide a BOOTH/EXHIBITOR space (10x10 Tent) to promote our services?": dataMap["Provide a Booth/Exhibitor Space (10×10 Tent)?"] || "",
+      "Include our logo on promo materials & social media?": dataMap["Include our logo on promo materials & social media?"] || "",
+      "Allowed to help promote the event?": dataMap["Allowed to help promote the event?"] || "",
+      "Are we allowed to HELP PROMOTE the event?": dataMap["Allowed to help promote the event?"] || "",
+      "Provide copies of video footage and photos?": dataMap["Provide copies of video footage and photos?"] || "",
+      "Who will be taking PICTURES AND VIDEO?": dataMap["Provide copies of video footage and photos?"] || "",
+      "Can we get COPIES of video footage and pictures of our participation?": dataMap["Provide copies of video footage and photos?"] || "",
+      "Weather / Contingency Plan": dataMap["Weather / Contingency Plan"] || "",
+
+      // Private Gathering
+      "Type of Private Gathering": dataMap["Type of Private Gathering"] || "",
+      "Are performers invited to attend/stay for the event?": dataMap["Are performers invited to attend/stay for the event?"] || "",
+      "Are we INVITED TO ATTEND the event?": dataMap["Are performers invited to attend/stay for the event?"] || "",
+
+      // Repertoire & Services
+      "Repertoire: Mexico / North American Dances": dataMap["Repertoire: Mexico / North American Dances"] || "",
+      "Repertoire: Caribbean Dances (Cuba & Puerto Rico)": dataMap["Repertoire: Caribbean Dances (Cuba & Puerto Rico)"] || "",
+      "Repertoire: Central American Dances (El Salvador)": dataMap["Repertoire: Central American Dances (El Salvador)"] || "",
+      "Repertoire: South American Dances (Colombia & Argentina)": dataMap["Repertoire: South American Dances (Colombia & Argentina)"] || "",
+      "Repertoire: Theatrical, Parade & Live Singing Performances": dataMap["Repertoire: Theatrical, Parade & Live Singing Performances"] || "",
+      "Which of our DANCE LESSON SERVICES will you need?": dataMap["Which of our DANCE LESSON SERVICES will you need?"] || "",
+      "Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?": dataMap["Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?"] || "",
+      "Expecting AUDIENCE PARTICIPATION?": dataMap["Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?"] || "",
+      "How much TIME do you require from us?": dataMap["How much TIME do you require from us?"] || "",
+      "Anticipated Performance Time": dataMap["How much TIME do you require from us?"] || "",
+      "Are there OTHER ENTERTAINERS sharing the time with us?": dataMap["Additional Services Needed (MC, DJ, Lecture)"] || dataMap["Special Instructions, Song Requests or Notes"] || "N/A",
+      "Which of our PERFORMANCE SERVICES will you need?": [
+        dataMap["Repertoire: Mexico / North American Dances"],
+        dataMap["Repertoire: Caribbean Dances (Cuba & Puerto Rico)"],
+        dataMap["Repertoire: Central American Dances (El Salvador)"],
+        dataMap["Repertoire: South American Dances (Colombia & Argentina)"],
+        dataMap["Repertoire: Theatrical, Parade & Live Singing Performances"],
+        dataMap["Any other PERFORMANCE SERVICES you wish, but are not listed above?"]
+      ].filter(Boolean).join("; ") || "As specified in agreement",
+
+      // Venue & Logistics
+      "Venue Location Setting": dataMap["Venue Location Setting"] || "",
+      "Where will it take PLACE?": dataMap["Venue Location Setting"] || "",
+      "On what SURFACE will the performance or class take place?": dataMap["On what SURFACE will the performance or class take place?"] || "",
+      "Size of Performance / Class Area": dataMap["Size of Performance / Class Area"] || "",
+      "Size of the performance Area": dataMap["Size of Performance / Class Area"] || "",
+      "Sound System Equipment": dataMap["Sound System Equipment"] || "",
+      "About the SOUND SYSTEM": dataMap["Sound System Equipment"] || "",
+      "ABOUT THE SOUND SYSTEM": dataMap["Sound System Equipment"] || "",
+      "Will a BADGE or ID be required for performers?": dataMap["Will a BADGE or ID be required for performers?"] || "",
+      "Will a BADGE or ID be issued to performers to access the performance area?": dataMap["Will a BADGE or ID be required for performers?"] || "",
+      "WILL YOU PROVIDE the performers with (Water, Hospitality, Meal, Green Room)": dataMap["WILL YOU PROVIDE the performers with (Water, Hospitality, Meal, Green Room)"] || "",
+      "WILL YOU PROVIDE the performers with:": dataMap["WILL YOU PROVIDE the performers with (Water, Hospitality, Meal, Green Room)"] || "",
+      "Dressing Room / Costume Changing Instructions": dataMap["Dressing Room / Costume Changing Instructions"] || "",
+      "Will we have a place to change COSTUMES if needed? If so, please provide instructions.": dataMap["Dressing Room / Costume Changing Instructions"] || "",
+      "Will we have a designated place for PARKING? If so, please provide instructions": dataMap["Special Instructions, Song Requests or Notes"] || "See event instructions",
+
+      // Budget & Notes
+      "Confirm you have a BUDGET for our participation": dataMap["Confirm you have a BUDGET for our participation"] || "",
+      "Confirmed Budget Amount for Performance / Workshop": dataMap["Confirmed Budget Amount for Performance / Workshop"] || "",
+      "Special Instructions, Song Requests or Notes": dataMap["Special Instructions, Song Requests or Notes"] || "",
+
+      // Tracking
+      "Event ID": dataMap["Event ID"] || ""
+    };
+
+    elems.forEach(e => {
+      const text = e.getText();
+      if (!text || text.trim() === "") return;
+
+      // 1. Replace {{Placeholder}} tags
+      const curlyMatches = text.match(/\{\{([^}]+)\}\}/g);
+      if (curlyMatches) {
+        const uniqueCurly = [...new Set(curlyMatches)];
+        uniqueCurly.forEach(fullTag => {
+          const innerTag = fullTag.substring(2, fullTag.length - 2).trim();
+          let val = (tagMap[innerTag] !== undefined && tagMap[innerTag] !== "") ? tagMap[innerTag] : (dataMap[innerTag] !== undefined ? dataMap[innerTag] : null);
+          if (val === null) {
+            const foundH = headers.find(h => h.toLowerCase() === innerTag.toLowerCase());
+            if (foundH) val = dataMap[foundH];
+          }
+          if (val instanceof Date) val = formatDateValue(val);
+          safeReplaceText(e, fullTag, val !== null ? val : "");
+        });
+      }
+
+      // 2. Replace <Placeholder> tags
+      const angleMatches = text.match(/<([^>]+)>/g);
+      if (angleMatches) {
+        const uniqueAngle = [...new Set(angleMatches)];
+        uniqueAngle.forEach(fullTag => {
+          const innerTag = fullTag.substring(1, fullTag.length - 1).trim();
+          let val = (tagMap[innerTag] !== undefined && tagMap[innerTag] !== "") ? tagMap[innerTag] : (dataMap[innerTag] !== undefined ? dataMap[innerTag] : null);
+          if (val === null) {
+            const foundH = headers.find(h => h.toLowerCase() === innerTag.toLowerCase());
+            if (foundH) val = dataMap[foundH];
+          }
+          if (val instanceof Date) val = formatDateValue(val);
+          safeReplaceText(e, fullTag, val !== null ? val : "");
+        });
+      }
+
+      // 3. Replace exact headers without brackets if present in text
+      headers.forEach(h => {
+        if (h && h.length > 6 && text.includes(h)) {
+          let val = dataMap[h] !== undefined ? dataMap[h] : "";
+          if (val instanceof Date) val = formatDateValue(val);
+          safeReplaceText(e, h, val);
+        }
+      });
+
+      // Cleanup step: Strip any remaining unreplaced {{...}} or <...> brackets from document text
+      const remainingCurly = e.getText().match(/\{\{([^}]+)\}\}/g);
+      if (remainingCurly) {
+        [...new Set(remainingCurly)].forEach(leftover => {
+          safeReplaceText(e, leftover, "");
+        });
+      }
+      const remainingAngle = e.getText().match(/<([^>]+)>/g);
+      if (remainingAngle) {
+        [...new Set(remainingAngle)].forEach(leftover => {
+          safeReplaceText(e, leftover, "");
+        });
+      }
+    });
+
     doc.saveAndClose();
     return copy.getUrl();
   } catch (e) { 
@@ -547,6 +797,7 @@ function handleFormSubmitJson(data) {
     { key: "representType", aliases: ["Who do you represent? (Organization / Business / Self)", "Who do you represent?", "Represent Type", "Representing"] },
     { key: "hearAboutUs", aliases: ["How did you HEAR of us?", "How did you HEAR ABOUT US?", "How did you hear about us", "Referral Source"] },
     { key: "eventName", aliases: ["What is the NAME of the event?", "Event Name", "Name of Event"] },
+    { key: "eventCoordinator", aliases: ["Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title", "Who is the COORDINATOR and or decision maker for this event? Name and Title:", "Event Planner / Coordinator", "Event Coordinator", "Coordinator Name", "Decision Maker"] },
     { key: "eventPurpose", aliases: ["Purpose of this Event", "What is the PURPOSE / THEME of your event?", "Event Purpose", "Purpose / Theme", "Theme"] },
     { key: "eventWebsites", aliases: ["Websites for Event & Organization", "Event Website(s) / Social Media", "Event Website", "Website", "Websites"] },
     { key: "eventDescription", aliases: ["Describe Your Event", "DESCRIBE your event.", "Describe event", "Event Description"] },
@@ -626,7 +877,15 @@ function handleFormSubmitJson(data) {
       const blob = Utilities.newBlob(bytes, data.attachedFile.mimeType || 'application/octet-stream', data.attachedFile.fileName || 'Event_Attachment');
       const dateStr = data.eventDate || "Undated";
       const eventFolder = getOrCreateEventFolder(mainFolder, dateStr, data.eventName || "Event");
-      eventFolder.createFile(blob);
+      const createdFile = eventFolder.createFile(blob);
+      try {
+        createdFile.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+      } catch (sharingErr) {}
+      const fileUrl = createdFile.getUrl();
+      const fileColIdx = getHeaderIndex(headers, ["Upload Event Document / Attachment", "Upload Event Document", "Attachment", "Uploaded File"]);
+      if (fileColIdx > -1) {
+        sheet.getRange(rowNum, fileColIdx + 1).setFormula(`=HYPERLINK("${fileUrl}", "View Uploaded File")`);
+      }
     } catch (fileErr) {
       console.warn("File attachment upload error: ", fileErr);
     }
@@ -809,6 +1068,13 @@ function createQuestionnaireReviewGoogleDoc() {
         "label": "Name of the Event",
         "required": true,
         "placeholder": "e.g. Richmond Salsa Festival 2026"
+      },
+      {
+        "type": "text",
+        "name": "eventCoordinator",
+        "label": "Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title",
+        "required": true,
+        "placeholder": "e.g. Maria Santos, Lead Coordinator / Decision Maker"
       },
       {
         "type": "text",
@@ -1352,4 +1618,90 @@ function createQuestionnaireReviewGoogleDoc() {
 
   console.log("Created Google Doc URL: " + doc.getUrl());
   return doc.getUrl();
+}
+
+/**
+ * Opens and fixes/updates the 3 Master Google Doc Templates:
+ * 1. Proposal Template (1plCZvjBJijgJrGduzXrTMjbtDopMgCfB5Vo7MLWxspo)
+ * 2. Contract Template (1BuEv7BF6wsHutvEWwVZOVb3m8J3zkYujKheti8X871g)
+ * 3. Performance Info Template (1eyXzMdmYiV0CDmxvNZfNO3dRYQ83hvJHHy_eseWPqIE)
+ * 
+ * Replaces mismatched, buggy, and legacy placeholders with clean, standardized tags.
+ */
+function updateMasterTemplates() {
+  const ui = SpreadsheetApp.getUi();
+  let log = "📝 Master Doc Templates Update Log:\n\n";
+
+  // 1. Update Proposal Template
+  try {
+    const docProp = DocumentApp.openById(CONFIG.TEMPLATES.PROPOSAL);
+    const bodyProp = docProp.getBody();
+    
+    safeReplaceText(bodyProp, "{{Today's Date}}", "{{Submission Date}}");
+    safeReplaceText(bodyProp, "{{Who is the COORDINATOR and or decision maker for this event? Name and Title:}}", "{{Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title}}");
+    safeReplaceText(bodyProp, "{{Event Planner/Coordinator}}", "{{Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title}}");
+    safeReplaceText(bodyProp, "{{Event Name}}", "{{What is the NAME of the event?}}");
+    safeReplaceText(bodyProp, "{{Event}}", "{{What is the NAME of the event?}}");
+    safeReplaceText(bodyProp, "{{Website 2}}", "{{Websites for Event & Organization}}");
+    safeReplaceText(bodyProp, "{{Your Name 2}}", "{{Your Name}}");
+    safeReplaceText(bodyProp, "Hello Ms. {{", "Hello {{");
+    
+    docProp.saveAndClose();
+    log += "✅ Proposal Master Doc updated successfully!\n";
+  } catch (e) {
+    log += "❌ Error updating Proposal Doc: " + e.message + "\n";
+  }
+
+  // 2. Update Contract Template
+  try {
+    const docCont = DocumentApp.openById(CONFIG.TEMPLATES.CONTRACT);
+    const bodyCont = docCont.getBody();
+    
+    safeReplaceText(bodyCont, "{{Today's Date}}", "{{Submission Date}}");
+    safeReplaceText(bodyCont, "{{Who is the COORDINATOR and or decision maker for this event? Name and Title:}}", "{{Your Name}}");
+    safeReplaceText(bodyCont, "Hello Mr. {{Your Name 2}},", "Hello {{Your Name}},");
+    safeReplaceText(bodyCont, "Hello Mr. {{Your Name}},", "Hello {{Your Name}},");
+    safeReplaceText(bodyCont, "{{Your Name 2}}", "{{Your Name}}");
+    
+    docCont.saveAndClose();
+    log += "✅ Contract Master Doc updated successfully!\n";
+  } catch (e) {
+    log += "❌ Error updating Contract Doc: " + e.message + "\n";
+  }
+
+  // 3. Update Performance Info Template
+  try {
+    const docPerf = DocumentApp.openById(CONFIG.TEMPLATES.PERF_INFO);
+    const bodyPerf = docPerf.getBody();
+    
+    // Fix critical bugs (wrong tags in fields)
+    safeReplaceText(bodyPerf, "Size of the performance Area: {{Will a BADGE or ID be issued to performers to access the performance area?}}", "Size of the performance Area: {{Size of Performance / Class Area}}");
+    safeReplaceText(bodyPerf, "We can take pictures and videos:  {{Are we allowed to HELP PROMOTE the event?}}", "We can take pictures and videos:  {{Provide copies of video footage and photos?}}");
+    safeReplaceText(bodyPerf, "We can take pictures and videos: {{Are we allowed to HELP PROMOTE the event?}}", "We can take pictures and videos: {{Provide copies of video footage and photos?}}");
+
+    // Standardize legacy & alternative phrasing tags to exact sheet header tags
+    safeReplaceText(bodyPerf, "{{What type of event ADMISSION is it?}}", "{{Type of Event Admission}}");
+    safeReplaceText(bodyPerf, "{{How many people are you expecting will ATTEND?}}", "{{Expected Number of Attendees}}");
+    safeReplaceText(bodyPerf, "{{Expecting AUDIENCE PARTICIPATION?}}", "{{Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?}}");
+    safeReplaceText(bodyPerf, "{{Are we INVITED TO ATTEND the event?}}", "{{Are performers invited to attend/stay for the event?}}");
+    safeReplaceText(bodyPerf, "{{WILL YOU PROVIDE the performers with:}}", "{{WILL YOU PROVIDE the performers with (Water, Hospitality, Meal, Green Room)}}");
+    safeReplaceText(bodyPerf, "{{Who is your AUDIENCE:}}", "{{Audience Age Groups Expected}}");
+    safeReplaceText(bodyPerf, "{{Event Address}}", "{{Where will the event take place? (ADDRESS)}}");
+    safeReplaceText(bodyPerf, "{{Where will it take PLACE?}}", "{{Venue Location Setting}}");
+    safeReplaceText(bodyPerf, "{{Who is the COORDINATOR and or decision maker for this event? Name and Title:}}", "{{Your Name}}");
+    safeReplaceText(bodyPerf, "{{Will we have a place to change COSTUMES if needed? If so, please provide instructions.}}", "{{Dressing Room / Costume Changing Instructions}}");
+    safeReplaceText(bodyPerf, "{{Will a BADGE or ID be issued to performers to access the performance area?}}", "{{Will a BADGE or ID be required for performers?}}");
+    safeReplaceText(bodyPerf, "{{ABOUT THE SOUND SYSTEM}}", "{{Sound System Equipment}}");
+    safeReplaceText(bodyPerf, "{{Will you provide a BOOTH/EXHIBITOR space (10 x 10 Tent) to promote our services?}}", "{{Provide a Booth/Exhibitor Space (10×10 Tent)?}}");
+    safeReplaceText(bodyPerf, "{{Will you provide a BOOTH/EXHIBITOR space (10x10 Tent) to promote our services?}}", "{{Provide a Booth/Exhibitor Space (10×10 Tent)?}}");
+    safeReplaceText(bodyPerf, "{{Are we allowed to HELP PROMOTE the event?}}", "{{Allowed to help promote the event?}}");
+    safeReplaceText(bodyPerf, "{{Who will be taking PICTURES AND VIDEO?}}", "{{Provide copies of video footage and photos?}}");
+    
+    docPerf.saveAndClose();
+    log += "✅ Performance Info Master Doc updated successfully!\n";
+  } catch (e) {
+    log += "❌ Error updating Performance Info Doc: " + e.message + "\n";
+  }
+
+  if (ui) ui.alert(log);
 }

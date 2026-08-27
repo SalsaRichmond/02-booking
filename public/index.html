@@ -1044,6 +1044,11 @@
             <input type="text" id="eventName" name="eventName" placeholder="e.g. Richmond Salsa Festival 2026" spellcheck="true" required>
           </div>
 
+          <div class="form-group">
+            <label for="eventCoordinator" id="lblEventCoordinator">Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title <span class="required">*</span></label>
+            <input type="text" id="eventCoordinator" name="eventCoordinator" placeholder="e.g. Maria Santos, Lead Coordinator / Decision Maker" spellcheck="true" required>
+          </div>
+
 
 
           <div class="form-group">
@@ -3634,6 +3639,7 @@ function saveUserSettings() {
         representType: document.getElementById('representType')?.value || '',
         hearAboutUs: document.getElementById('hearAboutUs')?.value || '',
         eventName: document.getElementById('eventName')?.value.trim() || '',
+        eventCoordinator: document.getElementById('eventCoordinator')?.value.trim() || '',
         eventPurpose: document.getElementById('eventDescription')?.value.trim() || '',
         eventWebsites: document.getElementById('eventWebsites')?.value.trim() || '',
         eventDescription: document.getElementById('eventDescription')?.value.trim() || '',

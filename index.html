@@ -949,9 +949,13 @@
     <!-- Brand Header -->
     <div class="brand-header">
       <div class="logo-trio-container">
-        <img src="salsa_guy_logo.png" alt="Salsa Guy Richmond" class="side-logo left-logo" title="Salsa Guy Richmond">
+        <a href="https://www.salsarichmond.com/" target="_blank" rel="noopener noreferrer" style="display: inline-block; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+          <img src="salsa_guy_logo.png" alt="Salsa Guy Richmond" class="side-logo left-logo" title="Salsa Guy Richmond - Visit Website" style="cursor: pointer;">
+        </a>
         <img src="logo.png" alt="Salsa Guy Richmond" class="profe-logo center-logo" title="Salsa Guy Richmond">
-        <img src="tradicion_logo.png" alt="Tradición Puerto Rican Folk Dancing" class="side-logo right-logo" title="Tradición Puerto Rican Folk Dancing &amp; More">
+        <a href="https://www.tradicion.org/" target="_blank" rel="noopener noreferrer" style="display: inline-block; transition: transform 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+          <img src="tradicion_logo.png" alt="Tradición Puerto Rican Folk Dancing" class="side-logo right-logo" title="Tradición Puerto Rican Folk Dancing &amp; More - Visit Website" style="cursor: pointer;">
+        </a>
       </div>
       <h1 class="brand-title" id="txtTitle" style="text-align: center; margin-bottom: 20px;">Event Request & Booking Questionnaire</h1>
     </div>
@@ -1009,8 +1013,8 @@
           </div>
 
           <div class="form-group">
-            <label for="hearAboutUs" id="lblHearAbout">How did you HEAR of us?</label>
-            <select id="hearAboutUs" name="hearAboutUs">
+            <label for="hearAboutUs" id="lblHearAbout">How did you HEAR of us? <span class="required">*</span></label>
+            <select id="hearAboutUs" name="hearAboutUs" required>
               <option value="" selected disabled>-- Select Option --</option>
               <option value="Social Media / Word of Mouth / Prior Event / Search">Social Media / Word of Mouth / Prior Event / Search</option>
               <option value="Email">Email</option>
@@ -1044,6 +1048,11 @@
             <input type="text" id="eventName" name="eventName" placeholder="e.g. Richmond Salsa Festival 2026" spellcheck="true" required>
           </div>
 
+          <div class="form-group">
+            <label for="eventCoordinator" id="lblEventCoordinator">Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title <span class="required">*</span></label>
+            <input type="text" id="eventCoordinator" name="eventCoordinator" placeholder="e.g. Maria Santos, Lead Coordinator / Decision Maker" spellcheck="true" required>
+          </div>
+
 
 
           <div class="form-group">
@@ -1052,8 +1061,8 @@
           </div>
 
           <div class="form-group full-width">
-            <label for="eventDescription" id="lblDescription">Purpose & Description of Your Event (Provide background on theme, venue vibe, guest flow, program schedule)</label>
-            <textarea id="eventDescription" name="eventDescription" placeholder="Provide background on theme, venue vibe, guest flow, program schedule..." spellcheck="true"></textarea>
+            <label for="eventDescription" id="lblDescription">Purpose & Description of Your Event (Provide background on theme, venue vibe, guest flow, program schedule) <span class="required">*</span></label>
+            <textarea id="eventDescription" name="eventDescription" placeholder="Provide background on theme, venue vibe, guest flow, program schedule..." spellcheck="true" required></textarea>
           </div>
 
           <div class="form-group">
@@ -1073,13 +1082,13 @@
           </div>
 
           <div class="form-group">
-            <label for="expectedAttendance" id="lblAttendance">Expected Number of Attendees</label>
-            <input type="number" id="expectedAttendance" name="expectedAttendance" placeholder="e.g. 250">
+            <label for="expectedAttendance" id="lblAttendance">Expected Number of Attendees <span class="required">*</span></label>
+            <input type="number" id="expectedAttendance" name="expectedAttendance" placeholder="Estimate" required>
           </div>
 
           <div class="form-group">
-            <label for="audienceAgesSelect" id="lblAudienceAges">Audience Age Groups Expected</label>
-            <select id="audienceAgesSelect" name="audienceAgesSelect">
+            <label for="audienceAgesSelect" id="lblAudienceAges">Audience Age Groups Expected <span class="required">*</span></label>
+            <select id="audienceAgesSelect" name="audienceAgesSelect" required>
               <option value="" selected disabled>-- Select Option --</option>
               <option value="All Ages / Family-Friendly / Adults Only / Youth">All Ages / Family-Friendly / Adults Only / Youth</option>
               <option value="Every Age Group">Every Age Group (All Ages Welcome)</option>
@@ -1095,8 +1104,8 @@
           </div>
 
           <div class="form-group full-width">
-            <label for="admissionType" id="lblAdmission">Type of Event Admission (Free Admission / Ticketed Event / Private by Invitation)</label>
-            <select id="admissionType" name="admissionType">
+            <label for="admissionType" id="lblAdmission">Type of Event Admission (Free Admission / Ticketed Event / Private by Invitation) <span class="required">*</span></label>
+            <select id="admissionType" name="admissionType" required>
               <option value="" selected disabled>-- Select Option --</option>
               <option value="Free Admission / Ticketed Event / Private by Invitation">Free Admission / Ticketed Event / Private by Invitation</option>
               <option value="Free / Open to Public">Free / Open to Public</option>
@@ -1118,7 +1127,7 @@
               <select id="regionalLocation" name="regionalLocation" required onchange="handleRegionalLocationChange(this.value); updateConditionalSections();">
                 <option value="" selected disabled>-- Select Option --</option>
                 <option value="Yes (Within Virginia, USA)">Yes (Within Virginia, USA)</option>
-                <option value="No, Out-of-State (Within USA, outside VA)">No, Out-of-State (Within USA, outside VA)</option>
+                <option value="No, Out-of-State (Within USA, outside VA)">No, Out-of-State (Within USA, outside VA) ➔ (Triggers Section XXX: Logistics)</option>
                 <option value="No, International (Outside USA)">No, International (Outside USA) ➔ (Triggers Section 3C: International Logistics)</option>
               </select>
             </div>
@@ -1180,8 +1189,8 @@
 
           <div class="grid-2">
             <div class="form-group">
-              <label for="serviceRecurrence" id="lblServiceRecurrence">Will the PERFORMANCE SERVICES be...</label>
-              <select id="serviceRecurrence" name="serviceRecurrence">
+              <label for="serviceRecurrence" id="lblServiceRecurrence">Will the PERFORMANCE SERVICES be... <span class="required">*</span></label>
+              <select id="serviceRecurrence" name="serviceRecurrence" required>
                 <option value="" selected disabled>-- Select Option --</option>
                 <option value="Nonrecurring - One time">Nonrecurring - One time</option>
                 <option value="Recurring">Recurring</option>
@@ -1207,8 +1216,8 @@
             </div>
 
             <div class="form-group">
-              <label for="boothSpace" id="lblBoothSpace">Provide a Booth/Exhibitor Space (10×10 Tent)?</label>
-              <select id="boothSpace" name="boothSpace">
+              <label for="boothSpace" id="lblBoothSpace">Provide a Booth/Exhibitor Space (10×10 Tent)? <span class="required">*</span></label>
+              <select id="boothSpace" name="boothSpace" required>
                 <option value="" selected disabled>-- Select Option --</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -1217,8 +1226,8 @@
             </div>
 
             <div class="form-group">
-              <label for="promoInclude" id="lblPromoInclude">Include our logo on promo materials & social media?</label>
-              <select id="promoInclude" name="promoInclude">
+              <label for="promoInclude" id="lblPromoInclude">Include our logo on promo materials & social media? <span class="required">*</span></label>
+              <select id="promoInclude" name="promoInclude" required>
                 <option value="" selected disabled>-- Select Option --</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -1227,8 +1236,8 @@
             </div>
 
             <div class="form-group">
-              <label for="allowHelpPromote" id="lblAllowHelpPromote">Allowed to help promote the event?</label>
-              <select id="allowHelpPromote" name="allowHelpPromote">
+              <label for="allowHelpPromote" id="lblAllowHelpPromote">Allowed to help promote the event? <span class="required">*</span></label>
+              <select id="allowHelpPromote" name="allowHelpPromote" required>
                 <option value="" selected disabled>-- Select Option --</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -1237,8 +1246,8 @@
             </div>
 
             <div class="form-group">
-              <label for="videoRights" id="lblVideoRights">Provide copies of video footage and photos?</label>
-              <select id="videoRights" name="videoRights">
+              <label for="videoRights" id="lblVideoRights">Provide copies of video footage and photos? <span class="required">*</span></label>
+              <select id="videoRights" name="videoRights" required>
                 <option value="" selected disabled>-- Select Option --</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -1247,8 +1256,8 @@
             </div>
 
             <div class="form-group full-width">
-              <label for="contingencyPlan" id="lblContingencyPlan">Weather / Contingency Plan (Alternate Location, Rain Date, Time adjustments)</label>
-              <textarea id="contingencyPlan" name="contingencyPlan" placeholder="Describe backup indoor location, rain date, time adjustments..." spellcheck="true"></textarea>
+              <label for="contingencyPlan" id="lblContingencyPlan">Weather / Contingency Plan (Alternate Location, Rain Date, Time adjustments) <span class="required">*</span></label>
+              <textarea id="contingencyPlan" name="contingencyPlan" placeholder="Describe backup indoor location, rain date, time adjustments..." spellcheck="true" required></textarea>
             </div>
           </div>
         </div>
@@ -1261,12 +1270,12 @@
 
           <div class="grid-2">
             <div class="form-group">
-              <label for="privateGatheringType" id="lblPrivateGatheringType">Type of Private Gathering (e.g., Birthday, Wedding, Quinceañera, Anniversary, House Gathering)</label>
-              <select id="privateGatheringType" name="privateGatheringType">
+              <label for="privateGatheringType" id="lblPrivateGatheringType">1. Type of Private Gathering <span class="required">*</span></label>
+              <select id="privateGatheringType" name="privateGatheringType" required>
                 <option value="" selected disabled>-- Select Option --</option>
                 <option value="Birthday Party">Birthday Party</option>
                 <option value="Wedding / Anniversary">Wedding / Anniversary</option>
-                <option value="Quinceañera">Quinceañera</option>
+                <option value="Quinceañera / Sweet 15">Quinceañera / Sweet 15</option>
                 <option value="House Gathering">House Gathering</option>
                 <option value="Private Dance Lesson">Private Dance Lesson</option>
                 <option value="Other Private Event">Other Private Event</option>
@@ -1274,8 +1283,8 @@
             </div>
 
             <div class="form-group">
-              <label for="invitedToAttend" id="lblInvitedToAttend">Are performers invited to attend/stay for the event?</label>
-              <select id="invitedToAttend" name="invitedToAttend">
+              <label for="invitedToAttend" id="lblInvitedToAttend">Are performers invited to attend/stay for the event? <span class="required">*</span></label>
+              <select id="invitedToAttend" name="invitedToAttend" required>
                 <option value="" selected disabled>-- Select Option --</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -1302,7 +1311,7 @@
             </div>
 
             <div class="form-group">
-              <label for="intlVisaSupport" id="lblIntlVisaSupport">Visa & Legal Documentation Support</label>
+              <label for="intlVisaSupport" id="lblIntlVisaSupport">3. Visa & Legal Documentation Support <span class="required">*</span></label>
               <select id="intlVisaSupport" name="intlVisaSupport">
                 <option value="" selected disabled>-- Select Option --</option>
                 <option value="Yes - Full Legal & Visa Support Provided">Yes - Full Legal & Visa Support Provided</option>
@@ -1314,12 +1323,12 @@
             </div>
 
             <div class="form-group">
-              <label for="intlPaymentTerms" id="lblIntlPaymentTerms">Preferred Currency & Payment Terms</label>
+              <label for="intlPaymentTerms" id="lblIntlPaymentTerms">4. Preferred Currency & Payment Terms <span class="required">*</span></label>
               <input type="text" id="intlPaymentTerms" name="intlPaymentTerms" placeholder="e.g. USD / Wire Transfer / 50% Deposit">
             </div>
 
             <div class="form-group full-width">
-              <label for="intlCustomsConsiderations" id="lblIntlCustoms">Costumes, Props & Customs Considerations <span class="hint">(Custom wardrobe transport or local provisions)</span></label>
+              <label for="intlCustomsConsiderations" id="lblIntlCustoms">5. Costumes, Props & Customs Considerations <span class="required">*</span> <span class="hint">(Custom wardrobe transport or local provisions)</span></label>
               <textarea id="intlCustomsConsiderations" name="intlCustomsConsiderations" placeholder="Details regarding wardrobe customs clearance, instruments, sound props..." spellcheck="true"></textarea>
             </div>
           </div>
@@ -1337,185 +1346,45 @@
 
           <!-- Q18: Performance Services Multi-Select Checkboxes Grid -->
           <div class="form-group full-width">
-            <label id="lblPerfServices">Which of our PERFORMANCE SERVICES will you need? <span class="hint">(Check all options that apply)</span></label>
+            <label id="lblPerfServices">Which of our PERFORMANCE SERVICES will you need? <span class="required">*</span> <span class="hint">(Check all options that apply)</span></label>
 
-            <!-- 1. MEXICO / NORTH AMERICAN DANCES -->
-            <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
-              🇲🇽 Mexico / North American Dances
-            </div>
             <div class="options-grid">
               <label class="checkbox-item" style="justify-content: space-between;">
                 <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="A Selection of Dances from the Disney Movie COCO (Mexico)"> 
-                  <span>A Selection of Dances from COCO (Mexico)</span>
+                  <input type="checkbox" name="perfServices" value="Mexico - Ballet Folklorico (Jalisco)"> 
+                  <span>Mexico - Ballet Folklorico (Jalisco)</span>
                 </span>
                 <span class="details-btn" onclick="openPerfModal(event, 'coco_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
                 <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="El Baile de los Viejitos (The Dance of The Old Men) (Mexico)"> 
-                  <span>El Baile de los Viejitos (Mexico)</span>
-                </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'viejitos_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-              </label>
-
-              <label class="checkbox-item" style="justify-content: space-between;">
-                <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="The Waltz of La Llorona (Weeping Woman) (Mexico)"> 
-                  <span>The Waltz of La Llorona (Mexico)</span>
+                  <input type="checkbox" name="perfServices" value="Mexico - Folk Character Meet & Greet (Catrina / Charro)"> 
+                  <span>Mexico - Folk Character Meet & Greet (Catrina / Charro)</span>
                 </span>
                 <span class="details-btn" onclick="openPerfModal(event, 'llorona_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
                 <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="Día de los Muertos - Day of the Dead Celebration (Mexico)"> 
-                  <span>Día de los Muertos Celebration (Mexico)</span>
+                  <input type="checkbox" name="perfServices" value="El Salvador - Folk Dance (Torito Pinto / Las Cortadoras)"> 
+                  <span>El Salvador - Folk Dance (Torito Pinto / Las Cortadoras)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'dia_muertos_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-              </label>
-            </div>
-
-            <!-- 2. CARIBBEAN DANCES -->
-            <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
-              🇨🇺 🇵🇷 Caribbean Dances (Cuba & Puerto Rico)
-            </div>
-            <div class="options-grid">
-              <label class="checkbox-item" style="justify-content: space-between;">
-                <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="Salsa Rueda (Cuba)"> 
-                  <span>Salsa Rueda (Cuba)</span>
-                </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'salsa_rueda_cuba')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'cortadoras_salvador')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
                 <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="Bomba (Puerto Rico)"> 
-                  <span>Bomba (Puerto Rico)</span>
-                </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'bomba_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-              </label>
-
-              <label class="checkbox-item" style="justify-content: space-between;">
-                <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="Plena (Puerto Rico)"> 
-                  <span>Plena (Puerto Rico)</span>
+                  <input type="checkbox" name="perfServices" value="Puerto Rico - Folk Character (Vejigante Meet & Greet / Plena Performers)"> 
+                  <span>Puerto Rico - Folk Character (Vejigante Meet & Greet / Plena Performers)</span>
                 </span>
                 <span class="details-btn" onclick="openPerfModal(event, 'plena_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
                 <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="Seis (Puerto Rico)"> 
-                  <span>Seis (Puerto Rico)</span>
-                </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'seis_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-              </label>
-
-              <label class="checkbox-item" style="justify-content: space-between;">
-                <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="Danza (Puerto Rico)"> 
-                  <span>Danza (Puerto Rico)</span>
-                </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'danza_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-              </label>
-            </div>
-
-            <!-- 3. CENTRAL AMERICAN DANCES -->
-            <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
-              🇸🇻 Central American Dances (El Salvador)
-            </div>
-            <div class="options-grid">
-              <label class="checkbox-item" style="justify-content: space-between;">
-                <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="Cumbia (El Salvador)"> 
-                  <span>Cumbia (El Salvador)</span>
-                </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'cumbia_salvador')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-              </label>
-
-              <label class="checkbox-item" style="justify-content: space-between;">
-                <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="Las Comaleras (El Salvador)"> 
-                  <span>Las Comaleras (El Salvador)</span>
-                </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'comaleras_salvador')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-              </label>
-
-              <label class="checkbox-item" style="justify-content: space-between;">
-                <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="Las Cortadoras (El Salvador) COMING SOON"> 
-                  <span>Las Cortadoras (El Salvador) <span style="font-size:0.75rem; color:var(--accent-gold);">(COMING SOON)</span></span>
-                </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'cortadoras_salvador')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-              </label>
-            </div>
-
-            <!-- 4. SOUTH AMERICAN DANCES -->
-            <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
-              🇨🇴 🇦🇷 South American Dances (Colombia & Argentina)
-            </div>
-            <div class="options-grid">
-              <label class="checkbox-item" style="justify-content: space-between;">
-                <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="Cumbia (Colombia)"> 
-                  <span>Cumbia (Colombia)</span>
-                </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'cumbia_colombia')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-              </label>
-
-              <label class="checkbox-item" style="justify-content: space-between;">
-                <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="Cumbia &quot;La Pollera Colorá&quot; (Colombia)"> 
-                  <span>Cumbia "La Pollera Colorá" (Colombia)</span>
-                </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'pollera_colora_colombia')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-              </label>
-
-              <label class="checkbox-item" style="justify-content: space-between;">
-                <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="El Mapalé (Colombia)"> 
-                  <span>El Mapalé (Colombia)</span>
-                </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'mapale_colombia')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-              </label>
-
-              <label class="checkbox-item" style="justify-content: space-between;">
-                <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="Tango (Argentina)"> 
-                  <span>Tango (Argentina)</span>
-                </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'tango_argentina')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-              </label>
-            </div>
-
-            <!-- 5. THEATRICAL, PARADE & SINGING PERFORMANCES -->
-            <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
-              🎭 Theatrical, Parade & Singing Performances
-            </div>
-            <div class="options-grid">
-              <label class="checkbox-item" style="justify-content: space-between;">
-                <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="Salsa Performance Group (Ladies in Red)"> 
-                  <span>Salsa Performance Group (Ladies in Red)</span>
-                </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'ladies_in_red')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-              </label>
-
-              <label class="checkbox-item" style="justify-content: space-between;">
-                <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="Folk Characters Meet & Greet (Puerto Rico & Mexico)"> 
-                  <span>Folk Characters Meet & Greet (Puerto Rico & Mexico)</span>
-                </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'meet_greet_photo')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
-              </label>
-
-              <label class="checkbox-item" style="justify-content: space-between;">
-                <span style="display: flex; align-items: center; gap: 8px;">
-                  <input type="checkbox" name="perfServices" value="Folk Characters Show (Puerto Rico)"> 
-                  <span>Folk Characters Show (Puerto Rico)</span>
+                  <input type="checkbox" name="perfServices" value="Puerto Rico - Folk Characters Show (Vejigante & Photo Ops)"> 
+                  <span>Puerto Rico - Folk Characters Show (Vejigante & Photo Ops)</span>
                 </span>
                 <span class="details-btn" onclick="openPerfModal(event, 'folk_characters_show')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
               </label>
@@ -1531,9 +1400,25 @@
               <label class="checkbox-item" style="justify-content: space-between;">
                 <span style="display: flex; align-items: center; gap: 8px;">
                   <input type="checkbox" name="perfServices" value="Los Cantores de Tradicion (Puerto Rican Christmas Parranda)"> 
-                  <span>Los Cantores de Tradicion (Parranda)</span>
+                  <span>Los Cantores de Tradicion (Puerto Rican Christmas Parranda)</span>
                 </span>
                 <span class="details-btn" onclick="openPerfModal(event, 'cantores_tradicion')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
+
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Salsa Performance Group (Ladies in Red)"> 
+                  <span>Salsa Performance Group (Ladies in Red)</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'ladies_in_red')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
+
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="USA - Line Dance Show & Animation"> 
+                  <span>USA - Line Dance Show & Animation</span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'salsa_rueda_cuba')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
               </label>
             </div>
 
@@ -1553,8 +1438,8 @@
 
           <div class="grid-2">
             <div class="form-group full-width">
-              <label for="lessonServicesSelect" id="lblLessonServices">Which of our DANCE LESSON SERVICES will you need?</label>
-              <select id="lessonServicesSelect" name="lessonServicesSelect">
+              <label for="lessonServicesSelect" id="lblLessonServices">1. Which of our DANCE LESSON SERVICES will you need? <span class="required">*</span></label>
+              <select id="lessonServicesSelect" name="lessonServicesSelect" required>
                 <option value="" selected disabled>-- Select Option --</option>
                 <option value="None" id="optLesson0">None</option>
                 <option value="Salsa Guy's Line Dance lesson Salsa, Merengue, Bachata and Chacha" id="optLesson1">Salsa Guy's Line Dance lesson Salsa, Merengue, Bachata and Chacha</option>
@@ -1573,8 +1458,8 @@
             </div>
 
             <div class="form-group">
-              <label for="audienceParticipation" id="lblAudienceParticipation">Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?</label>
-              <select id="audienceParticipation" name="audienceParticipation">
+              <label for="audienceParticipation" id="lblAudienceParticipation">Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)? <span class="required">*</span></label>
+              <select id="audienceParticipation" name="audienceParticipation" required>
                 <option value="" selected disabled>-- Select Option --</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
@@ -1582,8 +1467,8 @@
             </div>
 
             <div class="form-group">
-              <label for="serviceTimeSelect" id="lblServiceTime">How much TIME do you require from us? <span class="hint">(e.g., 30 min, 1 hour, Full day)</span></label>
-              <select id="serviceTimeSelect" name="serviceTimeSelect">
+              <label for="serviceTimeSelect" id="lblServiceTime">How much TIME do you require from us? <span class="required">*</span> <span class="hint">(e.g., 30 min, 1 hour, Full day)</span></label>
+              <select id="serviceTimeSelect" name="serviceTimeSelect" required>
                 <option value="" selected disabled>-- Select Option --</option>
                 <option value="30 minutes">30 minutes</option>
                 <option value="1 hour">1 hour</option>
@@ -1595,7 +1480,7 @@
             </div>
 
             <div class="form-group full-width">
-              <label id="lblOtherServices">Additional Services Needed</label>
+              <label id="lblOtherServices">Additional Services Needed <span class="required">*</span></label>
               <div class="options-grid">
                 <label class="checkbox-item"><input type="checkbox" name="otherServices" value="Master of Ceremonies (MC)"> Master of Ceremonies (MC)</label>
                 <label class="checkbox-item"><input type="checkbox" name="otherServices" value="DJ Services"> DJ Services</label>
@@ -1604,7 +1489,7 @@
             </div>
 
             <div class="form-group full-width">
-              <label id="lblGeneralFormats">General Formats</label>
+              <label id="lblGeneralFormats">General Formats <span class="required">*</span></label>
               <div class="options-grid">
                 <label class="checkbox-item"><input type="checkbox" name="generalFormats" value="Stage Performance"> Stage Performance</label>
                 <label class="checkbox-item"><input type="checkbox" name="generalFormats" value="Opening Act"> Opening Act</label>
@@ -1630,8 +1515,8 @@
         <div class="grid-2">
           <!-- 1. Venue Location Setting -->
           <div class="form-group">
-            <label for="venueSetting" id="lblVenueSetting">Venue Location Setting</label>
-            <select id="venueSetting" name="venueSetting">
+            <label for="venueSetting" id="lblVenueSetting">Venue Location Setting <span class="required">*</span></label>
+            <select id="venueSetting" name="venueSetting" required>
               <option value="" selected disabled>-- Select Option --</option>
               <option value="Indoor">Indoor</option>
               <option value="Outdoor Covered">Outdoor Covered</option>
@@ -1641,8 +1526,8 @@
 
           <!-- 2. Performance Surface -->
           <div class="form-group">
-            <label for="performanceSurface" id="lblPerformanceSurface">On what SURFACE will performance take place?</label>
-            <select id="performanceSurface" name="performanceSurface">
+            <label for="performanceSurface" id="lblPerformanceSurface">On what SURFACE will performance take place? <span class="required">*</span></label>
+            <select id="performanceSurface" name="performanceSurface" required>
               <option value="" selected disabled>-- Select Option --</option>
               <option value="Wood Dance Floor">Wood Dance Floor</option>
               <option value="Stage">Stage</option>
@@ -1654,14 +1539,22 @@
 
           <!-- 3. Size of Performance Area -->
           <div class="form-group">
-            <label for="performanceArea" id="lblPerformanceArea">Size of Performance / Class Area</label>
-            <input type="text" id="performanceArea" name="performanceArea" placeholder="e.g., 20ft × 30ft Stage / Dance Floor">
+            <label for="stageSizes" id="lblPerformanceArea">Size of Performance / Class Area <span class="required">*</span></label>
+            <select id="stageSizes" name="stageSizes" required>
+              <option value="" selected disabled>-- Select Stage Size --</option>
+              <option value="8 ft x 8 ft (64 sq ft): Best for a solo speaker, DJ booth, or solo acoustic performer.">8 ft x 8 ft (64 sq ft): Best for a solo speaker, DJ booth, or solo acoustic performer.</option>
+              <option value="8 ft x 12 ft (96 sq ft): Fits a single speaker with a podium or small ceremony setup.">8 ft x 12 ft (96 sq ft): Fits a single speaker with a podium or small ceremony setup.</option>
+              <option value="12 ft x 16 ft (192 sq ft): Ideal for a basic wedding band or a 3- to 6-piece group.">12 ft x 16 ft (192 sq ft): Ideal for a basic wedding band or a 3- to 6-piece group.</option>
+              <option value="16 ft x 20 ft (320 sq ft): The most common size for a full 5- to 8-piece band.">16 ft x 20 ft (320 sq ft): The most common size for a full 5- to 8-piece band.</option>
+              <option value="20 ft x 24 ft (480 sq ft): Accommodates high-energy bands with added horn sections.">20 ft x 24 ft (480 sq ft): Accommodates high-energy bands with added horn sections.</option>
+              <option value="24 ft x 32 ft+ (768+ sq ft): Built for major concerts and large corporate productions.">24 ft x 32 ft+ (768+ sq ft): Built for major concerts and large corporate productions.</option>
+            </select>
           </div>
 
           <!-- 4. Sound System Equipment -->
           <div class="form-group">
-            <label for="soundEquipment" id="lblSoundEquipment">Sound System Equipment</label>
-            <select id="soundEquipment" name="soundEquipment">
+            <label for="soundEquipment" id="lblSoundEquipment">Sound System Equipment <span class="required">*</span></label>
+            <select id="soundEquipment" name="soundEquipment" required>
               <option value="" selected disabled>-- Select Option --</option>
               <option value="Provided by Venue">Provided by Venue</option>
               <option value="Performer Must Provide PA">Performer Must Provide PA</option>
@@ -1670,8 +1563,8 @@
 
           <!-- 5. Performer Badge / ID -->
           <div class="form-group">
-            <label for="badgeRequired" id="lblBadgeRequired">Will a BADGE or ID be required for performers?</label>
-            <select id="badgeRequired" name="badgeRequired">
+            <label for="badgeRequired" id="lblBadgeRequired">Will a BADGE or ID be required for performers? <span class="required">*</span></label>
+            <select id="badgeRequired" name="badgeRequired" required>
               <option value="" selected disabled>-- Select Option --</option>
               <option value="Yes">Yes</option>
               <option value="No">No</option>
@@ -1680,8 +1573,8 @@
 
           <!-- 6. Hospitality Provided -->
           <div class="form-group">
-            <label for="hospitalityProvided" id="lblHospitalityProvided">WILL YOU PROVIDE the performers with:</label>
-            <select id="hospitalityProvided" name="hospitalityProvided">
+            <label for="hospitalityProvided" id="lblHospitalityProvided">WILL YOU PROVIDE the performers with: <span class="required">*</span></label>
+            <select id="hospitalityProvided" name="hospitalityProvided" required>
               <option value="" selected disabled>-- Select Option --</option>
               <option value="Water">Water</option>
               <option value="Hospitality">Hospitality</option>
@@ -1693,8 +1586,28 @@
 
           <!-- 7. Dressing Room Instructions -->
           <div class="form-group full-width">
-            <label for="dressingRoomDetails" id="lblDressingRoomDetails">Dressing Room / Costume Changing Instructions</label>
-            <textarea id="dressingRoomDetails" name="dressingRoomDetails" placeholder="e.g., Private Green Room on 2nd Floor with secure storage" spellcheck="true"></textarea>
+            <label for="dressingRoomDetails" id="lblDressingRoomDetails">Dressing Room / Costume Changing Instructions <span class="required">*</span></label>
+            <textarea id="dressingRoomDetails" name="dressingRoomDetails" placeholder="e.g., Private Green Room on 2nd Floor with secure storage" spellcheck="true" required></textarea>
+          </div>
+        </div>
+
+        <!-- Budget Section -->
+        <div class="form-section-block" style="border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
+          <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-coins"></i> Event Budget Confirmation</h4>
+          <div class="grid-2">
+            <div class="form-group">
+              <label for="hasBudget" id="lblHasBudget">Confirm you have a BUDGET for our participation <span class="required">*</span></label>
+              <select id="hasBudget" name="hasBudget" required>
+                <option value="" selected disabled>-- Select Option --</option>
+                <option value="Yes - Budget Confirmed">Yes - Budget Confirmed</option>
+                <option value="In Progress / Pending Approval">In Progress / Pending Approval</option>
+                <option value="No / Grant Funded">No / Grant Funded</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="budgetAmount" id="lblBudgetAmount">Confirmed Budget Amount for Performance / Workshop <span class="required">*</span></label>
+              <input type="text" id="budgetAmount" name="budgetAmount" placeholder="e.g. $1,500 USD" required>
+            </div>
           </div>
         </div>
 
@@ -1726,9 +1639,10 @@
         </div>
 
         <div class="notice-box" id="txtGeneralInfo" class="form-section-block" style=" border: 1px solid var(--card-border); border-left: 4px solid var(--accent-gold); padding: 22px; border-radius: var(--radius-md); font-size: 0.94rem; line-height: 1.6; color: var(--text-main); margin-bottom: 30px;">
-          <h4 style="color: var(--accent-gold); font-family: 'Outfit', sans-serif; font-size: 1.1rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+          <h4 style="color: var(--accent-gold); font-family: 'Outfit', sans-serif; font-size: 1.1rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
             <i class="fa-solid fa-masks-theater"></i> <span id="lblHiringPerformers">HIRING SIMILAR PERFORMERS</span>
           </h4>
+          <p style="font-size: 0.88rem; font-style: italic; color: var(--accent-gold); margin-bottom: 12px;">Notice: Hiring Similar Performers Disclosure reviewed upon formal title.</p>
           <p style="margin-bottom: 14px;" id="lblGenInfoP1">
             While you may be tempted to hire similar performances, I truly believe that incorporating different styles and specialties can greatly enhance your event experience in multiple ways. First and foremost, offering a variety of performances will keep your guests engaged and captivated throughout the entire event. By avoiding repetition or monotony, I ensure that attendees remain entertained and have a truly memorable experience.
           </p>
@@ -1795,16 +1709,6 @@
             <button type="button" class="report-btn" id="downloadReportBtn" onclick="window.print();">
               <i class="fa-solid fa-file-pdf"></i> <span id="btnReportText">Print / Save Summary Report</span>
             </button>
-          </div>
-          
-          <!-- Direct Website Links: Salsa Richmond & Tradicion -->
-          <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 14px;">
-            <a href="https://www.salsarichmond.com" target="_blank" class="control-btn" style="text-decoration: none; font-size: 0.88rem; padding: 8px 16px; border-radius: 20px; background: rgba(255,255,255,0.06); color: var(--text-main); border: 1px solid var(--card-border); transition: all 0.2s;" onmouseover="this.style.borderColor='var(--accent-gold)'" onmouseout="this.style.borderColor='var(--card-border)'">
-              <i class="fa-solid fa-arrow-up-right-from-square" style="color: var(--accent-gold);"></i> <span id="btnVisitSalsaText">Go to Salsa Richmond</span>
-            </a>
-            <a href="https://www.tradicion.org" target="_blank" class="control-btn" style="text-decoration: none; font-size: 0.88rem; padding: 8px 16px; border-radius: 20px; background: rgba(255,255,255,0.06); color: var(--text-main); border: 1px solid var(--card-border); transition: all 0.2s;" onmouseover="this.style.borderColor='#38BDF8'" onmouseout="this.style.borderColor='var(--card-border)'">
-              <i class="fa-solid fa-arrow-up-right-from-square" style="color: #38BDF8;"></i> <span id="btnVisitTradicionText">Go to Tradición</span>
-            </a>
           </div>
         </div>
       </div>
@@ -3125,13 +3029,13 @@ function changeLanguage(langCode) {
       setTxt('btnVisitTradicionText', t.visitTradicion);
 
       translateAllSelectOptions(langCode);
+      updatePlaceholders(langCode);
 
       // Translate all Details button links
       const detailsText = currentLang === 'es' ? 'Detalles' : (currentLang === 'fr' ? 'Détails' : (currentLang === 'de' ? 'Details' : 'Details'));
       document.querySelectorAll('.details-btn').forEach(btn => {
         btn.textContent = detailsText;
       });
-
 
       // Dynamically trigger Google Translate for full page option/label translation
       if (window.googleTranslateElementInit) {
@@ -3140,6 +3044,101 @@ function changeLanguage(langCode) {
           gtCombo.value = langCode;
           gtCombo.dispatchEvent(new Event('change'));
         }
+      }
+    }
+
+    function updatePlaceholders(langCode) {
+      const placeholderDict = {
+        en: {
+          clientName: "e.g. Maria Santos",
+          clientEmail: "maria@example.com",
+          clientPhone: "(804) 555-0199",
+          eventName: "e.g. Richmond Salsa Festival 2026",
+          eventWebsites: "Website URL, Facebook page, or N/A",
+          eventDescription: "Provide background on theme, venue vibe, guest flow, program schedule...",
+          expectedAttendance: "Estimate",
+          eventAddress: "(e.g., 123 Main St, Richmond, VA 23220 or Venue Name)",
+          outOfStateLogistics: "Describe flight/driving logistics, hotel accommodations, per diem, and arrival schedule...",
+          nonProfitName: "Organization Tax Name",
+          contingencyPlan: "Describe backup indoor location, rain date, time adjustments...",
+          intlVenueName: "e.g. San José, Costa Rica - Teatro Nacional",
+          intlLogistics: "Describe flight arrangements, airport transfers, hotel accommodations...",
+          intlPaymentTerms: "e.g. USD / Wire Transfer / 50% Deposit",
+          intlCustomsConsiderations: "Details regarding wardrobe customs clearance, instruments, sound props...",
+          otherPerfServices: "Describe any custom performance services...",
+          dressingRoomDetails: "e.g., Private Green Room on 2nd Floor with secure storage",
+          notes: "Tell us any special requests, song choices, or event guidelines...",
+          budgetAmount: "e.g. $1,500 USD"
+        },
+        es: {
+          clientName: "ej. María Santos",
+          clientEmail: "maria@ejemplo.com",
+          clientPhone: "(804) 555-0199",
+          eventName: "ej. Festival de Salsa Richmond 2026",
+          eventWebsites: "URL del sitio web, página de Facebook o N/A",
+          eventDescription: "Proporcione antecedentes sobre el tema, ambiente del lugar, flujo de invitados, programa...",
+          expectedAttendance: "Estimado",
+          eventAddress: "(ej., 123 Main St, Richmond, VA 23220 o nombre del lugar)",
+          outOfStateLogistics: "Describa la logística de vuelos/conducción, alojamiento en hotel, viáticos...",
+          nonProfitName: "Nombre fiscal de la organización",
+          contingencyPlan: "Describa la ubicación interior de respaldo, fecha de lluvia, ajustes...",
+          intlVenueName: "ej. San José, Costa Rica - Teatro Nacional",
+          intlLogistics: "Describa los arreglos de vuelo, traslados al aeropuerto, hotel...",
+          intlPaymentTerms: "ej. USD / Transferencia bancaria / Depósito del 50%",
+          intlCustomsConsiderations: "Detalles sobre el despacho de aduana del vestuario, instrumentos...",
+          otherPerfServices: "Describa cualquier servicio de actuación personalizado...",
+          dressingRoomDetails: "ej., Camerino privado en el 2º piso con almacenamiento seguro",
+          notes: "Cuéntenos sobre solicitudes especiales, canciones o pautas...",
+          budgetAmount: "ej. $1,500 USD"
+        },
+        fr: {
+          clientName: "ex. Maria Santos",
+          clientEmail: "maria@exemple.com",
+          clientPhone: "(804) 555-0199",
+          eventName: "ex. Festival de Salsa Richmond 2026",
+          eventWebsites: "URL du site Web, page Facebook ou N/A",
+          eventDescription: "Fournissez des informations sur le thème, l'ambiance, le programme...",
+          expectedAttendance: "Estimation",
+          eventAddress: "(ex., 123 Main St, Richmond, VA 23220 ou nom du lieu)",
+          outOfStateLogistics: "Décrivez la logistique des vols/déplacements, l'hébergement...",
+          nonProfitName: "Nom fiscal de l'organisation",
+          contingencyPlan: "Décrivez le lieu intérieur de secours, la date de pluie...",
+          intlVenueName: "ex. San José, Costa Rica - Teatro Nacional",
+          intlLogistics: "Décrivez les dispositions relatives aux vols, transferts aéroport...",
+          intlPaymentTerms: "ex. USD / Virement bancaire / Acompte de 50%",
+          intlCustomsConsiderations: "Détails concernant le dédouanement des costumes, instruments...",
+          otherPerfServices: "Décrivez tout service de spectacle personnalisé...",
+          dressingRoomDetails: "ex., Loge privée au 2ème étage avec rangement sécurisé",
+          notes: "Faites-nous part de vos demandes spéciales, choix de chansons...",
+          budgetAmount: "ex. $1,500 USD"
+        },
+        de: {
+          clientName: "z. B. Maria Santos",
+          clientEmail: "maria@beispiel.com",
+          clientPhone: "(804) 555-0199",
+          eventName: "z. B. Richmond Salsa Festival 2026",
+          eventWebsites: "Website-URL, Facebook-Seite oder N/A",
+          eventDescription: "Geben Sie Hintergrundinformationen zu Thema, Atmosphäre, Ablauf an...",
+          expectedAttendance: "Schätzung",
+          eventAddress: "(z. B. 123 Main St, Richmond, VA 23220 oder Veranstaltungsort)",
+          outOfStateLogistics: "Beschreiben Sie Flug-/Fahrlogistik, Hotelunterkunft, Tagegeld...",
+          nonProfitName: "Steuerlicher Name der Organisation",
+          contingencyPlan: "Beschreiben Sie Ausweichmöglichkeiten für Innenräume, Ausweichtermine...",
+          intlVenueName: "z. B. San José, Costa Rica - Teatro Nacional",
+          intlLogistics: "Beschreiben Sie Flugvereinbarungen, Flughafentransfers...",
+          intlPaymentTerms: "z. B. USD / Überweisung / 50% Anzahlung",
+          intlCustomsConsiderations: "Details zur Zollabwicklung von Kostümen, Requisiten...",
+          otherPerfServices: "Beschreiben Sie individuelle Show-Dienstleistungen...",
+          dressingRoomDetails: "z. B. Privater Umkleideraum im 2. Stock mit sicherem Aufbewahrungsort",
+          notes: "Teilen Sie uns besondere Wünsche, Musikauswahl oder Richtlinien mit...",
+          budgetAmount: "z. B. $1,500 USD"
+        }
+      };
+
+      const map = placeholderDict[langCode] || placeholderDict.en;
+      for (const [id, phText] of Object.entries(map)) {
+        const el = document.getElementById(id);
+        if (el) el.placeholder = phText;
       }
     }
 
@@ -3634,6 +3633,7 @@ function saveUserSettings() {
         representType: document.getElementById('representType')?.value || '',
         hearAboutUs: document.getElementById('hearAboutUs')?.value || '',
         eventName: document.getElementById('eventName')?.value.trim() || '',
+        eventCoordinator: document.getElementById('eventCoordinator')?.value.trim() || '',
         eventPurpose: document.getElementById('eventDescription')?.value.trim() || '',
         eventWebsites: document.getElementById('eventWebsites')?.value.trim() || '',
         eventDescription: document.getElementById('eventDescription')?.value.trim() || '',
@@ -3670,7 +3670,10 @@ function saveUserSettings() {
         generalFormats: getCheckedValues('generalFormats'),
         venueSetting: document.getElementById('venueSetting')?.value || '',
         performanceSurface: document.getElementById('performanceSurface')?.value || '',
-        performanceArea: document.getElementById('performanceArea')?.value || '',
+        performanceArea: document.getElementById('stageSizes')?.value || document.getElementById('performanceArea')?.value || '',
+        hasBudget: document.getElementById('hasBudget')?.value || '',
+        confirmedBudget: document.getElementById('budgetAmount')?.value || '',
+        attachedFile: uploadedFileData || null,
         soundEquipment: document.getElementById('soundEquipment')?.value || '',
         badgeRequired: document.getElementById('badgeRequired')?.value || '',
         hospitalityProvided: document.getElementById('hospitalityProvided')?.value || '',
@@ -3715,22 +3718,40 @@ function saveUserSettings() {
           eventId = "BTG-EVT-" + Date.now().toString(36).toUpperCase();
         }
 
-        bookingForm.style.display = 'none';
-        successCard.style.display = 'block';
-        eventIdDisplay.textContent = `Event ID: ${eventId}`;
-        successCard.scrollIntoView({ behavior: 'smooth' });
+        showConfirmationScreen(eventId);
 
       } catch (err) {
         console.error("Submission Error:", err);
-        bookingForm.style.display = 'none';
-        successCard.style.display = 'block';
-        eventIdDisplay.textContent = `Event ID: BTG-EVT-${Date.now().toString(36).toUpperCase()}`;
-        successCard.scrollIntoView({ behavior: 'smooth' });
+        showConfirmationScreen("BTG-EVT-" + Date.now().toString(36).toUpperCase());
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = `<span>${i18n[currentLang].submit}</span> <i class="fa-solid fa-paper-plane"></i>`;
       }
     });
+
+    function showConfirmationScreen(eventId) {
+      bookingForm.style.display = 'none';
+      const topControls = document.querySelector('.top-controls-row');
+      if (topControls) topControls.style.display = 'none';
+      const noticeBox = document.getElementById('txtNotice');
+      if (noticeBox) noticeBox.style.display = 'none';
+
+      successCard.style.display = 'block';
+      eventIdDisplay.textContent = `Event ID: ${eventId}`;
+      successCard.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function showFormScreen() {
+      successCard.style.display = 'none';
+      bookingForm.style.display = 'block';
+      const topControls = document.querySelector('.top-controls-row');
+      if (topControls) topControls.style.display = 'flex';
+      const noticeBox = document.getElementById('txtNotice');
+      if (noticeBox) noticeBox.style.display = 'block';
+
+      const formCard = document.getElementById('formCard');
+      if (formCard) formCard.scrollIntoView({ behavior: 'smooth' });
+    }
 
     if (resetBtn) resetBtn.addEventListener('click', () => {
       bookingForm.reset();
@@ -3738,20 +3759,14 @@ function saveUserSettings() {
       uploadedFileData = null;
       fileSelectedName.textContent = "";
       updateConditionalSections();
-      bookingForm.style.display = 'block';
-      successCard.style.display = 'none';
-      const formCard = document.getElementById('formCard');
-      if (formCard) formCard.scrollIntoView({ behavior: 'smooth' });
+      showFormScreen();
     });
 
     const editSubmissionBtn = document.getElementById('editSubmissionBtn');
     if (editSubmissionBtn) {
       editSubmissionBtn.addEventListener('click', () => {
-        successCard.style.display = 'none';
-        bookingForm.style.display = 'block';
         updateConditionalSections();
-        const formCard = document.getElementById('formCard');
-        if (formCard) formCard.scrollIntoView({ behavior: 'smooth' });
+        showFormScreen();
       });
     }
 
