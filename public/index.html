@@ -1242,6 +1242,15 @@
               </select>
             </div>
 
+            <div class="form-group">
+              <label for="invitedToAttend3a" id="lblInvitedToAttend3a">Are performers invited to attend/stay for the event? <span class="required">*</span></label>
+              <select id="invitedToAttend3a" name="invitedToAttend3a">
+                <option value="" selected disabled>-- Select Option --</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
             <div class="form-group full-width">
               <label for="contingencyPlan" id="lblContingencyPlan">Weather / Contingency Plan (Alternate Location, Rain Date, Time adjustments)</label>
               <textarea id="contingencyPlan" name="contingencyPlan" placeholder="Describe backup indoor location, rain date, time adjustments..." spellcheck="true"></textarea>
@@ -3652,7 +3661,7 @@ function saveUserSettings() {
         videoRights: document.getElementById('videoRights')?.value || '',
         contingencyPlan: document.getElementById('contingencyPlan')?.value.trim() || '',
         privateGatheringType: document.getElementById('privateGatheringType')?.value || '',
-        invitedToAttend: document.getElementById('invitedToAttend')?.value || '',
+        invitedToAttend: document.getElementById('invitedToAttend3a')?.value || document.getElementById('invitedToAttend')?.value || '',
         intlVenueName: document.getElementById('intlVenueName')?.value.trim() || '',
         intlLogistics: document.getElementById('intlLogistics')?.value || '',
         intlVisaSupport: document.getElementById('intlVisaSupport')?.value || '',
