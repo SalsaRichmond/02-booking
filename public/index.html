@@ -957,13 +957,6 @@
     </div>
 
       
-      <div class="notice-box" id="txtNotice" style="text-align: left;">
-      <i class="fa-solid fa-calendar-days"></i> <strong>Schedule Availability Notice:</strong><br>
-      • <strong>Friday – Sunday:</strong> Available for both Live Performances and Dance Lessons.<br>
-      • <strong>Monday – Thursday:</strong> Dedicated exclusively to Dance Lessons within the USA (Live performances are not accepted on weekdays domestically).<br>
-      <span style="font-size: 0.85rem; font-style: italic; color: var(--text-muted); display: block; margin-top: 6px;">*(Note: This weekday performance restriction does not apply to international requests; international live performances are evaluated on a case-by-case basis).*</span>
-    </div>
-
     <!-- Booking Form Card -->
     <div class="form-card" id="formCard">
       <form id="bookingForm" novalidate>
@@ -1756,7 +1749,7 @@
           <div class="form-group full-width">
             <label class="checkbox-item" style="border-color: var(--primary-accent); background: rgba(220, 38, 38, 0.08);">
               <input type="checkbox" id="sendEmailReceipt" checked> 
-              <span id="lblEmailReceipt">📧 Send instant Event ID confirmation receipt to my email</span>
+              <span id="lblEmailReceipt">📧 Send instant Request ID confirmation receipt to my email</span>
             </label>
           </div>
 
@@ -1776,7 +1769,7 @@
         </div>
         <h2 class="success-title" id="txtSuccessTitle">Event Request Received!</h2>
         <p class="success-text" id="txtSuccessDesc">Thank you for choosing Salsa Guy Richmond, LLC. Your questionnaire has been logged, calendar reservation is pending, and custom proposal docs are generating.</p>
-        <div class="event-id-badge" id="eventIdDisplay">Event ID: Syncing...</div>
+        <div class="event-id-badge" id="eventIdDisplay">Request ID: Syncing...</div>
         
         <!-- Next Actions Card -->
         <div class="ask-another-box" style="margin: 22px 0 15px 0; background: rgba(234, 179, 8, 0.08); border: 1.5px dashed var(--accent-gold); border-radius: 16px; padding: 22px; text-align: center;">
@@ -3716,19 +3709,19 @@ function saveUserSettings() {
         }
 
         if (!eventId) {
-          eventId = "BTG-EVT-" + Date.now().toString(36).toUpperCase();
+          eventId = "BTG-REQ-" + Date.now().toString(36).toUpperCase();
         }
 
         bookingForm.style.display = 'none';
         successCard.style.display = 'block';
-        eventIdDisplay.textContent = `Event ID: ${eventId}`;
+        eventIdDisplay.textContent = `Request ID: ${eventId}`;
         successCard.scrollIntoView({ behavior: 'smooth' });
 
       } catch (err) {
         console.error("Submission Error:", err);
         bookingForm.style.display = 'none';
         successCard.style.display = 'block';
-        eventIdDisplay.textContent = `Event ID: BTG-EVT-${Date.now().toString(36).toUpperCase()}`;
+        eventIdDisplay.textContent = `Request ID: BTG-REQ-${Date.now().toString(36).toUpperCase()}`;
         successCard.scrollIntoView({ behavior: 'smooth' });
       } finally {
         submitBtn.disabled = false;

@@ -9,6 +9,7 @@ const CONFIG = {
   SPREADSHEET_URL: "https://docs.google.com/spreadsheets/d/1ssJPBdSTOUzq1S9b_kHYuBLMoUbxwrDap2FIkfHOX4k/edit",
   INFOCALENDAR_ID: "shqfpe645m3tj6fhee17irti5s@group.calendar.google.com",
   FOLDER_ID: "1FaiN_vTho7YY5mwd_OXrfHPnQB0fF6oR",
+  ADMIN_EMAILS: ["salsaguyrichmond@gmail.com"],
   TEMPLATES: {
     PROPOSAL: "1plCZvjBJijgJrGduzXrTMjbtDopMgCfB5Vo7MLWxspo",
     CONTRACT: "1BuEv7BF6wsHutvEWwVZOVb3m8J3zkYujKheti8X871g",
@@ -79,6 +80,7 @@ function setupMasterHeaders() {
   const masterHeaders = [
     // 1. Contact & Organizer Information
     "Submission Date",
+    "Request ID",
     "Event ID",
     "Your Name",
     "Email Address",
@@ -325,9 +327,9 @@ function mainAutomation() {
 }
 
 /**
- * Processes a single row: formatting attachments, syncing Google Calendar, generating documents, and updating status.
+ * Processes a single row: formatting attachments, syncing Google Calendar, generating documents, updating status, and sending notifications.
  */
-function processRow(sheet, rowNum, rowData, folder, headers) {
+function processRow(sheet, rowNum, rowData, folder, headers, isNewSubmit = false, directFileUrl = "") {
   const dateIdx = getHeaderIndex(headers, ["Please confirm the DATE of your event:", "Event Date", "Date of event", "Date"]);
   const timeIdx = getHeaderIndex(headers, ["Please confirm the TIME of your event:", "Event Time", "Time of event", "Time"]);
   const dowIdx = getHeaderIndex(headers, ["Day of the Week", "Day of Week", "DOW"]);
@@ -444,6 +446,231 @@ function processRow(sheet, rowNum, rowData, folder, headers) {
   if (assignedToIdx > -1 && !rowData[assignedToIdx]) {
     sheet.getRange(rowNum, assignedToIdx + 1).setValue("The Salsa Guy");
   }
+
+  // Handle Email Notifications (Admin Notification & Client Confirmation Receipt)
+  if (isNewSubmit) {
+    try {
+      const clientNameIdx = getHeaderIndex(headers, ["Your Name", "Full Name", "Client Name", "Name"]);
+      const clientEmailIdx = getHeaderIndex(headers, ["Email Address", "Email"]);
+      const clientPhoneIdx = getHeaderIndex(headers, ["Best Contact Phone Number", "Phone Number", "Phone", "Telephone"]);
+      const representTypeIdx = getHeaderIndex(headers, ["Who do you represent? (Organization / Business / Self)", "Who do you represent?", "Represent Type", "Representing"]);
+      const sendReceiptIdx = getHeaderIndex(headers, ["Send Email Receipt", "Email Receipt", "Receipt"]);
+
+      const clientName = (clientNameIdx > -1 && rowData[clientNameIdx]) ? rowData[clientNameIdx] : "Valued Client";
+      const clientEmail = (clientEmailIdx > -1 && rowData[clientEmailIdx]) ? rowData[clientEmailIdx] : "";
+      const clientPhone = (clientPhoneIdx > -1 && rowData[clientPhoneIdx]) ? rowData[clientPhoneIdx] : "N/A";
+      const representType = (representTypeIdx > -1 && rowData[representTypeIdx]) ? rowData[representTypeIdx] : "N/A";
+      const eventAddress = (addrIdx > -1 && rowData[addrIdx]) ? rowData[addrIdx] : "TBD";
+      const eventTimeStr = (timeIdx > -1 && rowData[timeIdx]) ? extractTimeOnly(rowData[timeIdx]) : "TBD";
+      const eventDateStr = isValidDate && eDate ? formatDateValue(eDate) : ((dateIdx > -1 && rowData[dateIdx]) ? rowData[dateIdx] : "TBD");
+      
+      const fullId = eventIdIdx > -1 ? (rowData[eventIdIdx] ? rowData[eventIdIdx].toString().trim() : "") : "";
+      const finalEventId = fullId || `BTG-EVT-${rowNum}-${Date.now().toString(36).toUpperCase()}`;
+
+      let fileUrl = directFileUrl || "";
+      if (!fileUrl) {
+        headers.forEach((h, i) => {
+          if (h.toLowerCase().includes("upload") || h.toLowerCase().includes("attachment") || h.toLowerCase().includes("flyer")) {
+            const val = rowData[i];
+            if (val && typeof val === "string") {
+              const urls = val.split(",").map(u => u.trim()).filter(u => u.startsWith("http"));
+              if (urls.length > 0) fileUrl = urls[0];
+            }
+          }
+        });
+      }
+
+      let eventFolderUrl = "";
+      if (folder) {
+        try {
+          const dateFolderStr = rowData[dateIdx] || "Undated";
+          const subFolders = folder.getFoldersByName(`${dateFolderStr} - ${eventName}`.replace(/[/\\?%*:|"<>]/g, '_'));
+          if (subFolders.hasNext()) {
+            eventFolderUrl = subFolders.next().getUrl();
+          }
+        } catch (fErr) {}
+      }
+
+      const notificationDetails = {
+        rowNum: rowNum,
+        eventId: finalEventId,
+        clientName: clientName,
+        clientEmail: clientEmail,
+        clientPhone: clientPhone,
+        representType: representType,
+        eventName: eventName,
+        eventDate: eventDateStr,
+        eventTime: eventTimeStr,
+        eventAddress: eventAddress,
+        calendarEventUrl: calendarEventUrl,
+        eventFolderUrl: eventFolderUrl,
+        propUrl: propUrl,
+        contUrl: contUrl,
+        perfUrl: perfUrl,
+        fileUrl: fileUrl
+      };
+
+      // 1. Send Admin Notification Email (Confirming Steps 1 - 4)
+      sendAdminSubmittalNotification(notificationDetails);
+
+      // 2. Send Client Receipt Email if requested
+      const shouldSendReceipt = sendReceiptIdx > -1 ? rowData[sendReceiptIdx] : true;
+      if (shouldSendReceipt && shouldSendReceipt !== "No" && shouldSendReceipt !== false) {
+        sendClientReceiptNotification(notificationDetails);
+      }
+    } catch (notifErr) {
+      console.warn("Error triggering submittal email notifications: ", notifErr);
+    }
+  }
+}
+
+/**
+ * Safely dispatches email with fallback from MailApp to GmailApp.
+ */
+function sendEmailSafely(toEmail, subject, htmlBody) {
+  if (!toEmail || typeof toEmail !== "string" || toEmail.trim() === "") return false;
+  const target = toEmail.trim();
+
+  try {
+    MailApp.sendEmail({
+      to: target,
+      subject: subject,
+      htmlBody: htmlBody
+    });
+    console.log("Successfully sent email via MailApp to: " + target);
+    return true;
+  } catch (err1) {
+    console.warn("MailApp.sendEmail failed for " + target + " (" + err1.message + "), trying GmailApp fallback...");
+    try {
+      GmailApp.sendEmail(target, subject, "", { htmlBody: htmlBody });
+      console.log("Successfully sent email via GmailApp to: " + target);
+      return true;
+    } catch (err2) {
+      console.error("GmailApp.sendEmail fallback also failed for " + target + ": " + err2.message);
+      return false;
+    }
+  }
+}
+
+/**
+ * Sends an email notification to Admin(s) confirming Steps 1-4 of a new submittal.
+ */
+function sendAdminSubmittalNotification(details) {
+  if (!CONFIG.ADMIN_EMAILS || CONFIG.ADMIN_EMAILS.length === 0) return;
+
+  const subject = `💃 New Event Submittal: ${details.eventName} - ${details.eventDate} (Request ID: ${details.eventId})`;
+
+  const htmlBody = `
+    <div style="font-family: Arial, sans-serif; max-width: 650px; margin: 0 auto; background-color: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+      <div style="background-color: #dc2626; padding: 18px 24px; border-radius: 8px 8px 0 0; color: #ffffff;">
+        <h2 style="margin: 0; font-size: 20px;">💃 Salsa Guy Richmond LLC - New Submittal Alert</h2>
+        <p style="margin: 4px 0 0 0; font-size: 14px; opacity: 0.9;">Automated Booking Workflow Confirmation (Steps 1 – 4)</p>
+      </div>
+
+      <div style="background-color: #ffffff; padding: 24px; border-radius: 0 0 8px 8px; border: 1px solid #e2e8f0; border-top: none;">
+        
+        <!-- STEP 1: Response Logging & Client Details -->
+        <div style="margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+          <h3 style="color: #b45309; margin: 0 0 10px 0; font-size: 16px;">📌 Step 1: Google Sheet Logged & Client Contact</h3>
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px; color: #334155;">
+            <tr><td style="padding: 4px 0; font-weight: bold; width: 140px;">Request ID:</td><td><span style="background-color: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px; font-weight: bold;">${details.eventId}</span></td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Sheet Row:</td><td>Row #${details.rowNum} (<a href="${CONFIG.SPREADSHEET_URL}" target="_blank" style="color: #2563eb; text-decoration: none;">View Master Google Sheet</a>)</td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Client Name:</td><td>${details.clientName}</td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Email:</td><td><a href="mailto:${details.clientEmail}" style="color: #2563eb;">${details.clientEmail}</a></td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Phone:</td><td>${details.clientPhone}</td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Representing:</td><td>${details.representType}</td></tr>
+          </table>
+        </div>
+
+        <!-- STEP 2: Google Calendar -->
+        <div style="margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+          <h3 style="color: #1d4ed8; margin: 0 0 10px 0; font-size: 16px;">📅 Step 2: Google Calendar Event Scheduled</h3>
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px; color: #334155;">
+            <tr><td style="padding: 4px 0; font-weight: bold; width: 140px;">Event Name:</td><td>${details.eventName}</td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Date & Time:</td><td>${details.eventDate} at ${details.eventTime}</td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Location:</td><td>${details.eventAddress}</td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Calendar Link:</td><td>${details.calendarEventUrl ? `<a href="${details.calendarEventUrl}" target="_blank" style="color: #2563eb; font-weight: bold;">📆 View Calendar Event</a>` : 'Not Scheduled / Date TBD'}</td></tr>
+          </table>
+        </div>
+
+        <!-- STEP 3: Google Docs -->
+        <div style="margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
+          <h3 style="color: #15803d; margin: 0 0 10px 0; font-size: 16px;">📂 Step 3: Automated Google Docs Generated</h3>
+          <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: #334155; line-height: 1.8;">
+            ${details.eventFolderUrl ? `<li>📁 <strong>Drive Event Folder:</strong> <a href="${details.eventFolderUrl}" target="_blank" style="color: #2563eb;">Open Google Drive Folder</a></li>` : ''}
+            <li>📄 <strong>Proposal Doc:</strong> ${details.propUrl && details.propUrl !== "Error" ? `<a href="${details.propUrl}" target="_blank" style="color: #2563eb;">View Proposal Document</a>` : 'Not Generated'}</li>
+            <li>📜 <strong>Contract Doc:</strong> ${details.contUrl && details.contUrl !== "Error" ? `<a href="${details.contUrl}" target="_blank" style="color: #2563eb;">View Contract Document</a>` : 'Not Generated'}</li>
+            <li>🎭 <strong>Performance Info Doc:</strong> ${details.perfUrl && details.perfUrl !== "Error" ? `<a href="${details.perfUrl}" target="_blank" style="color: #2563eb;">View Performance Info Document</a>` : 'Not Generated'}</li>
+          </ul>
+        </div>
+
+        <!-- STEP 4: Attachments -->
+        <div>
+          <h3 style="color: #6b21a8; margin: 0 0 10px 0; font-size: 16px;">📎 Step 4: File Attachments</h3>
+          <p style="font-size: 14px; color: #334155; margin: 0;">
+            ${details.fileUrl ? `📎 <strong>Uploaded Attachment:</strong> <a href="${details.fileUrl}" target="_blank" style="color: #2563eb; font-weight: bold;">View Attached Document</a>` : 'No document attached by client.'}
+          </p>
+        </div>
+
+      </div>
+
+      <div style="text-align: center; margin-top: 16px; font-size: 12px; color: #64748b;">
+        Salsa Guy Richmond LLC Automation Suite • Internal Admin Notification
+      </div>
+    </div>
+  `;
+
+  CONFIG.ADMIN_EMAILS.forEach(email => {
+    sendEmailSafely(email, subject, htmlBody);
+  });
+}
+
+/**
+ * Sends an instant confirmation receipt email to the client if requested.
+ */
+function sendClientReceiptNotification(details) {
+  if (!details.clientEmail || details.clientEmail.trim() === "") return;
+
+  const subject = `Confirmation Receipt: Your Event Booking Request - ${details.eventName} (Request ID: ${details.eventId})`;
+
+  const htmlBody = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0;">
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h2 style="color: #dc2626; margin: 0; font-size: 22px;">💃 Salsa Guy Richmond LLC</h2>
+        <p style="color: #64748b; margin: 4px 0 0 0; font-size: 14px;">Thank you for your Event Request!</p>
+      </div>
+
+      <p style="font-size: 15px; color: #334155;">Dear <strong>${details.clientName}</strong>,</p>
+      
+      <p style="font-size: 14px; color: #334155; line-height: 1.6;">
+        We have received your event booking request! Your official Request Tracking ID is below. Our team is currently reviewing your details and preparing your proposal.
+      </p>
+
+      <div style="background-color: #fffbeb; border: 1px dashed #f59e0b; padding: 16px; border-radius: 8px; text-align: center; margin: 20px 0;">
+        <span style="font-size: 12px; color: #b45309; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px;">Your Request Tracking ID</span>
+        <span style="font-size: 20px; font-weight: bold; color: #92400e;">${details.eventId}</span>
+      </div>
+
+      <h3 style="font-size: 15px; color: #0f172a; margin-bottom: 8px;">Submission Summary:</h3>
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px; color: #334155; margin-bottom: 20px;">
+        <tr><td style="padding: 4px 0; font-weight: bold; width: 140px;">Event Name:</td><td>${details.eventName}</td></tr>
+        <tr><td style="padding: 4px 0; font-weight: bold;">Date & Time:</td><td>${details.eventDate} at ${details.eventTime}</td></tr>
+        <tr><td style="padding: 4px 0; font-weight: bold;">Location:</td><td>${details.eventAddress}</td></tr>
+      </table>
+
+      <p style="font-size: 14px; color: #334155; line-height: 1.6;">
+        If you have any questions or need to make updates, please contact us directly at <a href="mailto:salsaguyrichmond@gmail.com" style="color: #dc2626;">salsaguyrichmond@gmail.com</a>.
+      </p>
+
+      <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 24px 0 16px 0;" />
+      
+      <div style="text-align: center; font-size: 12px; color: #94a3b8;">
+        Salsa Guy Richmond LLC • Bring the Passion of Dance to Your Event
+      </div>
+    </div>
+  `;
+
+  sendEmailSafely(details.clientEmail, subject, htmlBody);
 }
 
 /**
@@ -789,6 +1016,7 @@ function handleFormSubmitJson(data) {
 
   const fieldHeaderMap = [
     { key: "timestamp", aliases: ["Submission Date", "Timestamp", "Date Submitted", "Date", "Submission Timestamp"] },
+    { key: "requestId", aliases: ["Request ID", "Request Tracking ID", "Tracking ID"] },
     { key: "clientName", aliases: ["Your Name", "Full Name", "Client Name", "Name"] },
     { key: "organizationName", aliases: ["Organization / Company Name", "Organization Name", "Organization", "Company"] },
     { key: "clientEmail", aliases: ["Email Address", "Email"] },
@@ -860,7 +1088,6 @@ function handleFormSubmitJson(data) {
     }
   });
 
-  // Guarantee complete Timestamp / Submission Date based on exact time of submittal
   const timestampIdx = getHeaderIndex(headers, ["Submission Date", "Timestamp", "Date Submitted", "Date", "Submission Timestamp"]);
   if (timestampIdx > -1 && (!newRow[timestampIdx] || newRow[timestampIdx] === "")) {
     const tz = ss.getSpreadsheetTimeZone() || Session.getScriptTimeZone() || "America/New_York";
@@ -869,8 +1096,23 @@ function handleFormSubmitJson(data) {
 
   sheet.appendRow(newRow);
   const rowNum = sheet.getLastRow();
+  const finalRequestId = `BTG-REQ-${rowNum}-${Date.now().toString(36).toUpperCase()}`;
+
+  const reqIdIdx = getHeaderIndex(headers, ["Request ID", "Request Tracking ID", "Tracking ID"]);
+  if (reqIdIdx > -1) {
+    sheet.getRange(rowNum, reqIdIdx + 1).setValue(finalRequestId);
+  }
+
+  const eventIdIdx = getHeaderIndex(headers, ["Event ID", "Calendar Event ID"]);
+  if (eventIdIdx > -1) {
+    const curVal = sheet.getRange(rowNum, eventIdIdx + 1).getValue();
+    if (!curVal) {
+      sheet.getRange(rowNum, eventIdIdx + 1).setValue(finalRequestId);
+    }
+  }
 
   const mainFolder = DriveApp.getFolderById(CONFIG.FOLDER_ID);
+  let uploadedFileUrl = "";
   if (data.attachedFile && data.attachedFile.base64) {
     try {
       const bytes = Utilities.base64Decode(data.attachedFile.base64);
@@ -881,10 +1123,10 @@ function handleFormSubmitJson(data) {
       try {
         createdFile.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
       } catch (sharingErr) {}
-      const fileUrl = createdFile.getUrl();
+      uploadedFileUrl = createdFile.getUrl();
       const fileColIdx = getHeaderIndex(headers, ["Upload Event Document / Attachment", "Upload Event Document", "Attachment", "Uploaded File"]);
       if (fileColIdx > -1) {
-        sheet.getRange(rowNum, fileColIdx + 1).setFormula(`=HYPERLINK("${fileUrl}", "View Uploaded File")`);
+        sheet.getRange(rowNum, fileColIdx + 1).setFormula(`=HYPERLINK("${uploadedFileUrl}", "View Uploaded File")`);
       }
     } catch (fileErr) {
       console.warn("File attachment upload error: ", fileErr);
@@ -892,19 +1134,25 @@ function handleFormSubmitJson(data) {
   }
 
   const updatedRowData = sheet.getRange(rowNum, 1, 1, sheet.getLastColumn()).getValues()[0];
+  if (uploadedFileUrl) {
+    const fileColIdx = getHeaderIndex(headers, ["Upload Event Document / Attachment", "Upload Event Document", "Attachment", "Uploaded File"]);
+    if (fileColIdx > -1) updatedRowData[fileColIdx] = uploadedFileUrl;
+  }
+  if (reqIdIdx > -1) updatedRowData[reqIdIdx] = finalRequestId;
+  if (eventIdIdx > -1 && (!updatedRowData[eventIdIdx] || updatedRowData[eventIdIdx] === "")) {
+    updatedRowData[eventIdIdx] = finalRequestId;
+  }
+
   try {
-    processRow(sheet, rowNum, updatedRowData, mainFolder, headers, true);
+    processRow(sheet, rowNum, updatedRowData, mainFolder, headers, true, uploadedFileUrl);
   } catch (procErr) {
     console.warn("processRow non-fatal error during submit: ", procErr);
   }
 
-  const eventIdIdx = getHeaderIndex(headers, ["Event ID", "Calendar Event ID"]);
-  const finalEventId = eventIdIdx > -1 ? sheet.getRange(rowNum, eventIdIdx + 1).getValue() : "";
-
   return {
     status: "success",
     row: rowNum,
-    eventId: finalEventId || `BTG-EVT-${rowNum}-${Date.now().toString(36).toUpperCase()}`
+    eventId: finalRequestId
   };
 }
 
@@ -941,20 +1189,59 @@ function doPost(e) {
 }
 
 /**
+ * Helper function to normalize text strings for flexible header matching.
+ * Strips punctuation (colons, slashes, question marks), replaces "and/or" with "and or",
+ * and collapses whitespace.
+ */
+function cleanHeaderStr(str) {
+  if (!str) return "";
+  return str.toString()
+    .toLowerCase()
+    .replace(/and\/or/g, "and or")
+    .replace(/[/\\?%*:|"<>(),._-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
  * Helper function to find column index in headers array matching a list of aliases.
+ * Strictly prioritizes exact raw header matching, then normalized matching (ignoring slashes/punctuation),
+ * then specific non-generic substring matching.
  */
 function getHeaderIndex(headers, aliases) {
   if (!headers || !aliases || !Array.isArray(aliases)) return -1;
-  const normHeaders = headers.map(h => (h ? h.toString().toLowerCase().trim() : ""));
   
+  const rawHeaders = headers.map(h => (h ? h.toString().toLowerCase().trim() : ""));
+  const cleanedHeaders = headers.map(h => cleanHeaderStr(h));
+  
+  // Pass 1: Raw Exact match across all aliases (highest priority)
   for (let alias of aliases) {
-    const normAlias = alias.toLowerCase().trim();
-    let idx = normHeaders.indexOf(normAlias);
-    if (idx > -1) return idx;
-    
-    idx = normHeaders.findIndex(h => h && (h.includes(normAlias) || normAlias.includes(h)));
+    if (!alias) continue;
+    const rawAlias = alias.toLowerCase().trim();
+    let idx = rawHeaders.indexOf(rawAlias);
     if (idx > -1) return idx;
   }
+
+  // Pass 2: Cleaned Normalized Match (ignores slashes vs spaces, colons, question marks)
+  for (let alias of aliases) {
+    if (!alias) continue;
+    const cleanedAlias = cleanHeaderStr(alias);
+    if (!cleanedAlias) continue;
+    let idx = cleanedHeaders.indexOf(cleanedAlias);
+    if (idx > -1) return idx;
+  }
+  
+  // Pass 3: Substring matching ONLY for explicit, non-generic aliases (length > 3 and not generic terms)
+  const genericTerms = ["date", "time", "name", "phone", "type", "event", "address", "notes", "receipt", "company"];
+  for (let alias of aliases) {
+    if (!alias) continue;
+    const cleanedAlias = cleanHeaderStr(alias);
+    if (cleanedAlias.length > 3 && !genericTerms.includes(cleanedAlias)) {
+      let idx = cleanedHeaders.findIndex(h => h && h.length > 3 && (h.includes(cleanedAlias) || cleanedAlias.includes(h)));
+      if (idx > -1) return idx;
+    }
+  }
+  
   return -1;
 }
 
