@@ -1284,207 +1284,130 @@ function createQuestionnaireReviewGoogleDoc() {
   const questionnaireData = [
   {
     "num": "1",
-    "title": "1. Contact & Organizer Information",
+    "title": "1. Location & Logistics",
     "fields": [
-      {
-        "type": "text",
-        "name": "clientName",
-        "label": "Your Name",
-        "required": true,
-        "placeholder": "e.g. Maria Santos"
-      },
-      {
-        "type": "email",
-        "name": "clientEmail",
-        "label": "Email Address",
-        "required": true,
-        "placeholder": "maria@example.com"
-      },
-      {
-        "type": "tel",
-        "name": "clientPhone",
-        "label": "Best Contact Phone Number",
-        "required": true,
-        "placeholder": "(804) 555-0199"
-      },
-      {
-        "type": "select",
-        "name": "representType",
-        "label": "Who do you represent? (Organization / Business / Self)",
-        "required": true,
-        "options": [
-          "Organization / Business / Self",
-          "Dance Studio",
-          "Educational Institution",
-          "Event Planning Company",
-          "Government",
-          "I'm a Dancer Instructor",
-          "Nonprofit Organization 501(C)",
-          "Private Sector Business",
-          "Religious Institution",
-          "Restaurant",
-          "Talent Agency",
-          "Yourself"
-        ]
-      },
-      {
-        "type": "select",
-        "name": "hearAboutUs",
-        "label": "How did you HEAR of us?",
-        "required": false,
-        "options": [
-          "Attended Past Salsa Guy Event",
-          "Word of Mouth / Referral",
-          "Search Engine (Google/Bing)",
-          "Social Media (Instagram/Facebook)",
-          "Community Flyer / Poster",
-          "Radio / TV Feature",
-          "Corporate/University Directory",
-          "Youtube Ads"
-        ]
-      }
-    ]
-  },
-  {
-    "num": "2",
-    "title": "2. Event Overview, Schedule & Classification Routing",
-    "fields": [
-      {
-        "type": "text",
-        "name": "eventName",
-        "label": "Name of the Event",
-        "required": true,
-        "placeholder": "e.g. Richmond Salsa Festival 2026"
-      },
-      {
-        "type": "text",
-        "name": "eventCoordinator",
-        "label": "Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title",
-        "required": true,
-        "placeholder": "e.g. Maria Santos, Lead Coordinator / Decision Maker"
-      },
-      {
-        "type": "text",
-        "name": "eventWebsites",
-        "label": "Websites for Event & Organization",
-        "required": false,
-        "placeholder": "Website URL, Facebook page, or N/A"
-      },
-      {
-        "type": "textarea",
-        "name": "eventDescription",
-        "label": "Purpose & Description of Your Event (Provide background on theme, venue vibe, guest flow, program schedule)",
-        "required": false,
-        "placeholder": "Provide background on theme, venue vibe, guest flow, program schedule..."
-      },
-      {
-        "type": "date",
-        "name": "eventDate",
-        "label": "Event Date",
-        "required": true,
-        "placeholder": "YYYY-MM-DD"
-      },
-      {
-        "type": "time",
-        "name": "eventTime",
-        "label": "Start Time",
-        "required": true,
-        "placeholder": "HH:MM AM/PM"
-      },
-      {
-        "type": "number",
-        "name": "expectedAttendance",
-        "label": "Expected Number of Attendees",
-        "required": false,
-        "placeholder": "e.g. 250"
-      },
-      {
-        "type": "select",
-        "name": "audienceAgesSelect",
-        "label": "Audience Age Groups Expected",
-        "required": false,
-        "options": [
-          "All Ages / Family-Friendly / Adults Only / Youth",
-          "Every Age Group (All Ages Welcome)",
-          "Toddlers (1-3 yrs)",
-          "Preschoolers (3-5 yrs)",
-          "School-age (6-12 yrs)",
-          "Adolescents (13-19 yrs)",
-          "Young Adults (20-39 yrs)",
-          "Middle-aged (40-59 yrs)",
-          "Seniors (60+ yrs)",
-          "Adults Only (18+ / 21+)"
-        ]
-      },
-      {
-        "type": "select",
-        "name": "admissionType",
-        "label": "Type of Event Admission",
-        "required": false,
-        "options": [
-          "Free Admission / Ticketed Event / Private by Invitation",
-          "Free / Open to Public",
-          "Ticketed / Paid Admission",
-          "Private Invitation Only"
-        ]
-      },
       {
         "type": "select",
         "name": "regionalLocation",
-        "label": "Is this event located within the Commonwealth of Virginia (USA)?",
+        "label": "Is this in Virginia? (If you are located outside of Virginia, please provide details on travel and logistics so we can accommodate your needs)",
         "required": true,
         "options": [
           "Yes (Within Virginia, USA)",
-          "No, Out-of-State (Within USA, outside VA)",
-          "No, International (Outside USA) ➔ (Triggers Section 3C: International Logistics)"
+          "No, Out-of-State (Within USA, outside VA) ➔ (Triggers Travel Logistics)",
+          "No, International (Outside USA) ➔ (Triggers International Logistics)"
         ]
       },
       {
         "type": "text",
         "name": "eventAddress",
-        "label": "Where will the event take place? (Full Address or Venue Name)",
+        "label": "Event Location (The full address or venue name)",
         "required": true,
-        "placeholder": "(e.g., 123 Main St, Richmond, VA 23220 or Venue Name)"
+        "placeholder": "e.g. 123 Main St, Richmond, VA 23220 or Venue Name"
       },
       {
         "type": "textarea",
         "name": "outOfStateLogistics",
         "label": "Out-of-State Travel & Logistics Arrangement (Conditional: Out-of-State)",
         "required": true,
-        "placeholder": "Describe flight/driving logistics, hotel accommodations, per diem..."
+        "placeholder": "Describe flight/driving logistics, hotel accommodations, per diem, and arrival schedule..."
+      },
+      {
+        "type": "text",
+        "name": "intlVenueName",
+        "label": "International: Specific Country, City, & Venue Name (Conditional: International)",
+        "required": true,
+        "placeholder": "e.g. San José, Costa Rica - Teatro Nacional"
+      },
+      {
+        "type": "textarea",
+        "name": "intlLogistics",
+        "label": "International: Travel & Lodging Logistics (Flights, ground transport, hotel arrangements)",
+        "required": true,
+        "placeholder": "Describe flight arrangements, airport transfers, hotel accommodations..."
       },
       {
         "type": "select",
-        "name": "eventTypeScale",
-        "label": "Select Event Classification",
+        "name": "intlVisaSupport",
+        "label": "International: Visa & Legal Documentation Support",
         "required": true,
         "options": [
-          "Option A: Large / Public Event ➔ (Triggers Section 3A: Large Public Event Details, 501(c) & Promotions)",
-          "Option B: Small / Private Gathering ➔ (Triggers Section 3B: Small Private Event Specifications & Hospitality)"
+          "Yes - Full Legal & Visa Support Provided",
+          "No - Assistance Needed",
+          "Work Visa Handled",
+          "P-3 / Cultural Performer Visa Support Needed",
+          "Not Applicable"
         ]
       },
       {
-        "type": "select",
-        "name": "serviceTypeRequested",
-        "label": "What type of service(s) are you requesting for your event?",
+        "type": "text",
+        "name": "intlPaymentTerms",
+        "label": "International: Preferred Currency & Payment Terms",
         "required": true,
-        "options": [
-          "Performance Only (Dance Show / Live Music / Characters)",
-          "Dance Instruction / Workshop Only",
-          "Both Performance & Dance Instruction"
-        ]
+        "placeholder": "e.g. USD / Wire Transfer / 50% Deposit"
+      },
+      {
+        "type": "textarea",
+        "name": "intlCustomsConsiderations",
+        "label": "International: Costumes, Props & Customs Considerations (Wardrobe transport or local provisions)",
+        "required": true,
+        "placeholder": "Details regarding wardrobe customs clearance, instruments, sound props..."
       }
     ]
   },
   {
-    "num": "3A",
-    "title": "3A. Large Public Event Details, 501(c) & Promotions (Conditional: Option A)",
+    "num": "2",
+    "title": "2. Event Basics",
     "fields": [
+      {
+        "type": "text",
+        "name": "eventName",
+        "label": "Name of the Event (What should we call your celebration or gathering?)",
+        "required": true,
+        "placeholder": "e.g. Richmond Salsa Festival 2026"
+      },
+      {
+        "type": "text",
+        "name": "eventWebsites",
+        "label": "Websites (If your event or organization has a website, Facebook page, or public profile)",
+        "required": false,
+        "placeholder": "Website URL, Facebook page, or N/A"
+      },
+      {
+        "type": "date",
+        "name": "eventDate",
+        "label": "Event Date (When does the magic happen?)",
+        "required": true,
+        "placeholder": "YYYY-MM-DD"
+      },
+      {
+        "type": "time",
+        "name": "eventTime",
+        "label": "Start Time (When does the magic happen?)",
+        "required": true,
+        "placeholder": "HH:MM AM/PM"
+      },
+      {
+        "type": "textarea",
+        "name": "eventDescription",
+        "label": "Description (Tell us about the theme, vibe, and flow of your program)",
+        "required": true,
+        "placeholder": "Tell us about the theme, vibe, and flow of your program..."
+      },
+      {
+        "type": "select",
+        "name": "eventTypeScale",
+        "label": "Private vs. Public Classification",
+        "required": true,
+        "options": [
+          "Option A: Large / Public Event (Please be prepared to provide details on booth space, promotional help, and contingency plans)",
+          "Option B: Small / Private Gathering (Let us know the type, e.g., Birthday, Wedding, Quinceañera)"
+        ]
+      },
       {
         "type": "select",
         "name": "serviceRecurrence",
-        "label": "Will the PERFORMANCE SERVICES be...",
-        "required": false,
+        "label": "Large/Public Event: Will the PERFORMANCE SERVICES be... (Conditional: Option A)",
+        "required": true,
         "options": [
           "Nonrecurring - One time",
           "Recurring",
@@ -1496,48 +1419,101 @@ function createQuestionnaireReviewGoogleDoc() {
       {
         "type": "text",
         "name": "nonProfitName",
-        "label": "501(c) Non-Profit Name (If Applicable)",
+        "label": "Large/Public Event: 501(c) Non-Profit Name (If Applicable)",
         "required": false,
         "placeholder": "Organization Tax Name"
       },
       {
         "type": "select",
         "name": "taxLetter",
-        "label": "Can you provide a Tax Deductibility Letter?",
+        "label": "Large/Public Event: Can you provide a Tax Deductibility Letter?",
         "required": false,
         "options": [
           "Yes",
           "No",
-          "In Process"
+          "Not Applicable"
         ]
       },
       {
         "type": "select",
         "name": "boothSpace",
-        "label": "Provide a Booth/Exhibitor Space (10×10 Tent)?",
-        "required": false,
+        "label": "Large/Public Event: Provide a Booth/Exhibitor Space (10×10 Tent)?",
+        "required": true,
         "options": [
           "Yes",
           "No",
-          "N/A"
+          "Not Applicable"
         ]
       },
       {
         "type": "select",
-        "name": "logoPromotion",
-        "label": "Include our logo on promo materials & social media?",
-        "required": false,
+        "name": "promoInclude",
+        "label": "Large/Public Event: Include our logo on promo materials & social media?",
+        "required": true,
         "options": [
           "Yes",
           "No",
-          "Upon Request"
+          "Not Applicable"
         ]
       },
       {
         "type": "select",
-        "name": "eventPromotionAllowed",
-        "label": "Allowed to help promote the event?",
-        "required": false,
+        "name": "allowHelpPromote",
+        "label": "Large/Public Event: Allowed to help promote the event?",
+        "required": true,
+        "options": [
+          "Yes",
+          "No",
+          "Not Applicable"
+        ]
+      },
+      {
+        "type": "select",
+        "name": "videoRights",
+        "label": "Large/Public Event: Provide copies of video footage and photos?",
+        "required": true,
+        "options": [
+          "Yes",
+          "No",
+          "Not Applicable"
+        ]
+      },
+      {
+        "type": "select",
+        "name": "invitedToAttend3a",
+        "label": "Large/Public Event: Are performers invited to attend/stay for the event?",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      },
+      {
+        "type": "textarea",
+        "name": "contingencyPlan",
+        "label": "Large/Public Event: Weather / Contingency Plan (Alternate Location, Rain Date, Time adjustments)",
+        "required": true,
+        "placeholder": "Describe backup indoor location, rain date, time adjustments..."
+      },
+      {
+        "type": "select",
+        "name": "privateGatheringType",
+        "label": "Small/Private Event: Type of Private Gathering (Conditional: Option B)",
+        "required": true,
+        "options": [
+          "Birthday Party",
+          "Wedding / Anniversary",
+          "Quinceañera / Sweet 15",
+          "House Gathering",
+          "Private Dance Lesson",
+          "Other Private Event"
+        ]
+      },
+      {
+        "type": "select",
+        "name": "invitedToAttend",
+        "label": "Small/Private Event: Are performers invited to attend/stay for the event?",
+        "required": true,
         "options": [
           "Yes",
           "No"
@@ -1545,117 +1521,58 @@ function createQuestionnaireReviewGoogleDoc() {
       },
       {
         "type": "select",
-        "name": "mediaFootage",
-        "label": "Provide copies of video footage and photos?",
-        "required": false,
+        "name": "admissionType",
+        "label": "Admission Type (Is this a free, ticketed, or private/invitation-only event?)",
+        "required": true,
         "options": [
-          "Yes",
-          "No",
-          "Conditional on Photographer"
+          "Free / Open to Public",
+          "Ticketed / Paid Admission",
+          "Private Invitation Only"
         ]
-      },
-      {
-        "type": "textarea",
-        "name": "contingencyPlan",
-        "label": "Weather / Contingency Plan",
-        "required": false,
-        "placeholder": "Indoor backup location, rain date, cancellation policy..."
       }
     ]
   },
   {
-    "num": "3B",
-    "title": "3B. Small Private Event Specifications & Hospitality (Conditional: Option B)",
+    "num": "3",
+    "title": "3. What You Need From Us",
     "fields": [
       {
         "type": "select",
-        "name": "privateGatheringType",
-        "label": "Type of Private Gathering",
-        "required": false,
+        "name": "serviceTypeRequested",
+        "label": "Services Requested (Choose from Performance, Dance Instruction, or both)",
+        "required": true,
         "options": [
-          "Wedding Reception / Ceremony",
-          "Quinceañera / Sweet 16",
-          "Birthday Party",
-          "Anniversary / Milestone",
-          "Private Dinner / Gala",
-          "Family Reunion",
-          "Private House Party",
-          "Corporate Private Function",
-          "Other Private Gathering"
+          "Performance Only (Dance Show / Live Music / Characters)",
+          "Dance Instruction / Workshop Only",
+          "Both Performance & Dance Instruction"
         ]
       },
-      {
-        "type": "select",
-        "name": "performerInvitation",
-        "label": "Are performers invited to attend/stay for the event?",
-        "required": false,
-        "options": [
-          "Yes (Full Access & Hospitality Provided)",
-          "No (Perform & Depart Only)",
-          "Optional / Up to Performers"
-        ]
-      }
-    ]
-  },
-  {
-    "num": "3C",
-    "title": "3C. International Travel & Event Specifications (Conditional: International)",
-    "fields": [
-      {
-        "type": "text",
-        "name": "intlVenueDetails",
-        "label": "Specific Country, City, & Venue Name",
-        "required": true,
-        "placeholder": "e.g., San Juan, Puerto Rico - Puerto Rico Convention Center"
-      },
-      {
-        "type": "textarea",
-        "name": "intlLogisticsDetails",
-        "label": "International Travel & Lodging Logistics",
-        "required": true,
-        "placeholder": "Describe flights, airport transfers, hotel accommodations..."
-      },
-      {
-        "type": "textarea",
-        "name": "intlVisaSupport",
-        "label": "Visa & Legal Documentation Support",
-        "required": false,
-        "placeholder": "Describe work permits, visa sponsorship, or tax clearance..."
-      },
-      {
-        "type": "text",
-        "name": "intlCurrencyTerms",
-        "label": "Preferred Currency & Payment Terms",
-        "required": false,
-        "placeholder": "e.g. USD via International Wire Transfer"
-      },
-      {
-        "type": "textarea",
-        "name": "intlCustomsNotes",
-        "label": "Costumes, Props & Customs Considerations",
-        "required": false,
-        "placeholder": "Describe instruments, costume trunks, customs declarations..."
-      }
-    ]
-  },
-  {
-    "num": "4A",
-    "title": "4A. Performance Dance Repertoire (Conditional: Performance)",
-    "fields": [
       {
         "type": "checkbox_group",
         "name": "perfServices",
-        "label": "Performance Dance Repertoire (Select all that apply)",
+        "label": "Repertoire: Performance Dance Repertoire (Conditional: Performance)",
         "options": [
-          "Mexico - Ballet Folklorico (Jalisco)",
-          "Mexico - Folk Character Meet & Greet (Catrina / Charro)",
-          "El Salvador - Folk Dance (Torito Pinto / Las Cortadoras)",
-          "Puerto Rico - Folk Character (Vejigante Meet & Greet / Photo Ops)",
-          "Puerto Rico - Folk Characters Show (Vejigante & Plena Performers)",
-          "Singer - Alma Ranchera (Mexico)",
-          "Los Cantores de Tradicion (Puerto Rican Christmas Parranda)",
-          "Salsa Performance Group (Ladies in Red)",
-          "USA - Line Dance Show & Animation"
+          "🇲🇽 Mexico & North America: A Selection of Dances from the Disney Movie COCO (Mexico)",
+          "🇲🇽 Mexico & North America: El Baile de los Viejitos (The Dance of The Old Men) (Mexico)",
+          "🇲🇽 Mexico & North America: The Waltz of La Llorona (Weeping Woman) (Mexico)",
+          "🇲🇽 Mexico & North America: Día de los Muertos - Day of the Dead Celebration (Mexico)",
+          "🇨🇺 🇵🇷 Caribbean: Salsa Rueda (Cuba)",
+          "🇨🇺 🇵🇷 Caribbean: Bomba (Puerto Rico)",
+          "🇨🇺 🇵🇷 Caribbean: Plena (Puerto Rico)",
+          "🇨🇺 🇵🇷 Caribbean: Seis (Puerto Rico)",
+          "🇨🇺 🇵🇷 Caribbean: Danza (Puerto Rico)",
+          "🇸🇻 Central America: Cumbia (El Salvador)",
+          "🇸🇻 Central America: Las Comaleras (El Salvador)",
+          "🇸🇻 Central America: Las Cortadoras (El Salvador) COMING SOON",
+          "🇨🇴 🇦🇷 South America: Cumbia (Colombia)",
+          "🇨🇴 🇦🇷 South America: Cumbia \"La Pollera Colorá\" (Colombia)",
+          "🇨🇴 🇦🇷 South America: El Mapalé (Colombia)",
+          "🇨🇴 🇦🇷 South America: Tango (Argentina)",
+          "🎭 Theatrical & Singing: Salsa Performance Group (Ladies in Red)",
+          "🎭 Theatrical & Singing: USA - Line Dance Show & Animation",
+          "🎭 Theatrical & Singing: Singer - Alma Ranchera (Mariachi & Ranchera Classics)",
+          "🎭 Theatrical & Singing: Los Cantores de Tradición (Puerto Rican Christmas Parranda)",
+          "🎭 Theatrical & Singing: Folk Characters Meet & Greet (Vejigantes & Catrinas / Charros)"
         ]
       },
       {
@@ -1664,17 +1581,11 @@ function createQuestionnaireReviewGoogleDoc() {
         "label": "Any other PERFORMANCE SERVICES you wish, but are not listed above?",
         "required": false,
         "placeholder": "Describe any custom performance services..."
-      }
-    ]
-  },
-  {
-    "num": "4B",
-    "title": "4B. Dance Instruction & Formats (Conditional: Instruction)",
-    "fields": [
+      },
       {
         "type": "select",
         "name": "lessonServicesSelect",
-        "label": "Which of our DANCE LESSON SERVICES will you need?",
+        "label": "Which of our DANCE LESSON SERVICES will you need? (Conditional: Instruction)",
         "required": false,
         "options": [
           "None",
@@ -1718,16 +1629,6 @@ function createQuestionnaireReviewGoogleDoc() {
       },
       {
         "type": "checkbox_group",
-        "name": "otherServices",
-        "label": "Additional Services Needed",
-        "options": [
-          "Master of Ceremonies (MC)",
-          "DJ Services",
-          "Cultural Presentation / Lecture"
-        ]
-      },
-      {
-        "type": "checkbox_group",
         "name": "generalFormats",
         "label": "General Formats",
         "options": [
@@ -1737,18 +1638,38 @@ function createQuestionnaireReviewGoogleDoc() {
           "Main Act / Showcase",
           "Background Performance"
         ]
+      },
+      {
+        "type": "select",
+        "name": "soundEquipment",
+        "label": "Sound (Will you provide the PA system, or should we bring our own?)",
+        "required": true,
+        "options": [
+          "Provided by Venue (Venue provides sound / PA system)",
+          "Performer Must Provide PA (We bring our own sound equipment)"
+        ]
+      },
+      {
+        "type": "checkbox_group",
+        "name": "otherServices",
+        "label": "Additional Needs (Let us know if you need an MC, DJ services, or a cultural presentation)",
+        "options": [
+          "Master of Ceremonies (MC)",
+          "DJ Services",
+          "Cultural Presentation / Lecture"
+        ]
       }
     ]
   },
   {
-    "num": "5",
-    "title": "5. Technical, Venue & Hospitality Logistics",
+    "num": "4",
+    "title": "4. Venue & Hospitality",
     "fields": [
       {
         "type": "select",
         "name": "venueSetting",
-        "label": "Venue Location Setting",
-        "required": false,
+        "label": "Setting (Indoor / Outdoor)",
+        "required": true,
         "options": [
           "Indoor",
           "Outdoor Covered",
@@ -1758,8 +1679,8 @@ function createQuestionnaireReviewGoogleDoc() {
       {
         "type": "select",
         "name": "performanceSurface",
-        "label": "On what SURFACE will performance take place?",
-        "required": false,
+        "label": "Surface (Wood floor / Concrete / etc.)",
+        "required": true,
         "options": [
           "Wood Dance Floor",
           "Stage",
@@ -1769,37 +1690,143 @@ function createQuestionnaireReviewGoogleDoc() {
         ]
       },
       {
+        "type": "select",
+        "name": "stageSizes",
+        "label": "Size of Area (Approximate size of the performance/class area)",
+        "required": true,
+        "options": [
+          "8 ft x 8 ft (64 sq ft): Best for a solo speaker, DJ booth, or solo acoustic performer.",
+          "8 ft x 12 ft (96 sq ft): Fits a single speaker with a podium or small ceremony setup.",
+          "12 ft x 16 ft (192 sq ft): Ideal for a basic wedding band or a 3- to 6-piece group.",
+          "16 ft x 20 ft (320 sq ft): The most common size for a full 5- to 8-piece band.",
+          "20 ft x 24 ft (480 sq ft): Accommodates high-energy bands with added horn sections.",
+          "24 ft x 32 ft+ (768+ sq ft): Built for major concerts and large corporate productions."
+        ]
+      }
+    ]
+  },
+  {
+    "num": "5",
+    "title": "5. Your Contact Details",
+    "fields": [
+      {
         "type": "text",
-        "name": "performanceArea",
-        "label": "Size of Performance / Class Area",
-        "required": false,
-        "placeholder": "e.g., 20ft × 30ft Stage / Dance Floor"
+        "name": "clientName",
+        "label": "Your Name (The primary person coordinating the booking)",
+        "required": true,
+        "placeholder": "e.g. Maria Santos"
+      },
+      {
+        "type": "email",
+        "name": "clientEmail",
+        "label": "Email Address (For official confirmation and correspondence)",
+        "required": true,
+        "placeholder": "maria@example.com"
+      },
+      {
+        "type": "tel",
+        "name": "clientPhone",
+        "label": "Best Contact Phone Number (So we can reach you quickly)",
+        "required": true,
+        "placeholder": "(804) 555-0199"
       },
       {
         "type": "select",
-        "name": "soundEquipment",
-        "label": "Sound System Equipment",
+        "name": "representType",
+        "label": "Who do you represent? (Organization / Business / Self)",
         "required": false,
         "options": [
-          "Provided by Venue",
-          "Performer Must Provide PA"
+          "Organization / Business / Self",
+          "Dance Studio",
+          "Educational Institution",
+          "Event Planning Company",
+          "Government",
+          "I'm a Dancer Instructor",
+          "Nonprofit Organization 501(C)",
+          "Private Sector Business",
+          "Religious Institution",
+          "Restaurant",
+          "Talent Agency",
+          "Yourself"
+        ]
+      },
+      {
+        "type": "text",
+        "name": "eventCoordinator",
+        "label": "Coordinator / Decision Maker (Who is the main contact we should speak to regarding final plans?)",
+        "required": true,
+        "placeholder": "e.g. Maria Santos, Lead Coordinator / Decision Maker"
+      },
+      {
+        "type": "select",
+        "name": "hasBudget",
+        "label": "Confirm you have a BUDGET for our participation",
+        "required": true,
+        "options": [
+          "Yes - Budget Confirmed",
+          "In Progress / Pending Approval",
+          "No / Grant Funded"
+        ]
+      },
+      {
+        "type": "text",
+        "name": "budgetAmount",
+        "label": "Confirmed Budget Amount for Performance / Workshop",
+        "required": true,
+        "placeholder": "e.g. $1,500 USD"
+      }
+    ]
+  },
+  {
+    "num": "6",
+    "title": "6. Final Steps",
+    "fields": [
+      {
+        "type": "number",
+        "name": "expectedAttendance",
+        "label": "Expected Attendance (A rough headcount helps us prepare properly)",
+        "required": true,
+        "placeholder": "Estimate"
+      },
+      {
+        "type": "select",
+        "name": "audienceAgesSelect",
+        "label": "Audience Ages (Let us know if this is a family-friendly, youth, or adult-only event)",
+        "required": true,
+        "options": [
+          "All Ages / Family-Friendly / Adults Only / Youth",
+          "Every Age Group (All Ages Welcome)",
+          "Toddlers (1-3 yrs)",
+          "Preschoolers (3-5 yrs)",
+          "School-age (6-12 yrs)",
+          "Adolescents (13-19 yrs)",
+          "Young Adults (20-39 yrs)",
+          "Middle-aged (40-59 yrs)",
+          "Seniors (60+ yrs)",
+          "Adults Only (18+ / 21+)"
         ]
       },
       {
         "type": "select",
-        "name": "badgeRequired",
-        "label": "Will a BADGE or ID be required for performers?",
-        "required": false,
+        "name": "hearAboutUs",
+        "label": "How did you hear about us? (How did you discover Salsa Guy Richmond?)",
+        "required": true,
         "options": [
-          "Yes",
-          "No"
+          "Attended Past Salsa Guy Event",
+          "Word of Mouth / Referral",
+          "Search Engine (Google/Bing)",
+          "Social Media (Instagram/Facebook)",
+          "Community Flyer / Poster",
+          "Radio / TV Feature",
+          "Corporate/University Directory",
+          "Youtube Ads"
         ]
       },
       {
         "type": "select",
         "name": "hospitalityProvided",
-        "label": "WILL YOU PROVIDE the performers with:",
-        "required": false,
+        "label": "Hospitality (Water, meals, or a green room for costume changes)",
+        "required": true,
         "options": [
           "Water",
           "Hospitality",
@@ -1809,54 +1836,52 @@ function createQuestionnaireReviewGoogleDoc() {
         ]
       },
       {
+        "type": "select",
+        "name": "badgeRequired",
+        "label": "Badges/ID (Let us know if our team needs special identification to enter the venue)",
+        "required": true,
+        "options": [
+          "Yes",
+          "No"
+        ]
+      },
+      {
         "type": "textarea",
         "name": "dressingRoomDetails",
         "label": "Dressing Room / Costume Changing Instructions",
-        "required": false,
+        "required": true,
         "placeholder": "e.g., Private Green Room on 2nd Floor with secure storage"
-      }
-    ]
-  },
-  {
-    "num": "6",
-    "title": "6. Special Instructions, Terms & File Attachments",
-    "fields": [
+      },
       {
         "type": "textarea",
         "name": "notes",
-        "label": "Special Instructions, Song Requests or Notes",
+        "label": "Special Instructions (Feel free to include song requests, specific notes, or event guidelines)",
         "required": false,
         "placeholder": "Tell us any special requests, song choices, or event guidelines..."
       },
       {
         "type": "file",
         "name": "fileInput",
-        "label": "Upload Event Document / Attachment (PDF, PNG, JPG - Max 10MB)",
+        "label": "Attachments (PDF, PNG, JPG - Max 10MB)",
         "required": false,
         "placeholder": "Click or Drag & Drop File Here to Attach to Drive"
       },
       {
+        "type": "notice",
+        "name": "txtGeneralInfo",
+        "label": "Notice: Hiring Similar Performers Disclosure",
+        "required": false
+      },
+      {
         "type": "checkbox",
         "name": "termsCheck",
-        "label": "I agree to the Terms of Service & Privacy Policy",
+        "label": "Agreement: I agree to the Terms of Service & Privacy Policy",
         "required": true
       },
       {
         "type": "checkbox",
         "name": "sendEmailReceipt",
-        "label": "Send instant Event ID confirmation receipt to my email",
-        "required": false
-      }
-    ]
-  },
-  {
-    "num": "7",
-    "title": "7. General Information",
-    "fields": [
-      {
-        "type": "notice",
-        "name": "txtGeneralInfo",
-        "label": "HIRING SIMILAR PERFORMERS (Educational Guidance)",
+        "label": "Send instant Request ID confirmation receipt to my email",
         "required": false
       }
     ]
