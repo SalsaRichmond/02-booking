@@ -931,6 +931,8 @@ function createDoc(templateId, type, eventName, rowData, folder, isValidDate, eD
           safeReplaceText(e, leftover, "");
         });
       }
+    });
+
     doc.saveAndClose();
 
     // Auto-Export companion PDF to the event's Google Drive folder
