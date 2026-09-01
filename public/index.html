@@ -647,24 +647,7 @@
       color: #FFF;
     }
 
-    /* Budget quick-select chip buttons */
-    .budget-chip-btn {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--card-border);
-      color: var(--text-main);
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.82rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .budget-chip-btn:hover, .budget-chip-btn.active {
-      background: rgba(220, 38, 38, 0.2);
-      border-color: var(--primary-accent);
-      color: #FFF;
-      transform: translateY(-1px);
-    }
+
 
     /* 6-Step Visual Stepper Navigation */
     .stepper-wrapper {
@@ -737,46 +720,6 @@
     .step-item.active .step-num {
       background: #0f172a;
       color: var(--accent-gold);
-    }
-
-    /* Live Investment Quote Estimator */
-    .live-estimator-card {
-      background: linear-gradient(135deg, rgba(234, 179, 8, 0.12), rgba(220, 38, 38, 0.08));
-      border: 1.5px solid var(--accent-gold);
-      border-radius: var(--radius-md);
-      padding: 18px 22px;
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 14px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-    }
-    .live-estimator-range {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: var(--accent-gold);
-    }
-    .apply-budget-btn {
-      background: var(--accent-gold);
-      color: #0f172a;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-    }
-    .apply-budget-btn:hover {
-      background: #FACC15;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(234, 179, 8, 0.35);
     }
 
     /* Floating fast-track contact badge */
@@ -874,7 +817,7 @@
       }
       .top-controls-row, .theme-settings-details, .btn-clear-draft, .draft-restore-toast,
       .floating-contact-badge, .submit-btn, .ask-another-box, .app-footer, .file-upload-box,
-      .budget-chip-btn, .bg-mesh, .noise-overlay, .theme-backdrop, .details-btn {
+      .bg-mesh, .noise-overlay, .theme-backdrop, .details-btn {
         display: none !important;
       }
       .form-card, .success-card {
@@ -1793,28 +1736,12 @@
           <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-volume-high"></i> Sound System Equipment</h4>
           <div class="form-group full-width" style="margin-bottom: 0;">
             <label for="soundEquipment" id="lblSoundEquipment">Sound System Equipment <span class="required">*</span></label>
-            <select id="soundEquipment" name="soundEquipment" required onchange="calculateLiveEstimate()">
+            <select id="soundEquipment" name="soundEquipment" required>
               <option value="" selected disabled>-- Select Option --</option>
               <option value="Provided by Venue">Provided by Venue (Venue provides sound system, PA, and microphone)</option>
               <option value="Performer Must Provide PA">Performer Must Provide PA (Salsa Guy Richmond must bring portable PA system)</option>
             </select>
           </div>
-        </div>
-
-        <!-- Interactive Live Investment Estimator Widget -->
-        <div id="liveQuoteEstimatorCard" class="live-estimator-card" style="margin-bottom: 25px;">
-          <div>
-            <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; display: flex; align-items: center; gap: 6px;">
-              <i class="fa-solid fa-calculator" style="color: var(--accent-gold);"></i> Real-Time Estimated Investment Range:
-            </div>
-            <div class="live-estimator-range" id="liveQuoteRangeText">$350 – $750 USD</div>
-            <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;" id="liveQuoteSummaryText">
-              *Calculated dynamically based on your selected service tier & duration.
-            </div>
-          </div>
-          <button type="button" class="apply-budget-btn" onclick="applyLiveEstimateToBudget()">
-            <i class="fa-solid fa-wand-magic-sparkles"></i> Apply to Confirmed Budget
-          </button>
         </div>
 
 
@@ -1912,14 +1839,7 @@
 
         <!-- Budget Confirmation (Section 5) -->
         <div class="form-section-block" style="border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-top: 15px; margin-bottom: 25px;">
-          <h4 style="color: var(--accent-gold); margin-bottom: 8px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-coins"></i> Event Budget Confirmation</h4>
-          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Quick-select a standard investment tier or enter your custom allocated budget:</p>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;">
-            <button type="button" class="budget-chip-btn" data-budget="$350" title="Solo/Duo Workshop">$350 (Solo Workshop)</button>
-            <button type="button" class="budget-chip-btn" data-budget="$750" title="Showcase Act">$750 (Showcase Act)</button>
-            <button type="button" class="budget-chip-btn" data-budget="$1,500" title="Full Ensemble Troupe">$1,500 (Full Troupe)</button>
-            <button type="button" class="budget-chip-btn" data-budget="$2,500" title="VIP Festival Production">$2,500+ (Festival Production)</button>
-          </div>
+          <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-coins"></i> Event Budget Confirmation</h4>
           <div class="grid-2">
             <div class="form-group">
               <label for="hasBudget" id="lblHasBudget">Confirm you have a BUDGET for our participation <span class="required">*</span></label>
@@ -3796,107 +3716,7 @@ function changeLanguage(langCode) {
       helper.style.display = 'block';
     }
 
-    // 4. Interactive Live Investment Estimator
-    function calculateLiveEstimate() {
-      const serviceType = document.getElementById('serviceTypeRequested')?.value || '';
-      const troupe = document.getElementById('troupeHeadcount')?.value || '';
-      const duration = document.getElementById('serviceTimeSelect')?.value || '';
-      const sound = document.getElementById('soundEquipment')?.value || '';
 
-      let min = 350;
-      let max = 750;
-      let summaryParts = [];
-
-      // Troupe Size Base
-      if (troupe.includes('Solo') || troupe.includes('1 Performer')) {
-        min = 350; max = 500;
-        summaryParts.push('Solo Performer/Instructor');
-      } else if (troupe.includes('Duo') || troupe.includes('2 Performers')) {
-        min = 550; max = 850;
-        summaryParts.push('Duo Showcase (2 performers)');
-      } else if (troupe.includes('Core Showcase Troupe') || troupe.includes('4 Dancers')) {
-        min = 1000; max = 1500;
-        summaryParts.push('Core Troupe (4 dancers)');
-      } else if (troupe.includes('Full Cultural Ensemble') || troupe.includes('6–8 Performers')) {
-        min = 1800; max = 2800;
-        summaryParts.push('Full Ensemble (6–8 performers)');
-      } else if (troupe.includes('Custom Festival') || troupe.includes('8+ Cast')) {
-        min = 2800; max = 4500;
-        summaryParts.push('Festival Production (8+ cast)');
-      } else {
-        if (serviceType.includes('Both')) {
-          min = 850; max = 1600;
-          summaryParts.push('Showcase + Workshop Combo');
-        } else if (serviceType.includes('Dance Instruction')) {
-          min = 350; max = 600;
-          summaryParts.push('Dance Instruction');
-        } else if (serviceType.includes('Performance')) {
-          min = 600; max = 1200;
-          summaryParts.push('Performance Showcase');
-        }
-      }
-
-      // Duration Multiplier
-      if (duration.includes('1.5 hours')) {
-        min += 100; max += 200;
-      } else if (duration.includes('2 hours')) {
-        min += 200; max += 400;
-      } else if (duration.includes('Half Day')) {
-        min = Math.max(min * 1.5, 1200);
-        max = Math.max(max * 1.6, 2500);
-        summaryParts.push('Half-Day Booking');
-      } else if (duration.includes('Full Day')) {
-        min = Math.max(min * 2.2, 2200);
-        max = Math.max(max * 2.4, 4500);
-        summaryParts.push('Full-Day Festival');
-      }
-
-      // Sound System addition
-      if (sound.includes('Performer Must Provide PA')) {
-        min += 150; max += 250;
-        summaryParts.push('Portable PA Included');
-      }
-
-      const rangeText = `$${min.toLocaleString()} – $${max.toLocaleString()} USD`;
-      const rangeEl = document.getElementById('liveQuoteRangeText');
-      const summaryEl = document.getElementById('liveQuoteSummaryText');
-
-      if (rangeEl) rangeEl.textContent = rangeText;
-      if (summaryEl) {
-        summaryEl.textContent = summaryParts.length > 0
-          ? `*Estimate based on: ${summaryParts.join(' • ')}`
-          : '*Calculated dynamically based on your selected service tier & duration.';
-      }
-
-      window.currentCalculatedEstimate = { min, max, rangeText };
-    }
-
-    // 5. Apply Live Estimate to Budget in Section 5
-    function applyLiveEstimateToBudget() {
-      if (!window.currentCalculatedEstimate) calculateLiveEstimate();
-      const est = window.currentCalculatedEstimate;
-      const budgetInput = document.getElementById('budgetAmount');
-      const hasBudgetSel = document.getElementById('hasBudget');
-
-      if (budgetInput && est) {
-        budgetInput.value = est.rangeText;
-      }
-      if (hasBudgetSel) {
-        hasBudgetSel.value = 'Yes - Budget Confirmed';
-      }
-
-      // Smooth scroll to Section 5 with pulse animation
-      const sec5 = document.getElementById('sec5Title');
-      if (sec5) {
-        sec5.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        budgetInput.focus();
-        budgetInput.style.transition = 'box-shadow 0.3s ease';
-        budgetInput.style.boxShadow = '0 0 15px rgba(234, 179, 8, 0.8)';
-        setTimeout(() => {
-          budgetInput.style.boxShadow = '';
-        }, 1500);
-      }
-    }
 
     function toggleSettingsMenu(e) {
       if (e) {
@@ -4664,19 +4484,7 @@ function saveUserSettings() {
         eventDateInput.addEventListener('input', (e) => updateDateScheduleHelper(e.target.value));
       }
 
-      // Budget quick-select chips handler
-      document.querySelectorAll('.budget-chip-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const budgetVal = btn.getAttribute('data-budget');
-          const budgetInput = document.getElementById('budgetAmount');
-          const hasBudgetSelect = document.getElementById('hasBudget');
-          if (budgetInput) budgetInput.value = budgetVal;
-          if (hasBudgetSelect) hasBudgetSelect.value = 'Yes - Budget Confirmed';
-          document.querySelectorAll('.budget-chip-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          saveFormDraft();
-        });
-      });
+
 
       const debouncedScan = debounce(() => {
         scanFormForTypos();
