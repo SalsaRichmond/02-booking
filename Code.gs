@@ -555,19 +555,28 @@ function sendEmailSafely(toEmail, subject, htmlBody) {
   }
 }
 
-/**
- * Sends an email notification to Admin(s) confirming Steps 1-4 of a new submittal.
- */
 function sendAdminSubmittalNotification(details) {
   if (!CONFIG.ADMIN_EMAILS || CONFIG.ADMIN_EMAILS.length === 0) return;
 
-  const subject = `💃 New Event Submittal: ${details.eventName} - ${details.eventDate} (Request ID: ${details.eventId})`;
+  const cleanPhone = (details.clientPhone || '').replace(/[^\d+]/g, '');
+  const intlPhone = cleanPhone.startsWith('1') ? cleanPhone : ('1' + cleanPhone.replace(/^0+/, ''));
+
+  const subject = `🔥 NEW BOOKING: ${details.eventName} - ${details.budgetAmount || '$TBD'} - ${details.clientName} (ID: ${details.eventId})`;
 
   const htmlBody = `
     <div style="font-family: Arial, sans-serif; max-width: 650px; margin: 0 auto; background-color: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
       <div style="background-color: #dc2626; padding: 18px 24px; border-radius: 8px 8px 0 0; color: #ffffff;">
         <h2 style="margin: 0; font-size: 20px;">💃 Salsa Guy Richmond LLC - New Submittal Alert</h2>
         <p style="margin: 4px 0 0 0; font-size: 14px; opacity: 0.9;">Automated Booking Workflow Confirmation (Steps 1 – 4)</p>
+      </div>
+
+      <!-- Quick 1-Tap Mobile Action Bar for Angel -->
+      <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 14px 18px; margin-top: 0; margin-bottom: 0; border-right: 1px solid #e2e8f0; border-left: 1px solid #e2e8f0;">
+        <p style="margin: 0 0 10px 0; font-size: 14px; font-weight: bold; color: #92400e;">⚡ Fast-Track Lead Follow-Up Actions:</p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <a href="tel:${cleanPhone}" style="background-color: #2563eb; color: #ffffff; padding: 9px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 13px; display: inline-block;">📞 1-Tap Call (${details.clientPhone})</a>
+          <a href="https://wa.me/${intlPhone}?text=Hello%20${encodeURIComponent(details.clientName)}%2C%20this%20is%20Angel%20from%20Salsa%20Guy%20Richmond%20following%20up%20on%20your%20event%20booking%20for%20${encodeURIComponent(details.eventName)}" target="_blank" style="background-color: #22c55e; color: #ffffff; padding: 9px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 13px; display: inline-block;">💬 1-Tap WhatsApp</a>
+        </div>
       </div>
 
       <div style="background-color: #ffffff; padding: 24px; border-radius: 0 0 8px 8px; border: 1px solid #e2e8f0; border-top: none;">
@@ -577,10 +586,11 @@ function sendAdminSubmittalNotification(details) {
           <h3 style="color: #b45309; margin: 0 0 10px 0; font-size: 16px;">📌 Step 1: Google Sheet Logged & Client Contact</h3>
           <table style="width: 100%; border-collapse: collapse; font-size: 14px; color: #334155;">
             <tr><td style="padding: 4px 0; font-weight: bold; width: 140px;">Request ID:</td><td><span style="background-color: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px; font-weight: bold;">${details.eventId}</span></td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Confirmed Budget:</td><td><span style="background-color: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 14px;">${details.budgetAmount || 'Pending Confirmation'}</span></td></tr>
             <tr><td style="padding: 4px 0; font-weight: bold;">Sheet Row:</td><td>Row #${details.rowNum} (<a href="${CONFIG.SPREADSHEET_URL}" target="_blank" style="color: #2563eb; text-decoration: none;">View Master Google Sheet</a>)</td></tr>
             <tr><td style="padding: 4px 0; font-weight: bold;">Client Name:</td><td>${details.clientName}</td></tr>
             <tr><td style="padding: 4px 0; font-weight: bold;">Email:</td><td><a href="mailto:${details.clientEmail}" style="color: #2563eb;">${details.clientEmail}</a></td></tr>
-            <tr><td style="padding: 4px 0; font-weight: bold;">Phone:</td><td>${details.clientPhone}</td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Phone:</td><td><a href="tel:${cleanPhone}" style="color: #2563eb; font-weight: bold;">${details.clientPhone}</a></td></tr>
             <tr><td style="padding: 4px 0; font-weight: bold;">Representing:</td><td>${details.representType}</td></tr>
           </table>
         </div>
@@ -868,6 +878,13 @@ function createDoc(templateId, type, eventName, rowData, folder, isValidDate, eD
       "Confirm you have a BUDGET for our participation": dataMap["Confirm you have a BUDGET for our participation"] || "",
       "Confirmed Budget Amount for Performance / Workshop": dataMap["Confirmed Budget Amount for Performance / Workshop"] || "",
       "Special Instructions, Song Requests or Notes": dataMap["Special Instructions, Song Requests or Notes"] || "",
+
+      // Digital E-Signature & Agreement Acceptance
+      "Signature": "____________________________________ (Digital Acceptance on File)",
+      "Client Signature": `${dataMap["Your Name"] || "Client Authorized Signatory"} (Digital Verification on File)`,
+      "Signature Date": Utilities.formatDate(new Date(), Session.getScriptTimeZone(), "MMMM dd, yyyy"),
+      "Electronic Acceptance": "Verified & Electronically Acknowledged via Salsa Guy Richmond LLC 2026 Portal",
+      "Agreement Status": "PENDING CONFIRMATION / DIGITALLY SUBMITTED",
 
       // Tracking
       "Event ID": dataMap["Event ID"] || ""

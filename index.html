@@ -666,6 +666,119 @@
       transform: translateY(-1px);
     }
 
+    /* 6-Step Visual Stepper Navigation */
+    .stepper-wrapper {
+      position: sticky;
+      top: 15px;
+      z-index: 100;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 12px 18px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    .stepper-progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .stepper-progress-fill {
+      height: 100%;
+      width: 16.66%;
+      background: linear-gradient(90deg, var(--primary-accent), var(--accent-gold));
+      transition: width 0.3s ease;
+    }
+    .stepper-steps {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      overflow-x: auto;
+    }
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 6px 10px;
+      border-radius: 20px;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+    .step-item:hover {
+      color: #FFF;
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .step-item.active {
+      color: #0f172a;
+      background: var(--accent-gold);
+    }
+    .step-item .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      color: inherit;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .step-item.active .step-num {
+      background: #0f172a;
+      color: var(--accent-gold);
+    }
+
+    /* Live Investment Quote Estimator */
+    .live-estimator-card {
+      background: linear-gradient(135deg, rgba(234, 179, 8, 0.12), rgba(220, 38, 38, 0.08));
+      border: 1.5px solid var(--accent-gold);
+      border-radius: var(--radius-md);
+      padding: 18px 22px;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    }
+    .live-estimator-range {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent-gold);
+    }
+    .apply-budget-btn {
+      background: var(--accent-gold);
+      color: #0f172a;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .apply-budget-btn:hover {
+      background: #FACC15;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(234, 179, 8, 0.35);
+    }
+
     /* Floating fast-track contact badge */
     .floating-contact-badge {
       position: fixed;
@@ -1166,6 +1279,38 @@
       <h1 class="brand-title" id="txtTitle" style="text-align: center; margin-bottom: 20px;">Event Request & Booking Questionnaire</h1>
     </div>
 
+    <!-- 6-Step Visual Progress Stepper -->
+    <div class="stepper-wrapper" id="stepperNav">
+      <div class="stepper-progress-bar">
+        <div class="stepper-progress-fill" id="stepperProgressFill"></div>
+      </div>
+      <div class="stepper-steps">
+        <a href="#sec1Title" class="step-item active" data-step="1" onclick="scrollToSection(event, 'sec1Title')">
+          <span class="step-num">1</span>
+          <span class="step-label">Location</span>
+        </a>
+        <a href="#sec2Title" class="step-item" data-step="2" onclick="scrollToSection(event, 'sec2Title')">
+          <span class="step-num">2</span>
+          <span class="step-label">Basics</span>
+        </a>
+        <a href="#sec3Title" class="step-item" data-step="3" onclick="scrollToSection(event, 'sec3Title')">
+          <span class="step-num">3</span>
+          <span class="step-label">Services</span>
+        </a>
+        <a href="#sec4Title" class="step-item" data-step="4" onclick="scrollToSection(event, 'sec4Title')">
+          <span class="step-num">4</span>
+          <span class="step-label">Venue</span>
+        </a>
+        <a href="#sec5Title" class="step-item" data-step="5" onclick="scrollToSection(event, 'sec5Title')">
+          <span class="step-num">5</span>
+          <span class="step-label">Contact</span>
+        </a>
+        <a href="#sec6Title" class="step-item" data-step="6" onclick="scrollToSection(event, 'sec6Title')">
+          <span class="step-num">6</span>
+          <span class="step-label">Final Steps</span>
+        </a>
+      </div>
+    </div>
       
     <!-- Booking Form Card -->
     <div class="form-card" id="formCard">
@@ -1192,7 +1337,8 @@
 
             <div class="form-group full-width">
               <label for="eventAddress" id="lblEventAddress">Where will the event take place? (Full Address or Venue Name) <span class="required">*</span></label>
-              <input type="text" id="eventAddress" name="eventAddress" placeholder="(e.g., 123 Main St, Richmond, VA 23220 or Venue Name)" spellcheck="true" required>
+              <input type="text" id="eventAddress" name="eventAddress" placeholder="(e.g., 123 Main St, Richmond, VA 23220 or Venue Name)" spellcheck="true" required oninput="calculateTravelMileage(this.value)">
+              <div id="travelMileageHelper" style="display:none; margin-top: 8px; font-size: 0.86rem; line-height: 1.4; padding: 8px 12px; border-radius: 8px; background: rgba(56, 189, 248, 0.08); border: 1px solid #38BDF8;"></div>
             </div>
 
             <!-- Out-of-State Travel & Logistics Conditional Block -->
@@ -1647,12 +1793,28 @@
           <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-volume-high"></i> Sound System Equipment</h4>
           <div class="form-group full-width" style="margin-bottom: 0;">
             <label for="soundEquipment" id="lblSoundEquipment">Sound System Equipment <span class="required">*</span></label>
-            <select id="soundEquipment" name="soundEquipment" required>
+            <select id="soundEquipment" name="soundEquipment" required onchange="calculateLiveEstimate()">
               <option value="" selected disabled>-- Select Option --</option>
               <option value="Provided by Venue">Provided by Venue (Venue provides sound system, PA, and microphone)</option>
               <option value="Performer Must Provide PA">Performer Must Provide PA (Salsa Guy Richmond must bring portable PA system)</option>
             </select>
           </div>
+        </div>
+
+        <!-- Interactive Live Investment Estimator Widget -->
+        <div id="liveQuoteEstimatorCard" class="live-estimator-card" style="margin-bottom: 25px;">
+          <div>
+            <div style="font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); font-weight: 700; display: flex; align-items: center; gap: 6px;">
+              <i class="fa-solid fa-calculator" style="color: var(--accent-gold);"></i> Real-Time Estimated Investment Range:
+            </div>
+            <div class="live-estimator-range" id="liveQuoteRangeText">$350 – $750 USD</div>
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 2px;" id="liveQuoteSummaryText">
+              *Calculated dynamically based on your selected service tier & duration.
+            </div>
+          </div>
+          <button type="button" class="apply-budget-btn" onclick="applyLiveEstimateToBudget()">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Apply to Confirmed Budget
+          </button>
         </div>
 
 
@@ -3554,6 +3716,188 @@ function changeLanguage(langCode) {
 
     
     
+    // 1. Smooth Scroll to Section & Active State in Stepper
+    function scrollToSection(e, secId) {
+      if (e) e.preventDefault();
+      const el = document.getElementById(secId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // 2. Window Scroll Listener for 6-Step Stepper Progress
+    window.addEventListener('scroll', () => {
+      const sections = [
+        { id: 'sec1Title', step: 1 },
+        { id: 'sec2Title', step: 2 },
+        { id: 'sec3Title', step: 3 },
+        { id: 'sec4Title', step: 4 },
+        { id: 'sec5Title', step: 5 },
+        { id: 'sec6Title', step: 6 }
+      ];
+
+      const scrollPos = window.scrollY + 200;
+      let currentStep = 1;
+
+      sections.forEach(s => {
+        const el = document.getElementById(s.id);
+        if (el && el.getBoundingClientRect().top + window.scrollY <= scrollPos) {
+          currentStep = s.step;
+        }
+      });
+
+      document.querySelectorAll('.stepper-steps .step-item').forEach(btn => {
+        const step = parseInt(btn.getAttribute('data-step'), 10);
+        if (step === currentStep) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      const fill = document.getElementById('stepperProgressFill');
+      if (fill) {
+        fill.style.width = (currentStep / 6 * 100) + '%';
+      }
+    });
+
+    // 3. Virginia & Out-of-State Travel Distance Mileage Helper
+    function calculateTravelMileage(addr) {
+      const helper = document.getElementById('travelMileageHelper');
+      if (!helper) return;
+      if (!addr || addr.trim().length < 3) {
+        helper.style.display = 'none';
+        helper.innerHTML = '';
+        return;
+      }
+
+      const q = addr.toLowerCase();
+      let travelMsg = '';
+
+      if (q.includes('richmond') || q.includes('henrico') || q.includes('chesterfield') || q.includes('glen allen') || q.includes('midlothian') || q.includes('mechanicsville') || q.includes('short pump')) {
+        travelMsg = `<i class="fa-solid fa-location-dot" style="color: #22C55E; margin-right: 6px;"></i> <strong>Greater Richmond Metro (Local):</strong> Standard local arrival. No travel surcharge required.`;
+      } else if (q.includes('charlottesville') || q.includes('albemarle') || q.includes('orange')) {
+        travelMsg = `<i class="fa-solid fa-car" style="color: var(--accent-gold); margin-right: 6px;"></i> <strong>Charlottesville Area (~70 miles from Richmond):</strong> Standard Virginia travel reimbursement applies.`;
+      } else if (q.includes('williamsburg') || q.includes('newport news') || q.includes('hampton')) {
+        travelMsg = `<i class="fa-solid fa-car" style="color: var(--accent-gold); margin-right: 6px;"></i> <strong>Peninsula / Williamsburg (~55–75 miles from Richmond):</strong> Standard travel allowance applies.`;
+      } else if (q.includes('norfolk') || q.includes('virginia beach') || q.includes('chesapeake') || q.includes('portsmouth') || q.includes('suffolk')) {
+        travelMsg = `<i class="fa-solid fa-car-side" style="color: #38BDF8; margin-right: 6px;"></i> <strong>Hampton Roads / Coastal Virginia (~95–110 miles from Richmond):</strong> Mileage allowance applies; hotel lodging requested for multi-set/evening bookings.`;
+      } else if (q.includes('alexandria') || q.includes('arlington') || q.includes('fairfax') || q.includes('dc') || q.includes('washington') || q.includes('loudoun') || q.includes('prince william') || q.includes('tysons') || q.includes('reston')) {
+        travelMsg = `<i class="fa-solid fa-van-shuttle" style="color: #EC4899; margin-right: 6px;"></i> <strong>Northern Virginia / Washington D.C. (~105–125 miles from Richmond):</strong> Standard mileage and hotel lodging per diem applies.`;
+      } else if (q.includes('roanoke') || q.includes('lynchburg') || q.includes('harrisonburg') || q.includes('winchester') || q.includes('blacksburg') || q.includes('staunton')) {
+        travelMsg = `<i class="fa-solid fa-mountain" style="color: #A855F7; margin-right: 6px;"></i> <strong>Western / Shenandoah Virginia (~110–165 miles from Richmond):</strong> Travel per diem and hotel accommodations required.`;
+      } else if (q.includes('maryland') || q.includes('md') || q.includes('north carolina') || q.includes('nc') || q.includes('new york') || q.includes('ny') || q.includes('florida') || q.includes('fl')) {
+        travelMsg = `<i class="fa-solid fa-plane" style="color: #F97316; margin-right: 6px;"></i> <strong>Out-of-State Domestic Travel:</strong> Flight/ground transport, hotel lodging, and performer per diem required.`;
+      } else {
+        travelMsg = `<i class="fa-solid fa-map-pin" style="color: var(--accent-gold); margin-right: 6px;"></i> <strong>Venue Address Logged:</strong> Distance and travel per diem will be calculated automatically upon proposal generation.`;
+      }
+
+      helper.innerHTML = travelMsg;
+      helper.style.display = 'block';
+    }
+
+    // 4. Interactive Live Investment Estimator
+    function calculateLiveEstimate() {
+      const serviceType = document.getElementById('serviceTypeRequested')?.value || '';
+      const troupe = document.getElementById('troupeHeadcount')?.value || '';
+      const duration = document.getElementById('serviceTimeSelect')?.value || '';
+      const sound = document.getElementById('soundEquipment')?.value || '';
+
+      let min = 350;
+      let max = 750;
+      let summaryParts = [];
+
+      // Troupe Size Base
+      if (troupe.includes('Solo') || troupe.includes('1 Performer')) {
+        min = 350; max = 500;
+        summaryParts.push('Solo Performer/Instructor');
+      } else if (troupe.includes('Duo') || troupe.includes('2 Performers')) {
+        min = 550; max = 850;
+        summaryParts.push('Duo Showcase (2 performers)');
+      } else if (troupe.includes('Core Showcase Troupe') || troupe.includes('4 Dancers')) {
+        min = 1000; max = 1500;
+        summaryParts.push('Core Troupe (4 dancers)');
+      } else if (troupe.includes('Full Cultural Ensemble') || troupe.includes('6–8 Performers')) {
+        min = 1800; max = 2800;
+        summaryParts.push('Full Ensemble (6–8 performers)');
+      } else if (troupe.includes('Custom Festival') || troupe.includes('8+ Cast')) {
+        min = 2800; max = 4500;
+        summaryParts.push('Festival Production (8+ cast)');
+      } else {
+        if (serviceType.includes('Both')) {
+          min = 850; max = 1600;
+          summaryParts.push('Showcase + Workshop Combo');
+        } else if (serviceType.includes('Dance Instruction')) {
+          min = 350; max = 600;
+          summaryParts.push('Dance Instruction');
+        } else if (serviceType.includes('Performance')) {
+          min = 600; max = 1200;
+          summaryParts.push('Performance Showcase');
+        }
+      }
+
+      // Duration Multiplier
+      if (duration.includes('1.5 hours')) {
+        min += 100; max += 200;
+      } else if (duration.includes('2 hours')) {
+        min += 200; max += 400;
+      } else if (duration.includes('Half Day')) {
+        min = Math.max(min * 1.5, 1200);
+        max = Math.max(max * 1.6, 2500);
+        summaryParts.push('Half-Day Booking');
+      } else if (duration.includes('Full Day')) {
+        min = Math.max(min * 2.2, 2200);
+        max = Math.max(max * 2.4, 4500);
+        summaryParts.push('Full-Day Festival');
+      }
+
+      // Sound System addition
+      if (sound.includes('Performer Must Provide PA')) {
+        min += 150; max += 250;
+        summaryParts.push('Portable PA Included');
+      }
+
+      const rangeText = `$${min.toLocaleString()} – $${max.toLocaleString()} USD`;
+      const rangeEl = document.getElementById('liveQuoteRangeText');
+      const summaryEl = document.getElementById('liveQuoteSummaryText');
+
+      if (rangeEl) rangeEl.textContent = rangeText;
+      if (summaryEl) {
+        summaryEl.textContent = summaryParts.length > 0
+          ? `*Estimate based on: ${summaryParts.join(' • ')}`
+          : '*Calculated dynamically based on your selected service tier & duration.';
+      }
+
+      window.currentCalculatedEstimate = { min, max, rangeText };
+    }
+
+    // 5. Apply Live Estimate to Budget in Section 5
+    function applyLiveEstimateToBudget() {
+      if (!window.currentCalculatedEstimate) calculateLiveEstimate();
+      const est = window.currentCalculatedEstimate;
+      const budgetInput = document.getElementById('budgetAmount');
+      const hasBudgetSel = document.getElementById('hasBudget');
+
+      if (budgetInput && est) {
+        budgetInput.value = est.rangeText;
+      }
+      if (hasBudgetSel) {
+        hasBudgetSel.value = 'Yes - Budget Confirmed';
+      }
+
+      // Smooth scroll to Section 5 with pulse animation
+      const sec5 = document.getElementById('sec5Title');
+      if (sec5) {
+        sec5.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        budgetInput.focus();
+        budgetInput.style.transition = 'box-shadow 0.3s ease';
+        budgetInput.style.boxShadow = '0 0 15px rgba(234, 179, 8, 0.8)';
+        setTimeout(() => {
+          budgetInput.style.boxShadow = '';
+        }, 1500);
+      }
+    }
+
     function toggleSettingsMenu(e) {
       if (e) {
         e.preventDefault();
