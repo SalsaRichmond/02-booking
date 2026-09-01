@@ -1,10 +1,16 @@
-import docx
-from docx.shared import Inches, Pt, RGBColor
-from docx.enum.text import WD_ALIGN_PARAGRAPH
-from docx.enum.table import WD_TABLE_ALIGNMENT, WD_ALIGN_VERTICAL
-from docx.oxml import OxmlElement, parse_xml
-from docx.oxml.ns import nsdecls, qn
 import os
+import sys
+
+try:
+    import docx
+    from docx.shared import Inches, Pt, RGBColor
+    from docx.enum.text import WD_ALIGN_PARAGRAPH
+    from docx.enum.table import WD_TABLE_ALIGNMENT, WD_ALIGN_VERTICAL
+    from docx.oxml import OxmlElement, parse_xml
+    from docx.oxml.ns import nsdecls, qn
+except ImportError:
+    print("python-docx is not installed in the active environment. Run: py -m pip install python-docx")
+    docx = None
 
 def set_cell_background(cell, hex_color):
     tcPr = cell._tc.get_or_add_tcPr()
@@ -17,6 +23,9 @@ def set_cell_margins(cell, top=100, bottom=100, left=150, right=150):
     tcPr.append(tcMar)
 
 def create_recommendations_doc(filepath):
+    if not docx:
+        print("Cannot create docx file: python-docx is required.")
+        return
     doc = docx.Document()
 
     # Set normal margins (0.8 inch)

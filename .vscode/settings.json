@@ -1,0 +1,9 @@
+{
+  "python.defaultInterpreterPath": "C:\\Users\\Angel A Rodriguez\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+  "python.analysis.extraPaths": [
+    "C:\\Users\\Angel A Rodriguez\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages"
+  ],
+  "python.autoComplete.extraPaths": [
+    "C:\\Users\\Angel A Rodriguez\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages"
+  ]
+}
