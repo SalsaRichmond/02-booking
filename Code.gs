@@ -103,6 +103,7 @@ function setupMasterHeaders() {
     // 3. Location & Event Classification Routing
     "Is this event located within the Commonwealth of Virginia (USA)?",
     "Where will the event take place? (ADDRESS)",
+    "Out-of-State Travel & Logistics Arrangement",
     "Select Event Classification:",
 
     // 4A. Conditional: Large Public Event Details
@@ -127,6 +128,7 @@ function setupMasterHeaders() {
     "International: Costumes, Props & Customs Considerations",
 
     // 5A. Repertoire Requests
+    "Service Type Requested",
     "Repertoire: Mexico / North American Dances",
     "Repertoire: Caribbean Dances (Cuba & Puerto Rico)",
     "Repertoire: Central American Dances (El Salvador)",
@@ -1014,6 +1016,29 @@ function handleFormSubmitJson(data) {
   const headers = getUniqueHeaders(sheet);
   let newRow = new Array(headers.length).fill("");
 
+  // Auto-categorize selected repertoire items into regional buckets if unified array/string provided
+  if (data.performanceServices) {
+    const perfList = Array.isArray(data.performanceServices) 
+      ? data.performanceServices 
+      : String(data.performanceServices).split(",").map(s => s.trim());
+    
+    if (!data.repertoireMexico || data.repertoireMexico.length === 0) {
+      data.repertoireMexico = perfList.filter(item => /Jalisco|Veracruz|Michoac|Viejitos|Huasteco|Chiapas|Sinaloa|Norte|Nayarit|Oaxaca|Mexico|Mexicana/i.test(item));
+    }
+    if (!data.repertoireCaribbean || data.repertoireCaribbean.length === 0) {
+      data.repertoireCaribbean = perfList.filter(item => /Puerto Rico|Bomba|Plena|Salsa|Cuba|Son|Rueda|Dominican|Bachata|Merengue|Caribbean/i.test(item));
+    }
+    if (!data.repertoireCentralAmerica || data.repertoireCentralAmerica.length === 0) {
+      data.repertoireCentralAmerica = perfList.filter(item => /Salvador|Carbonero|Cortadoras|Guatemala|Honduras|Nicaragua|Costa Rica|Panam|Central/i.test(item));
+    }
+    if (!data.repertoireSouthAmerica || data.repertoireSouthAmerica.length === 0) {
+      data.repertoireSouthAmerica = perfList.filter(item => /Colombia|Cumbia|Mapal|Bullerengue|Argentina|Tango|Chacarera|Per|Venezuela|Joropo|South/i.test(item));
+    }
+    if (!data.repertoireTheatrical || data.repertoireTheatrical.length === 0) {
+      data.repertoireTheatrical = perfList.filter(item => /Llorona|Muertos|Cantor|Singer|Ranchera|Mariachi|Bolero|Desfile|Parade|Carnival|Parranda|Navide/i.test(item));
+    }
+  }
+
   const fieldHeaderMap = [
     { key: "timestamp", aliases: ["Submission Date", "Timestamp", "Date Submitted", "Date", "Submission Timestamp"] },
     { key: "requestId", aliases: ["Request ID", "Request Tracking ID", "Tracking ID"] },
@@ -1036,6 +1061,7 @@ function handleFormSubmitJson(data) {
     { key: "admissionType", aliases: ["Type of Event Admission", "What type of event ADMISSION is it?", "Admission Type", "Admission"] },
     { key: "regionalLocation", aliases: ["Is this event located within the Commonwealth of Virginia (USA)?", "Regional Location & Jurisdiction Check", "Regional Location", "Virginia Check"] },
     { key: "eventAddress", aliases: ["Where will the event take place? (ADDRESS)", "Where will the event take place", "Address", "Location"] },
+    { key: "outOfStateLogistics", aliases: ["Out-of-State Travel & Logistics Arrangement", "Out-of-State Travel & Logistics Arrangement (Conditional: Out-of-State)", "Out-of-State Logistics", "Travel Logistics", "Lodging & Travel Logistics", "Out of State Logistics"] },
     { key: "eventTypeScale", aliases: ["Select Event Classification:", "Event Type Scale", "Scale of Event", "Event Scale", "Service Category / Scope", "Service Category"] },
     { key: "serviceRecurrence", aliases: ["Will the PERFORMANCE SERVICES be...", "Will the PERFORMANCE SERVICES be ...", "Service Recurrence", "Recurrence"] },
     { key: "nonProfitName", aliases: ["501(c) Non-Profit Name (If Applicable)", "FOR 501(C) ONLY - Which 501(C) do you represent?", "501c Non Profit Name", "501(c) Organization"] },
@@ -1052,6 +1078,7 @@ function handleFormSubmitJson(data) {
     { key: "intlVisaSupport", aliases: ["International: Visa & Legal Documentation Support", "Visa & Legal Documentation Support", "Visa Support", "Visa Legal"] },
     { key: "intlPaymentTerms", aliases: ["International: Preferred Currency & Payment Terms", "Preferred Currency & Payment Terms", "Preferred Currency", "Payment Terms"] },
     { key: "intlCustomsConsiderations", aliases: ["International: Costumes, Props & Customs Considerations", "Costumes, Props & Customs Considerations", "Customs Notes", "Customs Considerations"] },
+    { key: "serviceTypeRequested", aliases: ["Service Type Requested", "Service Category / Scope", "Service Category", "Primary Service", "Requested Service", "Service Selection"] },
     { key: "repertoireMexico", aliases: ["Repertoire: Mexico / North American Dances"] },
     { key: "repertoireCaribbean", aliases: ["Repertoire: Caribbean Dances (Cuba & Puerto Rico)"] },
     { key: "repertoireCentralAmerica", aliases: ["Repertoire: Central American Dances (El Salvador)"] },
@@ -1072,7 +1099,7 @@ function handleFormSubmitJson(data) {
     { key: "hospitalityProvided", aliases: ["WILL YOU PROVIDE the performers with (Water, Hospitality, Meal, Green Room)", "WILL YOU PROVIDE the performers with:", "Hospitality Provided", "Performer Provisions", "Provisions"] },
     { key: "dressingRoomDetails", aliases: ["Dressing Room / Costume Changing Instructions", "Will we have a place to change COSTUMES if needed? If so, please provide instructions.", "Dressing Room Instructions", "Costume Change Room"] },
     { key: "hasBudget", aliases: ["Confirm you have a BUDGET for our participation", "Confirm Budget", "Has Budget"] },
-    { key: "confirmedBudget", aliases: ["Confirmed Budget Amount for Performance / Workshop", "Confirmed Budget Amount", "Confirmed Budget", "Budget Amount"] },
+    { key: "confirmedBudget", aliases: ["Confirmed Budget Amount for Performance / Workshop", "Confirmed Budget Amount", "Confirmed Budget", "Budget Amount", "budgetAmount"] },
     { key: "notes", aliases: ["Special Instructions, Song Requests or Notes", "SPECIAL REQUESTS or Song Preferences", "Notes", "Special Requests"] },
     { key: "termsAgreed", aliases: ["Terms of Service & Privacy Policy Agreement", "Terms Agreed", "Terms of Service"] },
     { key: "sendEmailReceipt", aliases: ["Send Email Receipt", "Email Receipt", "Receipt"] },

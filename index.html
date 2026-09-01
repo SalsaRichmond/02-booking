@@ -577,7 +577,89 @@
       color: #FFF;
     }
 
+    /* Draft Restore Toast Notification */
+    .draft-restore-toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(220, 38, 38, 0.4);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(220, 38, 38, 0.2);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 12px 20px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      z-index: 9999;
+      color: #F8FAFC;
+      font-size: 0.95rem;
+      font-weight: 500;
+      animation: slideUpToast 0.3s ease-out forwards;
+      transition: opacity 0.3s ease;
+    }
+    @keyframes slideUpToast {
+      from { transform: translate(-50%, 40px); opacity: 0; }
+      to { transform: translate(-50%, 0); opacity: 1; }
+    }
+    .draft-toast-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .draft-toast-content i {
+      color: #F59E0B;
+      font-size: 1.1rem;
+    }
+    .draft-toast-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-clear-draft {
+      background: rgba(220, 38, 38, 0.25);
+      border: 1px solid rgba(220, 38, 38, 0.6);
+      color: #FCA5A5;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-clear-draft:hover {
+      background: rgba(220, 38, 38, 0.7);
+      color: #FFF;
+    }
+    .btn-dismiss-draft {
+      background: none;
+      border: none;
+      color: #94A3B8;
+      font-size: 1.3rem;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0 4px;
+      transition: color 0.2s;
+    }
+    .btn-dismiss-draft:hover {
+      color: #FFF;
+    }
+
     @media (max-width: 640px) {
+      .draft-restore-toast {
+        width: 92%;
+        border-radius: 16px;
+        flex-direction: column;
+        gap: 10px;
+        bottom: 16px;
+        padding: 14px 16px;
+      }
+      .draft-toast-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
       .grid-2 {
         grid-template-columns: 1fr;
       }
@@ -3741,7 +3823,128 @@ function saveUserSettings() {
       } catch(e) {}
     }
 
-        function getCheckedValues(name) {
+    function saveFormDraft() {
+      try {
+        if (!bookingForm) return;
+        const draft = {};
+        const inputs = bookingForm.querySelectorAll('input:not([type="file"]), select, textarea');
+        inputs.forEach(el => {
+          if (!el.name && !el.id) return;
+          const key = el.id || el.name;
+          if (el.type === 'checkbox') {
+            if (el.name && (el.name === 'perfServices' || el.name === 'otherServices' || el.name === 'generalFormats')) {
+              if (!draft[el.name]) draft[el.name] = [];
+              if (el.checked) draft[el.name].push(el.value);
+            } else {
+              draft[key] = el.checked;
+            }
+          } else if (el.type === 'radio') {
+            if (el.checked) draft[el.name] = el.value;
+          } else {
+            draft[key] = el.value;
+          }
+        });
+        localStorage.setItem('sgr_booking_draft_2026', JSON.stringify(draft));
+      } catch(e) {
+        console.warn('Unable to auto-save draft to localStorage:', e);
+      }
+    }
+
+    function restoreFormDraft() {
+      try {
+        const raw = localStorage.getItem('sgr_booking_draft_2026');
+        if (!raw) return;
+        const draft = JSON.parse(raw);
+        if (!draft || Object.keys(draft).length === 0) return;
+
+        let hasData = false;
+        Object.entries(draft).forEach(([key, val]) => {
+          if (Array.isArray(val)) {
+            val.forEach(v => {
+              const cb = document.querySelector(`input[name="${key}"][value="${CSS.escape(v)}"]`);
+              if (cb) {
+                cb.checked = true;
+                hasData = true;
+              }
+            });
+          } else {
+            const el = document.getElementById(key) || document.querySelector(`[name="${key}"]`);
+            if (el) {
+              if (el.type === 'checkbox') {
+                el.checked = Boolean(val);
+                if (val) hasData = true;
+              } else if (el.type === 'radio') {
+                const r = document.querySelector(`input[name="${key}"][value="${CSS.escape(val)}"]`);
+                if (r) {
+                  r.checked = true;
+                  hasData = true;
+                }
+              } else {
+                el.value = val;
+                if (val && String(val).trim()) hasData = true;
+              }
+            }
+          }
+        });
+
+        if (hasData) {
+          updateConditionalSections();
+          const svcTypeEl = document.getElementById('serviceTypeRequested');
+          if (svcTypeEl) toggleServiceCategories(svcTypeEl.value);
+          showDraftToast();
+        }
+      } catch(e) {
+        console.warn('Error restoring draft:', e);
+      }
+    }
+
+    function clearFormDraft() {
+      try {
+        localStorage.removeItem('sgr_booking_draft_2026');
+        const toast = document.getElementById('draftRestoreToast');
+        if (toast) toast.remove();
+      } catch(e) {}
+    }
+
+    function showDraftToast() {
+      if (document.getElementById('draftRestoreToast')) return;
+      const toast = document.createElement('div');
+      toast.id = 'draftRestoreToast';
+      toast.className = 'draft-restore-toast';
+      toast.innerHTML = `
+        <div class="draft-toast-content">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>We restored your in-progress event draft.</span>
+        </div>
+        <div class="draft-toast-actions">
+          <button type="button" class="btn-clear-draft" id="btnClearDraft">Clear Draft</button>
+          <button type="button" class="btn-dismiss-draft" id="btnDismissDraft" aria-label="Dismiss">&times;</button>
+        </div>
+      `;
+      document.body.appendChild(toast);
+
+      document.getElementById('btnClearDraft')?.addEventListener('click', () => {
+        clearFormDraft();
+        if (bookingForm) bookingForm.reset();
+        updateConditionalSections();
+        const svcTypeEl = document.getElementById('serviceTypeRequested');
+        if (svcTypeEl) toggleServiceCategories(svcTypeEl.value);
+        toast.remove();
+      });
+
+      document.getElementById('btnDismissDraft')?.addEventListener('click', () => {
+        toast.remove();
+      });
+
+      setTimeout(() => {
+        if (toast && toast.parentNode) {
+          toast.style.opacity = '0';
+          setTimeout(() => toast.remove(), 400);
+        }
+      }, 10000);
+    }
+
+    function getCheckedValues(name) {
       return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value).join(", ");
     }
 
@@ -3760,7 +3963,7 @@ function saveUserSettings() {
         hearAboutUs: document.getElementById('hearAboutUs')?.value || '',
         eventName: document.getElementById('eventName')?.value.trim() || '',
         eventCoordinator: document.getElementById('eventCoordinator')?.value.trim() || '',
-        eventPurpose: document.getElementById('eventDescription')?.value.trim() || '',
+        eventPurpose: document.getElementById('eventPurpose')?.value?.trim() || document.getElementById('eventDescription')?.value?.trim() || '',
         eventWebsites: document.getElementById('eventWebsites')?.value.trim() || '',
         eventDescription: document.getElementById('eventDescription')?.value.trim() || '',
         eventDate: document.getElementById('eventDate')?.value || '',
@@ -3844,10 +4047,12 @@ function saveUserSettings() {
           eventId = "BTG-REQ-" + Date.now().toString(36).toUpperCase();
         }
 
+        clearFormDraft();
         showConfirmationScreen(eventId);
 
       } catch (err) {
         console.error("Submission Error:", err);
+        clearFormDraft();
         showConfirmationScreen("BTG-REQ-" + Date.now().toString(36).toUpperCase());
       } finally {
         submitBtn.disabled = false;
@@ -3880,6 +4085,7 @@ function saveUserSettings() {
     }
 
     if (resetBtn) resetBtn.addEventListener('click', () => {
+      clearFormDraft();
       bookingForm.reset();
       toggleServiceCategories("");
       uploadedFileData = null;
@@ -3938,6 +4144,7 @@ function saveUserSettings() {
     // Attach real-time input listener with debouncing (300ms)
     document.addEventListener('DOMContentLoaded', () => {
       loadUserSettings();
+      restoreFormDraft();
       translateAllSelectOptions(currentLang);
       updateConditionalSections();
 
@@ -3945,10 +4152,20 @@ function saveUserSettings() {
         scanFormForTypos();
       }, 300);
 
+      const debouncedSaveDraft = debounce(() => {
+        saveFormDraft();
+      }, 400);
+
       const inputs = document.querySelectorAll('input[type="text"], textarea');
       inputs.forEach(inp => {
         inp.addEventListener('input', debouncedScan);
       });
+
+      if (bookingForm) {
+        bookingForm.addEventListener('input', debouncedSaveDraft);
+        bookingForm.addEventListener('change', debouncedSaveDraft);
+      }
+
       scanFormForTypos();
     });
   </script>
