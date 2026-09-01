@@ -926,9 +926,19 @@ function createDoc(templateId, type, eventName, rowData, folder, isValidDate, eD
           safeReplaceText(e, leftover, "");
         });
       }
-    });
-
     doc.saveAndClose();
+
+    // Auto-Export companion PDF to the event's Google Drive folder
+    try {
+      if (folder) {
+        const pdfBlob = copy.getAs("application/pdf");
+        pdfBlob.setName(`${type} - ${eventName}.pdf`);
+        folder.createFile(pdfBlob);
+      }
+    } catch (pdfErr) {
+      console.warn("Companion PDF auto-export skipped for " + type + ": " + pdfErr.message);
+    }
+
     return copy.getUrl();
   } catch (e) { 
     console.error("Error creating document: " + e.message);
