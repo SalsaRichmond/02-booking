@@ -666,18 +666,78 @@
       transform: translateY(-1px);
     }
 
+    /* Floating fast-track contact badge */
+    .floating-contact-badge {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1.5px solid var(--accent-gold);
+      border-radius: 50px;
+      padding: 8px 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 15px rgba(234, 179, 8, 0.25);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: #FFF;
+      animation: badgeSlideUp 0.6s ease-out;
+    }
+    @keyframes badgeSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .contact-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.8rem;
+      transition: all 0.2s ease;
+    }
+    .whatsapp-pill {
+      background: #25D366;
+      color: #FFF;
+    }
+    .whatsapp-pill:hover {
+      background: #20BA5A;
+      transform: scale(1.05);
+    }
+    .phone-pill {
+      background: rgba(255, 255, 255, 0.15);
+      color: #FFF;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+    .phone-pill:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: scale(1.05);
+    }
+
     @media (max-width: 640px) {
+      .floating-contact-badge {
+        bottom: 12px;
+        right: 12px;
+        left: 12px;
+        justify-content: center;
+        border-radius: 12px;
+      }
       .draft-restore-toast {
         width: 92%;
-        border-radius: 16px;
+        right: 4%;
+        left: 4%;
         flex-direction: column;
+        align-items: flex-start;
         gap: 10px;
-        bottom: 16px;
-        padding: 14px 16px;
       }
       .draft-toast-actions {
         width: 100%;
-        justify-content: space-between;
+        justify-content: flex-end;
       }
       .grid-2 {
         grid-template-columns: 1fr;
@@ -690,6 +750,51 @@
       }
       .brand-title {
         font-size: 2rem;
+      }
+    }
+  
+    @media print {
+      body {
+        background: #FFF !important;
+        color: #000 !important;
+        font-size: 11pt !important;
+      }
+      .top-controls-row, .theme-settings-details, .btn-clear-draft, .draft-restore-toast,
+      .floating-contact-badge, .submit-btn, .ask-another-box, .app-footer, .file-upload-box,
+      .budget-chip-btn, .bg-mesh, .noise-overlay, .theme-backdrop, .details-btn {
+        display: none !important;
+      }
+      .form-card, .success-card {
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .app-header {
+        border-bottom: 2px solid #DC2626 !important;
+        padding-bottom: 12px !important;
+        margin-bottom: 16px !important;
+      }
+      .app-logo-img {
+        height: 60px !important;
+      }
+      .section-title {
+        color: #DC2626 !important;
+        border-bottom: 1px solid #DDD !important;
+        font-size: 13pt !important;
+        page-break-after: avoid;
+      }
+      input, select, textarea {
+        border: 1px solid #DDD !important;
+        color: #000 !important;
+        background: #FFF !important;
+        font-size: 10pt !important;
+      }
+      .event-id-badge {
+        background: #F3F4F6 !important;
+        color: #000 !important;
+        border: 1px solid #999 !important;
       }
     }
   
@@ -1065,6 +1170,8 @@
     <!-- Booking Form Card -->
     <div class="form-card" id="formCard">
       <form id="bookingForm" novalidate>
+        <!-- Bot Shield Honeypot -->
+        <input type="text" id="website_hp" name="website_hp" style="display:none !important;" tabindex="-1" autocomplete="off">
         
         <!-- SECTION 1: CONTACT & ORGANIZER INFORMATION -->
         <div class="section-title" id="sec1Title">
@@ -1653,6 +1760,19 @@
               <label for="otherPerfServices" id="lblOtherPerfServices">Any other PERFORMANCE SERVICES you wish, but are not listed above?</label>
               <input type="text" id="otherPerfServices" name="otherPerfServices" placeholder="Describe any custom performance services..." spellcheck="true">
             </div>
+
+            <!-- Troupe Headcount / Ensemble Size Customizer -->
+            <div class="form-group full-width" style="margin-top: 15px;">
+              <label for="troupeHeadcount" id="lblTroupeHeadcount">Requested Troupe Headcount / Ensemble Size</label>
+              <select id="troupeHeadcount" name="troupeHeadcount">
+                <option value="" selected>-- Select Performer Headcount (Optional) --</option>
+                <option value="Solo Performer / Instructor (1 Performer)">Solo Performer / Instructor (1 Performer)</option>
+                <option value="Duo Showcase / Couple (2 Performers)">Duo Showcase / Couple (2 Performers)</option>
+                <option value="Core Showcase Troupe (4 Dancers)">Core Showcase Troupe (4 Dancers)</option>
+                <option value="Full Cultural Ensemble (6–8 Performers with Live Music / Carolers)">Full Cultural Ensemble (6–8 Performers with Live Music / Carolers)</option>
+                <option value="Custom Festival Production (8+ Cast Members)">Custom Festival Production (8+ Cast Members)</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -1943,6 +2063,16 @@
               <i class="fa-solid fa-file-pdf"></i> <span id="btnReportText">Print / Save Summary Report</span>
             </button>
           </div>
+
+          <!-- Calendar Integration Group -->
+          <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(234, 179, 8, 0.2); display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+            <a id="btnAddToGoogleCal" href="#" target="_blank" class="report-btn" style="background: rgba(34, 197, 94, 0.15); border: 1px solid #22C55E; color: #22C55E; text-decoration: none;">
+              <i class="fa-solid fa-calendar-plus"></i> <span id="btnGoogleCalText">Add to Google Calendar</span>
+            </a>
+            <button type="button" id="btnDownloadIcs" class="report-btn" style="background: rgba(168, 85, 247, 0.15); border: 1px solid #A855F7; color: #A855F7;">
+              <i class="fa-solid fa-calendar-days"></i> <span id="btnIcsText">Download iCal / Outlook (.ics)</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -1953,6 +2083,17 @@
         <a href="https://www.salsarichmond.com/contact-info/privacy-policy" target="_blank" id="lblFooterPrivacy" style="color: var(--accent-gold); text-decoration: underline; margin: 0 4px;">Privacy Policy</a>
       </footer>
 
+    </div>
+
+    <!-- Floating Fast-Track Contact Badge -->
+    <div class="floating-contact-badge" id="floatingContactBadge">
+      <span>⚡ <strong>Short-Notice Event?</strong></span>
+      <a href="https://wa.me/18045550199?text=Hello%20Salsa%20Guy%20Richmond%2C%20I%20have%20an%20urgent%20event%20booking%20inquiry!" target="_blank" class="contact-pill whatsapp-pill" title="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+      </a>
+      <a href="sms:+18045550199" class="contact-pill phone-pill" title="Direct SMS / Text">
+        <i class="fa-solid fa-comment-sms"></i> SMS / Call
+      </a>
     </div>
 
   <script>
@@ -3458,8 +3599,11 @@ function changeLanguage(langCode) {
       if (document.getElementById('sec6Title') && t.sec6) document.getElementById('sec6Title').innerHTML = t.sec6;
       document.getElementById('sec5Title').innerHTML = t.sec5;
       document.getElementById('sec7Title').innerHTML = t.sec7;
-      document.getElementById('lblNotes').textContent = t.notes;
-      document.getElementById('lblTerms').innerHTML = t.terms + ' <span class="required">*</span>';
+      if (document.getElementById('lblNotes')) document.getElementById('lblNotes').textContent = t.notes;
+      if (document.getElementById('lblTerms')) document.getElementById('lblTerms').innerHTML = t.terms + ' <span class="required">*</span>';
+      if (document.getElementById('lblTroupeHeadcount') && t.troupeHeadcount) document.getElementById('lblTroupeHeadcount').textContent = t.troupeHeadcount;
+      if (document.getElementById('btnGoogleCalText') && t.btnGoogleCalText) document.getElementById('btnGoogleCalText').textContent = t.btnGoogleCalText;
+      if (document.getElementById('btnIcsText') && t.btnIcsText) document.getElementById('btnIcsText').textContent = t.btnIcsText;
 
       if (document.getElementById('lblPressKitTitle')) document.getElementById('lblPressKitTitle').textContent = t.pressKitTitle;
       if (document.getElementById('lblPressKitDesc')) document.getElementById('lblPressKitDesc').textContent = t.pressKitDesc;
@@ -3978,11 +4122,20 @@ function saveUserSettings() {
     if (bookingForm) bookingForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       
+      const hp = document.getElementById('website_hp')?.value;
+      if (hp) {
+        console.warn("Bot submission blocked via honeypot.");
+        clearFormDraft();
+        showConfirmationScreen("BTG-REQ-SPAM-PREVENTED", {});
+        return;
+      }
+
       submitBtn.disabled = true;
       submitBtn.innerHTML = `<span>Processing...</span> <i class="fa-solid fa-spinner fa-spin"></i>`;
 
       const formData = {
         serviceTypeRequested: document.getElementById("serviceTypeRequested")?.value || "",
+        troupeHeadcount: document.getElementById("troupeHeadcount")?.value || "",
         clientName: document.getElementById('clientName')?.value.trim() || '',
         clientEmail: document.getElementById('clientEmail')?.value.trim() || '',
         clientPhone: document.getElementById('clientPhone')?.value.trim() || '',
@@ -4075,19 +4228,19 @@ function saveUserSettings() {
         }
 
         clearFormDraft();
-        showConfirmationScreen(eventId);
+        showConfirmationScreen(eventId, formData);
 
       } catch (err) {
         console.error("Submission Error:", err);
         clearFormDraft();
-        showConfirmationScreen("BTG-REQ-" + Date.now().toString(36).toUpperCase());
+        showConfirmationScreen("BTG-REQ-" + Date.now().toString(36).toUpperCase(), formData);
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = `<span>${i18n[currentLang].submit}</span> <i class="fa-solid fa-paper-plane"></i>`;
       }
     });
 
-    function showConfirmationScreen(eventId) {
+    function showConfirmationScreen(eventId, data = {}) {
       bookingForm.style.display = 'none';
       const topControls = document.querySelector('.top-controls-row');
       if (topControls) topControls.style.display = 'none';
@@ -4096,7 +4249,82 @@ function saveUserSettings() {
 
       successCard.style.display = 'block';
       eventIdDisplay.textContent = `Request ID: ${eventId}`;
+
+      setupCalendarButtons(eventId, data);
+
       successCard.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function setupCalendarButtons(eventId, data) {
+      const googleCalBtn = document.getElementById('btnAddToGoogleCal');
+      const downloadIcsBtn = document.getElementById('btnDownloadIcs');
+      
+      if (googleCalBtn) {
+        const title = encodeURIComponent(`💃 Salsa Guy Richmond - ${data.eventName || 'Dance Event'}`);
+        const details = encodeURIComponent(`Booking Request ID: ${eventId}\nService: ${data.serviceTypeRequested || 'Dance Event'}\nClient: ${data.clientName || ''}\nPhone: (804) 555-0199 | salsaguyrichmond@gmail.com\nWebsite: https://www.salsarichmond.com`);
+        const location = encodeURIComponent(data.eventAddress || 'Richmond, VA');
+        
+        let datesParam = "";
+        if (data.eventDate) {
+          const cleanDate = data.eventDate.replace(/-/g, '');
+          let startHour = "180000";
+          let endHour = "200000";
+          if (data.eventTime && data.eventTime.includes(":")) {
+            const [h, m] = data.eventTime.split(":");
+            const padH = h.padStart(2, "0");
+            const padM = m.padStart(2, "0");
+            startHour = `${padH}${padM}00`;
+            const endHNum = (parseInt(padH, 10) + 2) % 24;
+            endHour = `${String(endHNum).padStart(2, "0")}${padM}00`;
+          }
+          datesParam = `&dates=${cleanDate}T${startHour}/${cleanDate}T${endHour}`;
+        }
+        googleCalBtn.href = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}${datesParam}`;
+      }
+
+      if (downloadIcsBtn) {
+        downloadIcsBtn.onclick = () => {
+          downloadIcsCalendarFile(eventId, data);
+        };
+      }
+    }
+
+    function downloadIcsCalendarFile(eventId, data) {
+      const cleanDate = (data.eventDate || "2026-09-01").replace(/-/g, '');
+      let startHour = "180000";
+      let endHour = "200000";
+      if (data.eventTime && data.eventTime.includes(":")) {
+        const [h, m] = data.eventTime.split(":");
+        const padH = h.padStart(2, "0");
+        const padM = m.padStart(2, "0");
+        startHour = `${padH}${padM}00`;
+        const endHNum = (parseInt(padH, 10) + 2) % 24;
+        endHour = `${String(endHNum).padStart(2, "0")}${padM}00`;
+      }
+      const icsContent = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Salsa Guy Richmond LLC//Event Booking 2026//EN",
+        "CALSCALE:GREGORIAN",
+        "BEGIN:VEVENT",
+        `SUMMARY:💃 Salsa Guy Richmond - ${data.eventName || 'Dance Event'}`,
+        `DESCRIPTION:Event Booking with Salsa Guy Richmond LLC\\nRequest ID: ${eventId}\\nService: ${data.serviceTypeRequested || 'Dance Booking'}\\nContact: salsaguyrichmond@gmail.com | (804) 555-0199`,
+        `LOCATION:${data.eventAddress || 'Richmond, VA'}`,
+        `DTSTART:${cleanDate}T${startHour}`,
+        `DTEND:${cleanDate}T${endHour}`,
+        `UID:SGR-${eventId}@salsarichmond.com`,
+        "STATUS:CONFIRMED",
+        "END:VEVENT",
+        "END:VCALENDAR"
+      ].join("\r\n");
+
+      const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `SalsaGuyRichmond-${(data.eventName || "Event").replace(/[^a-zA-Z0-9]/g, '_')}.ics`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
 
     function showFormScreen() {

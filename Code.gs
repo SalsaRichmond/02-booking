@@ -129,6 +129,7 @@ function setupMasterHeaders() {
 
     // 5A. Repertoire Requests
     "Service Type Requested",
+    "Troupe Headcount / Ensemble Size",
     "Repertoire: Mexico / North American Dances",
     "Repertoire: Caribbean Dances (Cuba & Puerto Rico)",
     "Repertoire: Central American Dances (El Salvador)",
@@ -826,6 +827,10 @@ function createDoc(templateId, type, eventName, rowData, folder, isValidDate, eD
       "Repertoire: Caribbean Dances (Cuba & Puerto Rico)": dataMap["Repertoire: Caribbean Dances (Cuba & Puerto Rico)"] || "",
       "Repertoire: Central American Dances (El Salvador)": dataMap["Repertoire: Central American Dances (El Salvador)"] || "",
       "Repertoire: South American Dances (Colombia & Argentina)": dataMap["Repertoire: South American Dances (Colombia & Argentina)"] || "",
+      "Service Type Requested": dataMap["Service Type Requested"] || "",
+      "Troupe Headcount / Ensemble Size": dataMap["Troupe Headcount / Ensemble Size"] || "",
+      "Troupe Headcount": dataMap["Troupe Headcount / Ensemble Size"] || "",
+      "Ensemble Size": dataMap["Troupe Headcount / Ensemble Size"] || "",
       "Repertoire: Theatrical, Parade & Live Singing Performances": dataMap["Repertoire: Theatrical, Parade & Live Singing Performances"] || "",
       "Which of our DANCE LESSON SERVICES will you need?": dataMap["Which of our DANCE LESSON SERVICES will you need?"] || "",
       "Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?": dataMap["Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?"] || "",
@@ -1089,6 +1094,7 @@ function handleFormSubmitJson(data) {
     { key: "intlPaymentTerms", aliases: ["International: Preferred Currency & Payment Terms", "Preferred Currency & Payment Terms", "Preferred Currency", "Payment Terms"] },
     { key: "intlCustomsConsiderations", aliases: ["International: Costumes, Props & Customs Considerations", "Costumes, Props & Customs Considerations", "Customs Notes", "Customs Considerations"] },
     { key: "serviceTypeRequested", aliases: ["Service Type Requested", "Service Category / Scope", "Service Category", "Primary Service", "Requested Service", "Service Selection"] },
+    { key: "troupeHeadcount", aliases: ["Troupe Headcount / Ensemble Size", "Ensemble Size", "Performer Headcount", "Troupe Size", "Number of Performers", "Troupe Headcount"] },
     { key: "repertoireMexico", aliases: ["Repertoire: Mexico / North American Dances"] },
     { key: "repertoireCaribbean", aliases: ["Repertoire: Caribbean Dances (Cuba & Puerto Rico)"] },
     { key: "repertoireCentralAmerica", aliases: ["Repertoire: Central American Dances (El Salvador)"] },
