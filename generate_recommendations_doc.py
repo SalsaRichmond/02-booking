@@ -1,16 +1,34 @@
 import os
 import sys
+import importlib
 
 try:
-    import docx
-    from docx.shared import Inches, Pt, RGBColor
-    from docx.enum.text import WD_ALIGN_PARAGRAPH
-    from docx.enum.table import WD_TABLE_ALIGNMENT, WD_ALIGN_VERTICAL
-    from docx.oxml import OxmlElement, parse_xml
-    from docx.oxml.ns import nsdecls, qn
-except ImportError:
-    print("python-docx is not installed in the active environment. Run: py -m pip install python-docx")
+    docx = importlib.import_module("docx")
+    docx_shared = importlib.import_module("docx.shared")
+    Inches = getattr(docx_shared, "Inches")
+    Pt = getattr(docx_shared, "Pt")
+    RGBColor = getattr(docx_shared, "RGBColor")
+    
+    docx_enum_text = importlib.import_module("docx.enum.text")
+    WD_ALIGN_PARAGRAPH = getattr(docx_enum_text, "WD_ALIGN_PARAGRAPH")
+    
+    docx_enum_table = importlib.import_module("docx.enum.table")
+    WD_TABLE_ALIGNMENT = getattr(docx_enum_table, "WD_TABLE_ALIGNMENT")
+    WD_ALIGN_VERTICAL = getattr(docx_enum_table, "WD_ALIGN_VERTICAL")
+    
+    docx_oxml = importlib.import_module("docx.oxml")
+    OxmlElement = getattr(docx_oxml, "OxmlElement")
+    parse_xml = getattr(docx_oxml, "parse_xml")
+    
+    docx_oxml_ns = importlib.import_module("docx.oxml.ns")
+    nsdecls = getattr(docx_oxml_ns, "nsdecls")
+    qn = getattr(docx_oxml_ns, "qn")
+except Exception:
     docx = None
+    Inches = Pt = RGBColor = None
+    WD_ALIGN_PARAGRAPH = None
+    WD_TABLE_ALIGNMENT = WD_ALIGN_VERTICAL = None
+    OxmlElement = parse_xml = nsdecls = qn = None
 
 def set_cell_background(cell, hex_color):
     tcPr = cell._tc.get_or_add_tcPr()
