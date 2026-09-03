@@ -693,7 +693,7 @@ function sendAdminSubmittalNotification(details) {
             ${details.lessonServices ? `<tr><td style="padding: 4px 0; font-weight: bold;">Lessons Needed:</td><td>${details.lessonServices}</td></tr>` : ''}
             <tr><td style="padding: 4px 0; font-weight: bold;">Duration Required:</td><td>${details.durationRequired || 'As requested'}</td></tr>
             ${details.notes ? `<tr><td style="padding: 4px 0; font-weight: bold;">Special Notes:</td><td style="background-color: #f1f5f9; padding: 6px 10px; border-radius: 4px; font-style: italic;">${details.notes}</td></tr>` : ''}
-            <tr><td style="padding: 4px 0; font-weight: bold;">Google Calendar:</td><td>${details.calendarEventUrl ? `<a href="${details.calendarEventUrl}" target="_blank" style="color: #2563eb; font-weight: bold;">📆 View Calendar Event</a>` : 'Date TBD / Not Scheduled'}</td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Google Calendar:</td><td>${details.calendarEventUrl && details.calendarEventUrl.startsWith("http") ? `<a href="${details.calendarEventUrl}" target="_blank" style="color: #2563eb; font-weight: bold; text-decoration: underline;">📆 View Calendar Event</a>` : `<a href="https://calendar.google.com/calendar/u/0/r?cid=${encodeURIComponent(CONFIG.INFOCALENDAR_ID)}" target="_blank" style="color: #2563eb; font-weight: bold; text-decoration: underline;">📆 Open InfoCalendar</a>`}</td></tr>
           </table>
         </div>
 
@@ -701,10 +701,10 @@ function sendAdminSubmittalNotification(details) {
         <div style="margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
           <h3 style="color: #15803d; margin: 0 0 10px 0; font-size: 16px;">📂 Automated Google Docs & Drive</h3>
           <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: #334155; line-height: 1.8;">
-            ${details.eventFolderUrl ? `<li>📁 <strong>Drive Event Folder:</strong> <a href="${details.eventFolderUrl}" target="_blank" style="color: #2563eb;">Open Google Drive Folder</a></li>` : ''}
-            <li>📄 <strong>Proposal Doc:</strong> ${details.propUrl && details.propUrl !== "Error" ? `<a href="${details.propUrl}" target="_blank" style="color: #2563eb;">View Proposal Document</a>` : 'Ready in Google Drive'}</li>
-            <li>📜 <strong>Contract Doc:</strong> ${details.contUrl && details.contUrl !== "Error" ? `<a href="${details.contUrl}" target="_blank" style="color: #2563eb;">View Contract Document</a>` : 'Ready in Google Drive'}</li>
-            <li>🎭 <strong>Performance Info Doc:</strong> ${details.perfUrl && details.perfUrl !== "Error" ? `<a href="${details.perfUrl}" target="_blank" style="color: #2563eb;">View Performance Info Document</a>` : 'Ready in Google Drive'}</li>
+            <li>📁 <strong>Drive Event Folder:</strong> <a href="${details.eventFolderUrl && details.eventFolderUrl.startsWith('http') ? details.eventFolderUrl : `https://drive.google.com/drive/folders/${CONFIG.FOLDER_ID}`}" target="_blank" style="color: #2563eb; font-weight: bold; text-decoration: underline;">Open Google Drive Folder</a></li>
+            <li>📄 <strong>Proposal Doc:</strong> ${details.propUrl && details.propUrl.startsWith("http") ? `<a href="${details.propUrl}" target="_blank" style="color: #2563eb; font-weight: bold; text-decoration: underline;">View Proposal Document</a>` : `<a href="https://docs.google.com/document/d/${CONFIG.TEMPLATES.PROPOSAL}/edit" target="_blank" style="color: #2563eb; text-decoration: underline;">View Proposal Template (Drive)</a>`}</li>
+            <li>📜 <strong>Contract Doc:</strong> ${details.contUrl && details.contUrl.startsWith("http") ? `<a href="${details.contUrl}" target="_blank" style="color: #2563eb; font-weight: bold; text-decoration: underline;">View Contract Document</a>` : `<a href="https://docs.google.com/document/d/${CONFIG.TEMPLATES.CONTRACT}/edit" target="_blank" style="color: #2563eb; text-decoration: underline;">View Contract Template (Drive)</a>`}</li>
+            <li>🎭 <strong>Performance Info Doc:</strong> ${details.perfUrl && details.perfUrl.startsWith("http") ? `<a href="${details.perfUrl}" target="_blank" style="color: #2563eb; font-weight: bold; text-decoration: underline;">View Performance Info Document</a>` : `<a href="https://docs.google.com/document/d/${CONFIG.TEMPLATES.PERF_INFO}/edit" target="_blank" style="color: #2563eb; text-decoration: underline;">View Performance Info Template (Drive)</a>`}</li>
           </ul>
         </div>
 
@@ -803,13 +803,13 @@ function sendTestNotificationEmail() {
     lessonServices: "Salsa (Beginner / Intermediate), Bachata",
     durationRequired: "2 Hours",
     soundEquipment: "Venue provides PA system & microphones",
-    notes: "Special test run to verify email notification dispatch and instant mobile alert delivery.",
-    calendarEventUrl: "https://calendar.google.com",
-    eventFolderUrl: CONFIG.SPREADSHEET_URL,
-    propUrl: "",
-    contUrl: "",
-    perfUrl: "",
-    fileUrl: ""
+    notes: "Special test run to verify email notification dispatch, active document links, and mobile alert delivery.",
+    calendarEventUrl: `https://calendar.google.com/calendar/u/0/r?cid=${encodeURIComponent(CONFIG.INFOCALENDAR_ID)}`,
+    eventFolderUrl: `https://drive.google.com/drive/folders/${CONFIG.FOLDER_ID}`,
+    propUrl: `https://docs.google.com/document/d/${CONFIG.TEMPLATES.PROPOSAL}/edit`,
+    contUrl: `https://docs.google.com/document/d/${CONFIG.TEMPLATES.CONTRACT}/edit`,
+    perfUrl: `https://docs.google.com/document/d/${CONFIG.TEMPLATES.PERF_INFO}/edit`,
+    fileUrl: `https://docs.google.com/spreadsheets/d/${CONFIG.SPREADSHEET_ID}/edit`
   };
 
   sendAdminSubmittalNotification(testDetails);
@@ -996,7 +996,7 @@ function formatDateValue(val) {
  * Creates individual document copy from master template and replaces placeholders with row data.
  * Formats all dates as "MMM dd, yyyy" and eliminates all brackets.
  */
-function createDoc(templateId, type, eventName, rowData, folder, isValidDate, eDate, headers) {
+function createDoc(templateId, type, eventName, rowData, folder, isValidDate, eDate, headers, exportPdf = false) {
   try {
     const copy = DriveApp.getFileById(templateId).makeCopy(`${type} - ${eventName}`, folder);
     const doc = DocumentApp.openById(copy.getId());
@@ -1217,15 +1217,17 @@ function createDoc(templateId, type, eventName, rowData, folder, isValidDate, eD
 
     doc.saveAndClose();
 
-    // Auto-Export companion PDF to the event's Google Drive folder
-    try {
-      if (folder) {
-        const pdfBlob = copy.getAs("application/pdf");
-        pdfBlob.setName(`${type} - ${eventName}.pdf`);
-        folder.createFile(pdfBlob);
+    // Auto-Export companion PDF to the event's Google Drive folder if requested
+    if (exportPdf) {
+      try {
+        if (folder) {
+          const pdfBlob = copy.getAs("application/pdf");
+          pdfBlob.setName(`${type} - ${eventName}.pdf`);
+          folder.createFile(pdfBlob);
+        }
+      } catch (pdfErr) {
+        console.warn("Companion PDF auto-export skipped for " + type + ": " + pdfErr.message);
       }
-    } catch (pdfErr) {
-      console.warn("Companion PDF auto-export skipped for " + type + ": " + pdfErr.message);
     }
 
     return copy.getUrl();
@@ -1470,77 +1472,79 @@ function handleFormSubmitJson(data) {
     updatedRowData[eventIdIdx] = finalRequestId;
   }
 
-  // --- IMMEDIATE EMAIL NOTIFICATIONS (Guaranteed Dispatch) ---
+  // --- EXECUTE AUTOMATION & DISPATCH NOTIFICATIONS WITH ACTIVE LINKS ---
+  let notificationSent = false;
   try {
-    const clientNameIdx = getHeaderIndex(headers, ["Your Name", "Full Name", "Client Name", "Name"]);
-    const clientEmailIdx = getHeaderIndex(headers, ["Email Address", "Email"]);
-    const clientPhoneIdx = getHeaderIndex(headers, ["Best Contact Phone Number", "Phone Number", "Phone", "Telephone"]);
-    const representTypeIdx = getHeaderIndex(headers, ["Who do you represent? (Organization / Business / Self)", "Who do you represent?", "Represent Type", "Representing"]);
-    const dateIdx = getHeaderIndex(headers, ["Please confirm the DATE of your event:", "Event Date", "Date of event", "Date"]);
-    const timeIdx = getHeaderIndex(headers, ["Please confirm the TIME of your event:", "Event Time", "Time of event", "Time"]);
-    const addrIdx = getHeaderIndex(headers, ["Where will the event take place? (ADDRESS)", "Event Address", "Address", "Location"]);
-    const budgetIdx = getHeaderIndex(headers, ["Confirmed Budget Amount for Performance / Workshop", "Confirmed Budget Amount", "Confirmed Budget", "Budget Amount"]);
-    const serviceTypeIdx = getHeaderIndex(headers, ["Service Type Requested", "Service Category / Scope", "Service Category", "Primary Service"]);
-    const troupeIdx = getHeaderIndex(headers, ["Troupe Headcount / Ensemble Size", "Troupe Headcount", "Ensemble Size"]);
-    const durationIdx = getHeaderIndex(headers, ["How much TIME do you require from us?", "DURATION of Service Required", "Duration Required", "Duration"]);
-    const notesIdx = getHeaderIndex(headers, ["Special Instructions, Song Requests or Notes", "SPECIAL REQUESTS or Song Preferences", "Notes", "Special Requests"]);
-
-    const clientName = data.clientName || (clientNameIdx > -1 && updatedRowData[clientNameIdx]) || "Valued Client";
-    const clientEmail = data.clientEmail || (clientEmailIdx > -1 && updatedRowData[clientEmailIdx]) || "";
-    const clientPhone = data.clientPhone || (clientPhoneIdx > -1 && updatedRowData[clientPhoneIdx]) || "N/A";
-    const representType = data.representType || (representTypeIdx > -1 && updatedRowData[representTypeIdx]) || "N/A";
-    const budgetAmount = data.confirmedBudget || data.budgetAmount || (budgetIdx > -1 && updatedRowData[budgetIdx]) || "Pending Confirmation";
-    const serviceType = data.serviceTypeRequested || (serviceTypeIdx > -1 && updatedRowData[serviceTypeIdx]) || "Dance Booking";
-    const troupeHeadcount = data.troupeHeadcount || (troupeIdx > -1 && updatedRowData[troupeIdx]) || "Standard Ensemble";
-    const durationRequired = data.durationRequired || (durationIdx > -1 && updatedRowData[durationIdx]) || "As specified";
-    const notes = data.notes || (notesIdx > -1 && updatedRowData[notesIdx]) || "";
-    const eventAddress = data.eventAddress || (addrIdx > -1 && updatedRowData[addrIdx]) || "TBD";
-    const eventTimeStr = data.eventTime ? extractTimeOnly(data.eventTime) : ((timeIdx > -1 && updatedRowData[timeIdx]) ? extractTimeOnly(updatedRowData[timeIdx]) : "TBD");
-    const eventDateStr = data.eventDate ? formatDateValue(data.eventDate) : ((dateIdx > -1 && updatedRowData[dateIdx]) ? formatDateValue(updatedRowData[dateIdx]) : "TBD");
-
-    const directNotificationDetails = {
-      rowNum: rowNum,
-      eventId: finalRequestId,
-      clientName: clientName,
-      clientEmail: clientEmail,
-      clientPhone: clientPhone,
-      representType: representType,
-      budgetAmount: budgetAmount,
-      serviceTypeRequested: serviceType,
-      troupeHeadcount: troupeHeadcount,
-      performanceServices: Array.isArray(data.performanceServices) ? data.performanceServices.join(", ") : (data.performanceServices || ""),
-      lessonServices: data.lessonServices || "",
-      durationRequired: durationRequired,
-      notes: notes,
-      eventName: data.eventName || "Event Booking Request",
-      eventDate: eventDateStr,
-      eventTime: eventTimeStr,
-      eventAddress: eventAddress,
-      calendarEventUrl: "",
-      eventFolderUrl: "",
-      propUrl: "",
-      contUrl: "",
-      perfUrl: "",
-      fileUrl: uploadedFileUrl || ""
-    };
-
-    // 1. Immediately send admin notification
-    sendAdminSubmittalNotification(directNotificationDetails);
-
-    // 2. Immediately send client receipt notification if requested
-    const shouldSendReceipt = data.sendEmailReceipt !== undefined ? (data.sendEmailReceipt === "Yes" || data.sendEmailReceipt === true) : true;
-    if (shouldSendReceipt && clientEmail) {
-      sendClientReceiptNotification(directNotificationDetails);
-    }
-  } catch (emailErr) {
-    console.error("Critical error in immediate submittal email dispatch: " + emailErr.message);
+    // Process row: creates Drive Folder, Proposal Doc, Contract Doc, Info Doc, Calendar Event, and sends email with all active URLs (< 3 seconds)
+    processRow(sheet, rowNum, updatedRowData, mainFolder, headers, true, uploadedFileUrl, false);
+    notificationSent = true;
+  } catch (procErr) {
+    console.warn("processRow error during submit, triggering fallback notification: ", procErr);
   }
 
-  // --- BACKGROUND DRIVE / DOCS / CALENDAR PROCESSING ---
-  try {
-    processRow(sheet, rowNum, updatedRowData, mainFolder, headers, true, uploadedFileUrl, true);
-  } catch (procErr) {
-    console.warn("processRow secondary background processing warning: ", procErr);
+  // Guaranteed fallback if processRow encountered an issue
+  if (!notificationSent) {
+    try {
+      const clientNameIdx = getHeaderIndex(headers, ["Your Name", "Full Name", "Client Name", "Name"]);
+      const clientEmailIdx = getHeaderIndex(headers, ["Email Address", "Email"]);
+      const clientPhoneIdx = getHeaderIndex(headers, ["Best Contact Phone Number", "Phone Number", "Phone", "Telephone"]);
+      const representTypeIdx = getHeaderIndex(headers, ["Who do you represent? (Organization / Business / Self)", "Who do you represent?", "Represent Type", "Representing"]);
+      const dateIdx = getHeaderIndex(headers, ["Please confirm the DATE of your event:", "Event Date", "Date of event", "Date"]);
+      const timeIdx = getHeaderIndex(headers, ["Please confirm the TIME of your event:", "Event Time", "Time of event", "Time"]);
+      const addrIdx = getHeaderIndex(headers, ["Where will the event take place? (ADDRESS)", "Event Address", "Address", "Location"]);
+      const budgetIdx = getHeaderIndex(headers, ["Confirmed Budget Amount for Performance / Workshop", "Confirmed Budget Amount", "Confirmed Budget", "Budget Amount"]);
+      const serviceTypeIdx = getHeaderIndex(headers, ["Service Type Requested", "Service Category / Scope", "Service Category", "Primary Service"]);
+      const troupeIdx = getHeaderIndex(headers, ["Troupe Headcount / Ensemble Size", "Troupe Headcount", "Ensemble Size"]);
+      const durationIdx = getHeaderIndex(headers, ["How much TIME do you require from us?", "DURATION of Service Required", "Duration Required", "Duration"]);
+      const notesIdx = getHeaderIndex(headers, ["Special Instructions, Song Requests or Notes", "SPECIAL REQUESTS or Song Preferences", "Notes", "Special Requests"]);
+
+      const clientName = data.clientName || (clientNameIdx > -1 && updatedRowData[clientNameIdx]) || "Valued Client";
+      const clientEmail = data.clientEmail || (clientEmailIdx > -1 && updatedRowData[clientEmailIdx]) || "";
+      const clientPhone = data.clientPhone || (clientPhoneIdx > -1 && updatedRowData[clientPhoneIdx]) || "N/A";
+      const representType = data.representType || (representTypeIdx > -1 && updatedRowData[representTypeIdx]) || "N/A";
+      const budgetAmount = data.confirmedBudget || data.budgetAmount || (budgetIdx > -1 && updatedRowData[budgetIdx]) || "Pending Confirmation";
+      const serviceType = data.serviceTypeRequested || (serviceTypeIdx > -1 && updatedRowData[serviceTypeIdx]) || "Dance Booking";
+      const troupeHeadcount = data.troupeHeadcount || (troupeIdx > -1 && updatedRowData[troupeIdx]) || "Standard Ensemble";
+      const durationRequired = data.durationRequired || (durationIdx > -1 && updatedRowData[durationIdx]) || "As specified";
+      const notes = data.notes || (notesIdx > -1 && updatedRowData[notesIdx]) || "";
+      const eventAddress = data.eventAddress || (addrIdx > -1 && updatedRowData[addrIdx]) || "TBD";
+      const eventTimeStr = data.eventTime ? extractTimeOnly(data.eventTime) : ((timeIdx > -1 && updatedRowData[timeIdx]) ? extractTimeOnly(updatedRowData[timeIdx]) : "TBD");
+      const eventDateStr = data.eventDate ? formatDateValue(data.eventDate) : ((dateIdx > -1 && updatedRowData[dateIdx]) ? formatDateValue(updatedRowData[dateIdx]) : "TBD");
+
+      const fallbackNotificationDetails = {
+        rowNum: rowNum,
+        eventId: finalRequestId,
+        clientName: clientName,
+        clientEmail: clientEmail,
+        clientPhone: clientPhone,
+        representType: representType,
+        budgetAmount: budgetAmount,
+        serviceTypeRequested: serviceType,
+        troupeHeadcount: troupeHeadcount,
+        performanceServices: Array.isArray(data.performanceServices) ? data.performanceServices.join(", ") : (data.performanceServices || ""),
+        lessonServices: data.lessonServices || "",
+        durationRequired: durationRequired,
+        notes: notes,
+        eventName: data.eventName || "Event Booking Request",
+        eventDate: eventDateStr,
+        eventTime: eventTimeStr,
+        eventAddress: eventAddress,
+        calendarEventUrl: `https://calendar.google.com/calendar/u/0/r?cid=${encodeURIComponent(CONFIG.INFOCALENDAR_ID)}`,
+        eventFolderUrl: `https://drive.google.com/drive/folders/${CONFIG.FOLDER_ID}`,
+        propUrl: `https://docs.google.com/document/d/${CONFIG.TEMPLATES.PROPOSAL}/edit`,
+        contUrl: `https://docs.google.com/document/d/${CONFIG.TEMPLATES.CONTRACT}/edit`,
+        perfUrl: `https://docs.google.com/document/d/${CONFIG.TEMPLATES.PERF_INFO}/edit`,
+        fileUrl: uploadedFileUrl || ""
+      };
+
+      sendAdminSubmittalNotification(fallbackNotificationDetails);
+      const shouldSendReceipt = data.sendEmailReceipt !== undefined ? (data.sendEmailReceipt === "Yes" || data.sendEmailReceipt === true) : true;
+      if (shouldSendReceipt && clientEmail) {
+        sendClientReceiptNotification(fallbackNotificationDetails);
+      }
+    } catch (fallbackErr) {
+      console.error("Critical error in fallback email dispatch: " + fallbackErr.message);
+    }
   }
 
   return {
