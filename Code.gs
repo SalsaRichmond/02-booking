@@ -37,7 +37,7 @@ function getSpreadsheet() {
  */
 function onOpen() {
   const ui = SpreadsheetApp.getUi();
-  ui.createMenu('💃 Salsa App')
+  ui.createMenu('Salsa Guy Richmond')
     .addItem('🛠️ SETUP ALL QUESTIONNAIRE HEADERS', 'setupMasterHeaders')
     .addSeparator()
     .addItem('📧 SEND TEST NOTIFICATION EMAIL', 'sendTestNotificationEmail')
@@ -642,8 +642,17 @@ function sendAdminSubmittalNotification(details) {
   const htmlBody = `
     <div style="font-family: Arial, sans-serif; max-width: 650px; margin: 0 auto; background-color: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
       <div style="background-color: #dc2626; padding: 18px 24px; border-radius: 8px 8px 0 0; color: #ffffff;">
-        <h2 style="margin: 0; font-size: 20px;">💃 Salsa Guy Richmond LLC - New Submittal Alert</h2>
-        <p style="margin: 4px 0 0 0; font-size: 14px; opacity: 0.9;">Instant Booking Inquiry Notification & Lead Details</p>
+        <table style="width: 100%; border-collapse: collapse;">
+          <tr>
+            <td style="width: 52px; vertical-align: middle;">
+              <img src="https://sgr-booking-2026.tradicion.workers.dev/salsa_guy_logo.png" alt="Salsa Guy Richmond" width="48" height="48" style="display: block; border-radius: 50%; background-color: #ffffff; padding: 2px;" />
+            </td>
+            <td style="vertical-align: middle; padding-left: 12px;">
+              <h2 style="margin: 0; font-size: 20px; color: #ffffff; line-height: 1.2;">Salsa Guy Richmond LLC - New Submittal Alert</h2>
+              <p style="margin: 4px 0 0 0; font-size: 14px; opacity: 0.95; color: #ffffff;">Instant Booking Inquiry Notification & Lead Details</p>
+            </td>
+          </tr>
+        </table>
       </div>
 
       <!-- Quick 1-Tap Mobile Action Bar for Angel -->
@@ -731,7 +740,8 @@ function sendClientReceiptNotification(details) {
   const htmlBody = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #ffffff; padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0;">
       <div style="text-align: center; margin-bottom: 20px;">
-        <h2 style="color: #dc2626; margin: 0; font-size: 22px;">💃 Salsa Guy Richmond LLC</h2>
+        <img src="https://sgr-booking-2026.tradicion.workers.dev/salsa_guy_logo.png" alt="Salsa Guy Richmond" width="75" height="75" style="display: block; margin: 0 auto 12px auto; border-radius: 50%;" />
+        <h2 style="color: #dc2626; margin: 0; font-size: 22px;">Salsa Guy Richmond LLC</h2>
         <p style="color: #64748b; margin: 4px 0 0 0; font-size: 14px;">Thank you for your Event Request!</p>
       </div>
 
