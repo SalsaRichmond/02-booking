@@ -40,6 +40,10 @@ function onOpen() {
   ui.createMenu('💃 Salsa App')
     .addItem('🛠️ SETUP ALL QUESTIONNAIRE HEADERS', 'setupMasterHeaders')
     .addSeparator()
+    .addItem('📧 SEND TEST NOTIFICATION EMAIL', 'sendTestNotificationEmail')
+    .addItem('🔔 SETUP AUTO-SUBMISSION TRIGGER', 'installFormSubmitTrigger')
+    .addItem('🔍 DIAGNOSE NOTIFICATION SYSTEM', 'diagnoseNotificationSystem')
+    .addSeparator()
     .addItem('🚀 RUN FULL AUTOMATION', 'mainAutomation')
     .addItem('🎯 UPDATE SELECTED ROW ONLY', 'reGenerateDocs')
     .addSeparator()
@@ -332,7 +336,7 @@ function mainAutomation() {
 /**
  * Processes a single row: formatting attachments, syncing Google Calendar, generating documents, updating status, and sending notifications.
  */
-function processRow(sheet, rowNum, rowData, folder, headers, isNewSubmit = false, directFileUrl = "") {
+function processRow(sheet, rowNum, rowData, folder, headers, isNewSubmit = false, directFileUrl = "", skipEmailNotification = false) {
   const dateIdx = getHeaderIndex(headers, ["Please confirm the DATE of your event:", "Event Date", "Date of event", "Date"]);
   const timeIdx = getHeaderIndex(headers, ["Please confirm the TIME of your event:", "Event Time", "Time of event", "Time"]);
   const dowIdx = getHeaderIndex(headers, ["Day of the Week", "Day of Week", "DOW"]);
@@ -351,20 +355,24 @@ function processRow(sheet, rowNum, rowData, folder, headers, isNewSubmit = false
   const eventName = (eventNameIdx > -1 && rowData[eventNameIdx]) ? rowData[eventNameIdx] : "Unnamed Event";
   
   // Format Uploaded File Links (Drive Attachment Link Handler)
-  headers.forEach((h, i) => {
-    if (h.toLowerCase().includes("upload") || h.toLowerCase().includes("attachment") || h.toLowerCase().includes("flyer")) {
-      const fileUrlVal = rowData[i];
-      if (fileUrlVal && typeof fileUrlVal === "string") {
-        const urls = fileUrlVal.split(",").map(u => u.trim()).filter(u => u.startsWith("http"));
-        if (urls.length > 0) {
-          const formula = urls.length === 1 
-            ? `=HYPERLINK("${urls[0]}", "View Uploaded File")`
-            : `=HYPERLINK("${urls[0]}", "View Uploaded File (1 of ${urls.length})")`;
-          sheet.getRange(rowNum, i + 1).setFormula(formula);
+  try {
+    headers.forEach((h, i) => {
+      if (h.toLowerCase().includes("upload") || h.toLowerCase().includes("attachment") || h.toLowerCase().includes("flyer")) {
+        const fileUrlVal = rowData[i];
+        if (fileUrlVal && typeof fileUrlVal === "string") {
+          const urls = fileUrlVal.split(",").map(u => u.trim()).filter(u => u.startsWith("http"));
+          if (urls.length > 0) {
+            const formula = urls.length === 1 
+              ? `=HYPERLINK("${urls[0]}", "View Uploaded File")`
+              : `=HYPERLINK("${urls[0]}", "View Uploaded File (1 of ${urls.length})")`;
+            sheet.getRange(rowNum, i + 1).setFormula(formula);
+          }
         }
       }
-    }
-  });
+    });
+  } catch (attErr) {
+    console.warn("Attachment hyperlink formatting skipped: " + attErr.message);
+  }
 
   let isValidDate = false;
   let eDate = null;
@@ -378,91 +386,128 @@ function processRow(sheet, rowNum, rowData, folder, headers, isNewSubmit = false
   }
 
   if (isValidDate && dowIdx > -1) {
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const dayName = days[eDate.getDay()];
-    sheet.getRange(rowNum, dowIdx + 1).setValue(dayName);
+    try {
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const dayName = days[eDate.getDay()];
+      sheet.getRange(rowNum, dowIdx + 1).setValue(dayName);
+    } catch (dowErr) {}
   }
 
   let calendarEventUrl = "";
   if (isValidDate) {
-    const calendar = CalendarApp.getCalendarById(CONFIG.INFOCALENDAR_ID);
-    if (calendar) {
-      let calendarEvent = null;
-      let fullId = eventIdIdx > -1 ? (rowData[eventIdIdx] ? rowData[eventIdIdx].toString().trim() : "") : "";
+    try {
+      const calendar = CalendarApp.getCalendarById(CONFIG.INFOCALENDAR_ID);
+      if (calendar) {
+        let calendarEvent = null;
+        let fullId = eventIdIdx > -1 ? (rowData[eventIdIdx] ? rowData[eventIdIdx].toString().trim() : "") : "";
 
-      if (fullId) {
-        try {
-          calendarEvent = calendar.getEventById(fullId);
-        } catch (e) {}
-      }
+        if (fullId) {
+          try {
+            calendarEvent = calendar.getEventById(fullId);
+          } catch (e) {}
+        }
 
-      if (!calendarEvent) {
-        try {
-          const eventsOnDay = calendar.getEventsForDay(eDate);
-          calendarEvent = eventsOnDay.find(ev => ev.getTitle().toLowerCase() === eventName.toLowerCase());
-        } catch (e) {}
-      }
+        if (!calendarEvent) {
+          try {
+            const eventsOnDay = calendar.getEventsForDay(eDate);
+            calendarEvent = eventsOnDay.find(ev => ev.getTitle().toLowerCase() === eventName.toLowerCase());
+          } catch (e) {}
+        }
 
-      if (!calendarEvent) {
-        try {
-          const endDate = new Date(eDate.getTime() + (3600 * 1000));
-          calendarEvent = calendar.createEvent(eventName, eDate, endDate, { location: rowData[addrIdx] || "TBD" });
-        } catch (e) {}
-      }
+        if (!calendarEvent) {
+          try {
+            const endDate = new Date(eDate.getTime() + (3600 * 1000));
+            calendarEvent = calendar.createEvent(eventName, eDate, endDate, { location: rowData[addrIdx] || "TBD" });
+          } catch (e) {}
+        }
 
-      if (calendarEvent) {
-        const eventId = calendarEvent.getId();
-        const splitEventId = eventId.split('@')[0];
-        const eid = Utilities.base64Encode(`${splitEventId} ${CONFIG.INFOCALENDAR_ID}`).replace(/=+$/, '');
-        calendarEventUrl = `https://www.google.com/calendar/event?eid=${eid}`;
-        
-        if (eventIdIdx > -1) {
-          sheet.getRange(rowNum, eventIdIdx + 1).setValue(eventId);
+        if (calendarEvent) {
+          const eventId = calendarEvent.getId();
+          const splitEventId = eventId.split('@')[0];
+          const eid = Utilities.base64Encode(`${splitEventId} ${CONFIG.INFOCALENDAR_ID}`).replace(/=+$/, '');
+          calendarEventUrl = `https://www.google.com/calendar/event?eid=${eid}`;
+          
+          if (eventIdIdx > -1) {
+            sheet.getRange(rowNum, eventIdIdx + 1).setValue(eventId);
+          }
         }
       }
+    } catch (calErr) {
+      console.warn("Calendar synchronization skipped or failed: " + calErr.message);
     }
   }
 
   if (isValidDate && dateIdx > -1) {
-    const formattedDateStr = Utilities.formatDate(eDate, Session.getScriptTimeZone(), "MM-dd-yyyy");
-    if (calendarEventUrl) {
-      sheet.getRange(rowNum, dateIdx + 1).setFormula(`=HYPERLINK("${calendarEventUrl}", "${formattedDateStr}")`);
-    } else {
-      sheet.getRange(rowNum, dateIdx + 1).setValue(formattedDateStr);
+    try {
+      const formattedDateStr = Utilities.formatDate(eDate, Session.getScriptTimeZone(), "MM-dd-yyyy");
+      if (calendarEventUrl) {
+        sheet.getRange(rowNum, dateIdx + 1).setFormula(`=HYPERLINK("${calendarEventUrl}", "${formattedDateStr}")`);
+      } else {
+        sheet.getRange(rowNum, dateIdx + 1).setValue(formattedDateStr);
+      }
+    } catch (dErr) {}
+  }
+
+  let propUrl = "Error";
+  let contUrl = "Error";
+  let perfUrl = "Error";
+
+  try {
+    propUrl = createDoc(CONFIG.TEMPLATES.PROPOSAL, "Proposal", eventName, rowData, folder, isValidDate, eDate, headers);
+    if (propUrl !== "Error" && propUrlIdx > -1) sheet.getRange(rowNum, propUrlIdx + 1).setFormula(`=HYPERLINK("${propUrl}", "View Proposal")`);
+  } catch (pErr) {
+    console.warn("Proposal document generation error: " + pErr.message);
+  }
+
+  try {
+    contUrl = createDoc(CONFIG.TEMPLATES.CONTRACT, "Contract", eventName, rowData, folder, isValidDate, eDate, headers);
+    if (contUrl !== "Error" && contUrlIdx > -1) sheet.getRange(rowNum, contUrlIdx + 1).setFormula(`=HYPERLINK("${contUrl}", "View Contract")`);
+  } catch (cErr) {
+    console.warn("Contract document generation error: " + cErr.message);
+  }
+
+  try {
+    perfUrl = createDoc(CONFIG.TEMPLATES.PERF_INFO, "Performance", eventName, rowData, folder, isValidDate, eDate, headers);
+    if (perfUrl !== "Error" && perfUrlIdx > -1) sheet.getRange(rowNum, perfUrlIdx + 1).setFormula(`=HYPERLINK("${perfUrl}", "View Info")`);
+  } catch (perfErr) {
+    console.warn("Performance Info document generation error: " + perfErr.message);
+  }
+
+  try {
+    if (statusIdx > -1) {
+      sheet.getRange(rowNum, statusIdx + 1).setValue("Synced").setBackground("#d9ead3");
     }
-  }
+    if (internalStatusIdx > -1 && !rowData[internalStatusIdx]) {
+      sheet.getRange(rowNum, internalStatusIdx + 1).setValue("Ready for Review");
+    }
+    if (assignedToIdx > -1 && !rowData[assignedToIdx]) {
+      sheet.getRange(rowNum, assignedToIdx + 1).setValue("The Salsa Guy");
+    }
+  } catch (sErr) {}
 
-  const propUrl = createDoc(CONFIG.TEMPLATES.PROPOSAL, "Proposal", eventName, rowData, folder, isValidDate, eDate, headers);
-  const contUrl = createDoc(CONFIG.TEMPLATES.CONTRACT, "Contract", eventName, rowData, folder, isValidDate, eDate, headers);
-  const perfUrl = createDoc(CONFIG.TEMPLATES.PERF_INFO, "Performance", eventName, rowData, folder, isValidDate, eDate, headers);
-
-  if (propUrl !== "Error" && propUrlIdx > -1) sheet.getRange(rowNum, propUrlIdx + 1).setFormula(`=HYPERLINK("${propUrl}", "View Proposal")`);
-  if (contUrl !== "Error" && contUrlIdx > -1) sheet.getRange(rowNum, contUrlIdx + 1).setFormula(`=HYPERLINK("${contUrl}", "View Contract")`);
-  if (perfUrl !== "Error" && perfUrlIdx > -1) sheet.getRange(rowNum, perfUrlIdx + 1).setFormula(`=HYPERLINK("${perfUrl}", "View Info")`);
-
-  if (statusIdx > -1) {
-    sheet.getRange(rowNum, statusIdx + 1).setValue("Synced").setBackground("#d9ead3");
-  }
-  if (internalStatusIdx > -1 && !rowData[internalStatusIdx]) {
-    sheet.getRange(rowNum, internalStatusIdx + 1).setValue("Ready for Review");
-  }
-  if (assignedToIdx > -1 && !rowData[assignedToIdx]) {
-    sheet.getRange(rowNum, assignedToIdx + 1).setValue("The Salsa Guy");
-  }
-
-  // Handle Email Notifications (Admin Notification & Client Confirmation Receipt)
-  if (isNewSubmit) {
+  // Handle Email Notifications for Sheet/Google Form submissions or re-runs (if not already sent)
+  if (isNewSubmit && !skipEmailNotification) {
     try {
       const clientNameIdx = getHeaderIndex(headers, ["Your Name", "Full Name", "Client Name", "Name"]);
       const clientEmailIdx = getHeaderIndex(headers, ["Email Address", "Email"]);
       const clientPhoneIdx = getHeaderIndex(headers, ["Best Contact Phone Number", "Phone Number", "Phone", "Telephone"]);
       const representTypeIdx = getHeaderIndex(headers, ["Who do you represent? (Organization / Business / Self)", "Who do you represent?", "Represent Type", "Representing"]);
+      const budgetIdx = getHeaderIndex(headers, ["Confirmed Budget Amount for Performance / Workshop", "Confirmed Budget Amount", "Confirmed Budget", "Budget Amount"]);
+      const serviceTypeIdx = getHeaderIndex(headers, ["Service Type Requested", "Service Category / Scope", "Service Category", "Primary Service"]);
+      const troupeIdx = getHeaderIndex(headers, ["Troupe Headcount / Ensemble Size", "Troupe Headcount", "Ensemble Size"]);
+      const durationIdx = getHeaderIndex(headers, ["How much TIME do you require from us?", "DURATION of Service Required", "Duration Required", "Duration"]);
+      const notesIdx = getHeaderIndex(headers, ["Special Instructions, Song Requests or Notes", "SPECIAL REQUESTS or Song Preferences", "Notes", "Special Requests"]);
       const sendReceiptIdx = getHeaderIndex(headers, ["Send Email Receipt", "Email Receipt", "Receipt"]);
 
       const clientName = (clientNameIdx > -1 && rowData[clientNameIdx]) ? rowData[clientNameIdx] : "Valued Client";
       const clientEmail = (clientEmailIdx > -1 && rowData[clientEmailIdx]) ? rowData[clientEmailIdx] : "";
       const clientPhone = (clientPhoneIdx > -1 && rowData[clientPhoneIdx]) ? rowData[clientPhoneIdx] : "N/A";
       const representType = (representTypeIdx > -1 && rowData[representTypeIdx]) ? rowData[representTypeIdx] : "N/A";
+      const budgetAmount = (budgetIdx > -1 && rowData[budgetIdx]) ? rowData[budgetIdx] : "Pending Confirmation";
+      const serviceType = (serviceTypeIdx > -1 && rowData[serviceTypeIdx]) ? rowData[serviceTypeIdx] : "Dance Booking";
+      const troupeHeadcount = (troupeIdx > -1 && rowData[troupeIdx]) ? rowData[troupeIdx] : "Standard Ensemble";
+      const durationRequired = (durationIdx > -1 && rowData[durationIdx]) ? rowData[durationIdx] : "As specified";
+      const notes = (notesIdx > -1 && rowData[notesIdx]) ? rowData[notesIdx] : "";
       const eventAddress = (addrIdx > -1 && rowData[addrIdx]) ? rowData[addrIdx] : "TBD";
       const eventTimeStr = (timeIdx > -1 && rowData[timeIdx]) ? extractTimeOnly(rowData[timeIdx]) : "TBD";
       const eventDateStr = isValidDate && eDate ? formatDateValue(eDate) : ((dateIdx > -1 && rowData[dateIdx]) ? rowData[dateIdx] : "TBD");
@@ -501,6 +546,11 @@ function processRow(sheet, rowNum, rowData, folder, headers, isNewSubmit = false
         clientEmail: clientEmail,
         clientPhone: clientPhone,
         representType: representType,
+        budgetAmount: budgetAmount,
+        serviceTypeRequested: serviceType,
+        troupeHeadcount: troupeHeadcount,
+        durationRequired: durationRequired,
+        notes: notes,
         eventName: eventName,
         eventDate: eventDateStr,
         eventTime: eventTimeStr,
@@ -513,7 +563,7 @@ function processRow(sheet, rowNum, rowData, folder, headers, isNewSubmit = false
         fileUrl: fileUrl
       };
 
-      // 1. Send Admin Notification Email (Confirming Steps 1 - 4)
+      // 1. Send Admin Notification Email
       sendAdminSubmittalNotification(notificationDetails);
 
       // 2. Send Client Receipt Email if requested
@@ -522,30 +572,49 @@ function processRow(sheet, rowNum, rowData, folder, headers, isNewSubmit = false
         sendClientReceiptNotification(notificationDetails);
       }
     } catch (notifErr) {
-      console.warn("Error triggering submittal email notifications: ", notifErr);
+      console.warn("Error triggering submittal email notifications in processRow: ", notifErr);
     }
   }
 }
 
 /**
  * Safely dispatches email with fallback from MailApp to GmailApp.
+ * Includes plain-text fallback generation and sender display name.
  */
 function sendEmailSafely(toEmail, subject, htmlBody) {
   if (!toEmail || typeof toEmail !== "string" || toEmail.trim() === "") return false;
   const target = toEmail.trim();
 
+  // Create clean plain-text version for email clients that don't render HTML
+  const plainBody = htmlBody
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  const senderName = "Salsa Guy Richmond LLC";
+
   try {
     MailApp.sendEmail({
       to: target,
       subject: subject,
-      htmlBody: htmlBody
+      body: plainBody,
+      htmlBody: htmlBody,
+      name: senderName
     });
     console.log("Successfully sent email via MailApp to: " + target);
     return true;
   } catch (err1) {
     console.warn("MailApp.sendEmail failed for " + target + " (" + err1.message + "), trying GmailApp fallback...");
     try {
-      GmailApp.sendEmail(target, subject, "", { htmlBody: htmlBody });
+      GmailApp.sendEmail(target, subject, plainBody, {
+        htmlBody: htmlBody,
+        name: senderName
+      });
       console.log("Successfully sent email via GmailApp to: " + target);
       return true;
     } catch (err2) {
@@ -555,19 +624,26 @@ function sendEmailSafely(toEmail, subject, htmlBody) {
   }
 }
 
+/**
+ * Sends a rich, instant admin notification email to all configured admin recipients.
+ */
 function sendAdminSubmittalNotification(details) {
   if (!CONFIG.ADMIN_EMAILS || CONFIG.ADMIN_EMAILS.length === 0) return;
 
   const cleanPhone = (details.clientPhone || '').replace(/[^\d+]/g, '');
   const intlPhone = cleanPhone.startsWith('1') ? cleanPhone : ('1' + cleanPhone.replace(/^0+/, ''));
 
-  const subject = `🔥 NEW BOOKING: ${details.eventName} - ${details.budgetAmount || '$TBD'} - ${details.clientName} (ID: ${details.eventId})`;
+  const budgetDisplay = details.budgetAmount && details.budgetAmount !== "Pending Confirmation" 
+    ? (details.budgetAmount.startsWith("$") ? details.budgetAmount : `$${details.budgetAmount}`)
+    : "Pending Confirmation";
+
+  const subject = `🔥 NEW BOOKING: ${details.eventName} - ${budgetDisplay} - ${details.clientName} (ID: ${details.eventId})`;
 
   const htmlBody = `
     <div style="font-family: Arial, sans-serif; max-width: 650px; margin: 0 auto; background-color: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
       <div style="background-color: #dc2626; padding: 18px 24px; border-radius: 8px 8px 0 0; color: #ffffff;">
         <h2 style="margin: 0; font-size: 20px;">💃 Salsa Guy Richmond LLC - New Submittal Alert</h2>
-        <p style="margin: 4px 0 0 0; font-size: 14px; opacity: 0.9;">Automated Booking Workflow Confirmation (Steps 1 – 4)</p>
+        <p style="margin: 4px 0 0 0; font-size: 14px; opacity: 0.9;">Instant Booking Inquiry Notification & Lead Details</p>
       </div>
 
       <!-- Quick 1-Tap Mobile Action Bar for Angel -->
@@ -583,43 +659,49 @@ function sendAdminSubmittalNotification(details) {
         
         <!-- STEP 1: Response Logging & Client Details -->
         <div style="margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
-          <h3 style="color: #b45309; margin: 0 0 10px 0; font-size: 16px;">📌 Step 1: Google Sheet Logged & Client Contact</h3>
+          <h3 style="color: #b45309; margin: 0 0 10px 0; font-size: 16px;">📌 Client & Lead Contact</h3>
           <table style="width: 100%; border-collapse: collapse; font-size: 14px; color: #334155;">
-            <tr><td style="padding: 4px 0; font-weight: bold; width: 140px;">Request ID:</td><td><span style="background-color: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px; font-weight: bold;">${details.eventId}</span></td></tr>
-            <tr><td style="padding: 4px 0; font-weight: bold;">Confirmed Budget:</td><td><span style="background-color: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 14px;">${details.budgetAmount || 'Pending Confirmation'}</span></td></tr>
-            <tr><td style="padding: 4px 0; font-weight: bold;">Sheet Row:</td><td>Row #${details.rowNum} (<a href="${CONFIG.SPREADSHEET_URL}" target="_blank" style="color: #2563eb; text-decoration: none;">View Master Google Sheet</a>)</td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold; width: 150px;">Request ID:</td><td><span style="background-color: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px; font-weight: bold;">${details.eventId}</span></td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Confirmed Budget:</td><td><span style="background-color: #dcfce7; color: #166534; padding: 2px 8px; border-radius: 4px; font-weight: bold; font-size: 14px;">${budgetDisplay}</span></td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Master Sheet Row:</td><td>Row #${details.rowNum} (<a href="${CONFIG.SPREADSHEET_URL}" target="_blank" style="color: #2563eb; text-decoration: none;">View Master Google Sheet</a>)</td></tr>
             <tr><td style="padding: 4px 0; font-weight: bold;">Client Name:</td><td>${details.clientName}</td></tr>
-            <tr><td style="padding: 4px 0; font-weight: bold;">Email:</td><td><a href="mailto:${details.clientEmail}" style="color: #2563eb;">${details.clientEmail}</a></td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Email:</td><td><a href="mailto:${details.clientEmail}" style="color: #2563eb; font-weight: bold;">${details.clientEmail}</a></td></tr>
             <tr><td style="padding: 4px 0; font-weight: bold;">Phone:</td><td><a href="tel:${cleanPhone}" style="color: #2563eb; font-weight: bold;">${details.clientPhone}</a></td></tr>
             <tr><td style="padding: 4px 0; font-weight: bold;">Representing:</td><td>${details.representType}</td></tr>
           </table>
         </div>
 
-        <!-- STEP 2: Google Calendar -->
+        <!-- STEP 2: Service & Event Specifications -->
         <div style="margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
-          <h3 style="color: #1d4ed8; margin: 0 0 10px 0; font-size: 16px;">📅 Step 2: Google Calendar Event Scheduled</h3>
+          <h3 style="color: #1d4ed8; margin: 0 0 10px 0; font-size: 16px;">🎭 Event & Service Requirements</h3>
           <table style="width: 100%; border-collapse: collapse; font-size: 14px; color: #334155;">
-            <tr><td style="padding: 4px 0; font-weight: bold; width: 140px;">Event Name:</td><td>${details.eventName}</td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold; width: 150px;">Event Name:</td><td><strong>${details.eventName}</strong></td></tr>
             <tr><td style="padding: 4px 0; font-weight: bold;">Date & Time:</td><td>${details.eventDate} at ${details.eventTime}</td></tr>
-            <tr><td style="padding: 4px 0; font-weight: bold;">Location:</td><td>${details.eventAddress}</td></tr>
-            <tr><td style="padding: 4px 0; font-weight: bold;">Calendar Link:</td><td>${details.calendarEventUrl ? `<a href="${details.calendarEventUrl}" target="_blank" style="color: #2563eb; font-weight: bold;">📆 View Calendar Event</a>` : 'Not Scheduled / Date TBD'}</td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Location Address:</td><td>${details.eventAddress}</td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Service Requested:</td><td>${details.serviceTypeRequested || 'Dance Booking'}</td></tr>
+            <tr><td style="padding: 4px 0; font-weight: bold;">Troupe Headcount:</td><td>${details.troupeHeadcount || 'Standard Ensemble'}</td></tr>
+            ${details.performanceServices ? `<tr><td style="padding: 4px 0; font-weight: bold;">Repertoire/Dances:</td><td>${details.performanceServices}</td></tr>` : ''}
+            ${details.lessonServices ? `<tr><td style="padding: 4px 0; font-weight: bold;">Lessons Needed:</td><td>${details.lessonServices}</td></tr>` : ''}
+            <tr><td style="padding: 4px 0; font-weight: bold;">Duration Required:</td><td>${details.durationRequired || 'As requested'}</td></tr>
+            ${details.notes ? `<tr><td style="padding: 4px 0; font-weight: bold;">Special Notes:</td><td style="background-color: #f1f5f9; padding: 6px 10px; border-radius: 4px; font-style: italic;">${details.notes}</td></tr>` : ''}
+            <tr><td style="padding: 4px 0; font-weight: bold;">Google Calendar:</td><td>${details.calendarEventUrl ? `<a href="${details.calendarEventUrl}" target="_blank" style="color: #2563eb; font-weight: bold;">📆 View Calendar Event</a>` : 'Date TBD / Not Scheduled'}</td></tr>
           </table>
         </div>
 
-        <!-- STEP 3: Google Docs -->
+        <!-- STEP 3: Google Docs & Drive Links -->
         <div style="margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid #f1f5f9;">
-          <h3 style="color: #15803d; margin: 0 0 10px 0; font-size: 16px;">📂 Step 3: Automated Google Docs Generated</h3>
+          <h3 style="color: #15803d; margin: 0 0 10px 0; font-size: 16px;">📂 Automated Google Docs & Drive</h3>
           <ul style="margin: 0; padding-left: 20px; font-size: 14px; color: #334155; line-height: 1.8;">
             ${details.eventFolderUrl ? `<li>📁 <strong>Drive Event Folder:</strong> <a href="${details.eventFolderUrl}" target="_blank" style="color: #2563eb;">Open Google Drive Folder</a></li>` : ''}
-            <li>📄 <strong>Proposal Doc:</strong> ${details.propUrl && details.propUrl !== "Error" ? `<a href="${details.propUrl}" target="_blank" style="color: #2563eb;">View Proposal Document</a>` : 'Not Generated'}</li>
-            <li>📜 <strong>Contract Doc:</strong> ${details.contUrl && details.contUrl !== "Error" ? `<a href="${details.contUrl}" target="_blank" style="color: #2563eb;">View Contract Document</a>` : 'Not Generated'}</li>
-            <li>🎭 <strong>Performance Info Doc:</strong> ${details.perfUrl && details.perfUrl !== "Error" ? `<a href="${details.perfUrl}" target="_blank" style="color: #2563eb;">View Performance Info Document</a>` : 'Not Generated'}</li>
+            <li>📄 <strong>Proposal Doc:</strong> ${details.propUrl && details.propUrl !== "Error" ? `<a href="${details.propUrl}" target="_blank" style="color: #2563eb;">View Proposal Document</a>` : 'Ready in Google Drive'}</li>
+            <li>📜 <strong>Contract Doc:</strong> ${details.contUrl && details.contUrl !== "Error" ? `<a href="${details.contUrl}" target="_blank" style="color: #2563eb;">View Contract Document</a>` : 'Ready in Google Drive'}</li>
+            <li>🎭 <strong>Performance Info Doc:</strong> ${details.perfUrl && details.perfUrl !== "Error" ? `<a href="${details.perfUrl}" target="_blank" style="color: #2563eb;">View Performance Info Document</a>` : 'Ready in Google Drive'}</li>
           </ul>
         </div>
 
         <!-- STEP 4: Attachments -->
         <div>
-          <h3 style="color: #6b21a8; margin: 0 0 10px 0; font-size: 16px;">📎 Step 4: File Attachments</h3>
+          <h3 style="color: #6b21a8; margin: 0 0 10px 0; font-size: 16px;">📎 File Attachments</h3>
           <p style="font-size: 14px; color: #334155; margin: 0;">
             ${details.fileUrl ? `📎 <strong>Uploaded Attachment:</strong> <a href="${details.fileUrl}" target="_blank" style="color: #2563eb; font-weight: bold;">View Attached Document</a>` : 'No document attached by client.'}
           </p>
@@ -628,7 +710,7 @@ function sendAdminSubmittalNotification(details) {
       </div>
 
       <div style="text-align: center; margin-top: 16px; font-size: 12px; color: #64748b;">
-        Salsa Guy Richmond LLC Automation Suite • Internal Admin Notification
+        Salsa Guy Richmond LLC Automation Suite • Instant Admin Notification
       </div>
     </div>
   `;
@@ -669,10 +751,11 @@ function sendClientReceiptNotification(details) {
         <tr><td style="padding: 4px 0; font-weight: bold; width: 140px;">Event Name:</td><td>${details.eventName}</td></tr>
         <tr><td style="padding: 4px 0; font-weight: bold;">Date & Time:</td><td>${details.eventDate} at ${details.eventTime}</td></tr>
         <tr><td style="padding: 4px 0; font-weight: bold;">Location:</td><td>${details.eventAddress}</td></tr>
+        <tr><td style="padding: 4px 0; font-weight: bold;">Service Type:</td><td>${details.serviceTypeRequested || 'Dance Event'}</td></tr>
       </table>
 
       <p style="font-size: 14px; color: #334155; line-height: 1.6;">
-        If you have any questions or need to make updates, please contact us directly at <a href="mailto:salsaguyrichmond@gmail.com" style="color: #dc2626;">salsaguyrichmond@gmail.com</a>.
+        If you have any questions or need to make updates, please contact us directly at <a href="mailto:salsaguyrichmond@gmail.com" style="color: #dc2626; font-weight: bold;">salsaguyrichmond@gmail.com</a> or call/text <a href="tel:8045550199" style="color: #2563eb; font-weight: bold;">(804) 555-0199</a>.
       </p>
 
       <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 24px 0 16px 0;" />
@@ -684,6 +767,178 @@ function sendClientReceiptNotification(details) {
   `;
 
   sendEmailSafely(details.clientEmail, subject, htmlBody);
+}
+
+/**
+ * Test function that sends a verification email to all admin emails in CONFIG.
+ * Verifies email sending permissions and displays daily email quota.
+ */
+function sendTestNotificationEmail() {
+  const ui = (typeof SpreadsheetApp !== "undefined" && SpreadsheetApp.getUi) ? SpreadsheetApp.getUi() : null;
+  const testDetails = {
+    rowNum: 99,
+    eventId: "BTG-TEST-" + Date.now().toString(36).toUpperCase(),
+    clientName: "Angel A. Rodriguez (Test Notification)",
+    clientEmail: "salsaguyrichmond@gmail.com",
+    clientPhone: "804-555-0199",
+    representType: "Salsa Guy Richmond LLC",
+    eventName: "Salsa & Bachata Gala Showcase 2026",
+    eventDate: "October 15, 2026",
+    eventTime: "6:00 PM",
+    eventAddress: "123 E Franklin St, Richmond, VA 23219",
+    budgetAmount: "$1,500.00",
+    serviceTypeRequested: "Performance & Dance Instruction",
+    troupeHeadcount: "4 to 6 Performers",
+    performanceServices: "Dances from Disney COCO, Salsa Rueda (Cuba), El Baile de los Viejitos (Mexico)",
+    lessonServices: "Salsa (Beginner / Intermediate), Bachata",
+    durationRequired: "2 Hours",
+    soundEquipment: "Venue provides PA system & microphones",
+    notes: "Special test run to verify email notification dispatch and instant mobile alert delivery.",
+    calendarEventUrl: "https://calendar.google.com",
+    eventFolderUrl: CONFIG.SPREADSHEET_URL,
+    propUrl: "",
+    contUrl: "",
+    perfUrl: "",
+    fileUrl: ""
+  };
+
+  sendAdminSubmittalNotification(testDetails);
+  
+  let quota = -1;
+  try {
+    quota = MailApp.getRemainingDailyQuota();
+  } catch (qErr) {}
+
+  const msg = `✅ Test notification email successfully dispatched to:\n${CONFIG.ADMIN_EMAILS.join(", ")}\n\n` +
+    (quota >= 0 ? `📧 Remaining Daily Email Quota: ${quota} emails\n\n` : "") +
+    `Please check your inbox (and Spam/Promotions folder) for the "🔥 NEW BOOKING" alert.`;
+
+  if (ui) {
+    ui.alert("📧 Email Notification Test", msg, ui.ButtonSet.OK);
+  } else {
+    console.log(msg);
+  }
+}
+
+/**
+ * Runs a complete health check on the entire notification and automation pipeline.
+ */
+function diagnoseNotificationSystem() {
+  const ui = SpreadsheetApp.getUi();
+  let report = "🔍 Notification & Automation System Diagnosis:\n\n";
+
+  // 1. Admin Emails Check
+  if (CONFIG.ADMIN_EMAILS && CONFIG.ADMIN_EMAILS.length > 0) {
+    report += `✅ Admin Recipients: ${CONFIG.ADMIN_EMAILS.join(", ")}\n`;
+  } else {
+    report += `❌ No admin emails configured in CONFIG.ADMIN_EMAILS!\n`;
+  }
+
+  // 2. Email Quota Check
+  try {
+    const quota = MailApp.getRemainingDailyQuota();
+    report += `✅ Google MailApp Daily Quota Remaining: ${quota} emails\n`;
+  } catch (e) {
+    report += `⚠️ MailApp Quota check failed: ${e.message}\n`;
+  }
+
+  // 3. Spreadsheet Access Check
+  const ss = getSpreadsheet();
+  if (ss) {
+    const sheet = ss.getSheetByName(CONFIG.SHEET_NAME) || ss.getActiveSheet();
+    report += `✅ Spreadsheet Connected: "${sheet ? sheet.getName() : 'Active Sheet'}" (${ss.getId()})\n`;
+  } else {
+    report += `❌ Failed to connect to spreadsheet!\n`;
+  }
+
+  // 4. Drive Folder Check
+  try {
+    const folder = DriveApp.getFolderById(CONFIG.FOLDER_ID);
+    report += `✅ Google Drive Folder Connected: "${folder.getName()}"\n`;
+  } catch (e) {
+    report += `⚠️ Drive Folder Access warning: ${e.message}\n`;
+  }
+
+  // 5. Calendar Check
+  try {
+    const cal = CalendarApp.getCalendarById(CONFIG.INFOCALENDAR_ID);
+    if (cal) {
+      report += `✅ InfoCalendar Connected: "${cal.getName()}"\n`;
+    } else {
+      report += `⚠️ InfoCalendar not found by ID (${CONFIG.INFOCALENDAR_ID})\n`;
+    }
+  } catch (e) {
+    report += `⚠️ Calendar check error: ${e.message}\n`;
+  }
+
+  // 6. Form Submit Trigger Check
+  try {
+    const triggers = ScriptApp.getProjectTriggers();
+    const formTrigger = triggers.find(t => t.getHandlerFunction() === "onFormSubmit");
+    if (formTrigger) {
+      report += `✅ Form Submit Trigger Active: onFormSubmit (${formTrigger.getEventType()})\n`;
+    } else {
+      report += `ℹ️ Form Submit Trigger: Not installed yet (Use '🔔 SETUP AUTO-SUBMISSION TRIGGER' if using Google Forms)\n`;
+    }
+  } catch (e) {
+    report += `⚠️ Trigger check error: ${e.message}\n`;
+  }
+
+  ui.alert("System Health Report", report, ui.ButtonSet.OK);
+}
+
+/**
+ * Installs an installable onFormSubmit trigger on the active spreadsheet if not already installed.
+ */
+function installFormSubmitTrigger() {
+  const ui = SpreadsheetApp.getUi();
+  try {
+    const ss = getSpreadsheet();
+    if (!ss) {
+      ui.alert("⚠️ Unable to access spreadsheet to install trigger.");
+      return;
+    }
+
+    const triggers = ScriptApp.getProjectTriggers();
+    const existing = triggers.find(t => t.getHandlerFunction() === "onFormSubmit");
+    if (existing) {
+      ui.alert("ℹ️ Form Submit Trigger is already installed and active!");
+      return;
+    }
+
+    ScriptApp.newTrigger("onFormSubmit")
+      .forSpreadsheet(ss)
+      .onFormSubmit()
+      .create();
+
+    ui.alert("✅ Form Submit Trigger successfully installed!\n\nNew Google Forms or Sheet submittals will now automatically trigger email notifications.");
+  } catch (e) {
+    ui.alert("❌ Error installing trigger: " + e.message);
+  }
+}
+
+/**
+ * Handles installable onFormSubmit event from Google Sheets or linked Google Form.
+ */
+function onFormSubmit(e) {
+  try {
+    const ss = getSpreadsheet();
+    const sheet = (e && e.range) ? e.range.getSheet() : (ss ? (ss.getSheetByName(CONFIG.SHEET_NAME) || ss.getActiveSheet()) : null);
+    if (!sheet) return;
+    
+    const rowNum = e && e.range ? e.range.getRow() : sheet.getLastRow();
+    const headers = getUniqueHeaders(sheet);
+    const rowData = sheet.getRange(rowNum, 1, 1, sheet.getLastColumn()).getValues()[0];
+    
+    let folder = null;
+    try {
+      folder = DriveApp.getFolderById(CONFIG.FOLDER_ID);
+    } catch (fErr) {}
+    
+    processRow(sheet, rowNum, rowData, folder, headers, true, "", false);
+  } catch (err) {
+    console.error("Error in onFormSubmit trigger: " + err.message);
+  }
 }
 
 /**
@@ -1205,10 +1460,77 @@ function handleFormSubmitJson(data) {
     updatedRowData[eventIdIdx] = finalRequestId;
   }
 
+  // --- IMMEDIATE EMAIL NOTIFICATIONS (Guaranteed Dispatch) ---
   try {
-    processRow(sheet, rowNum, updatedRowData, mainFolder, headers, true, uploadedFileUrl);
+    const clientNameIdx = getHeaderIndex(headers, ["Your Name", "Full Name", "Client Name", "Name"]);
+    const clientEmailIdx = getHeaderIndex(headers, ["Email Address", "Email"]);
+    const clientPhoneIdx = getHeaderIndex(headers, ["Best Contact Phone Number", "Phone Number", "Phone", "Telephone"]);
+    const representTypeIdx = getHeaderIndex(headers, ["Who do you represent? (Organization / Business / Self)", "Who do you represent?", "Represent Type", "Representing"]);
+    const dateIdx = getHeaderIndex(headers, ["Please confirm the DATE of your event:", "Event Date", "Date of event", "Date"]);
+    const timeIdx = getHeaderIndex(headers, ["Please confirm the TIME of your event:", "Event Time", "Time of event", "Time"]);
+    const addrIdx = getHeaderIndex(headers, ["Where will the event take place? (ADDRESS)", "Event Address", "Address", "Location"]);
+    const budgetIdx = getHeaderIndex(headers, ["Confirmed Budget Amount for Performance / Workshop", "Confirmed Budget Amount", "Confirmed Budget", "Budget Amount"]);
+    const serviceTypeIdx = getHeaderIndex(headers, ["Service Type Requested", "Service Category / Scope", "Service Category", "Primary Service"]);
+    const troupeIdx = getHeaderIndex(headers, ["Troupe Headcount / Ensemble Size", "Troupe Headcount", "Ensemble Size"]);
+    const durationIdx = getHeaderIndex(headers, ["How much TIME do you require from us?", "DURATION of Service Required", "Duration Required", "Duration"]);
+    const notesIdx = getHeaderIndex(headers, ["Special Instructions, Song Requests or Notes", "SPECIAL REQUESTS or Song Preferences", "Notes", "Special Requests"]);
+
+    const clientName = data.clientName || (clientNameIdx > -1 && updatedRowData[clientNameIdx]) || "Valued Client";
+    const clientEmail = data.clientEmail || (clientEmailIdx > -1 && updatedRowData[clientEmailIdx]) || "";
+    const clientPhone = data.clientPhone || (clientPhoneIdx > -1 && updatedRowData[clientPhoneIdx]) || "N/A";
+    const representType = data.representType || (representTypeIdx > -1 && updatedRowData[representTypeIdx]) || "N/A";
+    const budgetAmount = data.confirmedBudget || data.budgetAmount || (budgetIdx > -1 && updatedRowData[budgetIdx]) || "Pending Confirmation";
+    const serviceType = data.serviceTypeRequested || (serviceTypeIdx > -1 && updatedRowData[serviceTypeIdx]) || "Dance Booking";
+    const troupeHeadcount = data.troupeHeadcount || (troupeIdx > -1 && updatedRowData[troupeIdx]) || "Standard Ensemble";
+    const durationRequired = data.durationRequired || (durationIdx > -1 && updatedRowData[durationIdx]) || "As specified";
+    const notes = data.notes || (notesIdx > -1 && updatedRowData[notesIdx]) || "";
+    const eventAddress = data.eventAddress || (addrIdx > -1 && updatedRowData[addrIdx]) || "TBD";
+    const eventTimeStr = data.eventTime ? extractTimeOnly(data.eventTime) : ((timeIdx > -1 && updatedRowData[timeIdx]) ? extractTimeOnly(updatedRowData[timeIdx]) : "TBD");
+    const eventDateStr = data.eventDate ? formatDateValue(data.eventDate) : ((dateIdx > -1 && updatedRowData[dateIdx]) ? formatDateValue(updatedRowData[dateIdx]) : "TBD");
+
+    const directNotificationDetails = {
+      rowNum: rowNum,
+      eventId: finalRequestId,
+      clientName: clientName,
+      clientEmail: clientEmail,
+      clientPhone: clientPhone,
+      representType: representType,
+      budgetAmount: budgetAmount,
+      serviceTypeRequested: serviceType,
+      troupeHeadcount: troupeHeadcount,
+      performanceServices: Array.isArray(data.performanceServices) ? data.performanceServices.join(", ") : (data.performanceServices || ""),
+      lessonServices: data.lessonServices || "",
+      durationRequired: durationRequired,
+      notes: notes,
+      eventName: data.eventName || "Event Booking Request",
+      eventDate: eventDateStr,
+      eventTime: eventTimeStr,
+      eventAddress: eventAddress,
+      calendarEventUrl: "",
+      eventFolderUrl: "",
+      propUrl: "",
+      contUrl: "",
+      perfUrl: "",
+      fileUrl: uploadedFileUrl || ""
+    };
+
+    // 1. Immediately send admin notification
+    sendAdminSubmittalNotification(directNotificationDetails);
+
+    // 2. Immediately send client receipt notification if requested
+    const shouldSendReceipt = data.sendEmailReceipt !== undefined ? (data.sendEmailReceipt === "Yes" || data.sendEmailReceipt === true) : true;
+    if (shouldSendReceipt && clientEmail) {
+      sendClientReceiptNotification(directNotificationDetails);
+    }
+  } catch (emailErr) {
+    console.error("Critical error in immediate submittal email dispatch: " + emailErr.message);
+  }
+
+  // --- BACKGROUND DRIVE / DOCS / CALENDAR PROCESSING ---
+  try {
+    processRow(sheet, rowNum, updatedRowData, mainFolder, headers, true, uploadedFileUrl, true);
   } catch (procErr) {
-    console.warn("processRow non-fatal error during submit: ", procErr);
+    console.warn("processRow secondary background processing warning: ", procErr);
   }
 
   return {

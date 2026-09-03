@@ -25,6 +25,17 @@ This project contains the **Next-Generation 2026 Event Booking Suite** for **Sal
 - **Contract Master Doc**: [`1BuEv7BF6wsHutvEWwVZOVb3m8J3zkYujKheti8X871g`](https://docs.google.com/document/d/1BuEv7BF6wsHutvEWwVZOVb3m8J3zkYujKheti8X871g/edit)
 - **Performance Info Master Doc**: [`1eyXzMdmYiV0CDmxvNZfNO3dRYQ83hvJHHy_eseWPqIE`](https://docs.google.com/document/d/1eyXzMdmYiV0CDmxvNZfNO3dRYQ83hvJHHy_eseWPqIE/edit)
 
-## Recommended Workspace Action
-Copy `Code.gs` into your Google Apps Script project bound to the Google Spreadsheet, and run `📄 UPDATE MASTER DOC TEMPLATES` from the `💃 Salsa App` custom UI menu!
+## Recommended Workspace Actions
+
+1. **Deploy `Code.gs` in Google Apps Script**:
+   - Open your Google Sheet linked to the questionnaire.
+   - Go to **Extensions > Apps Script**, paste the updated [`Code.gs`](file:///c:/Users/Angel%20A%20Rodriguez/.gemini/antigravity-ide/scratch/questionnaire-new-generation-2026/Code.gs), and click **Save**.
+   - Click **Deploy > Manage Deployments**, edit your active Web App deployment (or create a **New Deployment**), ensure access is set to **"Anyone"**, and click **Deploy**.
+
+2. **Verify Notifications & Email Permissions**:
+   - In Google Sheets, refresh the page to load the `💃 Salsa App` menu.
+   - Click **`📧 SEND TEST NOTIFICATION EMAIL`** to verify instant email delivery to `salsaguyrichmond@gmail.com` and inspect remaining daily quota.
+   - Click **`🔔 SETUP AUTO-SUBMISSION TRIGGER`** if you also accept submissions directly through Google Forms or Google Sheets.
+   - Click **`🔍 DIAGNOSE NOTIFICATION SYSTEM`** to run a comprehensive connectivity check across Gmail, Drive, Calendar, and Sheets.
+
 

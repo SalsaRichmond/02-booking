@@ -4255,7 +4255,7 @@ function saveUserSettings() {
         } 
         else if (WEB_APP_URL && WEB_APP_URL.startsWith("http")) {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 12000);
+          const timeoutId = setTimeout(() => controller.abort(), 35000);
           try {
             const resp = await fetch(WEB_APP_URL, {
               method: 'POST',
