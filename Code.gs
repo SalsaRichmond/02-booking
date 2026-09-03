@@ -655,15 +655,6 @@ function sendAdminSubmittalNotification(details) {
         </table>
       </div>
 
-      <!-- Quick 1-Tap Mobile Action Bar for Angel -->
-      <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 14px 18px; margin-top: 0; margin-bottom: 0; border-right: 1px solid #e2e8f0; border-left: 1px solid #e2e8f0;">
-        <p style="margin: 0 0 10px 0; font-size: 14px; font-weight: bold; color: #92400e;">⚡ Fast-Track Lead Follow-Up Actions:</p>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <a href="tel:${cleanPhone}" style="background-color: #2563eb; color: #ffffff; padding: 9px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 13px; display: inline-block;">📞 1-Tap Call (${details.clientPhone})</a>
-          <a href="https://wa.me/${intlPhone}?text=Hello%20${encodeURIComponent(details.clientName)}%2C%20this%20is%20Angel%20from%20Salsa%20Guy%20Richmond%20following%20up%20on%20your%20event%20booking%20for%20${encodeURIComponent(details.eventName)}" target="_blank" style="background-color: #22c55e; color: #ffffff; padding: 9px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 13px; display: inline-block;">💬 1-Tap WhatsApp</a>
-        </div>
-      </div>
-
       <div style="background-color: #ffffff; padding: 24px; border-radius: 0 0 8px 8px; border: 1px solid #e2e8f0; border-top: none;">
         
         <!-- STEP 1: Response Logging & Client Details -->
