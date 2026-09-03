@@ -9,7 +9,7 @@ const CONFIG = {
   SPREADSHEET_URL: "https://docs.google.com/spreadsheets/d/1ssJPBdSTOUzq1S9b_kHYuBLMoUbxwrDap2FIkfHOX4k/edit",
   INFOCALENDAR_ID: "shqfpe645m3tj6fhee17irti5s@group.calendar.google.com",
   FOLDER_ID: "1FaiN_vTho7YY5mwd_OXrfHPnQB0fF6oR",
-  ADMIN_EMAILS: ["salsaguyrichmond@gmail.com"],
+  ADMIN_EMAILS: ["salsaguy@salsarichmond.com", "salsaguyrichmond@gmail.com"],
   TEMPLATES: {
     PROPOSAL: "1plCZvjBJijgJrGduzXrTMjbtDopMgCfB5Vo7MLWxspo",
     CONTRACT: "1BuEv7BF6wsHutvEWwVZOVb3m8J3zkYujKheti8X871g",
@@ -755,7 +755,7 @@ function sendClientReceiptNotification(details) {
       </table>
 
       <p style="font-size: 14px; color: #334155; line-height: 1.6;">
-        If you have any questions or need to make updates, please contact us directly at <a href="mailto:salsaguyrichmond@gmail.com" style="color: #dc2626; font-weight: bold;">salsaguyrichmond@gmail.com</a> or call/text <a href="tel:8045550199" style="color: #2563eb; font-weight: bold;">(804) 555-0199</a>.
+        If you have any questions or need to make updates, please contact us directly at <a href="mailto:salsaguy@salsarichmond.com" style="color: #dc2626; font-weight: bold;">salsaguy@salsarichmond.com</a> or call/text <a href="tel:8045550199" style="color: #2563eb; font-weight: bold;">(804) 555-0199</a>.
       </p>
 
       <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 24px 0 16px 0;" />
@@ -779,7 +779,7 @@ function sendTestNotificationEmail() {
     rowNum: 99,
     eventId: "BTG-TEST-" + Date.now().toString(36).toUpperCase(),
     clientName: "Angel A. Rodriguez (Test Notification)",
-    clientEmail: "salsaguyrichmond@gmail.com",
+    clientEmail: "salsaguy@salsarichmond.com",
     clientPhone: "804-555-0199",
     representType: "Salsa Guy Richmond LLC",
     eventName: "Salsa & Bachata Gala Showcase 2026",

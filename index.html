@@ -4309,7 +4309,7 @@ function saveUserSettings() {
       
       if (googleCalBtn) {
         const title = encodeURIComponent(`💃 Salsa Guy Richmond - ${data.eventName || 'Dance Event'}`);
-        const details = encodeURIComponent(`Booking Request ID: ${eventId}\nService: ${data.serviceTypeRequested || 'Dance Event'}\nClient: ${data.clientName || ''}\nPhone: (804) 555-0199 | salsaguyrichmond@gmail.com\nWebsite: https://www.salsarichmond.com`);
+        const details = encodeURIComponent(`Booking Request ID: ${eventId}\nService: ${data.serviceTypeRequested || 'Dance Event'}\nClient: ${data.clientName || ''}\nPhone: (804) 555-0199 | salsaguy@salsarichmond.com\nWebsite: https://www.salsarichmond.com`);
         const location = encodeURIComponent(data.eventAddress || 'Richmond, VA');
         
         let datesParam = "";
@@ -4356,7 +4356,7 @@ function saveUserSettings() {
         "CALSCALE:GREGORIAN",
         "BEGIN:VEVENT",
         `SUMMARY:💃 Salsa Guy Richmond - ${data.eventName || 'Dance Event'}`,
-        `DESCRIPTION:Event Booking with Salsa Guy Richmond LLC\\nRequest ID: ${eventId}\\nService: ${data.serviceTypeRequested || 'Dance Booking'}\\nContact: salsaguyrichmond@gmail.com | (804) 555-0199`,
+        `DESCRIPTION:Event Booking with Salsa Guy Richmond LLC\\nRequest ID: ${eventId}\\nService: ${data.serviceTypeRequested || 'Dance Booking'}\\nContact: salsaguy@salsarichmond.com | (804) 555-0199`,
         `LOCATION:${data.eventAddress || 'Richmond, VA'}`,
         `DTSTART:${cleanDate}T${startHour}`,
         `DTEND:${cleanDate}T${endHour}`,

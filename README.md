@@ -34,7 +34,7 @@ This project contains the **Next-Generation 2026 Event Booking Suite** for **Sal
 
 2. **Verify Notifications & Email Permissions**:
    - In Google Sheets, refresh the page to load the `💃 Salsa App` menu.
-   - Click **`📧 SEND TEST NOTIFICATION EMAIL`** to verify instant email delivery to `salsaguyrichmond@gmail.com` and inspect remaining daily quota.
+   - Click **`📧 SEND TEST NOTIFICATION EMAIL`** to verify instant email delivery to `salsaguy@salsarichmond.com` and inspect remaining daily quota.
    - Click **`🔔 SETUP AUTO-SUBMISSION TRIGGER`** if you also accept submissions directly through Google Forms or Google Sheets.
    - Click **`🔍 DIAGNOSE NOTIFICATION SYSTEM`** to run a comprehensive connectivity check across Gmail, Drive, Calendar, and Sheets.
 
