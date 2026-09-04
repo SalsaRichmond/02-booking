@@ -1533,7 +1533,7 @@
 
             <!-- 2. CARIBBEAN DANCES -->
             <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
-              🇨🇺 🇵🇷 Caribbean Dances (Cuba & Puerto Rico)
+              🇨🇺 🇵🇷 🇩🇴 Caribbean Dances (Cuba, Puerto Rico & Dominican Republic)
             </div>
             <div class="options-grid">
               <label class="checkbox-item" style="justify-content: space-between;">
@@ -1574,6 +1574,14 @@
                   <span>Danza (Puerto Rico)</span>
                 </span>
                 <span class="details-btn" onclick="openPerfModal(event, 'danza_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+              </label>
+
+              <label class="checkbox-item" style="justify-content: space-between;">
+                <span style="display: flex; align-items: center; gap: 8px;">
+                  <input type="checkbox" name="perfServices" value="Merengue (Dominican Republic) COMING SOON"> 
+                  <span>Merengue (Dominican Republic) <span style="font-size:0.75rem; color:var(--accent-gold);">(COMING SOON)</span></span>
+                </span>
+                <span class="details-btn" onclick="openPerfModal(event, 'merengue_dominican_republic')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
               </label>
             </div>
 
@@ -2270,6 +2278,24 @@
           <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 10 Minutes</li>
         `,
         link: "https://www.tradicion.org/presentations/performances#h.ynlss9y2an4i"
+      },
+      merengue_dominican_republic: {
+        title: "Merengue (Dominican Republic) COMING SOON",
+        icon: "fa-music",
+        photo: "merengue.jpg",
+        pitch: "(Coming Soon) Merengue is the national music and dance of the Dominican Republic, defined by its rapid, driving 2/4 tempo and infectious energy. Musically, traditional merengue típico relies on a core trio of instruments: accordion for melodic phrasing, metal güira for scraping syncopation, and double-headed tambora drum delivering its signature galloping rhythm.",
+        included: `
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Rapid, Driving 2/4 Tempo & Infectious Energy</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> Intricate Arm Turns, Pretzel-Like Wraps & Circular Spins</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-check" style="color: #22C55E;"></i> UNESCO Intangible Cultural Heritage of Humanity</li>
+        `,
+        quote: `"The dance mirrors this straightforward beat with an accessible, marching-style footwork where partners step on every single count. Movement flows primarily through continuous, rhythmic Cuban motion—bending and straightening alternate knees to create a natural, rolling hip sway. Danced in a close or open ballroom hold, partners weave together using intricate arm turns, pretzel-like wraps, and circular spins while maintaining connection."`,
+        ensemble: `
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-masks-theater" style="color: #EC4899;"></i> <strong>Full Ensemble:</strong> 8 to 10 Performers</li>
+          <li style="display: flex; align-items: center; gap: 8px; margin-bottom: 6px;"><i class="fa-solid fa-volume-high" style="color: #F59E0B;"></i> <strong>Requirements:</strong> Sound system & large space</li>
+          <li style="display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-clock" style="color: #38BDF8;"></i> <strong>Duration:</strong> 10 Minutes</li>
+        `,
+        link: "https://www.tradicion.org/presentations/performances"
       },
       cumbia_salvador: {
         title: "Cumbia (El Salvador)",

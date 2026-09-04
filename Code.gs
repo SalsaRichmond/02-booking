@@ -1373,7 +1373,7 @@ function handleFormSubmitJson(data) {
     { key: "serviceTypeRequested", aliases: ["Service Type Requested", "Service Category / Scope", "Service Category", "Primary Service", "Requested Service", "Service Selection"] },
     { key: "troupeHeadcount", aliases: ["Troupe Headcount / Ensemble Size", "Ensemble Size", "Performer Headcount", "Troupe Size", "Number of Performers", "Troupe Headcount"] },
     { key: "repertoireMexico", aliases: ["Repertoire: Mexico / North American Dances"] },
-    { key: "repertoireCaribbean", aliases: ["Repertoire: Caribbean Dances (Cuba & Puerto Rico)"] },
+    { key: "repertoireCaribbean", aliases: ["Repertoire: Caribbean Dances (Cuba, Puerto Rico & Dominican Republic)", "Repertoire: Caribbean Dances (Cuba & Puerto Rico)", "Caribbean Dances", "Repertoire: Caribbean"] },
     { key: "repertoireCentralAmerica", aliases: ["Repertoire: Central American Dances (El Salvador)"] },
     { key: "repertoireSouthAmerica", aliases: ["Repertoire: South American Dances (Colombia & Argentina)"] },
     { key: "repertoireTheatrical", aliases: ["Repertoire: Theatrical, Parade & Live Singing Performances"] },
