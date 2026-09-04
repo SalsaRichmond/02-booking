@@ -4321,9 +4321,22 @@ function saveUserSettings() {
       submitBtn.disabled = true;
       submitBtn.innerHTML = `<span>Processing...</span> <i class="fa-solid fa-spinner fa-spin"></i>`;
 
+      const perfServicesVal = getCheckedValues('perfServices');
+      let finalServiceType = document.getElementById("serviceTypeRequested")?.value || "";
+      if (perfServicesVal) {
+        const otherPerf = document.getElementById('otherPerfServices')?.value.trim();
+        let fullPerfStr = perfServicesVal;
+        if (otherPerf) fullPerfStr += `, Other: ${otherPerf}`;
+        if (finalServiceType && finalServiceType.toLowerCase().includes("both") && document.getElementById('lessonServicesSelect')?.value) {
+          finalServiceType = `${fullPerfStr} | Instruction: ${document.getElementById('lessonServicesSelect').value}`;
+        } else {
+          finalServiceType = fullPerfStr;
+        }
+      }
+
       const formData = {
-        serviceTypeRequested: document.getElementById("serviceTypeRequested")?.value || "",
-        troupeHeadcount: document.getElementById("troupeHeadcount")?.value || "",
+        serviceTypeRequested: finalServiceType,
+        troupeHeadcount: "",
         clientName: document.getElementById('clientName')?.value.trim() || '',
         clientEmail: document.getElementById('clientEmail')?.value.trim() || '',
         clientPhone: document.getElementById('clientPhone')?.value.trim() || '',

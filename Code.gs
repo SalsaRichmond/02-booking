@@ -1308,11 +1308,24 @@ function handleFormSubmitJson(data) {
   const headers = getUniqueHeaders(sheet);
   let newRow = new Array(headers.length).fill("");
 
-  // Auto-categorize selected repertoire items into regional buckets if unified array/string provided
+  // When performance repertoire dances are selected, list them in a single cell under "Service Type Requested"
   if (data.performanceServices) {
     const perfList = Array.isArray(data.performanceServices) 
       ? data.performanceServices 
-      : String(data.performanceServices).split(",").map(s => s.trim());
+      : String(data.performanceServices).split(",").map(s => s.trim()).filter(Boolean);
+    
+    if (perfList.length > 0) {
+      let allPerfs = [...perfList];
+      if (data.otherPerfServices && String(data.otherPerfServices).trim()) {
+        allPerfs.push(`Other: ${String(data.otherPerfServices).trim()}`);
+      }
+      const perfString = allPerfs.join(", ");
+      if (data.serviceTypeRequested && data.serviceTypeRequested.toLowerCase().includes("both") && data.lessonServices) {
+        data.serviceTypeRequested = `${perfString} | Instruction: ${data.lessonServices}`;
+      } else {
+        data.serviceTypeRequested = perfString;
+      }
+    }
     
     if (!data.repertoireMexico || data.repertoireMexico.length === 0) {
       data.repertoireMexico = perfList.filter(item => /Jalisco|Veracruz|Michoac|Viejitos|Huasteco|Chiapas|Sinaloa|Norte|Nayarit|Oaxaca|Mexico|Mexicana|COCO/i.test(item));
