@@ -133,12 +133,6 @@ function setupMasterHeaders() {
 
     // 5A. Repertoire Requests
     "Service Type Requested",
-    "Troupe Headcount / Ensemble Size",
-    "Repertoire: Mexico / North American Dances",
-    "Repertoire: Caribbean Dances (Cuba & Puerto Rico)",
-    "Repertoire: Central American Dances (El Salvador)",
-    "Repertoire: South American Dances (Colombia & Argentina)",
-    "Repertoire: Theatrical, Parade & Live Singing Performances",
     "Any other PERFORMANCE SERVICES you wish, but are not listed above?",
 
     // 5B. Dance Instruction & Formats
@@ -494,7 +488,6 @@ function processRow(sheet, rowNum, rowData, folder, headers, isNewSubmit = false
       const representTypeIdx = getHeaderIndex(headers, ["Who do you represent? (Organization / Business / Self)", "Who do you represent?", "Represent Type", "Representing"]);
       const budgetIdx = getHeaderIndex(headers, ["Confirmed Budget Amount for Performance / Workshop", "Confirmed Budget Amount", "Confirmed Budget", "Budget Amount"]);
       const serviceTypeIdx = getHeaderIndex(headers, ["Service Type Requested", "Service Category / Scope", "Service Category", "Primary Service"]);
-      const troupeIdx = getHeaderIndex(headers, ["Troupe Headcount / Ensemble Size", "Troupe Headcount", "Ensemble Size"]);
       const durationIdx = getHeaderIndex(headers, ["How much TIME do you require from us?", "DURATION of Service Required", "Duration Required", "Duration"]);
       const notesIdx = getHeaderIndex(headers, ["Special Instructions, Song Requests or Notes", "SPECIAL REQUESTS or Song Preferences", "Notes", "Special Requests"]);
       const sendReceiptIdx = getHeaderIndex(headers, ["Send Email Receipt", "Email Receipt", "Receipt"]);
@@ -505,7 +498,7 @@ function processRow(sheet, rowNum, rowData, folder, headers, isNewSubmit = false
       const representType = (representTypeIdx > -1 && rowData[representTypeIdx]) ? rowData[representTypeIdx] : "N/A";
       const budgetAmount = (budgetIdx > -1 && rowData[budgetIdx]) ? rowData[budgetIdx] : "Pending Confirmation";
       const serviceType = (serviceTypeIdx > -1 && rowData[serviceTypeIdx]) ? rowData[serviceTypeIdx] : "Dance Booking";
-      const troupeHeadcount = (troupeIdx > -1 && rowData[troupeIdx]) ? rowData[troupeIdx] : "Standard Ensemble";
+      const troupeHeadcount = "Standard Ensemble";
       const durationRequired = (durationIdx > -1 && rowData[durationIdx]) ? rowData[durationIdx] : "As specified";
       const notes = (notesIdx > -1 && rowData[notesIdx]) ? rowData[notesIdx] : "";
       const eventAddress = (addrIdx > -1 && rowData[addrIdx]) ? rowData[addrIdx] : "TBD";
@@ -679,7 +672,6 @@ function sendAdminSubmittalNotification(details) {
             <tr><td style="padding: 4px 0; font-weight: bold;">Date & Time:</td><td>${details.eventDate} at ${details.eventTime}</td></tr>
             <tr><td style="padding: 4px 0; font-weight: bold;">Location Address:</td><td>${details.eventAddress}</td></tr>
             <tr><td style="padding: 4px 0; font-weight: bold;">Service Requested:</td><td>${details.serviceTypeRequested || 'Dance Booking'}</td></tr>
-            <tr><td style="padding: 4px 0; font-weight: bold;">Troupe Headcount:</td><td>${details.troupeHeadcount || 'Standard Ensemble'}</td></tr>
             ${details.performanceServices ? `<tr><td style="padding: 4px 0; font-weight: bold;">Repertoire/Dances:</td><td>${details.performanceServices}</td></tr>` : ''}
             ${details.lessonServices ? `<tr><td style="padding: 4px 0; font-weight: bold;">Lessons Needed:</td><td>${details.lessonServices}</td></tr>` : ''}
             <tr><td style="padding: 4px 0; font-weight: bold;">Duration Required:</td><td>${details.durationRequired || 'As requested'}</td></tr>
@@ -1089,29 +1081,14 @@ function createDoc(templateId, type, eventName, rowData, folder, isValidDate, eD
       "Are we INVITED TO ATTEND the event?": dataMap["Are performers invited to attend/stay for the event?"] || "",
 
       // Repertoire & Services
-      "Repertoire: Mexico / North American Dances": dataMap["Repertoire: Mexico / North American Dances"] || "",
-      "Repertoire: Caribbean Dances (Cuba & Puerto Rico)": dataMap["Repertoire: Caribbean Dances (Cuba & Puerto Rico)"] || "",
-      "Repertoire: Central American Dances (El Salvador)": dataMap["Repertoire: Central American Dances (El Salvador)"] || "",
-      "Repertoire: South American Dances (Colombia & Argentina)": dataMap["Repertoire: South American Dances (Colombia & Argentina)"] || "",
       "Service Type Requested": dataMap["Service Type Requested"] || "",
-      "Troupe Headcount / Ensemble Size": dataMap["Troupe Headcount / Ensemble Size"] || "",
-      "Troupe Headcount": dataMap["Troupe Headcount / Ensemble Size"] || "",
-      "Ensemble Size": dataMap["Troupe Headcount / Ensemble Size"] || "",
-      "Repertoire: Theatrical, Parade & Live Singing Performances": dataMap["Repertoire: Theatrical, Parade & Live Singing Performances"] || "",
       "Which of our DANCE LESSON SERVICES will you need?": dataMap["Which of our DANCE LESSON SERVICES will you need?"] || "",
       "Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?": dataMap["Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?"] || "",
       "Expecting AUDIENCE PARTICIPATION?": dataMap["Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?"] || "",
       "How much TIME do you require from us?": dataMap["How much TIME do you require from us?"] || "",
       "Anticipated Performance Time": dataMap["How much TIME do you require from us?"] || "",
       "Are there OTHER ENTERTAINERS sharing the time with us?": dataMap["Additional Services Needed (MC, DJ, Lecture)"] || dataMap["Special Instructions, Song Requests or Notes"] || "N/A",
-      "Which of our PERFORMANCE SERVICES will you need?": [
-        dataMap["Repertoire: Mexico / North American Dances"],
-        dataMap["Repertoire: Caribbean Dances (Cuba & Puerto Rico)"],
-        dataMap["Repertoire: Central American Dances (El Salvador)"],
-        dataMap["Repertoire: South American Dances (Colombia & Argentina)"],
-        dataMap["Repertoire: Theatrical, Parade & Live Singing Performances"],
-        dataMap["Any other PERFORMANCE SERVICES you wish, but are not listed above?"]
-      ].filter(Boolean).join("; ") || "As specified in agreement",
+      "Which of our PERFORMANCE SERVICES will you need?": dataMap["Service Type Requested"] || dataMap["Any other PERFORMANCE SERVICES you wish, but are not listed above?"] || "As specified in agreement",
 
       // Venue & Logistics
       "Venue Location Setting": dataMap["Venue Location Setting"] || "",
@@ -1326,22 +1303,6 @@ function handleFormSubmitJson(data) {
         data.serviceTypeRequested = perfString;
       }
     }
-    
-    if (!data.repertoireMexico || data.repertoireMexico.length === 0) {
-      data.repertoireMexico = perfList.filter(item => /Jalisco|Veracruz|Michoac|Viejitos|Huasteco|Chiapas|Sinaloa|Norte|Nayarit|Oaxaca|Mexico|Mexicana|COCO/i.test(item));
-    }
-    if (!data.repertoireCaribbean || data.repertoireCaribbean.length === 0) {
-      data.repertoireCaribbean = perfList.filter(item => /Puerto Rico|Bomba|Plena|Seis|Danza|Salsa|Cuba|Son|Rueda|Dominican|Bachata|Merengue|Caribbean/i.test(item));
-    }
-    if (!data.repertoireCentralAmerica || data.repertoireCentralAmerica.length === 0) {
-      data.repertoireCentralAmerica = perfList.filter(item => /Salvador|Carbonero|Cortadoras|Comaleras|Guatemala|Honduras|Nicaragua|Costa Rica|Panam|Central/i.test(item));
-    }
-    if (!data.repertoireSouthAmerica || data.repertoireSouthAmerica.length === 0) {
-      data.repertoireSouthAmerica = perfList.filter(item => /Colombia|Cumbia|Mapal|Bullerengue|Argentina|Tango|Chacarera|Per|Venezuela|Joropo|South|Pollera/i.test(item));
-    }
-    if (!data.repertoireTheatrical || data.repertoireTheatrical.length === 0) {
-      data.repertoireTheatrical = perfList.filter(item => /Llorona|Muertos|Cantor|Singer|Ranchera|Mariachi|Bolero|Desfile|Parade|Carnival|Parranda|Navide|Ladies in Red|Folk Characters/i.test(item));
-    }
   }
 
   const fieldHeaderMap = [
@@ -1384,12 +1345,6 @@ function handleFormSubmitJson(data) {
     { key: "intlPaymentTerms", aliases: ["International: Preferred Currency & Payment Terms", "Preferred Currency & Payment Terms", "Preferred Currency", "Payment Terms"] },
     { key: "intlCustomsConsiderations", aliases: ["International: Costumes, Props & Customs Considerations", "Costumes, Props & Customs Considerations", "Customs Notes", "Customs Considerations"] },
     { key: "serviceTypeRequested", aliases: ["Service Type Requested", "Service Category / Scope", "Service Category", "Primary Service", "Requested Service", "Service Selection"] },
-    { key: "troupeHeadcount", aliases: ["Troupe Headcount / Ensemble Size", "Ensemble Size", "Performer Headcount", "Troupe Size", "Number of Performers", "Troupe Headcount"] },
-    { key: "repertoireMexico", aliases: ["Repertoire: Mexico / North American Dances"] },
-    { key: "repertoireCaribbean", aliases: ["Repertoire: Caribbean Dances (Cuba, Puerto Rico & Dominican Republic)", "Repertoire: Caribbean Dances (Cuba & Puerto Rico)", "Caribbean Dances", "Repertoire: Caribbean"] },
-    { key: "repertoireCentralAmerica", aliases: ["Repertoire: Central American Dances (El Salvador)"] },
-    { key: "repertoireSouthAmerica", aliases: ["Repertoire: South American Dances (Colombia & Argentina)"] },
-    { key: "repertoireTheatrical", aliases: ["Repertoire: Theatrical, Parade & Live Singing Performances"] },
     { key: "performanceServices", aliases: ["Which of our PERFORMANCE SERVICES will you need?", "Performance Services Needed", "Performance Services"] },
     { key: "otherPerfServices", aliases: ["Any other PERFORMANCE SERVICES you wish, but are not listed above?", "Other Performance Services"] },
     { key: "lessonServices", aliases: ["Which of our DANCE LESSON SERVICES will you need?", "Dance Lesson Services Needed", "Lesson Services"] },
@@ -1498,7 +1453,6 @@ function handleFormSubmitJson(data) {
       const addrIdx = getHeaderIndex(headers, ["Where will the event take place? (ADDRESS)", "Event Address", "Address", "Location"]);
       const budgetIdx = getHeaderIndex(headers, ["Confirmed Budget Amount for Performance / Workshop", "Confirmed Budget Amount", "Confirmed Budget", "Budget Amount"]);
       const serviceTypeIdx = getHeaderIndex(headers, ["Service Type Requested", "Service Category / Scope", "Service Category", "Primary Service"]);
-      const troupeIdx = getHeaderIndex(headers, ["Troupe Headcount / Ensemble Size", "Troupe Headcount", "Ensemble Size"]);
       const durationIdx = getHeaderIndex(headers, ["How much TIME do you require from us?", "DURATION of Service Required", "Duration Required", "Duration"]);
       const notesIdx = getHeaderIndex(headers, ["Special Instructions, Song Requests or Notes", "SPECIAL REQUESTS or Song Preferences", "Notes", "Special Requests"]);
 
@@ -1508,7 +1462,7 @@ function handleFormSubmitJson(data) {
       const representType = data.representType || (representTypeIdx > -1 && updatedRowData[representTypeIdx]) || "N/A";
       const budgetAmount = data.confirmedBudget || data.budgetAmount || (budgetIdx > -1 && updatedRowData[budgetIdx]) || "Pending Confirmation";
       const serviceType = data.serviceTypeRequested || (serviceTypeIdx > -1 && updatedRowData[serviceTypeIdx]) || "Dance Booking";
-      const troupeHeadcount = data.troupeHeadcount || (troupeIdx > -1 && updatedRowData[troupeIdx]) || "Standard Ensemble";
+      const troupeHeadcount = "Standard Ensemble";
       const durationRequired = data.durationRequired || (durationIdx > -1 && updatedRowData[durationIdx]) || "As specified";
       const notes = data.notes || (notesIdx > -1 && updatedRowData[notesIdx]) || "";
       const eventAddress = data.eventAddress || (addrIdx > -1 && updatedRowData[addrIdx]) || "TBD";

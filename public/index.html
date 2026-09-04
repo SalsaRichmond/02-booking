@@ -3707,7 +3707,6 @@ function changeLanguage(langCode) {
       if (document.getElementById('sec7Title') && t.sec7) document.getElementById('sec7Title').innerHTML = t.sec7;
       if (document.getElementById('lblNotes') && t.notes) document.getElementById('lblNotes').textContent = t.notes;
       if (document.getElementById('lblTerms') && t.terms) document.getElementById('lblTerms').innerHTML = t.terms + ' <span class="required">*</span>';
-      if (document.getElementById('lblTroupeHeadcount') && t.troupeHeadcount) document.getElementById('lblTroupeHeadcount').textContent = t.troupeHeadcount;
       if (document.getElementById('btnGoogleCalText') && t.btnGoogleCalText) document.getElementById('btnGoogleCalText').textContent = t.btnGoogleCalText;
       if (document.getElementById('btnIcsText') && t.btnIcsText) document.getElementById('btnIcsText').textContent = t.btnIcsText;
 
@@ -4336,7 +4335,6 @@ function saveUserSettings() {
 
       const formData = {
         serviceTypeRequested: finalServiceType,
-        troupeHeadcount: "",
         clientName: document.getElementById('clientName')?.value.trim() || '',
         clientEmail: document.getElementById('clientEmail')?.value.trim() || '',
         clientPhone: document.getElementById('clientPhone')?.value.trim() || '',
