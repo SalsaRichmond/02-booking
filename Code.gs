@@ -1315,19 +1315,19 @@ function handleFormSubmitJson(data) {
       : String(data.performanceServices).split(",").map(s => s.trim());
     
     if (!data.repertoireMexico || data.repertoireMexico.length === 0) {
-      data.repertoireMexico = perfList.filter(item => /Jalisco|Veracruz|Michoac|Viejitos|Huasteco|Chiapas|Sinaloa|Norte|Nayarit|Oaxaca|Mexico|Mexicana/i.test(item));
+      data.repertoireMexico = perfList.filter(item => /Jalisco|Veracruz|Michoac|Viejitos|Huasteco|Chiapas|Sinaloa|Norte|Nayarit|Oaxaca|Mexico|Mexicana|COCO/i.test(item));
     }
     if (!data.repertoireCaribbean || data.repertoireCaribbean.length === 0) {
-      data.repertoireCaribbean = perfList.filter(item => /Puerto Rico|Bomba|Plena|Salsa|Cuba|Son|Rueda|Dominican|Bachata|Merengue|Caribbean/i.test(item));
+      data.repertoireCaribbean = perfList.filter(item => /Puerto Rico|Bomba|Plena|Seis|Danza|Salsa|Cuba|Son|Rueda|Dominican|Bachata|Merengue|Caribbean/i.test(item));
     }
     if (!data.repertoireCentralAmerica || data.repertoireCentralAmerica.length === 0) {
-      data.repertoireCentralAmerica = perfList.filter(item => /Salvador|Carbonero|Cortadoras|Guatemala|Honduras|Nicaragua|Costa Rica|Panam|Central/i.test(item));
+      data.repertoireCentralAmerica = perfList.filter(item => /Salvador|Carbonero|Cortadoras|Comaleras|Guatemala|Honduras|Nicaragua|Costa Rica|Panam|Central/i.test(item));
     }
     if (!data.repertoireSouthAmerica || data.repertoireSouthAmerica.length === 0) {
-      data.repertoireSouthAmerica = perfList.filter(item => /Colombia|Cumbia|Mapal|Bullerengue|Argentina|Tango|Chacarera|Per|Venezuela|Joropo|South/i.test(item));
+      data.repertoireSouthAmerica = perfList.filter(item => /Colombia|Cumbia|Mapal|Bullerengue|Argentina|Tango|Chacarera|Per|Venezuela|Joropo|South|Pollera/i.test(item));
     }
     if (!data.repertoireTheatrical || data.repertoireTheatrical.length === 0) {
-      data.repertoireTheatrical = perfList.filter(item => /Llorona|Muertos|Cantor|Singer|Ranchera|Mariachi|Bolero|Desfile|Parade|Carnival|Parranda|Navide/i.test(item));
+      data.repertoireTheatrical = perfList.filter(item => /Llorona|Muertos|Cantor|Singer|Ranchera|Mariachi|Bolero|Desfile|Parade|Carnival|Parranda|Navide|Ladies in Red|Folk Characters/i.test(item));
     }
   }
 
