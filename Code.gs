@@ -9,7 +9,7 @@ const CONFIG = {
   SPREADSHEET_URL: "https://docs.google.com/spreadsheets/d/1ssJPBdSTOUzq1S9b_kHYuBLMoUbxwrDap2FIkfHOX4k/edit",
   INFOCALENDAR_ID: "shqfpe645m3tj6fhee17irti5s@group.calendar.google.com",
   FOLDER_ID: "1FaiN_vTho7YY5mwd_OXrfHPnQB0fF6oR",
-  ADMIN_EMAILS: ["salsaguy@salsarichmond.com", "salsaguyrichmond@gmail.com"],
+  ADMIN_EMAILS: ["rodriguez2113@gmail.com"],
   TEMPLATES: {
     PROPOSAL: "1plCZvjBJijgJrGduzXrTMjbtDopMgCfB5Vo7MLWxspo",
     CONTRACT: "1BuEv7BF6wsHutvEWwVZOVb3m8J3zkYujKheti8X871g",
@@ -772,7 +772,7 @@ function sendTestNotificationEmail() {
     rowNum: 99,
     eventId: "BTG-TEST-" + Date.now().toString(36).toUpperCase(),
     clientName: "Angel A. Rodriguez (Test Notification)",
-    clientEmail: "salsaguy@salsarichmond.com",
+    clientEmail: "rodriguez2113@gmail.com",
     clientPhone: "804-555-0199",
     representType: "Salsa Guy Richmond LLC",
     eventName: "Salsa & Bachata Gala Showcase 2026",
