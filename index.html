@@ -1212,7 +1212,12 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group full-width">
+            <label for="eventDescription" id="lblDescription">Purpose & Description of Your Event (Provide background on theme, venue vibe, guest flow, program schedule) <span class="required">*</span></label>
+            <textarea id="eventDescription" name="eventDescription" placeholder="Provide background on theme, venue vibe, guest flow, program schedule..." spellcheck="true" required></textarea>
+          </div>
+
+          <div class="form-group full-width">
             <label for="eventTypeScale" id="lblEventScale">Private vs. Public Event Classification: <span class="required">*</span></label>
             <select id="eventTypeScale" name="eventTypeScale" required onchange="updateConditionalSections()">
               <option value="" selected disabled>-- Select Option --</option>
@@ -1221,19 +1226,14 @@
             </select>
           </div>
 
-          <div class="form-group">
-            <label for="admissionType" id="lblAdmission">Type of Event Admission <span class="required">*</span></label>
+          <div class="form-group full-width">
+            <label for="admissionType" id="lblAdmission">Type of Event Admission (Free Admission / Ticketed Event / Private by Invitation) <span class="required">*</span></label>
             <select id="admissionType" name="admissionType" required>
               <option value="" selected disabled>-- Select Option --</option>
               <option value="Free / Open to Public">Free / Open to Public</option>
               <option value="Ticketed / Paid Admission">Ticketed / Paid Admission</option>
               <option value="Private Invitation Only">Private Invitation Only</option>
             </select>
-          </div>
-
-          <div class="form-group full-width">
-            <label for="eventDescription" id="lblDescription">Purpose & Description of Your Event (Theme, venue vibe, guest flow, program schedule) <span class="required">*</span></label>
-            <textarea id="eventDescription" name="eventDescription" placeholder="Provide background on theme, venue vibe, guest flow, program schedule..." spellcheck="true" required></textarea>
           </div>
         </div>
 
@@ -1358,14 +1358,17 @@
           3. What You Need From Us
         </div>
 
-        <div class="form-group full-width" style="margin-bottom: 22px;">
-          <label for="serviceTypeRequested" id="lblServiceTypeRequested">What type of service(s) are you requesting for your event? <span class="required">*</span></label>
-          <select id="serviceTypeRequested" name="serviceTypeRequested" required onchange="toggleServiceCategories(this.value)">
-            <option value="" selected disabled>-- Select Option --</option>
-            <option value="Performance Only">Performance Only (Dance Show / Live Music / Characters)</option>
-            <option value="Dance Instruction Only">Dance Instruction / Workshop Only</option>
-            <option value="Both Performance & Dance Instruction">Both Performance & Dance Instruction</option>
-          </select>
+        <div style="margin-bottom: 22px;">
+          <h4 style="font-size: 0.98rem; font-weight: 600; color: var(--text-main); margin-bottom: 12px;">1A Service Category Selection</h4>
+          <div class="form-group full-width" style="margin-bottom: 0;">
+            <label for="serviceTypeRequested" id="lblServiceTypeRequested">What type of service(s) are you requesting for your event? <span class="required">*</span></label>
+            <select id="serviceTypeRequested" name="serviceTypeRequested" required onchange="toggleServiceCategories(this.value)">
+              <option value="" selected disabled>-- Select Option --</option>
+              <option value="Performance Only">Performance Only (Dance Show / Live Music / Characters)</option>
+              <option value="Dance Instruction Only">Dance Instruction / Workshop Only</option>
+              <option value="Both Performance & Dance Instruction">Both Performance & Dance Instruction</option>
+            </select>
+          </div>
         </div>
 
         <!-- A. Performance Services & Cultural Repertoire -->
@@ -1660,6 +1663,7 @@
 
         <!-- Sound System Equipment (Section 3 Requirement) -->
         <div style="margin-top: 15px; margin-bottom: 22px;">
+          <h4 style="font-size: 0.98rem; font-weight: 600; color: var(--text-main); margin-bottom: 12px;">4 Sound System Equipment</h4>
           <div class="form-group full-width" style="margin-bottom: 0;">
             <label for="soundEquipment" id="lblSoundEquipment">Sound System Equipment <span class="required">*</span></label>
             <select id="soundEquipment" name="soundEquipment" required>
@@ -1916,7 +1920,7 @@
         <!-- Submit Button with generous breathing room -->
         <div class="submit-btn-wrapper">
           <button type="submit" class="btn-submit submit-btn" id="submitBtn">
-            <span id="btnSubmitText">Submit</span> <i class="fa-solid fa-paper-plane"></i>
+            <span id="btnSubmitText">Submit Event Request</span> <i class="fa-solid fa-paper-plane"></i>
           </button>
         </div>
       </form>
@@ -2498,7 +2502,7 @@
         sec4: "4. Venue & Hospitality",
         sec5: "5. Your Contact Details",
         sec6: "6. Final Steps",
-        submit: "Submit"
+        submit: "Submit Event Request"
       },
       es: {
         title: "¡Cuéntame sobre ti y tu evento!",
@@ -2694,7 +2698,7 @@
         footerTerms: "Terms of Service",
         footerPrivacy: "Privacy Policy",
         emailReceipt: "📧 Send instant Request ID confirmation receipt to my email",
-        submitBtn: "Submit",
+        submitBtn: "Submit Event Request",
         pressKitTitle: "Press Kits & Media Assets:",
         pressKitDesc: "Official Bios, High-Res Logos, Performance Photos & Promotional Materials",
         pressKitSalsa: "Salsa Guy Press Kit",
