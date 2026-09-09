@@ -214,14 +214,13 @@
       border-radius: 12px;
       padding: 6px 10px;
       background: #ffffff;
-      border: 1px solid var(--border-color);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      border: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
       transition: transform 0.3s ease;
       flex-shrink: 0;
     }
     .side-logo:hover {
       transform: translateY(-2px);
-      border-color: var(--primary);
     }
     .brand-title {
       font-size: 1.85rem;
@@ -244,11 +243,11 @@
       top: 15px;
       z-index: 100;
       background: var(--card-bg);
-      border: 1px solid var(--border-color);
+      border: none;
       border-radius: var(--radius);
       padding: 12px 18px;
       margin-bottom: 25px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     }
     .stepper-progress-bar {
       width: 100%;
@@ -317,9 +316,9 @@
       margin: 30px auto 40px auto;
       background: var(--card-bg);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.04);
       padding: 36px 40px;
-      border: 1px solid var(--border-color);
+      border: none;
     }
 
     /* --- Títulos Limpios y Elegantes --- */
@@ -466,17 +465,17 @@
       }
     }
 
-    /* --- Bloques de Sección y Contenedores Limpios --- */
+    /* --- Bloques de Sección y Contenedores Limpios (Sin Bordes de Caja) --- */
     .form-section-block {
-      border: 1px solid var(--border-color);
-      background: var(--card-bg);
-      padding: 20px;
-      border-radius: var(--radius);
-      margin-bottom: 22px;
+      border: none;
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      margin-bottom: 20px;
     }
 
     .form-section-block h4 {
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 600;
       color: var(--text-main);
       margin-bottom: 12px;
@@ -538,18 +537,19 @@
 
     /* --- Zona de Carga de Archivos --- */
     .file-upload-box {
-      border: 1px dashed var(--border-color);
+      border: 1px dashed #cbd5e1;
       border-radius: var(--radius-md);
       padding: 22px;
       text-align: center !important;
-      background-color: #fafafa;
+      background-color: #f8fafc;
       color: var(--text-muted);
       cursor: pointer;
       transition: all 0.2s ease;
     }
 
     [data-theme="dark"] .file-upload-box {
-      background-color: #1e293b;
+      background-color: #0f172a;
+      border-color: #334155;
     }
 
     .file-upload-box:hover {
@@ -570,7 +570,7 @@
       font-weight: 600;
     }
 
-    /* Checkbox & Radio Items */
+    /* Checkbox & Radio Items - Limpios y Planos sin Bordes de Caja Pesados */
     .options-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -583,8 +583,8 @@
       align-items: center;
       gap: 10px;
       padding: 10px 14px;
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
+      background: #f8fafc;
+      border: 1px solid transparent;
       border-radius: var(--radius-md);
       cursor: pointer;
       transition: all 0.2s ease;
@@ -593,19 +593,46 @@
     }
 
     .checkbox-item:hover, .radio-item:hover {
-      border-color: #cbd5e1;
-      background: #f8fafc;
+      background: #f1f5f9;
+      border-color: transparent;
+    }
+
+    [data-theme="dark"] .checkbox-item, 
+    [data-theme="dark"] .radio-item {
+      background: #0f172a;
+      border-color: transparent;
     }
 
     [data-theme="dark"] .checkbox-item:hover, 
     [data-theme="dark"] .radio-item:hover {
-      border-color: #475569;
-      background: #0f172a;
+      background: #1e293b;
+      border-color: transparent;
     }
 
     .checkbox-item input, .radio-item input {
       width: 17px;
       height: 17px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Checkbox de Acuerdos / Legal (Completamente sin marcos ni fondos) */
+    .agreement-checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 4px 0;
+      background: transparent !important;
+      border: none !important;
+      cursor: pointer;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    .agreement-checkbox-item input {
+      width: 18px;
+      height: 18px;
       accent-color: var(--primary);
       cursor: pointer;
       flex-shrink: 0;
@@ -642,10 +669,10 @@
       color: #ffffff;
     }
 
-    /* Notice Box ("Hiring Similar Performers") */
+    /* Notice Box ("Hiring Similar Performers") - Sin marco cuadrado exterior */
     .notice-box {
-      background: #fafaf9;
-      border: 1px solid #e7e5e4;
+      background: #f8fafc;
+      border: none;
       border-left: 3px solid var(--primary);
       border-radius: var(--radius-md);
       padding: 20px;
@@ -658,8 +685,9 @@
     }
 
     [data-theme="dark"] .notice-box {
-      background: #1e293b;
-      border-color: #334155;
+      background: #0f172a;
+      border-color: transparent;
+      border-left: 3px solid var(--primary);
       color: #94a3b8;
     }
 
@@ -1124,30 +1152,28 @@
           1. Location & Logistics
         </div>
         
-        <div class="form-section-block">
-          <div class="grid-2">
-            <div class="form-group full-width">
-              <label for="regionalLocation" id="lblRegionalLocation">Is this event located within the Commonwealth of Virginia (USA)? <span class="required">*</span></label>
-              <select id="regionalLocation" name="regionalLocation" required onchange="handleRegionalLocationChange(this.value); updateConditionalSections();">
-                <option value="" selected disabled>-- Select Option --</option>
-                <option value="Yes (Within Virginia, USA)">Yes (Within Virginia, USA)</option>
-                <option value="No, Out-of-State (Within USA, outside VA)">No, Out-of-State (Within USA, outside VA) ➔ (Requires Travel & Logistics Details)</option>
-                <option value="No, International (Outside USA)">No, International (Outside USA) ➔ (Requires International Logistics)</option>
-              </select>
-            </div>
+        <div class="grid-2">
+          <div class="form-group full-width">
+            <label for="regionalLocation" id="lblRegionalLocation">Is this event located within the Commonwealth of Virginia (USA)? <span class="required">*</span></label>
+            <select id="regionalLocation" name="regionalLocation" required onchange="handleRegionalLocationChange(this.value); updateConditionalSections();">
+              <option value="" selected disabled>-- Select Option --</option>
+              <option value="Yes (Within Virginia, USA)">Yes (Within Virginia, USA)</option>
+              <option value="No, Out-of-State (Within USA, outside VA)">No, Out-of-State (Within USA, outside VA) ➔ (Requires Travel & Logistics Details)</option>
+              <option value="No, International (Outside USA)">No, International (Outside USA) ➔ (Requires International Logistics)</option>
+            </select>
+          </div>
 
-            <div class="form-group full-width">
-              <label for="eventAddress" id="lblEventAddress">Where will the event take place? (Full Address or Venue Name) <span class="required">*</span></label>
-              <input type="text" id="eventAddress" name="eventAddress" placeholder="(e.g., 123 Main St, Richmond, VA 23220 or Venue Name)" spellcheck="true" required oninput="calculateTravelMileage(this.value)">
-              <div id="travelMileageHelper" style="display:none; margin-top: 8px; font-size: 0.86rem; line-height: 1.4; padding: 8px 12px; border-radius: 8px; background: rgba(56, 189, 248, 0.08); border: 1px solid #38BDF8;"></div>
-            </div>
+          <div class="form-group full-width">
+            <label for="eventAddress" id="lblEventAddress">Where will the event take place? (Full Address or Venue Name) <span class="required">*</span></label>
+            <input type="text" id="eventAddress" name="eventAddress" placeholder="(e.g., 123 Main St, Richmond, VA 23220 or Venue Name)" spellcheck="true" required oninput="calculateTravelMileage(this.value)">
+            <div id="travelMileageHelper" style="display:none; margin-top: 8px; font-size: 0.86rem; line-height: 1.4; padding: 8px 12px; border-radius: 8px; background: rgba(56, 189, 248, 0.08); border: 1px solid #38BDF8;"></div>
+          </div>
 
-            <!-- Out-of-State Travel & Logistics Conditional Block -->
-            <div id="outOfStateBlock" class="conditional-block" style="display: none; margin-top: 15px; grid-column: span 2;">
-              <div class="form-group full-width" style="margin-bottom: 0;">
-                <label for="outOfStateLogistics" id="lblOutOfStateLogistics">Out-of-State Travel & Logistics Arrangement <span class="required">*</span> <span class="hint">(Describe travel, flight/driving arrangements, hotel lodging, and per diem)</span></label>
-                <textarea id="outOfStateLogistics" name="outOfStateLogistics" placeholder="Describe flight/driving logistics, hotel accommodations, per diem, and arrival schedule..." spellcheck="true"></textarea>
-              </div>
+          <!-- Out-of-State Travel & Logistics Conditional Block -->
+          <div id="outOfStateBlock" class="conditional-block" style="display: none; margin-top: 15px; grid-column: span 2;">
+            <div class="form-group full-width" style="margin-bottom: 0;">
+              <label for="outOfStateLogistics" id="lblOutOfStateLogistics">Out-of-State Travel & Logistics Arrangement <span class="required">*</span> <span class="hint">(Describe travel, flight/driving arrangements, hotel lodging, and per diem)</span></label>
+              <textarea id="outOfStateLogistics" name="outOfStateLogistics" placeholder="Describe flight/driving logistics, hotel accommodations, per diem, and arrival schedule..." spellcheck="true"></textarea>
             </div>
           </div>
         </div>
@@ -1332,24 +1358,20 @@
           3. What You Need From Us
         </div>
 
-        <div class="form-section-block">
-          <h4>Service Category Selection</h4>
-          
-          <div class="form-group full-width" style="margin-bottom: 0;">
-            <label for="serviceTypeRequested" id="lblServiceTypeRequested">What type of service(s) are you requesting for your event? <span class="required">*</span></label>
-            <select id="serviceTypeRequested" name="serviceTypeRequested" required onchange="toggleServiceCategories(this.value)">
-              <option value="" selected disabled>-- Select Option --</option>
-              <option value="Performance Only">Performance Only (Dance Show / Live Music / Characters)</option>
-              <option value="Dance Instruction Only">Dance Instruction / Workshop Only</option>
-              <option value="Both Performance & Dance Instruction">Both Performance & Dance Instruction</option>
-            </select>
-          </div>
+        <div class="form-group full-width" style="margin-bottom: 22px;">
+          <label for="serviceTypeRequested" id="lblServiceTypeRequested">What type of service(s) are you requesting for your event? <span class="required">*</span></label>
+          <select id="serviceTypeRequested" name="serviceTypeRequested" required onchange="toggleServiceCategories(this.value)">
+            <option value="" selected disabled>-- Select Option --</option>
+            <option value="Performance Only">Performance Only (Dance Show / Live Music / Characters)</option>
+            <option value="Dance Instruction Only">Dance Instruction / Workshop Only</option>
+            <option value="Both Performance & Dance Instruction">Both Performance & Dance Instruction</option>
+          </select>
         </div>
 
         <!-- A. Performance Services & Cultural Repertoire -->
-        <div id="performanceServicesBlock" style="display: none; transition: all 0.35s ease;">
-          <div class="form-section-block">
-            <h4>A. Performance Services & Cultural Repertoire</h4>
+        <div id="performanceServicesBlock" style="display: none; transition: all 0.35s ease; margin-bottom: 22px;">
+          <div>
+            <h4 style="font-size: 0.98rem; font-weight: 600; color: var(--text-main); margin-bottom: 12px;">A. Performance Services & Cultural Repertoire</h4>
 
             <!-- 1. MEXICAN & NORTH AMERICAN DANCES -->
             <div class="repertoire-category-title">
@@ -1566,9 +1588,9 @@
         </div> <!-- End #performanceServicesBlock -->
 
         <!-- B. Dance Instruction, Production Roles & Formats -->
-        <div id="instructionServicesBlock" style="display: none; transition: all 0.35s ease;">
-          <div class="form-section-block">
-            <h4>B. Dance Instruction, Production Roles & Formats</h4>
+        <div id="instructionServicesBlock" style="display: none; transition: all 0.35s ease; margin-bottom: 22px;">
+          <div>
+            <h4 style="font-size: 0.98rem; font-weight: 600; color: var(--text-main); margin-bottom: 12px;">B. Dance Instruction, Production Roles & Formats</h4>
 
             <div class="grid-2">
               <div class="form-group full-width">
@@ -1637,8 +1659,7 @@
         </div> <!-- End #instructionServicesBlock -->
 
         <!-- Sound System Equipment (Section 3 Requirement) -->
-        <div class="form-section-block">
-          <h4>Sound System Equipment</h4>
+        <div style="margin-top: 15px; margin-bottom: 22px;">
           <div class="form-group full-width" style="margin-bottom: 0;">
             <label for="soundEquipment" id="lblSoundEquipment">Sound System Equipment <span class="required">*</span></label>
             <select id="soundEquipment" name="soundEquipment" required>
@@ -1743,8 +1764,8 @@
         </div>
 
         <!-- Budget Confirmation (Section 5) -->
-        <div class="form-section-block" style="margin-top: 15px;">
-          <h4>Event Budget Confirmation</h4>
+        <div style="margin-top: 18px; margin-bottom: 10px;">
+          <h4 style="font-size: 0.98rem; font-weight: 600; color: var(--text-main); margin-bottom: 12px;">Event Budget Confirmation</h4>
           <div class="grid-2">
             <div class="form-group">
               <label for="hasBudget" id="lblHasBudget">Confirm you have a BUDGET for our participation <span class="required">*</span></label>
@@ -1872,7 +1893,7 @@
             While you may be tempted to hire similar performances, I truly believe that incorporating different styles and specialties can greatly enhance your event experience in multiple ways. First and foremost, offering a variety of performances will keep your guests engaged and captivated throughout the entire event. By avoiding repetition or monotony, I ensure that attendees remain entertained and have a truly memorable experience.
           </p>
           <p style="margin-bottom: 12px;" id="lblGenInfoP2">
-            Furthermore, diverse performances cater to a broader audience, attracting individuals with varying interests and preferences. By providing a mix of entertainment options, I ensure that everyone finds something appealing and feels included in the festivities. This inclusive approach guarantees a more enjoyable and satisfying experience for all attendees.
+            Furthermore, diverse performances cater to a broader audience, attracting individuals with varying interests and preferences. By providing a mix of entertainment options, I ensure that everyone finds something appealing and feels included in the festivities. This inclusive approach guarantees a more enjoyable and exciting experience for all attendees.
           </p>
           <p style="margin: 0;" id="lblGenInfoP3">
             I understand that you may have already considered these points, and I would be absolutely delighted to discuss further how my unique and engaging performances can complement your event. It will simplify the logistics of the event, making it easier for you to plan and execute. I am confident that I can deliver a truly exceptional and unforgettable experience for your guests.
@@ -1881,12 +1902,12 @@
 
         <!-- Checkbox Agreements -->
         <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
-          <label class="checkbox-item">
+          <label class="agreement-checkbox-item">
             <input type="checkbox" id="termsCheck" required> 
             <span id="lblTerms">I agree to the <a href="https://www.salsarichmond.com/contact-info/terms" target="_blank" style="color: var(--primary); font-weight: 600; text-decoration: underline;">Terms of Service</a> &amp; <a href="https://www.salsarichmond.com/contact-info/privacy-policy" target="_blank" style="color: var(--primary); font-weight: 600; text-decoration: underline;">Privacy Policy</a> <span class="required">*</span></span>
           </label>
 
-          <label class="checkbox-item">
+          <label class="agreement-checkbox-item">
             <input type="checkbox" id="sendEmailReceipt" checked> 
             <span id="lblEmailReceipt">📧 Send instant Request ID confirmation receipt to my email</span>
           </label>
@@ -1909,7 +1930,7 @@
         <div class="event-id-badge" id="eventIdDisplay">Request ID: Syncing...</div>
         
         <!-- Next Actions Card -->
-        <div class="ask-another-box" style="margin: 22px 0 15px 0; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 22px; text-align: center;">
+        <div class="ask-another-box" style="margin: 22px 0 15px 0; background: var(--card-bg); border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border-radius: 12px; padding: 22px; text-align: center;">
           <p id="txtAskAnother" style="font-size: 1.05rem; font-weight: 600; color: var(--text-main); margin-bottom: 16px;">
             <i class="fa-solid fa-compass" style="margin-right: 6px; color: var(--primary);"></i> What would you like to do next?
           </p>
