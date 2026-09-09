@@ -19,654 +19,241 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
+    /* --- Variables y Estilos Generales --- */
     :root {
-      /* Theme 1: Crimson Fire (Default) */
-      --primary-accent: #DC2626;
-      --primary-dark: #991B1B;
-      --accent-gold: #F59E0B;
-      --bg-gradient-1: #31101A;
-      --bg-gradient-2: #0F172A;
-      --bg-gradient-3: #080C14;
-      --card-bg: rgba(20, 26, 38, 0.85);
-      --sub-card-bg: rgba(255, 255, 255, 0.04);
-      --sub-card-border: rgba(255, 255, 255, 0.1);
-      --card-border: rgba(255, 255, 255, 0.12);
-      --text-main: #F8FAFC;
-      --text-muted: #94A3B8;
-      --input-bg: rgba(15, 23, 42, 0.7);
-      --input-border: rgba(255, 255, 255, 0.18);
-      --shadow-glow: 0 10px 30px -10px rgba(220, 38, 38, 0.35);
-      --radius-xl: 20px;
-      --radius-md: 12px;
+      --primary: #e91e63; /* Color de acento de marca */
+      --primary-hover: #d81b60;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --border-focus: #e91e63;
+      --radius: 12px;
+      --radius-md: 8px;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+
+      /* Compatibility aliases */
+      --primary-accent: #e91e63;
+      --primary-dark: #d81b60;
+      --accent-gold: #e91e63;
+      --bg-gradient-1: #f8fafc;
+      --bg-gradient-2: #f1f5f9;
+      --bg-gradient-3: #e2e8f0;
+      --sub-card-bg: #fafafa;
+      --sub-card-border: #e2e8f0;
+      --card-border: #e2e8f0;
+      --input-bg: #ffffff;
+      --input-border: #e2e8f0;
+      --shadow-glow: 0 4px 20px rgba(233, 30, 99, 0.12);
+      --radius-xl: 12px;
     }
 
-    /* Color Scheme Presets */
+    [data-theme="dark"],
+    body:not(.light-theme) {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --border-color: #334155;
+      --sub-card-bg: #1e293b;
+      --sub-card-border: #334155;
+      --card-border: #334155;
+      --input-bg: #0f172a;
+      --input-border: #334155;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    [data-color-scheme="crimson"] {
+      --primary: #e91e63;
+      --primary-hover: #d81b60;
+      --border-focus: #e91e63;
+    }
     [data-color-scheme="salsa-passion"] {
-      --primary-accent: #EC4899;
-      --primary-dark: #BE185D;
-      --accent-gold: #F43F5E;
-      --bg-gradient-1: #3B0764;
-      --bg-gradient-2: #1E1B4B;
-      --shadow-glow: 0 10px 30px -10px rgba(236, 72, 153, 0.35);
+      --primary: #dc2626;
+      --primary-hover: #b91c1c;
+      --border-focus: #dc2626;
     }
-
     [data-color-scheme="tropical-palm"] {
-      --primary-accent: #10B981;
-      --primary-dark: #047857;
-      --accent-gold: #F59E0B;
-      --bg-gradient-1: #064E3B;
-      --bg-gradient-2: #065F46;
-      --shadow-glow: 0 10px 30px -10px rgba(16, 185, 129, 0.35);
-    }
-
-    [data-color-scheme="midnight-fiesta"] {
-      --primary-accent: #06B6D4;
-      --primary-dark: #0E7490;
-      --accent-gold: #38BDF8;
-      --bg-gradient-1: #0F172A;
-      --bg-gradient-2: #1E1B4B;
-      --shadow-glow: 0 10px 30px -10px rgba(6, 182, 212, 0.35);
-    }
-
-    /* Light Mode Overrides */
-    [data-theme="light"] {
-      --bg-gradient-1: #FFFFFF;
-      --bg-gradient-2: #FFF5F5;
-      --bg-gradient-3: #FAF8F8;
-      --card-bg: #FFFFFF;
-      --card-border: rgba(220, 38, 38, 0.12);
-      --sub-card-bg: #FFFFFF;
-      --sub-card-border: rgba(0, 0, 0, 0.08);
-      --text-main: #0F172A;
-      --text-muted: #475569;
-      --input-bg: #FFFFFF;
-      --input-border: #CBD5E1;
-      --shadow-glow: 0 10px 30px -10px rgba(220, 38, 38, 0.1);
+      --primary: #059669;
+      --primary-hover: #047857;
+      --border-focus: #059669;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
 
     body {
-      background: radial-gradient(circle at top right, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 50%, var(--bg-gradient-3) 100%);
+      background-color: var(--bg-color);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       color: var(--text-main);
+      line-height: 1.5;
       min-height: 100vh;
       display: block;
       margin: 0 auto;
       padding: 30px 15px;
-      transition: background 0.4s ease, color 0.4s ease;
+      transition: background 0.3s ease, color 0.3s ease;
     }
 
     .container {
       width: 100%;
-      max-width: 960px;
+      max-width: 760px;
+      margin: 0 auto !important;
+      padding: 0 15px;
+      box-sizing: border-box;
     }
 
-    /* Controls Bar: Day/Night, Theme, Language */
-    .controls-bar {
+    /* Top Controls Row */
+    .top-controls-row {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border);
-      border-radius: 30px;
-      padding: 10px 20px;
-      margin-bottom: 25px;
-      box-shadow: var(--shadow-glow);
+      margin-bottom: 20px;
+      width: 100%;
     }
 
-    .control-group {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    /* Native <details> Settings Dropdown */
+    details.settings-details {
+      position: relative;
+      display: inline-block;
+      z-index: 99999;
     }
-
-    .control-btn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      color: var(--text-main);
-      padding: 6px 14px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s ease;
-    }
-
-    .control-btn:hover {
-      background: var(--primary-accent);
-      color: #FFF;
-    }
-
-    .theme-select {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      color: var(--text-main);
-      padding: 6px 12px;
-      font-size: 0.85rem;
-      font-weight: 600;
+    details.settings-details summary {
+      list-style: none;
       outline: none;
       cursor: pointer;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.88rem;
+      user-select: none;
+      box-shadow: var(--shadow);
+      transition: all 0.2s ease;
+    }
+    details.settings-details summary:hover {
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+    details.settings-details summary::-webkit-details-marker {
+      display: none;
+    }
+    .settings-dropdown-box {
+      position: absolute;
+      right: 0;
+      top: 45px;
+      background: var(--card-bg) !important;
+      border: 1px solid var(--border-color) !important;
+      border-radius: var(--radius);
+      padding: 16px;
+      min-width: 230px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      z-index: 999999 !important;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .settings-dropdown-box label,
+    .settings-dropdown-box .setting-label {
+      color: var(--text-main) !important;
+      font-size: 0.78rem !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.3px !important;
+    }
+    .settings-dropdown-box select,
+    .settings-dropdown-box option,
+    .settings-dropdown-box button {
+      color: var(--text-main) !important;
+      background-color: var(--card-bg) !important;
+      border: 1px solid var(--border-color) !important;
+      font-size: 0.88rem !important;
+      border-radius: 8px !important;
+      padding: 6px 10px !important;
+      font-weight: 500 !important;
     }
 
-    /* Header Styling & Trio Logo Layout */
+    /* Brand Header & Trio Logo Layout */
+    .brand-header {
+      text-align: center;
+      margin-bottom: 25px;
+    }
     .logo-trio-container {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 22px;
-      margin: 0 auto 20px auto;
+      gap: 18px;
+      margin: 0 auto 16px auto;
       flex-wrap: wrap;
     }
-
     .profe-logo {
-      width: 130px;
-      height: 130px;
+      width: 100px;
+      height: 100px;
       object-fit: cover;
       border-radius: 50%;
       border: 3px solid #38BDF8;
-      box-shadow: 0 0 25px rgba(56, 189, 248, 0.6), 0 0 50px rgba(56, 189, 248, 0.2);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.25);
+      transition: transform 0.3s ease;
       flex-shrink: 0;
     }
     .profe-logo:hover {
-      transform: scale(1.06);
-      box-shadow: 0 0 35px rgba(56, 189, 248, 0.8), 0 0 60px rgba(56, 189, 248, 0.4);
+      transform: scale(1.05);
     }
-
     .side-logo {
-      height: 95px;
-      max-width: 160px;
+      height: 75px;
+      max-width: 130px;
       object-fit: contain;
-      border-radius: 14px;
-      padding: 6px 12px;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid var(--card-border);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 12px;
+      padding: 6px 10px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      transition: transform 0.3s ease;
       flex-shrink: 0;
     }
     .side-logo:hover {
-      transform: translateY(-4px) scale(1.04);
-      box-shadow: 0 12px 25px rgba(220, 38, 38, 0.35);
+      transform: translateY(-2px);
+      border-color: var(--primary);
     }
-
-    .brand-header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .brand-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 18px;
-      background: rgba(220, 38, 38, 0.15);
-      border: 1px solid rgba(220, 38, 38, 0.3);
-      border-radius: 30px;
-      color: var(--primary-accent);
-      font-size: 0.88rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      margin-bottom: 15px;
-    }
-
     .brand-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: 2.5rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--text-main) 0%, var(--primary-accent) 50%, var(--accent-gold) 100%);
-      background-clip: text;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-
-    .notice-box {
-      background: rgba(245, 158, 11, 0.1);
-      border: 1px solid rgba(245, 158, 11, 0.3);
-      border-radius: var(--radius-md);
-      padding: 16px 20px;
-      font-size: 0.92rem;
-      color: var(--accent-gold);
-      line-height: 1.5;
-      margin-bottom: 30px;
-      text-align: left;
-    }
-
-    /* Glassmorphic Card */
-    .form-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--card-border);
-      border-radius: var(--radius-xl);
-      padding: 40px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3), var(--shadow-glow);
-    }
-
-    .section-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.3rem;
+      font-size: 1.85rem;
       font-weight: 700;
-      color: var(--accent-gold);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 35px;
-      margin-bottom: 22px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--card-border);
-    }
-
-    .section-title:first-of-type {
-      margin-top: 0;
-    }
-
-    .section-title i {
-      color: var(--primary-accent);
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .form-group {
-      margin-bottom: 22px;
-    }
-
-    .form-group.full-width {
-      grid-column: span 2;
-    }
-
-    label {
-      display: block;
-      font-size: 0.9rem;
-      font-weight: 600;
       color: var(--text-main);
-      margin-bottom: 8px;
+      line-height: 1.3;
+      margin-bottom: 6px;
     }
-
-    label span.required {
-      color: var(--primary-accent);
-      margin-left: 3px;
-    }
-
-    label span.hint {
+    .brand-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
       font-weight: 400;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-left: 5px;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 14px 16px;
-      background: var(--input-bg);
-      border: 1px solid var(--input-border);
-      border-radius: var(--radius-md);
-      color: var(--text-main);
-      font-size: 0.95rem;
-      outline: none;
-      transition: all 0.25s ease;
-    }
-
-    select {
-      width: 100%;
-      padding: 14px 38px 14px 14px;
-      background-color: var(--input-bg);
-      border: 1px solid var(--input-border);
-      border-radius: var(--radius-md);
-      color: var(--text-main);
-      font-size: 0.93rem;
-      outline: none;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      cursor: pointer;
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      background-size: 11px;
-      transition: all 0.25s ease;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--accent-gold);
-      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
-    }
-
-    /* Universal High Contrast Select Dropdown Options */
-    select option {
-      color: var(--text-main) !important;
-      background-color: var(--input-bg) !important;
-      padding: 10px !important;
-      font-weight: 600 !important;
-    }
-    [data-theme="light"] select option {
-      background-color: #FFFFFF !important;
-      color: #0F172A !important;
-    }
-    [data-theme="dark"] select option {
-      background-color: #1E293B !important;
-      color: #F8FAFC !important;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 90px;
-    }
-
-    /* File Upload Box (H1.7) */
-    .file-upload-box {
-      border: 2px dashed var(--input-border);
-      border-radius: var(--radius-md);
-      padding: 24px;
+      margin-bottom: 20px;
       text-align: center;
-      background: var(--input-bg);
-      cursor: pointer;
-      transition: all 0.3s ease;
     }
 
-    .file-upload-box:hover {
-      border-color: var(--accent-gold);
-      background: rgba(245, 158, 11, 0.08);
-    }
-
-    .file-upload-icon {
-      font-size: 2rem;
-      color: var(--accent-gold);
-      margin-bottom: 8px;
-    }
-
-    .file-info {
-      margin-top: 10px;
-      font-size: 0.85rem;
-      color: var(--primary-accent);
-      font-weight: 600;
-    }
-
-    /* Checkbox & Radio Groups */
-    .options-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-      margin-top: 6px;
-    }
-
-    .checkbox-item, .radio-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 12px 16px;
-      background: var(--input-bg);
-      border: 1px solid var(--input-border);
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      font-size: 0.9rem;
-      color: var(--text-main);
-    }
-
-    .checkbox-item:hover, .radio-item:hover {
-      border-color: var(--accent-gold);
-      background: rgba(245, 158, 11, 0.08);
-    }
-
-    .checkbox-item input, .radio-item input {
-      width: 18px;
-      height: 18px;
-      accent-color: var(--accent-gold);
-      cursor: pointer;
-    }
-
-    .conditional-block {
-      transition: all 0.35s ease-in-out;
-      border-left: 3px solid var(--accent-gold);
-      padding-left: 18px;
-      margin-top: 20px;
-      margin-bottom: 25px;
-    }
-
-    /* Submit Button */
-    .submit-btn {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(135deg, var(--primary-accent) 0%, #E11D48 50%, #EC4899 100%);
-      border: none;
-      border-radius: var(--radius-md);
-      color: #FFF;
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 12px;
-      box-shadow: var(--shadow-glow);
-      transition: all 0.3s ease;
-      margin-top: 35px;
-    }
-
-    .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 30px -5px rgba(220, 38, 38, 0.6);
-    }
-
-    .submit-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* Success Card & Reports (H1.5) */
-    .success-card {
-      display: none;
-      text-align: center;
-      padding: 40px 20px;
-    }
-
-    .success-icon {
-      width: 80px;
-      height: 80px;
-      background: rgba(34, 197, 94, 0.15);
-      border: 2px solid #22C55E;
-      color: #22C55E;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.2rem;
-      margin: 0 auto 20px auto;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
-      70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(34, 197, 94, 0); }
-      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-    }
-
-    .success-title {
-      font-family: 'Outfit', sans-serif;
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 10px;
-    }
-
-    .success-text {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      margin-bottom: 25px;
-      line-height: 1.5;
-    }
-
-    .event-id-badge {
-      display: inline-block;
-      padding: 10px 20px;
-      background: rgba(245, 158, 11, 0.15);
-      border: 1px dashed var(--accent-gold);
-      border-radius: 10px;
-      color: var(--accent-gold);
-      font-family: monospace;
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 25px;
-    }
-
-    .action-buttons-group {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .report-btn {
-      padding: 12px 24px;
-      background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
-      border: none;
-      border-radius: var(--radius-md);
-      color: #FFF;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s ease;
-    }
-
-    .report-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
-    }
-
-    .reset-btn {
-      padding: 12px 28px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--card-border);
-      border-radius: var(--radius-md);
-      color: var(--text-main);
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .reset-btn:hover {
-      background: var(--primary-accent);
-      color: #FFF;
-    }
-
-    /* Draft Restore Toast Notification */
-    .draft-restore-toast {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(220, 38, 38, 0.4);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(220, 38, 38, 0.2);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      padding: 12px 20px;
-      border-radius: 50px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      z-index: 9999;
-      color: #F8FAFC;
-      font-size: 0.95rem;
-      font-weight: 500;
-      animation: slideUpToast 0.3s ease-out forwards;
-      transition: opacity 0.3s ease;
-    }
-    @keyframes slideUpToast {
-      from { transform: translate(-50%, 40px); opacity: 0; }
-      to { transform: translate(-50%, 0); opacity: 1; }
-    }
-    .draft-toast-content {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .draft-toast-content i {
-      color: #F59E0B;
-      font-size: 1.1rem;
-    }
-    .draft-toast-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .btn-clear-draft {
-      background: rgba(220, 38, 38, 0.25);
-      border: 1px solid rgba(220, 38, 38, 0.6);
-      color: #FCA5A5;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    .btn-clear-draft:hover {
-      background: rgba(220, 38, 38, 0.7);
-      color: #FFF;
-    }
-    .btn-dismiss-draft {
-      background: none;
-      border: none;
-      color: #94A3B8;
-      font-size: 1.3rem;
-      line-height: 1;
-      cursor: pointer;
-      padding: 0 4px;
-      transition: color 0.2s;
-    }
-    .btn-dismiss-draft:hover {
-      color: #FFF;
-    }
-
-
-
-    /* 6-Step Visual Stepper Navigation */
+    /* --- Stepper Navigation --- */
     .stepper-wrapper {
       position: sticky;
       top: 15px;
       z-index: 100;
-      background: rgba(15, 23, 42, 0.92);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--card-border);
-      border-radius: var(--radius-lg);
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
       padding: 12px 18px;
       margin-bottom: 25px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      box-shadow: var(--shadow);
     }
     .stepper-progress-bar {
       width: 100%;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.1);
+      height: 3px;
+      background: var(--border-color);
       border-radius: 4px;
       overflow: hidden;
       margin-bottom: 10px;
@@ -674,7 +261,7 @@
     .stepper-progress-fill {
       height: 100%;
       width: 16.66%;
-      background: linear-gradient(90deg, var(--primary-accent), var(--accent-gold));
+      background: var(--primary);
       transition: width 0.3s ease;
     }
     .stepper-steps {
@@ -690,402 +277,548 @@
       gap: 6px;
       text-decoration: none;
       color: var(--text-muted);
-      font-size: 0.82rem;
-      font-weight: 600;
+      font-size: 0.85rem;
+      font-weight: 500;
       padding: 6px 10px;
       border-radius: 20px;
-      transition: all 0.25s ease;
+      transition: all 0.2s ease;
       white-space: nowrap;
     }
     .step-item:hover {
-      color: #FFF;
-      background: rgba(255, 255, 255, 0.06);
+      color: var(--primary);
+      background: rgba(233, 30, 99, 0.06);
     }
     .step-item.active {
-      color: #0f172a;
-      background: var(--accent-gold);
+      color: var(--primary);
+      background: rgba(233, 30, 99, 0.08);
+      font-weight: 600;
     }
     .step-item .step-num {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.15);
-      color: inherit;
-      font-size: 0.72rem;
+      background: var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.75rem;
       font-weight: 700;
     }
     .step-item.active .step-num {
-      background: #0f172a;
-      color: var(--accent-gold);
+      background: var(--primary);
+      color: #ffffff;
     }
 
-    /* Floating fast-track contact badge */
-    .floating-contact-badge {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      z-index: 999;
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1.5px solid var(--accent-gold);
-      border-radius: 50px;
-      padding: 8px 16px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 15px rgba(234, 179, 8, 0.25);
+    /* --- Contenedor Principal del Formulario --- */
+    .booking-form-container,
+    .form-card {
+      max-width: 720px;
+      margin: 30px auto 40px auto;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 36px 40px;
+      border: 1px solid var(--border-color);
+    }
+
+    /* --- Títulos Limpios y Elegantes --- */
+    .form-step-title,
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-top: 28px;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 0.85rem;
-      color: #FFF;
-      animation: badgeSlideUp 0.6s ease-out;
-    }
-    @keyframes badgeSlideUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .contact-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-weight: 600;
-      text-decoration: none;
-      font-size: 0.8rem;
-      transition: all 0.2s ease;
-    }
-    .whatsapp-pill {
-      background: #25D366;
-      color: #FFF;
-    }
-    .whatsapp-pill:hover {
-      background: #20BA5A;
-      transform: scale(1.05);
-    }
-    .phone-pill {
-      background: rgba(255, 255, 255, 0.15);
-      color: #FFF;
-      border: 1px solid rgba(255,255,255,0.3);
-    }
-    .phone-pill:hover {
-      background: rgba(255, 255, 255, 0.25);
-      transform: scale(1.05);
     }
 
-    @media (max-width: 640px) {
-      .floating-contact-badge {
-        bottom: 12px;
-        right: 12px;
-        left: 12px;
-        justify-content: center;
-        border-radius: 12px;
-      }
-      .draft-restore-toast {
-        width: 92%;
-        right: 4%;
-        left: 4%;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
-      .draft-toast-actions {
-        width: 100%;
-        justify-content: flex-end;
-      }
+    .section-title:first-of-type {
+      margin-top: 0;
+    }
+
+    /* --- Campos de Entrada Limpios (Inputs, Selects, Textareas) --- */
+    .form-group {
+      margin-bottom: 18px;
+      text-align: left !important;
+    }
+
+    .form-group label,
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #374151;
+      margin-bottom: 6px;
+      text-align: left !important;
+    }
+
+    [data-theme="dark"] .form-group label,
+    [data-theme="dark"] label {
+      color: #e2e8f0;
+    }
+
+    label span.required {
+      color: var(--primary);
+      font-weight: 600;
+      margin-left: 3px;
+    }
+
+    label span.hint {
+      font-weight: 400;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-left: 5px;
+    }
+
+    .form-control, 
+    .form-select, 
+    input:not([type="checkbox"]):not([type="radio"]),
+    select,
+    textarea {
+      width: 100%;
+      padding: 11px 14px;
+      background-color: var(--input-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      font-size: 0.92rem;
+      color: var(--text-main);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    .form-control:hover,
+    .form-select:hover,
+    input:hover,
+    select:hover,
+    textarea:hover {
+      border-color: #cbd5e1;
+    }
+
+    [data-theme="dark"] input:hover,
+    [data-theme="dark"] select:hover,
+    [data-theme="dark"] textarea:hover {
+      border-color: #475569;
+    }
+
+    /* Enfoque Limpio y Moderno */
+    .form-control:focus, 
+    .form-select:focus, 
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.12);
+    }
+
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 14px;
+      padding-right: 38px;
+      cursor: pointer;
+    }
+
+    select option {
+      color: var(--text-main) !important;
+      background-color: var(--card-bg) !important;
+      padding: 10px !important;
+      font-weight: 500 !important;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 85px;
+    }
+
+    /* --- Retícula de dos columnas limpia --- */
+    .form-row-grid,
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-group.full-width {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 620px) {
+      .form-row-grid,
       .grid-2 {
         grid-template-columns: 1fr;
       }
       .form-group.full-width {
         grid-column: span 1;
       }
+      .booking-form-container,
       .form-card {
-        padding: 25px;
-      }
-      .brand-title {
-        font-size: 2rem;
+        padding: 24px 18px;
+        margin: 20px auto;
       }
     }
-  
-    @media print {
-      body {
-        background: #FFF !important;
-        color: #000 !important;
-        font-size: 11pt !important;
-      }
-      .top-controls-row, .theme-settings-details, .btn-clear-draft, .draft-restore-toast,
-      .floating-contact-badge, .submit-btn, .ask-another-box, .app-footer, .file-upload-box,
-      .bg-mesh, .noise-overlay, .theme-backdrop, .details-btn {
-        display: none !important;
-      }
-      .form-card, .success-card {
-        border: none !important;
-        box-shadow: none !important;
-        background: transparent !important;
-        padding: 0 !important;
-        margin: 0 !important;
-      }
-      .app-header {
-        border-bottom: 2px solid #DC2626 !important;
-        padding-bottom: 12px !important;
-        margin-bottom: 16px !important;
-      }
-      .app-logo-img {
-        height: 60px !important;
-      }
-      .section-title {
-        color: #DC2626 !important;
-        border-bottom: 1px solid #DDD !important;
-        font-size: 13pt !important;
-        page-break-after: avoid;
-      }
-      input, select, textarea {
-        border: 1px solid #DDD !important;
-        color: #000 !important;
-        background: #FFF !important;
-        font-size: 10pt !important;
-      }
-      .event-id-badge {
-        background: #F3F4F6 !important;
-        color: #000 !important;
-        border: 1px solid #999 !important;
-      }
+
+    /* --- Bloques de Sección y Contenedores Limpios --- */
+    .form-section-block {
+      border: 1px solid var(--border-color);
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: var(--radius);
+      margin-bottom: 22px;
     }
-  
-    /* Left justification enforce */
-    .form-group, .form-group label, .section-title, label span, .notice-box, .file-upload-box {
+
+    .form-section-block h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 12px;
+    }
+
+    .conditional-block {
+      transition: all 0.3s ease-in-out;
+      border-left: 2.5px solid var(--primary);
+      padding-left: 16px;
+      margin-top: 14px;
+      margin-bottom: 20px;
+    }
+
+    /* --- Botón de Envío con Espacio y Presencia --- */
+    .submit-btn-wrapper {
+      margin: 36px auto 16px auto;
+      text-align: center;
+      max-width: 480px;
+    }
+
+    .btn-submit,
+    .submit-btn {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 15px 32px;
+      background-color: var(--primary);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 1.05rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 14px rgba(233, 30, 99, 0.28);
+    }
+
+    .btn-submit:hover,
+    .submit-btn:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(233, 30, 99, 0.36);
+    }
+
+    .btn-submit:active,
+    .submit-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 8px rgba(233, 30, 99, 0.2);
+    }
+
+    .btn-submit:disabled,
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* --- Zona de Carga de Archivos --- */
+    .file-upload-box {
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      text-align: center !important;
+      background-color: #fafafa;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    [data-theme="dark"] .file-upload-box {
+      background-color: #1e293b;
+    }
+
+    .file-upload-box:hover {
+      border-color: var(--primary);
+      background-color: rgba(233, 30, 99, 0.02);
+    }
+
+    .file-upload-icon {
+      font-size: 1.8rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .file-info {
+      margin-top: 6px;
+      font-size: 0.85rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* Checkbox & Radio Items */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .checkbox-item, .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.88rem;
+      color: var(--text-main);
+    }
+
+    .checkbox-item:hover, .radio-item:hover {
+      border-color: #cbd5e1;
+      background: #f8fafc;
+    }
+
+    [data-theme="dark"] .checkbox-item:hover, 
+    [data-theme="dark"] .radio-item:hover {
+      border-color: #475569;
+      background: #0f172a;
+    }
+
+    .checkbox-item input, .radio-item input {
+      width: 17px;
+      height: 17px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    /* Repertoire Category Header & Pill Details */
+    .repertoire-category-title {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #64748b;
+      margin-top: 14px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .details-btn {
+      color: var(--primary);
+      background: rgba(233, 30, 99, 0.08);
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      z-index: 10;
+      margin-left: auto;
+      transition: all 0.2s ease;
+    }
+
+    .details-btn:hover {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    /* Notice Box ("Hiring Similar Performers") */
+    .notice-box {
+      background: #fafaf9;
+      border: 1px solid #e7e5e4;
+      border-left: 3px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #475569;
+      margin-top: 24px;
+      margin-bottom: 24px;
       text-align: left !important;
     }
 
-    /* Header Container & Settings Box styling matching PDF Page 1 Screenshot #3 */
-    .header-top-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-bottom: 25px;
-    }
-    .header-logos-flex {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .header-settings-panel {
-      background: var(--sub-card-bg);
-      border: 1px solid var(--accent-gold);
-      border-radius: 12px;
-      padding: 12px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      min-width: 170px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    }
-    .settings-title-tag {
-      color: var(--accent-gold);
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    [data-theme="dark"] .notice-box {
+      background: #1e293b;
+      border-color: #334155;
+      color: #94a3b8;
     }
 
+    .notice-box h4 {
+      color: var(--text-main);
+      font-size: 0.98rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
 
-    /* Enforce main container alignment & centering */
-    
-    .container {
-      width: 100%;
-      max-width: 960px;
-      margin: 0 auto !important;
-      padding: 0 15px;
-      box-sizing: border-box;
+    /* Success Card & Next Actions */
+    .success-card {
+      display: none;
+      text-align: center;
+      padding: 30px 10px;
     }
-    .brand-header {
-      text-align: center !important;
-      margin-bottom: 25px;
-      position: relative;
-    }
-    .logo-trio-container {
+    .success-icon {
+      width: 70px;
+      height: 70px;
+      background: rgba(34, 197, 94, 0.12);
+      border: 2px solid #22C55E;
+      color: #22C55E;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 22px;
-      margin: 0 auto 20px auto !important;
+      font-size: 2rem;
+      margin: 0 auto 16px auto;
+    }
+    .success-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+    .success-text {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .event-id-badge {
+      display: inline-block;
+      padding: 8px 18px;
+      background: rgba(233, 30, 99, 0.08);
+      border: 1px dashed var(--primary);
+      border-radius: 8px;
+      color: var(--primary);
+      font-family: monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+    .action-buttons-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
       flex-wrap: wrap;
     }
-    .top-controls-row {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      margin-bottom: 15px;
-      width: 100%;
-    }
-
-
-    /* Settings Dropdown Menu CSS */
-    .settings-dropdown-wrapper {
-      position: relative;
-      display: inline-block;
-      z-index: 9999;
-    }
-    .settings-dropdown-menu {
-      display: none;
-      position: absolute;
-      right: 0;
-      top: 48px;
-      background: var(--card-bg) !important;
-      border: 1px solid var(--accent-gold) !important;
-      border-radius: 14px;
-      padding: 16px;
-      min-width: 230px;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.85);
-      z-index: 99999 !important;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .settings-dropdown-menu.active {
-      display: flex !important;
-    }
-    .settings-dropdown-menu select,
-    .settings-dropdown-menu option,
-    .settings-dropdown-menu button {
-      color: #F8FAFC !important;
-      background-color: var(--input-bg) !important;
-      border: 1px solid rgba(245, 158, 11, 0.4) !important;
-      font-size: 0.88rem !important;
-      border-radius: 8px !important;
-      opacity: 1 !important;
-      visibility: visible !important;
-    }
-    .settings-dropdown-menu select option {
-      color: #F8FAFC !important;
-      background-color: var(--card-bg) !important;
-      padding: 6px;
-    }
-
-
-    /* Native <details> Settings Dropdown */
-    details.settings-details {
-      position: relative;
-      display: inline-block;
-      z-index: 99999;
-    }
-    details.settings-details summary {
-      list-style: none;
-      outline: none;
+    .report-btn {
+      padding: 10px 20px;
+      background: #2563EB;
+      border: none;
+      border-radius: 8px;
+      color: #FFF;
+      font-weight: 600;
       cursor: pointer;
-      background: rgba(245, 158, 11, 0.18);
-      border: 1px solid var(--accent-gold);
-      color: var(--accent-gold);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      font-size: 0.9rem;
+    }
+    .report-btn:hover {
+      background: #1D4ED8;
+      transform: translateY(-1px);
+    }
+    .reset-btn {
+      padding: 10px 22px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.9rem;
+    }
+    .reset-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Summary Report Styles */
+    .summary-report-container {
+      margin-top: 25px;
+      text-align: left;
+    }
+    .summary-report-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 18px 22px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+    .summary-section-title {
+      color: var(--primary);
+      font-size: 1.05rem;
       font-weight: 700;
-      padding: 8px 18px;
-      border-radius: 30px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.9rem;
-      user-select: none;
     }
-    details.settings-details summary::-webkit-details-marker {
-      display: none;
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 20px;
     }
-    details.settings-details[open] summary {
-      box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+    @media (max-width: 640px) {
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+      .summary-item.full-width {
+        grid-column: span 1 !important;
+      }
     }
-    .settings-dropdown-box {
-      position: absolute;
-      right: 0;
-      top: 48px;
-      background: var(--card-bg) !important;
-      border: 1px solid var(--accent-gold) !important;
-      border-radius: 14px;
-      padding: 16px;
-      min-width: 230px;
-      box-shadow: 0 12px 35px rgba(0,0,0,0.85);
-      z-index: 999999 !important;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .summary-item {
+      font-size: 0.92rem;
+      line-height: 1.45;
     }
-    .settings-dropdown-box select,
-    .settings-dropdown-box option,
-    .settings-dropdown-box button {
-      color: #F8FAFC !important;
-      background-color: var(--input-bg) !important;
-      border: 1px solid rgba(245, 158, 11, 0.4) !important;
-      font-size: 0.88rem !important;
-      border-radius: 8px !important;
-      opacity: 1 !important;
-      visibility: visible !important;
+    .summary-item.full-width {
+      grid-column: span 2;
     }
-    .settings-dropdown-box select option {
-      color: #F8FAFC !important;
-      background-color: var(--card-bg) !important;
-      padding: 6px;
+    .summary-label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
     }
-
-    
-    /* Theme-Aware High Contrast Settings Dropdown CSS */
-    .settings-dropdown-box {
-      background: var(--card-bg) !important;
-      border: 1px solid var(--accent-gold) !important;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25) !important;
+    .summary-value {
+      color: var(--text-main);
+      font-weight: 500;
+      word-break: break-word;
     }
-    .settings-dropdown-box label,
-    .settings-dropdown-box .setting-label {
-      color: var(--text-main) !important;
-      font-size: 0.78rem !important;
-      font-weight: 700 !important;
-      letter-spacing: 0.3px !important;
-    }
-    .settings-dropdown-box .saved-badge {
-      color: #10B981 !important;
-      font-weight: 700 !important;
-      font-size: 0.7rem !important;
-    }
-    .settings-dropdown-box select,
-    .settings-dropdown-box option,
-    .settings-dropdown-box button {
-      color: var(--text-main) !important;
-      background-color: var(--input-bg) !important;
-      border: 1px solid rgba(245, 158, 11, 0.6) !important;
-      font-size: 0.88rem !important;
-      border-radius: 8px !important;
-      opacity: 1 !important;
-      visibility: visible !important;
-      font-weight: 600 !important;
-    }
-    .settings-dropdown-box select option {
-      color: var(--text-main) !important;
-      background-color: var(--card-bg) !important;
-      padding: 8px !important;
-    }
-    #resetDefaultsBtn {
-      color: var(--text-main) !important;
-      border: 1px dashed var(--accent-gold) !important;
-      background: rgba(245, 158, 11, 0.12) !important;
-      font-weight: 700 !important;
-    }
-    #resetDefaultsBtn:hover {
-      background: rgba(245, 158, 11, 0.25) !important;
-      color: var(--primary-accent) !important;
-      border-color: var(--primary-accent) !important;
-    }
-    [data-theme="light"] .settings-dropdown-box select,
-    [data-theme="light"] .settings-dropdown-box button {
-      background-color: #F8FAFC !important;
-      border-color: #CBD5E1 !important;
-    }
-    [data-theme="light"] #resetDefaultsBtn {
-      background: #FEF2F2 !important;
-      color: #DC2626 !important;
-      border-color: #FCA5A5 !important;
+    .summary-badge-pill {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      background: rgba(233, 30, 99, 0.1);
+      border: 1px solid rgba(233, 30, 99, 0.2);
+      color: var(--primary);
     }
 
     /* Footer CSS */
@@ -1094,56 +827,180 @@
       clear: both !important;
       display: block !important;
       width: 100% !important;
-      max-width: 960px !important;
-      margin: 50px auto 20px auto !important;
-      padding-top: 25px !important;
-      border-top: 1px solid var(--card-border) !important;
+      max-width: 700px !important;
+      margin: 40px auto 20px auto !important;
+      padding-top: 20px !important;
+      border-top: 1px solid var(--border-color) !important;
       text-align: center !important;
-      font-size: 0.88rem !important;
+      font-size: 0.85rem !important;
       color: var(--text-muted) !important;
     }
 
-</style>
-<style>
-  /* Interactive Spell Checker Modal Styles */
-  .spell-issue-card {
-    background: var(--sub-card-bg);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
-    padding: 14px 18px;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .spell-issue-card .field-name {
-    font-weight: 700;
-    color: #F59E0B;
-    font-size: 0.92rem;
-  }
-  .spell-issue-card .issue-desc {
-    color: #94A3B8;
-    font-size: 0.88rem;
-    margin-top: 2px;
-  }
-  .spell-issue-card .autofix-btn {
-    padding: 6px 14px;
-    background: rgba(56, 189, 248, 0.15);
-    border: 1px solid #38BDF8;
-    border-radius: 20px;
-    color: #38BDF8;
-    font-size: 0.82rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  .spell-issue-card .autofix-btn:hover {
-    background: #38BDF8;
-    color: #000;
-  }
-</style>
+    /* Spell Check Modal */
+    .spell-issue-card {
+      background: #fafafa;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .spell-issue-card .field-name {
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 0.92rem;
+    }
+    .spell-issue-card .issue-desc {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-top: 2px;
+    }
+    .spell-issue-card .autofix-btn {
+      padding: 6px 14px;
+      background: rgba(233, 30, 99, 0.1);
+      border: 1px solid var(--primary);
+      border-radius: 20px;
+      color: var(--primary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .spell-issue-card .autofix-btn:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    @media print {
+      @page {
+        margin: 10mm 12mm;
+        size: auto;
+      }
+      body {
+        background: #FFF !important;
+        color: #0F172A !important;
+        font-size: 10pt !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .container {
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .top-controls-row, .theme-settings-details, .stepper-wrapper, #stepperNav,
+      .brand-title, .brand-subtitle, .brand-badge, .notice-box, #formCard, #bookingForm,
+      .success-icon, #txtSuccessDesc, .ask-another-box, .event-id-badge,
+      .draft-restore-toast, .app-footer, .modal-overlay, .btn-clear-draft,
+      .floating-contact-badge, .submit-btn, .btn-submit, .file-upload-box {
+        display: none !important;
+      }
+      .brand-header {
+        margin-bottom: 12px !important;
+      }
+      .logo-trio-container {
+        gap: 14px !important;
+        margin-bottom: 10px !important;
+      }
+      .profe-logo {
+        width: 80px !important;
+        height: 80px !important;
+        box-shadow: none !important;
+        border: 2px solid #CBD5E1 !important;
+      }
+      .side-logo {
+        height: 60px !important;
+        max-width: 110px !important;
+        box-shadow: none !important;
+        border: 1px solid #CBD5E1 !important;
+        background: #FFF !important;
+      }
+      .success-card {
+        display: block !important;
+        border: none !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .summary-report-container {
+        display: block !important;
+        margin-top: 0 !important;
+        padding: 0 !important;
+      }
+      .summary-report-card {
+        border: 1px solid #CBD5E1 !important;
+        border-radius: 6px !important;
+        padding: 10px 14px !important;
+        margin-bottom: 10px !important;
+        background: #FFF !important;
+        box-shadow: none !important;
+        page-break-inside: avoid !important;
+      }
+      .summary-report-header {
+        border-bottom: 2px solid #e91e63 !important;
+        padding-bottom: 8px !important;
+        margin-bottom: 10px !important;
+      }
+      .summary-section-title {
+        color: #e91e63 !important;
+        font-size: 10.5pt !important;
+        font-weight: 700 !important;
+        border-bottom: 1px solid #E2E8F0 !important;
+        padding-bottom: 4px !important;
+        margin-bottom: 8px !important;
+        page-break-after: avoid !important;
+      }
+      .summary-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 6px 14px !important;
+      }
+      .summary-item {
+        font-size: 9pt !important;
+        line-height: 1.3 !important;
+      }
+      .summary-item.full-width {
+        grid-column: span 2 !important;
+      }
+      .summary-label {
+        font-weight: 700 !important;
+        color: #475569 !important;
+        font-size: 8pt !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.3px !important;
+      }
+      .summary-value {
+        color: #0F172A !important;
+        font-weight: 500 !important;
+        margin-top: 1px !important;
+      }
+      .summary-badge-pill {
+        display: inline-block !important;
+        padding: 2px 6px !important;
+        border-radius: 4px !important;
+        font-size: 8pt !important;
+        font-weight: 700 !important;
+        border: 1px solid #CBD5E1 !important;
+        background: #F8FAFC !important;
+        color: #0F172A !important;
+      }
+      .summary-footer-box {
+        border-top: 1px solid #CBD5E1 !important;
+        padding-top: 8px !important;
+        margin-top: 12px !important;
+        font-size: 8pt !important;
+        color: #64748B !important;
+        text-align: center !important;
+        page-break-inside: avoid !important;
+      }
+    }
+  </style>
 </head>
 <body class="light-theme">
 
@@ -1219,7 +1076,8 @@
           <img src="tradicion_logo.png" alt="Tradición Puerto Rican Folk Dancing" class="side-logo right-logo" title="Tradición Puerto Rican Folk Dancing &amp; More - Visit Website" style="cursor: pointer;">
         </a>
       </div>
-      <h1 class="brand-title" id="txtTitle" style="text-align: center; margin-bottom: 20px;">Event Request & Booking Questionnaire</h1>
+      <h1 class="brand-title" id="txtTitle" style="text-align: center; margin-bottom: 6px;">Event Request & Booking Questionnaire</h1>
+      <p class="brand-subtitle" id="txtSubtitle">Let's bring your event to life!</p>
     </div>
 
     <!-- 6-Step Visual Progress Stepper -->
@@ -1256,17 +1114,17 @@
     </div>
       
     <!-- Booking Form Card -->
-    <div class="form-card" id="formCard">
+    <div class="form-card booking-form-container" id="formCard">
       <form id="bookingForm" novalidate>
         <!-- Bot Shield Honeypot -->
         <input type="text" id="website_hp" name="website_hp" style="display:none !important;" tabindex="-1" autocomplete="off">
         
         <!-- SECTION 1: LOCATION & LOGISTICS -->
         <div class="section-title" id="sec1Title">
-          <i class="fa-solid fa-map-location-dot"></i> 1. Location & Logistics
+          1. Location & Logistics
         </div>
         
-        <div class="form-section-block" style="border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
+        <div class="form-section-block">
           <div class="grid-2">
             <div class="form-group full-width">
               <label for="regionalLocation" id="lblRegionalLocation">Is this event located within the Commonwealth of Virginia (USA)? <span class="required">*</span></label>
@@ -1297,7 +1155,7 @@
 
         <!-- SECTION 2: EVENT BASICS -->
         <div class="section-title" id="sec2Title">
-          <i class="fa-solid fa-calendar-check"></i> 2. Event Basics
+          2. Event Basics
         </div>
         
         <div class="grid-2">
@@ -1315,25 +1173,20 @@
             <label for="eventDate" id="lblEventDate">Event Date <span class="required">*</span></label>
             <div style="position: relative;">
               <input type="date" id="eventDate" name="eventDate" onclick="if(this.showPicker) this.showPicker();" onfocus="if(this.showPicker) this.showPicker();" style="padding-right: 42px; cursor: pointer;" required>
-              <i class="fa-solid fa-calendar-days" onclick="const d = document.getElementById('eventDate'); if(d.showPicker) d.showPicker(); else d.focus();" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--accent-gold); cursor: pointer; font-size: 1.15rem;" title="Click to open calendar"></i>
+              <i class="fa-solid fa-calendar-days" onclick="const d = document.getElementById('eventDate'); if(d.showPicker) d.showPicker(); else d.focus();" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; cursor: pointer; font-size: 1.15rem;" title="Click to open calendar"></i>
             </div>
-            <div id="dateScheduleHelper" style="display:none; margin-top: 8px; font-size: 0.86rem; line-height: 1.4; padding: 8px 12px; border-radius: 8px; background: rgba(255,255,255,0.04); border: 1px solid var(--card-border);"></div>
+            <div id="dateScheduleHelper" style="display:none; margin-top: 8px; font-size: 0.86rem; line-height: 1.4; padding: 8px 12px; border-radius: 8px; background: rgba(0,0,0,0.02); border: 1px solid var(--border-color);"></div>
           </div>
 
           <div class="form-group">
             <label for="eventTime" id="lblEventTime">Start Time <span class="required">*</span></label>
             <div style="position: relative;">
               <input type="time" id="eventTime" name="eventTime" onclick="if(this.showPicker) this.showPicker();" onfocus="if(this.showPicker) this.showPicker();" style="padding-right: 42px; cursor: pointer;" required>
-              <i class="fa-solid fa-clock" onclick="const t = document.getElementById('eventTime'); if(t.showPicker) t.showPicker(); else t.focus();" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--accent-gold); cursor: pointer; font-size: 1.15rem;" title="Click to open time picker"></i>
+              <i class="fa-solid fa-clock" onclick="const t = document.getElementById('eventTime'); if(t.showPicker) t.showPicker(); else t.focus();" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; cursor: pointer; font-size: 1.15rem;" title="Click to open time picker"></i>
             </div>
           </div>
 
-          <div class="form-group full-width">
-            <label for="eventDescription" id="lblDescription">Purpose & Description of Your Event (Provide background on theme, venue vibe, guest flow, program schedule) <span class="required">*</span></label>
-            <textarea id="eventDescription" name="eventDescription" placeholder="Provide background on theme, venue vibe, guest flow, program schedule..." spellcheck="true" required></textarea>
-          </div>
-
-          <div class="form-group full-width">
+          <div class="form-group">
             <label for="eventTypeScale" id="lblEventScale">Private vs. Public Event Classification: <span class="required">*</span></label>
             <select id="eventTypeScale" name="eventTypeScale" required onchange="updateConditionalSections()">
               <option value="" selected disabled>-- Select Option --</option>
@@ -1342,8 +1195,8 @@
             </select>
           </div>
 
-          <div class="form-group full-width">
-            <label for="admissionType" id="lblAdmission">Type of Event Admission (Free Admission / Ticketed Event / Private by Invitation) <span class="required">*</span></label>
+          <div class="form-group">
+            <label for="admissionType" id="lblAdmission">Type of Event Admission <span class="required">*</span></label>
             <select id="admissionType" name="admissionType" required>
               <option value="" selected disabled>-- Select Option --</option>
               <option value="Free / Open to Public">Free / Open to Public</option>
@@ -1351,12 +1204,17 @@
               <option value="Private Invitation Only">Private Invitation Only</option>
             </select>
           </div>
+
+          <div class="form-group full-width">
+            <label for="eventDescription" id="lblDescription">Purpose & Description of Your Event (Theme, venue vibe, guest flow, program schedule) <span class="required">*</span></label>
+            <textarea id="eventDescription" name="eventDescription" placeholder="Provide background on theme, venue vibe, guest flow, program schedule..." spellcheck="true" required></textarea>
+          </div>
         </div>
 
         <!-- Conditional Classification Details: Large Public / Small Private / International -->
         <div id="largePublicSection" class="conditional-block" style="display: none; margin-top: 15px;">
           <div class="section-title" id="sec3aTitle" style="font-size: 1.05rem;">
-            <i class="fa-solid fa-bullhorn"></i> Large Public Event Details, 501(c) & Promotions
+            Large Public Event Details, 501(c) & Promotions
           </div>
 
           <div class="grid-2">
@@ -1394,7 +1252,7 @@
         <!-- 3B. Small Private Event Specifications & Hospitality -->
         <div id="smallPrivateSection" class="conditional-block" style="display: none; margin-top: 15px;">
           <div class="section-title" id="sec3bTitle" style="font-size: 1.05rem;">
-            <i class="fa-solid fa-cake-candles"></i> Small Private Event Specifications & Hospitality
+            Small Private Event Specifications & Hospitality
           </div>
 
           <div class="grid-2">
@@ -1431,7 +1289,7 @@
         <!-- 3C. Outside of the United States of America (International Logistics) -->
         <div id="intlSection" class="conditional-block" style="display: none; margin-top: 15px;">
           <div class="section-title" id="sec3cTitle" style="font-size: 1.05rem;">
-            <i class="fa-solid fa-plane-departure"></i> International Event Logistics (Outside USA)
+            International Event Logistics (Outside USA)
           </div>
 
           <div class="grid-2">
@@ -1441,11 +1299,16 @@
             </div>
 
             <div class="form-group">
+              <label for="intlPaymentTerms" id="lblIntlPayment">Preferred Currency & Payment Terms <span class="required">*</span></label>
+              <input type="text" id="intlPaymentTerms" name="intlPaymentTerms" placeholder="e.g. USD / Wire Transfer / 50% Deposit" spellcheck="true">
+            </div>
+
+            <div class="form-group full-width">
               <label for="intlLogistics" id="lblIntlLogistics">International Travel & Lodging Logistics <span class="required">*</span></label>
               <textarea id="intlLogistics" name="intlLogistics" placeholder="Describe flight arrangements, airport transfers, hotel accommodations..." spellcheck="true"></textarea>
             </div>
 
-            <div class="form-group">
+            <div class="form-group full-width">
               <label for="intlVisaSupport" id="lblIntlVisa">Visa & Legal Documentation Support <span class="required">*</span></label>
               <select id="intlVisaSupport" name="intlVisaSupport">
                 <option value="" selected disabled>-- Select Option --</option>
@@ -1454,11 +1317,6 @@
                 <option value="Performers Must Secure Standard Travel Authorization">Performers Must Secure Standard Travel Authorization</option>
                 <option value="Not Applicable / Visa Free Entry">Not Applicable / Visa Free Entry</option>
               </select>
-            </div>
-
-            <div class="form-group">
-              <label for="intlPaymentTerms" id="lblIntlPayment">Preferred Currency & Payment Terms <span class="required">*</span></label>
-              <input type="text" id="intlPaymentTerms" name="intlPaymentTerms" placeholder="e.g. USD / Wire Transfer / 50% Deposit" spellcheck="true">
             </div>
 
             <div class="form-group full-width">
@@ -1471,11 +1329,11 @@
 
         <!-- SECTION 3: WHAT YOU NEED FROM US -->
         <div class="section-title" id="sec3Title">
-          <i class="fa-solid fa-music"></i> 3. What You Need From Us
+          3. What You Need From Us
         </div>
 
-        <div class="form-section-block" style="border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
-          <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-list-check"></i> Service Category Selection</h4>
+        <div class="form-section-block">
+          <h4>Service Category Selection</h4>
           
           <div class="form-group full-width" style="margin-bottom: 0;">
             <label for="serviceTypeRequested" id="lblServiceTypeRequested">What type of service(s) are you requesting for your event? <span class="required">*</span></label>
@@ -1490,11 +1348,11 @@
 
         <!-- A. Performance Services & Cultural Repertoire -->
         <div id="performanceServicesBlock" style="display: none; transition: all 0.35s ease;">
-          <div class="form-section-block" style="border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
-            <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-masks-theater"></i> A. Performance Services & Cultural Repertoire</h4>
+          <div class="form-section-block">
+            <h4>A. Performance Services & Cultural Repertoire</h4>
 
             <!-- 1. MEXICAN & NORTH AMERICAN DANCES -->
-            <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 10px; margin-bottom: 8px;">
+            <div class="repertoire-category-title">
               🇲🇽 Mexico & North American Dances
             </div>
             <div class="options-grid">
@@ -1503,7 +1361,7 @@
                   <input type="checkbox" name="perfServices" value="A Selection of Dances from the Disney Movie COCO (Mexico)"> 
                   <span>A Selection of Dances from COCO (Mexico)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'coco_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'coco_mexico')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
@@ -1511,7 +1369,7 @@
                   <input type="checkbox" name="perfServices" value="El Baile de los Viejitos (The Dance of The Old Men) (Mexico)"> 
                   <span>El Baile de los Viejitos (Mexico)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'viejitos_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'viejitos_mexico')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
@@ -1519,7 +1377,7 @@
                   <input type="checkbox" name="perfServices" value="The Waltz of La Llorona (Weeping Woman) (Mexico)"> 
                   <span>The Waltz of La Llorona (Mexico)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'llorona_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'llorona_mexico')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
@@ -1527,12 +1385,12 @@
                   <input type="checkbox" name="perfServices" value="Día de los Muertos - Day of the Dead Celebration (Mexico)"> 
                   <span>Día de los Muertos Celebration (Mexico)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'dia_muertos_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'dia_muertos_mexico')">Details</span>
               </label>
             </div>
 
             <!-- 2. CARIBBEAN DANCES -->
-            <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
+            <div class="repertoire-category-title">
               🇨🇺 🇵🇷 🇩🇴 Caribbean Dances (Cuba, Puerto Rico & Dominican Republic)
             </div>
             <div class="options-grid">
@@ -1541,7 +1399,7 @@
                   <input type="checkbox" name="perfServices" value="Salsa Rueda (Cuba)"> 
                   <span>Salsa Rueda (Cuba)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'salsa_rueda_cuba')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'salsa_rueda_cuba')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
@@ -1549,7 +1407,7 @@
                   <input type="checkbox" name="perfServices" value="Bomba (Puerto Rico)"> 
                   <span>Bomba (Puerto Rico)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'bomba_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'bomba_puerto_rico')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
@@ -1557,7 +1415,7 @@
                   <input type="checkbox" name="perfServices" value="Plena (Puerto Rico)"> 
                   <span>Plena (Puerto Rico)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'plena_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'plena_puerto_rico')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
@@ -1565,7 +1423,7 @@
                   <input type="checkbox" name="perfServices" value="Seis (Puerto Rico)"> 
                   <span>Seis (Puerto Rico)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'seis_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'seis_puerto_rico')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
@@ -1573,20 +1431,20 @@
                   <input type="checkbox" name="perfServices" value="Danza (Puerto Rico)"> 
                   <span>Danza (Puerto Rico)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'danza_puerto_rico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'danza_puerto_rico')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
                 <span style="display: flex; align-items: center; gap: 8px;">
                   <input type="checkbox" name="perfServices" value="Merengue (Dominican Republic) COMING SOON"> 
-                  <span>Merengue (Dominican Republic) <span style="font-size:0.75rem; color:var(--accent-gold);">(COMING SOON)</span></span>
+                  <span>Merengue (Dominican Republic) <span style="font-size:0.75rem; color:var(--text-muted);">(COMING SOON)</span></span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'merengue_dominican_republic')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'merengue_dominican_republic')">Details</span>
               </label>
             </div>
 
             <!-- 3. CENTRAL AMERICAN DANCES -->
-            <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
+            <div class="repertoire-category-title">
               🇸🇻 Central American Dances (El Salvador)
             </div>
             <div class="options-grid">
@@ -1595,7 +1453,7 @@
                   <input type="checkbox" name="perfServices" value="Cumbia (El Salvador)"> 
                   <span>Cumbia (El Salvador)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'cumbia_salvador')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'cumbia_salvador')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
@@ -1603,20 +1461,20 @@
                   <input type="checkbox" name="perfServices" value="Las Comaleras (El Salvador)"> 
                   <span>Las Comaleras (El Salvador)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'comaleras_salvador')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'comaleras_salvador')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
                 <span style="display: flex; align-items: center; gap: 8px;">
                   <input type="checkbox" name="perfServices" value="Las Cortadoras (El Salvador) COMING SOON"> 
-                  <span>Las Cortadoras (El Salvador) <span style="font-size:0.75rem; color:var(--accent-gold);">(COMING SOON)</span></span>
+                  <span>Las Cortadoras (El Salvador) <span style="font-size:0.75rem; color:var(--text-muted);">(COMING SOON)</span></span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'cortadoras_salvador')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'cortadoras_salvador')">Details</span>
               </label>
             </div>
 
             <!-- 4. SOUTH AMERICAN DANCES -->
-            <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
+            <div class="repertoire-category-title">
               🇨🇴 🇦🇷 South American Dances (Colombia & Argentina)
             </div>
             <div class="options-grid">
@@ -1625,7 +1483,7 @@
                   <input type="checkbox" name="perfServices" value="Cumbia (Colombia)"> 
                   <span>Cumbia (Colombia)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'cumbia_colombia')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'cumbia_colombia')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
@@ -1633,7 +1491,7 @@
                   <input type="checkbox" name="perfServices" value="Cumbia &quot;La Pollera Colorá&quot; (Colombia)"> 
                   <span>Cumbia "La Pollera Colorá" (Colombia)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'pollera_colora_colombia')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'pollera_colora_colombia')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
@@ -1641,7 +1499,7 @@
                   <input type="checkbox" name="perfServices" value="El Mapalé (Colombia)"> 
                   <span>El Mapalé (Colombia)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'mapale_colombia')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'mapale_colombia')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
@@ -1649,12 +1507,12 @@
                   <input type="checkbox" name="perfServices" value="Tango (Argentina)"> 
                   <span>Tango (Argentina)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'tango_argentina')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'tango_argentina')">Details</span>
               </label>
             </div>
 
             <!-- 5. THEATRICAL, PARADE & SINGING PERFORMANCES -->
-            <div style="font-size: 0.9rem; font-weight: 700; color: var(--accent-gold); margin-top: 18px; margin-bottom: 8px;">
+            <div class="repertoire-category-title">
               🎭 Theatrical, Parade & Singing Performances
             </div>
             <div class="options-grid">
@@ -1663,7 +1521,7 @@
                   <input type="checkbox" name="perfServices" value="Salsa Performance Group (Ladies in Red)"> 
                   <span>Salsa Performance Group (Ladies in Red)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'ladies_in_red')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'ladies_in_red')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
@@ -1671,7 +1529,7 @@
                   <input type="checkbox" name="perfServices" value="Folk Characters Meet & Greet (Puerto Rico & Mexico)"> 
                   <span>Folk Characters Meet & Greet (Puerto Rico & Mexico)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'meet_greet_photo')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'meet_greet_photo')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
@@ -1679,7 +1537,7 @@
                   <input type="checkbox" name="perfServices" value="Folk Characters Show (Puerto Rico)"> 
                   <span>Folk Characters Show (Puerto Rico)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'folk_characters_show')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'folk_characters_show')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
@@ -1687,7 +1545,7 @@
                   <input type="checkbox" name="perfServices" value="Singer - Alma Ranchera (Mexico)"> 
                   <span>Singer - Alma Ranchera (Mexico)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'singer_mexico')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'singer_mexico')">Details</span>
               </label>
 
               <label class="checkbox-item" style="justify-content: space-between;">
@@ -1695,12 +1553,12 @@
                   <input type="checkbox" name="perfServices" value="Los Cantores de Tradicion (Puerto Rican Christmas Parranda)"> 
                   <span>Los Cantores de Tradicion (Parranda)</span>
                 </span>
-                <span class="details-btn" onclick="openPerfModal(event, 'cantores_tradicion')" style="color: var(--accent-gold); font-size: 0.88rem; font-weight: 600; text-decoration: underline; cursor: pointer; position: relative; z-index: 10; margin-left: auto; padding: 2px 6px;">Details</span>
+                <span class="details-btn" onclick="openPerfModal(event, 'cantores_tradicion')">Details</span>
               </label>
             </div>
 
             <!-- Other Performance Services Text Input -->
-            <div class="form-group full-width" style="margin-top: 20px;">
+            <div class="form-group full-width" style="margin-top: 18px;">
               <label for="otherPerfServices" id="lblOtherPerfServices">Any other PERFORMANCE SERVICES you wish, but are not listed above?</label>
               <input type="text" id="otherPerfServices" name="otherPerfServices" placeholder="Describe any custom performance services..." spellcheck="true">
             </div>
@@ -1709,8 +1567,8 @@
 
         <!-- B. Dance Instruction, Production Roles & Formats -->
         <div id="instructionServicesBlock" style="display: none; transition: all 0.35s ease;">
-          <div class="form-section-block" style="border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
-            <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-graduation-cap"></i> B. Dance Instruction, Production Roles & Formats</h4>
+          <div class="form-section-block">
+            <h4>B. Dance Instruction, Production Roles & Formats</h4>
 
             <div class="grid-2">
               <div class="form-group full-width">
@@ -1779,8 +1637,8 @@
         </div> <!-- End #instructionServicesBlock -->
 
         <!-- Sound System Equipment (Section 3 Requirement) -->
-        <div class="form-section-block" style="border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-bottom: 25px;">
-          <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-volume-high"></i> Sound System Equipment</h4>
+        <div class="form-section-block">
+          <h4>Sound System Equipment</h4>
           <div class="form-group full-width" style="margin-bottom: 0;">
             <label for="soundEquipment" id="lblSoundEquipment">Sound System Equipment <span class="required">*</span></label>
             <select id="soundEquipment" name="soundEquipment" required>
@@ -1794,7 +1652,7 @@
 
         <!-- SECTION 4: VENUE & HOSPITALITY -->
         <div class="section-title" id="sec4Title">
-          <i class="fa-solid fa-building-circle-check"></i> 4. Venue & Hospitality
+          4. Venue & Hospitality
         </div>
 
         <div class="grid-2">
@@ -1840,7 +1698,7 @@
 
         <!-- SECTION 5: YOUR CONTACT DETAILS -->
         <div class="section-title" id="sec5Title">
-          <i class="fa-solid fa-address-card"></i> 5. Your Contact Details
+          5. Your Contact Details
         </div>
         
         <div class="grid-2">
@@ -1860,7 +1718,7 @@
           </div>
 
           <div class="form-group">
-            <label for="representType" id="lblRepresent">Who do you represent? (Organization / Business / Self)</label>
+            <label for="representType" id="lblRepresent">Who do you represent?</label>
             <select id="representType" name="representType">
               <option value="" selected disabled>-- Select Option --</option>
               <option value="Organization / Business / Self">Organization / Business / Self</option>
@@ -1885,8 +1743,8 @@
         </div>
 
         <!-- Budget Confirmation (Section 5) -->
-        <div class="form-section-block" style="border: 1px solid var(--card-border); padding: 20px; border-radius: var(--radius-md); margin-top: 15px; margin-bottom: 25px;">
-          <h4 style="color: var(--accent-gold); margin-bottom: 14px; font-family: 'Outfit', sans-serif; font-size: 1.05rem;"><i class="fa-solid fa-coins"></i> Event Budget Confirmation</h4>
+        <div class="form-section-block" style="margin-top: 15px;">
+          <h4>Event Budget Confirmation</h4>
           <div class="grid-2">
             <div class="form-group">
               <label for="hasBudget" id="lblHasBudget">Confirm you have a BUDGET for our participation <span class="required">*</span></label>
@@ -1907,7 +1765,7 @@
 
         <!-- SECTION 6: FINAL STEPS -->
         <div class="section-title" id="sec6Title">
-          <i class="fa-solid fa-clipboard-check"></i> 6. Final Steps
+          6. Final Steps
         </div>
 
         <div class="grid-2">
@@ -1973,7 +1831,7 @@
           </div>
 
           <!-- 5. Performer Badge / ID -->
-          <div class="form-group">
+          <div class="form-group full-width">
             <label for="badgeRequired" id="lblBadgeRequired">Will a BADGE or ID be required for performers? <span class="required">*</span></label>
             <select id="badgeRequired" name="badgeRequired" required>
               <option value="" selected disabled>-- Select Option --</option>
@@ -2007,15 +1865,13 @@
         </div>
 
         <!-- General Info / Hiring Similar Performers Disclosure -->
-        <div class="notice-box" id="txtGeneralInfo" class="form-section-block" style="border: 1px solid var(--card-border); border-left: 4px solid var(--accent-gold); padding: 22px; border-radius: var(--radius-md); font-size: 0.94rem; line-height: 1.6; color: var(--text-main); margin-top: 20px; margin-bottom: 25px;">
-          <h4 style="color: var(--accent-gold); font-family: 'Outfit', sans-serif; font-size: 1.1rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-            <i class="fa-solid fa-masks-theater"></i> <span id="lblHiringPerformers">HIRING SIMILAR PERFORMERS</span>
-          </h4>
-          <p style="font-size: 0.88rem; font-style: italic; color: var(--accent-gold); margin-bottom: 12px;">Notice: Hiring Similar Performers Disclosure reviewed upon formal title.</p>
-          <p style="margin-bottom: 14px;" id="lblGenInfoP1">
+        <div class="notice-box" id="txtGeneralInfo">
+          <h4 id="lblHiringPerformers">HIRING SIMILAR PERFORMERS</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Notice: Hiring Similar Performers Disclosure reviewed upon formal title.</p>
+          <p style="margin-bottom: 12px;" id="lblGenInfoP1">
             While you may be tempted to hire similar performances, I truly believe that incorporating different styles and specialties can greatly enhance your event experience in multiple ways. First and foremost, offering a variety of performances will keep your guests engaged and captivated throughout the entire event. By avoiding repetition or monotony, I ensure that attendees remain entertained and have a truly memorable experience.
           </p>
-          <p style="margin-bottom: 14px;" id="lblGenInfoP2">
+          <p style="margin-bottom: 12px;" id="lblGenInfoP2">
             Furthermore, diverse performances cater to a broader audience, attracting individuals with varying interests and preferences. By providing a mix of entertainment options, I ensure that everyone finds something appealing and feels included in the festivities. This inclusive approach guarantees a more enjoyable and satisfying experience for all attendees.
           </p>
           <p style="margin: 0;" id="lblGenInfoP3">
@@ -2023,26 +1879,25 @@
           </p>
         </div>
 
-        <!-- Terms & Privacy Links -->
-        <div class="form-group">
-          <label class="checkbox-item" style="border-color: var(--primary-accent); background: rgba(220, 38, 38, 0.08);">
+        <!-- Checkbox Agreements -->
+        <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px;">
+          <label class="checkbox-item">
             <input type="checkbox" id="termsCheck" required> 
-            <span id="lblTerms">I agree to the <a href="https://www.salsarichmond.com/contact-info/terms" target="_blank" style="color: var(--primary-accent); font-weight: 600; text-decoration: underline;">Terms of Service</a> & <a href="https://www.salsarichmond.com/contact-info/privacy-policy" target="_blank" style="color: var(--primary-accent); font-weight: 600; text-decoration: underline;">Privacy Policy</a> <span class="required">*</span></span>
+            <span id="lblTerms">I agree to the <a href="https://www.salsarichmond.com/contact-info/terms" target="_blank" style="color: var(--primary); font-weight: 600; text-decoration: underline;">Terms of Service</a> &amp; <a href="https://www.salsarichmond.com/contact-info/privacy-policy" target="_blank" style="color: var(--primary); font-weight: 600; text-decoration: underline;">Privacy Policy</a> <span class="required">*</span></span>
           </label>
-        </div>
 
-        <!-- Customer Email Receipt Checkbox -->
-        <div class="form-group full-width">
-          <label class="checkbox-item" style="border-color: var(--primary-accent); background: rgba(220, 38, 38, 0.08);">
+          <label class="checkbox-item">
             <input type="checkbox" id="sendEmailReceipt" checked> 
             <span id="lblEmailReceipt">📧 Send instant Request ID confirmation receipt to my email</span>
           </label>
         </div>
 
-        <!-- Submit Button -->
-        <button type="submit" class="submit-btn" id="submitBtn">
-          <span id="btnSubmitText">Submit Event Request</span> <i class="fa-solid fa-paper-plane"></i>
-        </button>
+        <!-- Submit Button with generous breathing room -->
+        <div class="submit-btn-wrapper">
+          <button type="submit" class="btn-submit submit-btn" id="submitBtn">
+            <span id="btnSubmitText">Submit</span> <i class="fa-solid fa-paper-plane"></i>
+          </button>
+        </div>
       </form>
 
       <!-- Success Screen & Action Options -->
@@ -2050,49 +1905,49 @@
         <div class="success-icon">
           <i class="fa-solid fa-check"></i>
         </div>
-        <h2 class="success-title" id="txtSuccessTitle">Event Request Received!</h2>
         <p class="success-text" id="txtSuccessDesc">Thank you for choosing Salsa Guy Richmond, LLC. Your questionnaire has been logged, calendar reservation is pending, and custom proposal docs are generating.</p>
         <div class="event-id-badge" id="eventIdDisplay">Request ID: Syncing...</div>
         
         <!-- Next Actions Card -->
-        <div class="ask-another-box" style="margin: 22px 0 15px 0; background: rgba(234, 179, 8, 0.08); border: 1.5px dashed var(--accent-gold); border-radius: 16px; padding: 22px; text-align: center;">
-          <p id="txtAskAnother" style="font-size: 1.1rem; font-weight: 700; color: var(--accent-gold); margin-bottom: 16px;">
-            <i class="fa-solid fa-compass" style="margin-right: 6px;"></i> What would you like to do next?
+        <div class="ask-another-box" style="margin: 22px 0 15px 0; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 22px; text-align: center;">
+          <p id="txtAskAnother" style="font-size: 1.05rem; font-weight: 600; color: var(--text-main); margin-bottom: 16px;">
+            <i class="fa-solid fa-compass" style="margin-right: 6px; color: var(--primary);"></i> What would you like to do next?
           </p>
           <div class="action-buttons-group" style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 0;">
             <!-- Option 1: Submit Another Request -->
-            <button type="button" class="reset-btn" id="resetBtn" style="background: var(--accent-gold); color: #0f172a; font-weight: 700;">
+            <button type="button" class="report-btn" id="resetBtn" style="background: var(--primary); color: #ffffff; font-weight: 600; border: none;">
               <i class="fa-solid fa-plus-circle"></i> <span id="btnResetText">Submit Another Request</span>
             </button>
             
             <!-- Option 2: Edit Submitted Request -->
-            <button type="button" class="report-btn" id="editSubmissionBtn" style="background: rgba(56, 189, 248, 0.15); border: 1px solid #38BDF8; color: #38BDF8;">
+            <button type="button" class="report-btn" id="editSubmissionBtn" style="background: #ffffff; border: 1px solid var(--border-color); color: var(--text-main);">
               <i class="fa-solid fa-pen-to-square"></i> <span id="btnEditText">Edit Submitted Request</span>
             </button>
             
             <!-- Option 3: Print / Save Summary -->
-            <button type="button" class="report-btn" id="downloadReportBtn" onclick="window.print();">
-              <i class="fa-solid fa-file-pdf"></i> <span id="btnReportText">Print / Save Summary Report</span>
+            <button type="button" class="report-btn" id="downloadReportBtn" onclick="printBookingSummaryReport();" style="background: #ffffff; border: 1px solid var(--border-color); color: var(--text-main);">
+              <i class="fa-solid fa-file-pdf" style="color: #ef4444;"></i> <span id="btnReportText">Print / Save Summary Report</span>
             </button>
           </div>
 
           <!-- Calendar Integration Group -->
-          <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(234, 179, 8, 0.2); display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-            <a id="btnAddToGoogleCal" href="#" target="_blank" class="report-btn" style="background: rgba(34, 197, 94, 0.15); border: 1px solid #22C55E; color: #22C55E; text-decoration: none;">
-              <i class="fa-solid fa-calendar-plus"></i> <span id="btnGoogleCalText">Add to Google Calendar</span>
+          <div style="margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-color); display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+            <a id="btnAddToGoogleCal" href="#" target="_blank" class="report-btn" style="background: #ffffff; border: 1px solid var(--border-color); color: var(--text-main); text-decoration: none;">
+              <i class="fa-solid fa-calendar-plus" style="color: #22c55e;"></i> <span id="btnGoogleCalText">Add to Google Calendar</span>
             </a>
-            <button type="button" id="btnDownloadIcs" class="report-btn" style="background: rgba(168, 85, 247, 0.15); border: 1px solid #A855F7; color: #A855F7;">
-              <i class="fa-solid fa-calendar-days"></i> <span id="btnIcsText">Download iCal / Outlook (.ics)</span>
+            <button type="button" id="btnDownloadIcs" class="report-btn" style="background: #ffffff; border: 1px solid var(--border-color); color: var(--text-main);">
+              <i class="fa-solid fa-calendar-days" style="color: #3b82f6;"></i> <span id="btnIcsText">Download iCal / Outlook (.ics)</span>
             </button>
           </div>
         </div>
+
+        <!-- Submitted Booking Summary Report (Viewable on screen & formatted for Print / PDF Export) -->
+        <div id="bookingSummaryReport" class="summary-report-container" style="display: none;"></div>
       </div>
 
-      <!-- Footer Links -->
+      <!-- Footer -->
       <footer class="app-footer">
-        © 2026 Salsa Guy Richmond, LLC. All rights reserved. &nbsp;|&nbsp; 
-        <a href="https://www.salsarichmond.com/contact-info/terms" target="_blank" id="lblFooterTerms" style="color: var(--accent-gold); text-decoration: underline; margin: 0 4px;">Terms of Service</a> &nbsp;|&nbsp; 
-        <a href="https://www.salsarichmond.com/contact-info/privacy-policy" target="_blank" id="lblFooterPrivacy" style="color: var(--accent-gold); text-decoration: underline; margin: 0 4px;">Privacy Policy</a>
+        © 2026 Salsa Guy Richmond, LLC. All rights reserved.
       </footer>
 
     </div>
@@ -2613,146 +2468,132 @@
     const langDict = {
       en: {
         title: "Event Request & Booking Questionnaire",
-        sec1: "1. Contact & Organizer Information",
-        sec2: "2. Event Overview & Schedule",
-        sec3a: "4A. Large Public Event Details, 501(c) & Promotions",
-        sec3b: "4B. Small Private Event Specifications & Hospitality",
-        sec4: "5. Services Requested",
-        sec6: "7. Technical, Venue & Hospitality Logistics",
-        sec5: "8. Budget, Documents & Special Terms",
-        secFile: "6. File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
-        sec7: "9. General Information",
-        isInternational: "Are services requested OUTSIDE of the USA?",
-        destinationCountry: "Select Destination Country",
-        submit: "Submit Event Request"
+        sec1: "1. Location & Logistics",
+        sec2: "2. Event Basics",
+        sec3a: "Large Public Event Details, 501(c) & Promotions",
+        sec3b: "Small Private Event Specifications & Hospitality",
+        sec3c: "International Event Logistics (Outside USA)",
+        sec3: "3. What You Need From Us",
+        sec4: "4. Venue & Hospitality",
+        sec5: "5. Your Contact Details",
+        sec6: "6. Final Steps",
+        submit: "Submit"
       },
       es: {
         title: "¡Cuéntame sobre ti y tu evento!",
-        sec1: "1. Información de Contacto y Organización",
-        sec2: "2. Fecha, Hora y Logística",
-        sec3a: "4A. Detalles de Eventos Públicos Grandes, 501(c) y Promoción",
-        sec3b: "4B. Especificaciones de Eventos Privados y Hospitalidad",
-        sec4: "5. Servicios Solicitados",
-        sec6: "7. Logística Técnica, Lugar y Hospitalidad",
-        sec5: "8. Instrucciones Especiales y Términos",
-        secFile: "6. Archivos Adjuntos (Folleto / Plano / Carta 501c)",
-        sec7: "9. Información General",
-        isInternational: "¿Se solicitan servicios FUERA de EE. UU.?",
-        destinationCountry: "Seleccione el País de Destino",
+        sec1: "1. Ubicación y Logística",
+        sec2: "2. Datos Básicos del Evento",
+        sec3a: "Detalles de Eventos Públicos Grandes, 501(c) y Promoción",
+        sec3b: "Especificaciones de Eventos Privados y Hospitalidad",
+        sec3c: "Logística de Eventos Internacionales (Fuera de EE. UU.)",
+        sec3: "3. Lo Que Necesita de Nosotros",
+        sec4: "4. Lugar y Hospitalidad",
+        sec5: "5. Sus Datos de Contacto",
+        sec6: "6. Pasos Finales",
         submit: "Enviar Solicitud de Evento"
       },
       fr: {
         title: "Parlez-moi de vous et de votre événement!",
         sec1: "1. Emplacement et Logistique",
         sec2: "2. Informations de Base sur l'Événement",
-        sec3a: "4A. Événement Public Majeur et Promotions",
-        sec3b: "4B. Événement Privé et Hospitalité",
-        sec4: "3. Ce Que Vous Attendez de Nous",
-        sec6: "4. Lieu et Accueil",
+        sec3a: "Détails Grands Événements Publics, 501(c) & Promotions",
+        sec3b: "Événements Privés et Hospitalité",
+        sec3c: "Logistique d'Événements Internationaux (Hors USA)",
+        sec3: "3. Ce Que Vous Attendez de Nous",
+        sec4: "4. Lieu et Accueil",
         sec5: "5. Vos Coordonnées",
-        secFile: "6. Pièces Jointes (Flyer / Plan / Lettre 501c)",
-        sec7: "6. Dernières Étapes",
-        isInternational: "Services demandés HORS des États-Unis?",
-        destinationCountry: "Sélectionnez le Pays de Destination",
+        sec6: "6. Dernières Étapes",
         submit: "Soumettre la Demande d'Événement"
       },
       de: {
         title: "Erzählen Sie mir von Ihnen und Ihrer Veranstaltung!",
         sec1: "1. Standort und Logistik",
         sec2: "2. Basisdaten der Veranstaltung",
-        sec3a: "4A. Große öffentliche Veranstaltung",
-        sec3b: "4B. Kleine private Veranstaltung",
-        sec4: "3. Was Sie von uns benötigen",
-        sec6: "4. Veranstaltungsort & Gastfreundschaft",
+        sec3a: "Details für große öffentliche Events, 501(c) & Promotions",
+        sec3b: "Private Veranstaltungen & Gastfreundschaft",
+        sec3c: "Internationale Veranstaltungslogistik (Außerhalb der USA)",
+        sec3: "3. Was Sie von uns benötigen",
+        sec4: "4. Veranstaltungsort & Gastfreundschaft",
         sec5: "5. Ihre Kontaktdaten",
-        secFile: "6. Dateianhänge (Flyer / Hallenplan / 501c-Bescheid)",
-        sec7: "6. Letzte Schritte",
-        isInternational: "Dienstleistungen AUSSERHALB der USA angefordert?",
-        destinationCountry: "Zielland auswählen",
+        sec6: "6. Letzte Schritte",
         submit: "Veranstaltungsanfrage absenden"
       },
       it: {
         title: "Raccontami di te e del tuo evento!",
-        sec1: "1. Informazioni di Contatto e Organizzazione",
-        sec2: "2. Data, Ora e Logistica",
-        sec3a: "4A. Dettagli Grande Evento Pubblico",
-        sec3b: "4B. Specifiche Evento Privato",
-        sec4: "5. Servizi Richiesti",
-        sec5: "8. Istruzioni Speciali e Termini",
-        secFile: "6. Allegati File",
-        sec7: "9. Informazioni Generali",
-        isInternational: "Servizi richiesti FUORI dagli USA?",
-        destinationCountry: "Seleziona il Paese di Destinazione",
+        sec1: "1. Posizione e Logistica",
+        sec2: "2. Informazioni di Base sull'Evento",
+        sec3a: "Dettagli Grande Evento Pubblico, 501(c) e Promozioni",
+        sec3b: "Specifiche Evento Privato e Ospitalità",
+        sec3c: "Logistica Eventi Internazionali (Fuori dagli USA)",
+        sec3: "3. Di Cosa Avete Bisogno da Noi",
+        sec4: "4. Luogo e Ospitalità",
+        sec5: "5. I Vostri Dati di Contatto",
+        sec6: "6. Passaggi Finali",
         submit: "Invia Richiesta Evento"
       },
       pt: {
         title: "Fale-me sobre você e seu evento!",
-        sec1: "1. Informações de Contato e Organização",
-        sec2: "2. Data, Hora e Logística",
-        sec3a: "4A. Detalhes de Grande Evento Público",
-        sec3b: "4B. Especificações de Evento Privado",
-        sec4: "5. Serviços Solicitados",
-        sec5: "8. Instruções Especiais e Termos",
-        secFile: "6. Anexos de Arquivos",
-        sec7: "9. Informações Gerais",
-        isInternational: "Serviços solicitados FORA dos EUA?",
-        destinationCountry: "Selecione o País de Destino",
+        sec1: "1. Localização e Logística",
+        sec2: "2. Informações Básicas do Evento",
+        sec3a: "Detalhes de Grandes Eventos Públicos, 501(c) e Promoções",
+        sec3b: "Especificações de Eventos Privados e Hospitalidade",
+        sec3c: "Logística de Eventos Internacionais (Fora dos EUA)",
+        sec3: "3. O Que Você Precisa de Nós",
+        sec4: "4. Local e Hospitalidade",
+        sec5: "5. Seus Dados de Contacto",
+        sec6: "6. Passos Finais",
         submit: "Enviar Solicitação de Evento"
       },
       nl: {
         title: "Vertel me over jou en je evenement!",
-        sec1: "1. Contact & Organisatie Informatie",
-        sec2: "2. Datum, Tijd & Logistiek",
-        sec3a: "4A. Grote Openbare Evenementen",
-        sec3b: "4B. Kleine Privé Evenementen",
-        sec4: "5. Gevraagde Diensten",
-        sec5: "8. Speciale Instructies & Voorwaarden",
-        secFile: "6. Bijlagen",
-        sec7: "9. Algemene Informatie",
-        isInternational: "Diensten aangevraagd BUITEN de VS?",
-        destinationCountry: "Selecteer Bestemmingsland",
+        sec1: "1. Locatie & Logistiek",
+        sec2: "2. Basisgegevens Evenement",
+        sec3a: "Details Grote Openbare Evenementen, 501(c) & Promoties",
+        sec3b: "Specificaties Privé-evenementen & Gastvrijheid",
+        sec3c: "Internationale Evenementenlogistiek (Buiten de VS)",
+        sec3: "3. Wat U van Ons Nodig Heeft",
+        sec4: "4. Locatie & Gastvrijheid",
+        sec5: "5. Uw Contactgegevens",
+        sec6: "6. Laatste Stappen",
         submit: "Evenementaanvraag Indienen"
       },
       zh: {
         title: "告诉我关于您和您的活动！",
-        sec1: "1. 联系与组织信息",
-        sec2: "2. 日期、时间与物流",
-        sec3a: "4A. 大型公开活动详情",
-        sec3b: "4B. 小型私人活动规格",
-        sec4: "5. 请求的服务",
-        sec5: "8. 特殊说明与条款",
-        secFile: "6. 文件附件",
-        sec7: "9. 一般信息",
-        isInternational: "是否在美国境外请求服务？",
-        destinationCountry: "选择目的国家",
+        sec1: "1. 地点与物流",
+        sec2: "2. 活动基本信息",
+        sec3a: "大型公开活动详情、501(c)与宣传",
+        sec3b: "小型私人活动规格与接待",
+        sec3c: "国际活动物流（美国境外）",
+        sec3: "3. 您需要的服务",
+        sec4: "4. 场地与接待",
+        sec5: "5. 您的联系方式",
+        sec6: "6. 最后步骤",
         submit: "提交活动申请"
       },
       ja: {
         title: "あなたとイベントについて教えてください！",
-        sec1: "1. 連絡先と組織情報",
-        sec2: "2. 日時とロジスティクス",
-        sec3a: "4A. 大型パブリックイベント詳細",
-        sec3b: "4B. 小型プライベートイベント仕様",
-        sec4: "5. リクエストされたサービス",
-        sec5: "8. 特別な指示と利用規約",
-        secFile: "6. 添付ファイル",
-        sec7: "9. 一般情報",
-        isInternational: "米国以外でのサービス依頼ですか？",
-        destinationCountry: "目的地国を選択",
+        sec1: "1. 場所とロジスティクス",
+        sec2: "2. イベント基本情報",
+        sec3a: "大型パブリックイベント詳細、501(c)およびプロモーション",
+        sec3b: "プライベートイベント仕様およびホスピタリティ",
+        sec3c: "国際イベントロジスティクス（米国国外）",
+        sec3: "3. ご希望のサービス",
+        sec4: "4. 会場とホスピタリティ",
+        sec5: "5. ご連絡先情報",
+        sec6: "6. 最終ステップ",
         submit: "イベントリクエストを送信"
       },
       ar: {
         title: "أخبرني عن نفسك وعن فعاليتك!",
-        sec1: "1. معلومات الاتصال والتنظيم",
-        sec2: "2. التاريخ والوقت واللوجستيات",
-        sec3a: "4أ. تفاصيل الفعاليات العامة الكبيرة",
-        sec3b: "4ب. مواصفات الفعاليات الخاصة الصغيرة",
-        sec4: "5. الخدمات المطلوبة",
-        sec5: "8. تعليمات خاصة والشروط",
-        secFile: "6. المرفقات",
-        sec7: "9. معلومات عامة",
-        isInternational: "هل الخدمات مطلوبة خارج الولايات المتحدة؟",
-        destinationCountry: "اختر بلد الوجهة",
+        sec1: "1. الموقع واللوجستيات",
+        sec2: "2. المعلومات الأساسية للفعالية",
+        sec3a: "تفاصيل الفعاليات العامة الكبيرة والترويج",
+        sec3b: "مواصفات الفعاليات الخاصة والضيافة",
+        sec3c: "اللوجستيات الدولية للفعاليات (خارج الولايات المتحدة)",
+        sec3: "3. ما تحتاجه منا",
+        sec4: "4. المكان والضيافة",
+        sec5: "5. تفاصيل الاتصال الخاصة بك",
+        sec6: "6. الخطوات النهائية",
         submit: "إرسال طلب الفعالية"
       }
     };
@@ -2763,65 +2604,76 @@
     const fullDict = {
       en: {
         settingsTitle: "Settings",
-        title: "Tell me about you and your event!",
+        title: "Event Request & Booking Questionnaire",
+        subtitle: "Let's bring your event to life!",
         notice: "<i class='fa-solid fa-calendar-days'></i> <strong>Schedule Availability Notice:</strong><br>• <strong>Friday – Sunday:</strong> Available for both Live Performances and Dance Lessons.<br>• <strong>Monday – Thursday:</strong> Dedicated exclusively to Dance Lessons within the USA (Live performances are not accepted on weekdays domestically).<br><span style='font-size: 0.85rem; font-style: italic; color: var(--text-muted); display: block; margin-top: 6px;'>*(Note: This weekday performance restriction does not apply to international requests; international live performances are evaluated on a case-by-case basis).*</span>",
-        sec1: "<i class='fa-solid fa-user-circle'></i> 1. Contact & Organizer Information",
-        clientName: "Your Name",
-        clientEmail: "Email Address",
-        clientPhone: "Best Contact Phone Number",
-        represent: "Who do you represent? (Organization / Business / Self)",
+        sec1: "1. Location & Logistics",
+        regionalLocation: "Is this event located within the Commonwealth of Virginia (USA)?",
+        eventAddress: "Where will the event take place? (Full Address or Venue Name)",
+        outOfStateLogistics: "Out-of-State Travel & Logistics Arrangement",
+        sec2: "2. Event Basics",
         eventName: "Name of the Event",
-        eventScale: "Is your event a large public event or a small private event?",
         websites: "Websites for Event & Organization",
-        purpose: "Purpose of this Event",
-        hearAbout: "How did you HEAR of us?",
-        description: "Purpose & Description of Your Event (Provide background on theme, venue vibe, guest flow, program schedule)",
-        isInternational: "Are services requested OUTSIDE of the USA?",
-        destinationCountry: "Select Destination Country",
-        sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Event Overview, Schedule & Classification Routing",
         eventDate: "Event Date",
         eventTime: "Start Time",
-        eventAddress: "Where will the event take place? (ADDRESS)",
-        regionalLocation: "Is this event located within the Commonwealth of Virginia (USA)?",
-        outOfStateLogistics: "Out-of-State Travel & Logistics Arrangement",
+        description: "Purpose & Description of Your Event (Provide background on theme, venue vibe, guest flow, program schedule)",
+        eventScale: "Private vs. Public Event Classification:",
+        admission: "Type of Event Admission (Free Admission / Ticketed Event / Private by Invitation)",
+        sec3a: "Large Public Event Details, 501(c) & Promotions",
+        serviceRecurrence: "Will the PERFORMANCE SERVICES be...",
+        nonProfitName: "501(c) Non-Profit Name (If Applicable)",
+        taxLetter: "Can you provide a Tax Deductibility Letter?",
+        contingencyPlan: "Weather / Contingency Plan",
+        sec3b: "Small Private Event Specifications & Hospitality",
+        privateGatheringType: "Type of Private Gathering",
+        invitedToAttend: "Are performers invited to attend/stay for the event?",
+        sec3c: "International Event Logistics (Outside USA)",
         intlVenue: "Specific Country, City, & Venue Name",
         intlLogistics: "International Travel & Lodging Logistics",
         visaSupport: "Visa & Legal Documentation Support",
         currency: "Preferred Currency & Payment Terms",
         customsNotes: "Costumes, Props & Customs Considerations",
-        attendance: "Expected Number of Attendees",
-        admission: "Type of Event Admission",
-        duration: "How much TIME do you require from us?",
-        audiencePart: "Interactive (AUDIENCE PARTICIPATION)",
-        areaSize: "Size of Performance / Class Area",
-        surface: "On what SURFACE will the performance or class take place?",
-        venueSetting: "Venue Location Setting",
-        soundSystem: "Sound System Equipment",
-        audienceAges: "Audience Age Groups Expected",
-        provisions: "WILL YOU PROVIDE the performers with:",
-        sec3a: "<i class='fa-solid fa-bullhorn'></i> 3A. Large Public Event Details, 501(c) & Promotions",
-        sec3b: "<i class='fa-solid fa-cake-candles'></i> 3B. Small Private Event Specifications & Hospitality",
-        sec4: "<i class='fa-solid fa-music'></i> 4. Services Requested",
-        perfServices: "Which of our PERFORMANCE SERVICES will you need?",
+        sec3: "3. What You Need From Us",
+        serviceTypeRequested: "What type of service(s) are you requesting for your event?",
+        perfServices: "A. Performance Services & Cultural Repertoire",
         otherPerfServices: "Any other PERFORMANCE SERVICES you wish, but are not listed above?",
-        lessonServices: "Which of our DANCE LESSON SERVICES will you need?",
+        lessonServices: "1. Which of our DANCE LESSON SERVICES will you need?",
+        audiencePart: "Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?",
+        duration: "How much TIME do you require from us?",
         otherServices: "Additional Services Needed",
-        secFile: "<i class='fa-solid fa-paperclip'></i> 6. File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
+        generalFormats: "General Formats",
+        soundSystem: "Sound System Equipment",
+        sec4: "4. Venue & Hospitality",
+        venueSetting: "Venue Location Setting",
+        surface: "On what SURFACE will performance take place?",
+        areaSize: "Size of Performance / Class Area",
+        sec5: "5. Your Contact Details",
+        clientName: "Your Name",
+        clientEmail: "Email Address",
+        clientPhone: "Best Contact Phone Number",
+        represent: "Who do you represent? (Organization / Business / Self)",
+        eventCoordinator: "Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title",
+        hasBudget: "Confirm you have a BUDGET for our participation",
+        budgetAmount: "Confirmed Budget Amount for Performance / Workshop",
+        sec6: "6. Final Steps",
+        attendance: "Expected Number of Attendees",
+        audienceAges: "Audience Age Groups Expected",
+        hearAbout: "How did you HEAR of us?",
+        provisions: "WILL YOU PROVIDE the performers with:",
+        badgeRequired: "Will a BADGE or ID be required for performers?",
+        dressingRoomDetails: "Dressing Room / Costume Changing Instructions",
+        notes: "Special Instructions, Song Requests or Notes",
         fileUpload: "Upload Event Document / Attachment",
         fileBoxText: "Click or Drag & Drop File Here to Attach to Drive",
-        sec6: "<i class='fa-solid fa-toolbox'></i> 5. Technical, Venue & Hospitality Logistics",
-        sec5: "<i class='fa-solid fa-file-contract'></i> 6. Special Instructions, Terms & File Attachments (Flyer / Floor Plan / 501c Tax Letter)",
-        notes: "Special Instructions, Song Requests or Notes",
-        sec7: "<i class='fa-solid fa-circle-info'></i> 7. General Information",
         hiringPerformers: "HIRING SIMILAR PERFORMERS",
         genInfoP1: "While you may be tempted to hire similar performances, I truly believe that incorporating different styles and specialties can greatly enhance your event experience in multiple ways. First and foremost, offering a variety of performances will keep your guests engaged and captivated throughout the entire event. By avoiding repetition or monotony, I ensure that attendees remain entertained and have a truly memorable experience.",
         genInfoP2: "Furthermore, diverse performances cater to a broader audience, attracting individuals with varying interests and preferences. By providing a mix of entertainment options, I ensure that everyone finds something appealing and feels included in the festivities. This inclusive approach guarantees a more enjoyable and satisfying experience for all attendees.",
         genInfoP3: "I understand that you may have already considered these points, and I would be absolutely delighted to discuss further how my unique and engaging performances can complement your event. It will simplify the logistics of the event, making it easier for you to plan and execute. I am confident that I can deliver a truly exceptional and unforgettable experience for your guests.",
-        terms: "I agree to the <a href='https://www.salsarichmond.com/contact-info/terms' target='_blank' style='color: var(--primary-accent); font-weight: 600; text-decoration: underline;'>Terms of Service</a> & <a href='https://www.salsarichmond.com/contact-info/privacy-policy' target='_blank' style='color: var(--primary-accent); font-weight: 600; text-decoration: underline;'>Privacy Policy</a>",
+        terms: "I agree to the <a href='https://www.salsarichmond.com/contact-info/terms' target='_blank' style='color: var(--primary); font-weight: 600; text-decoration: underline;'>Terms of Service</a> & <a href='https://www.salsarichmond.com/contact-info/privacy-policy' target='_blank' style='color: var(--primary); font-weight: 600; text-decoration: underline;'>Privacy Policy</a>",
         footerTerms: "Terms of Service",
         footerPrivacy: "Privacy Policy",
-        emailReceipt: "📧 Send instant Event ID confirmation receipt to my email",
-        submitBtn: "Submit Event Request",
+        emailReceipt: "📧 Send instant Request ID confirmation receipt to my email",
+        submitBtn: "Submit",
         pressKitTitle: "Press Kits & Media Assets:",
         pressKitDesc: "Official Bios, High-Res Logos, Performance Photos & Promotional Materials",
         pressKitSalsa: "Salsa Guy Press Kit",
@@ -2838,64 +2690,75 @@
       es: {
         settingsTitle: "Configuración",
         title: "¡Cuéntame sobre ti y tu evento!",
+        subtitle: "¡Hagamos realidad su evento!",
         notice: "<i class='fa-solid fa-calendar-days'></i> <strong>Aviso de Disponibilidad de Horarios:</strong><br>• <strong>Viernes – Domingo:</strong> Disponible para Presentaciones en Vivo y Clases de Baile.<br>• <strong>Lunes – Jueves:</strong> Dedicado exclusivamente a Clases de Baile dentro de EE. UU. (No se aceptan presentaciones los días laborables a nivel nacional).<br><span style='font-size: 0.85rem; font-style: italic; color: var(--text-muted); display: block; margin-top: 6px;'>*(Nota: Esta restricción no aplica para solicitudes internacionales; se evalúan caso por caso).*</span>",
-        sec1: "<i class='fa-solid fa-user-circle'></i> 1. Información de Contacto y Organización",
+        sec1: "1. Ubicación y Logística",
+        regionalLocation: "¿Este evento es dentro del Estado de Virginia (EE. UU.)?",
+        eventAddress: "¿Dónde se llevará a cabo el evento? (Dirección Completa o Lugar)",
+        outOfStateLogistics: "Logística y Viaje Fuera del Estado",
+        sec2: "2. Datos Básicos del Evento",
+        eventName: "Nombre del Evento",
+        websites: "Sitios Web del Evento u Organización",
+        eventDate: "Fecha del Evento",
+        eventTime: "Hora de Inicio",
+        description: "Propósito y Descripción de su Evento",
+        eventScale: "Clasificación de Evento Privado vs. Público:",
+        admission: "Tipo de Entrada al Evento",
+        sec3a: "Detalles de Eventos Públicos Grandes, 501(c) y Promoción",
+        serviceRecurrence: "¿El SERVICIO DE ESPECTÁCULO será...",
+        nonProfitName: "Nombre de Organización Sin Fines de Lucro 501(c)",
+        taxLetter: "¿Puede proporcionar Carta de Deducibilidad Fiscal?",
+        contingencyPlan: "Plan de Contingencia / Clima",
+        sec3b: "Especificaciones de Eventos Privados y Hospitalidad",
+        privateGatheringType: "Tipo de Reunión Privada",
+        invitedToAttend: "¿Los artistas están invitados a asistir/quedarse?",
+        sec3c: "Logística de Eventos Internacionales (Fuera de EE. UU.)",
+        intlVenue: "País, Ciudad y Lugar Específico",
+        intlLogistics: "Logística de Vuelos y Alojamiento Internacional",
+        visaSupport: "Soporte de Visa y Documentación Legal",
+        currency: "Moneda Preferida y Términos de Pago",
+        customsNotes: "Consideraciones de Aduanas, Vestuario y Utilería",
+        sec3: "3. Lo Que Necesita de Nosotros",
+        serviceTypeRequested: "¿Qué tipo de servicio(s) solicita para su evento?",
+        perfServices: "A. Servicios de Espectáculo y Repertorio Cultural",
+        otherPerfServices: "¿Algún otro SERVICIO DE ESPECTÁCULO no listado?",
+        lessonServices: "1. ¿Cuál de nuestros SERVICIOS DE CLASES DE BAILE necesitará?",
+        audiencePart: "Interactivo (PARTICIPACIÓN DEL PÚBLICO / Mini-Clase)?",
+        duration: "¿Cuánto TIEMPO requiere de nosotros?",
+        otherServices: "Servicios Adicionales Necesarios",
+        generalFormats: "Formatos Generales",
+        soundSystem: "Equipo de Sistema de Sonido",
+        sec4: "4. Lugar y Hospitalidad",
+        venueSetting: "Ubicación del Lugar (Interior / Exterior)",
+        surface: "¿En qué SUPERFICIE se realizará el espectáculo o clase?",
+        areaSize: "Tamaño del Área de Baile / Escenario",
+        sec5: "5. Sus Datos de Contacto",
         clientName: "Su Nombre",
         clientEmail: "Correo Electrónico",
         clientPhone: "Mejor Teléfono de Contacto",
-        represent: "¿A quién representa?",
-        eventName: "Nombre del Evento",
-        eventScale: "¿Su evento es público grande o privado pequeño?",
-        websites: "Sitios Web del Evento u Organización",
-        purpose: "Propósito de este Evento",
-        hearAbout: "¿Cómo se enteró de nosotros?",
-        description: "Describa su Evento",
-        isInternational: "¿Los servicios son requeridos FUERA de EE. UU.?",
-        destinationCountry: "Seleccione el País de Destino",
-        sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Fecha, Hora y Logística",
-        eventDate: "Fecha del Evento",
-        eventTime: "Hora de Inicio",
-        eventAddress: "¿Dónde se llevará a cabo el evento? (Dirección)",
-        regionalLocation: "¿Este evento es dentro del Estado de Virginia (EE. UU.)?",
-        outOfStateLogistics: "Logística y Viaje Fuera del Estado",
-        intlVenue: "País, Ciudad y Nombre del Lugar Específico",
-        intlLogistics: "Logística de Vuelos Internacionales y Alojamiento",
-        visaSupport: "Soporte de Visa y Documentación Legal",
-        currency: "Moneda Preferida y Términos de Pago",
-        customsNotes: "Consideraciones de Vestuario, Utilería y Aduanas",
+        represent: "¿A quién representa? (Organización / Empresa / Particular)",
+        eventCoordinator: "Nombre y Cargo del Coordinador / Persona a cargo",
+        hasBudget: "Confirme que tiene PRESUPUESTO para nuestra participación",
+        budgetAmount: "Monto de Presupuesto Confirmado para Espectáculo / Taller",
+        sec6: "6. Pasos Finales",
         attendance: "Número Estimado de Asistentes",
-        admission: "Tipo de Entrada al Evento",
-        duration: "¿Cuánto TIEMPO requiere de nosotros?",
-        audiencePart: "Interactivo (PARTICIPACIÓN DEL PÚBLICO)",
-        areaSize: "Tamaño del Área de Baile / Escenario",
-        surface: "¿En qué SUPERFICIE se realizará el espectáculo o clase?",
-        venueSetting: "Ubicación del Lugar (Interior / Exterior)",
-        soundSystem: "Equipo de Sistema de Sonido",
         audienceAges: "Edades Esperadas del Público",
+        hearAbout: "¿Cómo se enteró de nosotros?",
         provisions: "¿PROVEERÁ a los artistas con:",
-        sec3a: "<i class='fa-solid fa-bullhorn'></i> 4A. Detalles de Eventos Públicos Grandes, 501(c) y Promoción",
-        sec3b: "<i class='fa-solid fa-cake-candles'></i> 4B. Especificaciones de Eventos Privados Pequeños y Hospitalidad",
-        sec4: "<i class='fa-solid fa-music'></i> 4. Servicios Solicitados",
-        perfServices: "¿Cuál de nuestros SERVICIOS DE ESPECTÁCULO necesitará?",
-        otherPerfServices: "¿Algún otro SERVICIO DE ESPECTÁCULO que desee y no esté listado?",
-        lessonServices: "¿Cuál de nuestros SERVICIOS DE CLASES DE BAILE necesitará?",
-        otherServices: "Servicios Adicionales Necesarios",
-        secFile: "<i class='fa-solid fa-paperclip'></i> 6. Archivos Adjuntos (Folleto / Plano / Carta 501c)",
-        fileUpload: "Subir Documento del Evento",
-        fileBoxText: "Haga clic o arrastre su archivo aquí para adjuntarlo a Drive",
-        sec6: "<i class='fa-solid fa-toolbox'></i> 5. Logística Técnica, Lugar y Hospitalidad",
-        sec5: "<i class='fa-solid fa-file-contract'></i> 6. Instrucciones Especiales, Términos y Archivos Adjuntos (Folleto / Plano / Carta 501c)",
+        badgeRequired: "¿Se requerirá PASE O CREDENCIAL para los artistas?",
+        dressingRoomDetails: "Instrucciones de Camerino / Vestuario",
         notes: "Instrucciones Especiales, Canciones o Notas",
-        sec7: "<i class='fa-solid fa-circle-info'></i> 7. Información General",
+        fileUpload: "Subir Documento o Archivo Adjunto",
+        fileBoxText: "Haga clic o arrastre su archivo aquí para adjuntarlo",
         hiringPerformers: "CONTRATACIÓN DE ARTISTAS SIMILARES",
         genInfoP1: "Si bien puede verse tentado a contratar espectáculos similares, creo firmemente que incorporar diferentes estilos y especialidades mejorará enormemente la experiencia de su evento. Ofrecer una variedad mantendrá a sus invitados fascinados durante todo el evento.",
         genInfoP2: "Además, las presentaciones diversas satisfacen a un público más amplio. Al brindar una combinación de entretenimiento, aseguro que todos encuentren algo atractivo y se sientan incluidos en la festividad.",
         genInfoP3: "Entiendo que ya haya considerado estos puntos y me encantaría discutir más cómo mis actuaciones únicas pueden complementar su evento de manera inolvidable.",
-        terms: "Acepto los <a href='https://www.salsarichmond.com/contact-info/terms' target='_blank' style='color: var(--primary-accent); font-weight: 600; text-decoration: underline;'>Términos de Servicio</a> y la <a href='https://www.salsarichmond.com/contact-info/privacy-policy' target='_blank' style='color: var(--primary-accent); font-weight: 600; text-decoration: underline;'>Política de Privacidad</a>",
+        terms: "Acepto los <a href='https://www.salsarichmond.com/contact-info/terms' target='_blank' style='color: var(--primary); font-weight: 600; text-decoration: underline;'>Términos de Servicio</a> y la <a href='https://www.salsarichmond.com/contact-info/privacy-policy' target='_blank' style='color: var(--primary); font-weight: 600; text-decoration: underline;'>Política de Privacidad</a>",
         footerTerms: "Términos de Servicio",
         footerPrivacy: "Política de Privacidad",
-        emailReceipt: "📧 Enviar recibo con ID de Evento instantáneo a mi correo",
-        submitBtn: "Enviar Solicitud de Evento",
+        emailReceipt: "📧 Enviar recibo con ID de Solicitud instantáneo a mi correo",
+        submitBtn: "Enviar Solicitud",
         pressKitTitle: "Kits de Prensa y Archivos Multimedia:",
         pressKitDesc: "Biografía Oficial, Logotipos HD, Fotos de Espectáculos y Material Promocional",
         pressKitSalsa: "Kit de Prensa - Salsa Guy",
@@ -2912,55 +2775,66 @@
       fr: {
         settingsTitle: "Paramètres",
         title: "Parlez-moi de vous et de votre événement !",
+        subtitle: "Donnons vie à votre événement !",
         notice: "<i class='fa-solid fa-calendar-days'></i> <strong>Avis de Disponibilité :</strong><br>• <strong>Vendredi – Dimanche :</strong> Disponible pour spectacles et cours de danse.<br>• <strong>Lundi – Jeudi :</strong> Dédié exclusivement aux cours de danse aux USA.",
-        sec1: "<i class='fa-solid fa-map-location-dot'></i> 1. Emplacement et Logistique",
+        sec1: "1. Emplacement et Logistique",
+        regionalLocation: "L'événement est-il situé en Virginie (USA) ?",
+        eventAddress: "Adresse du Lieu de l'Événement",
+        outOfStateLogistics: "Logistique de Voyage Hors État",
+        sec2: "2. Informations de Base sur l'Événement",
+        eventName: "Nom de l'Événement",
+        websites: "Sites Web de l'Événement ou Organisation",
+        eventDate: "Date de l'Événement",
+        eventTime: "Heure de Début",
+        description: "Description et Objectif de votre Événement",
+        eventScale: "Classification de l'Événement : Privé vs Public",
+        admission: "Type d'Admission à l'Événement",
+        sec3a: "Détails Grands Événements Publics, 501(c) & Promotions",
+        serviceRecurrence: "Les SERVICES DE SPECTACLE seront-ils...",
+        nonProfitName: "Nom de l'Organisation 501(c)",
+        taxLetter: "Pouvez-vous fournir une lettre fiscale ?",
+        contingencyPlan: "Plan d'Urgence Météo",
+        sec3b: "Événements Privés et Hospitalité",
+        privateGatheringType: "Type de Rassemblement Privé",
+        invitedToAttend: "Les artistes sont-ils invités à rester ?",
+        sec3c: "Logistique d'Événements Internationaux (Hors USA)",
+        intlVenue: "Pays, Ville et Nom du Lieu",
+        intlLogistics: "Logistique Internationale et Hébergement",
+        visaSupport: "Support Visa et Documents Légaux",
+        currency: "Devise et Conditions de Paiement",
+        customsNotes: "Costumes, Accessoires et Douanes",
+        sec3: "3. Ce Que Vous Attendez de Nous",
+        serviceTypeRequested: "Quel type de service demandez-vous ?",
+        perfServices: "A. Services de Spectacle et Répertoire Culturel",
+        otherPerfServices: "Autres services de spectacle souhaités ?",
+        lessonServices: "1. Quels COURS DE DANSE désirez-vous ?",
+        audiencePart: "Interactif (PARTICIPATION DU PUBLIC) ?",
+        duration: "Combien de TEMPS demandez-vous ?",
+        otherServices: "Services Supplémentaires Nécessaires",
+        generalFormats: "Formats Généraux",
+        soundSystem: "Équipement de Système Sonore",
+        sec4: "4. Lieu et Accueil",
+        venueSetting: "Cadre du Lieu (Intérieur / Extérieur)",
+        surface: "Sur quelle SURFACE aura lieu le spectacle ?",
+        areaSize: "Taille de la Scène / Piste de Danse",
+        sec5: "5. Vos Coordonnées",
         clientName: "Votre Nom",
         clientEmail: "Adresse E-mail",
         clientPhone: "Numéro de Téléphone",
         represent: "Qui représentez-vous ?",
-        eventName: "Nom de l'Événement",
-        eventScale: "S'agit-il d'un grand événement public ou privé ?",
-        websites: "Sites Web de l'Événement ou Organisation",
-        purpose: "Objectif de cet Événement",
-        hearAbout: "Comment avez-vous entendu parler de nous ?",
-        description: "Décrivez votre Événement",
-        isInternational: "Services demandés HORS des USA ?",
-        destinationCountry: "Sélectionnez le Pays de Destination",
-        sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Informations de Base sur l'Événement",
-        eventDate: "Date de l'Événement",
-        eventTime: "Heure de Début",
-        eventAddress: "Adresse du Lieu de l'Événement",
-        regionalLocation: "L'événement est-il situé en Virginie (USA) ?",
-        outOfStateLogistics: "Logistique de Voyage Hors État",
-        intlVenue: "Pays, Ville et Nom du Lieu Spécifique",
-        intlLogistics: "Logistique des Vols Internationaux et Hébergement",
-        visaSupport: "Support de Visa et Documents Légaux",
-        currency: "Devise Préférée et Conditions de Paiement",
-        customsNotes: "Costumes, Accessoires et Douanes",
+        eventCoordinator: "Nom et Titre du Coordinateur / Décideur",
+        hasBudget: "Confirmez votre BUDGET",
+        budgetAmount: "Montant du Budget Confirmé",
+        sec6: "6. Dernières Étapes",
         attendance: "Nombre d'Participants Attendu",
-        admission: "Type d'Admission à l'Événement",
-        duration: "Combien de TEMPS demandez-vous ?",
-        audiencePart: "Interactif (PARTICIPATION DU PUBLIC)",
-        areaSize: "Taille de la Scène / Piste de Danse",
-        surface: "Sur quelle SURFACE aura lieu le spectacle ?",
-        venueSetting: "Cadre du Lieu (Intérieur / Extérieur)",
-        soundSystem: "Équipement de Système Sonore",
         audienceAges: "Tranches d'Âge Attendues",
+        hearAbout: "Comment avez-vous entendu parler de nous ?",
         provisions: "FOURNIREZ-VOUS aux artistes :",
-        sec3a: "<i class='fa-solid fa-bullhorn'></i> Détails Grands Événements Publics",
-        sec3b: "<i class='fa-solid fa-cake-candles'></i> Événements Privés et Hospitalité",
-        sec4: "<i class='fa-solid fa-music'></i> 3. Ce Que Vous Attendez de Nous",
-        perfServices: "Quels SERVICES DE SPECTACLE désirez-vous ?",
-        otherPerfServices: "Autres services de spectacle souhaités ?",
-        lessonServices: "Quels COURS DE DANSE désirez-vous ?",
-        otherServices: "Services Supplémentaires Nécessaires",
-        secFile: "<i class='fa-solid fa-paperclip'></i> 6. Fichiers Joints (Flyer / Plan / Lettre 501c)",
+        badgeRequired: "Un BADGE sera-t-il requis pour les artistes ?",
+        dressingRoomDetails: "Instructions pour Loge / Vestiaire",
+        notes: "Instructions Spéciales ou Chansons Demandées",
         fileUpload: "Télécharger un Document d'Événement",
         fileBoxText: "Cliquez ou glissez votre fichier ici",
-        sec6: "<i class='fa-solid fa-building-circle-check'></i> 4. Lieu et Accueil",
-        sec5: "<i class='fa-solid fa-address-card'></i> 5. Vos Coordonnées",
-        notes: "Instructions Spéciales ou Chansons Demandées",
-        sec7: "<i class='fa-solid fa-clipboard-check'></i> 6. Dernières Étapes",
         hiringPerformers: "ENGAGER DES ARTISTES SIMILAIRES",
         genInfoP1: "Offrir une variété de performances captivera vos invités tout au long de l'événement.",
         genInfoP2: "Une variété de divertissements garantit une expérience mémorable pour tous.",
@@ -2969,7 +2843,7 @@
         footerTerms: "Conditions d'Utilisation",
         footerPrivacy: "Politique de Confidentialité",
         emailReceipt: "📧 Envoyer un reçu instantané à mon e-mail",
-        submitBtn: "Soumettre la Demande d'Événement",
+        submitBtn: "Soumettre",
         pressKitTitle: "Kits de Presse et Médias:",
         pressKitDesc: "Bios Officielles, Logos HD et Photos de Spectacle",
         pressKitSalsa: "Kit de Presse - Salsa Guy",
@@ -2986,55 +2860,66 @@
       de: {
         settingsTitle: "Einstellungen",
         title: "Erzählen Sie uns von Ihrer Veranstaltung!",
+        subtitle: "Lassen Sie uns Ihr Event zum Leben erwecken!",
         notice: "<i class='fa-solid fa-calendar-days'></i> <strong>Verfügbarkeitshinweis:</strong><br>• <strong>Freitag – Sonntag:</strong> Verfügbar für Live-Auftritte und Tanzkurse.<br>• <strong>Montag – Donnerstag:</strong> Ausschließlich Tanzkurse in den USA.",
-        sec1: "<i class='fa-solid fa-map-location-dot'></i> 1. Standort und Logistik",
-        clientName: "Ihr Name",
-        clientEmail: "E-Mail-Adresse",
-        clientPhone: "Telefonnummer",
-        represent: "Wen vertreten Sie?",
+        sec1: "1. Standort und Logistik",
+        regionalLocation: "Findet das Event in Virginia (USA) statt?",
+        eventAddress: "Veranstaltungsort (Adresse)",
+        outOfStateLogistics: "Logistik für Auftritte außerhalb von Virginia",
+        sec2: "2. Basisdaten der Veranstaltung",
         eventName: "Name der Veranstaltung",
-        eventScale: "Große öffentliche oder kleine private Veranstaltung?",
         websites: "Websites der Veranstaltung oder Organisation",
-        purpose: "Zweck dieser Veranstaltung",
-        hearAbout: "Wie haben Sie von uns erfahren?",
-        description: "Beschreiben Sie Ihre Veranstaltung",
-        isInternational: "Dienstleistungen AUßERHALB der USA gewünscht?",
-        destinationCountry: "Zielland auswählen",
-        sec2: "<i class='fa-solid fa-calendar-check'></i> 2. Basisdaten der Veranstaltung",
         eventDate: "Veranstaltungsdatum",
         eventTime: "Startzeit",
-        eventAddress: "Veranstaltungsort (Adresse)",
-        regionalLocation: "Findet das Event in Virginia (USA) statt?",
-        outOfStateLogistics: "Logistik für Auftritte außerhalb von Virginia",
+        description: "Beschreibung und Zweck Ihrer Veranstaltung",
+        eventScale: "Private vs. Öffentliche Veranstaltung:",
+        admission: "Art des Einlasses",
+        sec3a: "Details für große öffentliche Events, 501(c) & Promotions",
+        serviceRecurrence: "Werden die SHOW-AUFTRITTE...",
+        nonProfitName: "Name der 501(c)-Organisation",
+        taxLetter: "Können Sie eine Steuerbescheinigung vorlegen?",
+        contingencyPlan: "Wetter- / Notfallplan",
+        sec3b: "Private Veranstaltungen & Gastfreundschaft",
+        privateGatheringType: "Art der privaten Feier",
+        invitedToAttend: "Sind Künstler zur Teilnahme eingeladen?",
+        sec3c: "Internationale Veranstaltungslogistik (Außerhalb der USA)",
         intlVenue: "Land, Stadt & Name des Veranstaltungsortes",
         intlLogistics: "Internationale Flug- & Unterkunftlogistik",
         visaSupport: "Visum- & rechtliche Unterstützung",
         currency: "Bevorzugte Währung & Zahlungsbedingungen",
         customsNotes: "Kostüme, Requisiten & Zollbestimmungen",
-        attendance: "Erwartete Teilnehmerzahl",
-        admission: "Art des Einlasses",
-        duration: "Wie viel ZEIT benötigen Sie von uns?",
-        audiencePart: "Interaktiv (PUBLIKUMSBETEILIGUNG)",
-        areaSize: "Größe der Tanzfläche / Bühne",
-        surface: "Auf welcher OBERFLÄCHE findet der Auftritt statt?",
-        venueSetting: "Veranstaltungsort (Innen / Außen)",
-        soundSystem: "Musikanlage & Tonausstattung",
-        audienceAges: "Erwartete Altersgruppen",
-        provisions: "BIETEN SIE den Künstlern:",
-        sec3a: "<i class='fa-solid fa-bullhorn'></i> Details für große öffentliche Events",
-        sec3b: "<i class='fa-solid fa-cake-candles'></i> Private Veranstaltungen & Gastfreundschaft",
-        sec4: "<i class='fa-solid fa-music'></i> 3. Was Sie von uns benötigen",
-        perfServices: "Welche SHOW-DIENSTLEISTUNGEN benötigen Sie?",
+        sec3: "3. Was Sie von uns benötigen",
+        serviceTypeRequested: "Welche Art von Service wünschen Sie?",
+        perfServices: "A. Show-Dienstleistungen & Kulturelles Repertoire",
         otherPerfServices: "Weitere gewünschte Show-Dienste?",
-        lessonServices: "Welche TANZKURS-DIENSTLEISTUNGEN benötigen Sie?",
+        lessonServices: "1. Welche TANZKURS-DIENSTLEISTUNGEN benötigen Sie?",
+        audiencePart: "Interaktiv (PUBLIKUMSBETEILIGUNG)?",
+        duration: "Wie viel ZEIT benötigen Sie von uns?",
         otherServices: "Zusätzliche Dienstleistungen",
-        secFile: "<i class='fa-solid fa-paperclip'></i> 6. Dateianhänge (Flyer / Hallenplan / 501c-Bescheid)",
+        generalFormats: "Allgemeine Formate",
+        soundSystem: "Musikanlage & Tonausstattung",
+        sec4: "4. Veranstaltungsort & Gastfreundschaft",
+        venueSetting: "Veranstaltungsort (Innen / Außen)",
+        surface: "Auf welcher OBERFLÄCHE findet der Auftritt statt?",
+        areaSize: "Größe der Tanzfläche / Bühne",
+        sec5: "5. Ihre Kontaktdaten",
+        clientName: "Ihr Name",
+        clientEmail: "E-Mail-Adresse",
+        clientPhone: "Telefonnummer",
+        represent: "Wen vertreten Sie?",
+        eventCoordinator: "Name & Titel des Veranstaltungsplaners",
+        hasBudget: "Bestätigen Sie ein BUDGET",
+        budgetAmount: "Bestätigter Budgetbetrag",
+        sec6: "6. Letzte Schritte",
+        attendance: "Erwartete Teilnehmerzahl",
+        audienceAges: "Erwartete Altersgruppen",
+        hearAbout: "Wie haben Sie von uns erfahren?",
+        provisions: "BIETEN SIE den Künstlern:",
+        badgeRequired: "Wird ein AUSWEIS für Künstler benötigt?",
+        dressingRoomDetails: "Anweisungen für Umkleidekabine / Green Room",
+        notes: "Besondere Wünsche oder Musikwünsche",
         fileUpload: "Veranstaltungsdokument hochladen",
         fileBoxText: "Klicken oder Datei hierher ziehen",
-        sec6: "<i class='fa-solid fa-building-circle-check'></i> 4. Veranstaltungsort & Gastfreundschaft",
-        sec5: "<i class='fa-solid fa-address-card'></i> 5. Ihre Kontaktdaten",
-        notes: "Besondere Wünsche oder Musikwünsche",
-        sec7: "<i class='fa-solid fa-clipboard-check'></i> 6. Letzte Schritte",
         hiringPerformers: "ÄHNLICHE KÜNSTLER BUCHEN",
         genInfoP1: "Eine Vielzahl von Auftritten hält Ihre Gäste während der gesamten Veranstaltung begeistert.",
         genInfoP2: "Verschiedene Darbietungen sprechen ein breiteres Publikum an.",
@@ -3042,8 +2927,8 @@
         terms: "Ich stimme den Nutzungsbedingungen und der Datenschutzrichtlinie zu",
         footerTerms: "Nutzungsbedingungen",
         footerPrivacy: "Datenschutzrichtlinie",
-        emailReceipt: "📧 Sofortige Bestätigungs-E-Mail mit Event-ID senden",
-        submitBtn: "Veranstaltungsanfrage absenden",
+        emailReceipt: "📧 Sofortige Bestätigungs-E-Mail mit Anfrage-ID senden",
+        submitBtn: "Absenden",
         pressKitTitle: "Pressemappen & Medien:",
         pressKitDesc: "Offizielle Bios, HD-Logos & Auftrittsfotos",
         pressKitSalsa: "Pressemappe - Salsa Guy",
@@ -3414,14 +3299,14 @@
       }
     }
 
-function changeLanguage(langCode) {
+    function changeLanguage(langCode) {
       currentLang = langCode || 'en';
       const t = fullDict[currentLang] || fullDict.en;
 
       // Update text helper
       const setTxt = (id, val, isHTML = false) => {
         const el = document.getElementById(id);
-        if (el && val) {
+        if (el && val !== undefined && val !== null) {
           if (isHTML) el.innerHTML = val;
           else if (el.childNodes.length > 0 && el.childNodes[0].nodeType === 3) {
             el.childNodes[0].nodeValue = val + (val.endsWith('*') ? '' : ' ');
@@ -3433,65 +3318,86 @@ function changeLanguage(langCode) {
 
       setTxt('lblSettingsTitle', t.settingsTitle);
       setTxt('txtTitle', t.title);
+      if (t.subtitle) setTxt('txtSubtitle', t.subtitle);
       setTxt('txtNotice', t.notice, true);
-      setTxt('sec1Title', t.sec1, true);
+
+      // Section 1: Location & Logistics
+      setTxt('sec1Title', t.sec1);
+      setTxt('lblRegionalLocation', t.regionalLocation);
+      setTxt('lblEventAddress', t.eventAddress);
+      setTxt('lblOutOfStateLogistics', t.outOfStateLogistics);
+
+      // Section 2: Event Basics
+      setTxt('sec2Title', t.sec2);
+      setTxt('lblEventName', t.eventName);
+      setTxt('lblWebsites', t.websites);
+      setTxt('lblEventDate', t.eventDate);
+      setTxt('lblEventTime', t.eventTime);
+      setTxt('lblDescription', t.description);
+      setTxt('lblEventScale', t.eventScale);
+      setTxt('lblAdmission', t.admission);
+
+      // Section 2 Conditionals
+      setTxt('sec3aTitle', t.sec3a);
+      setTxt('lblServiceRecurrence', t.serviceRecurrence);
+      setTxt('lblNonProfitName', t.nonProfitName);
+      setTxt('lblTaxLetter', t.taxLetter);
+      setTxt('lblContingencyPlan', t.contingencyPlan);
+
+      setTxt('sec3bTitle', t.sec3b);
+      setTxt('lblPrivateType', t.privateGatheringType);
+      setTxt('lblInvitedToAttend', t.invitedToAttend);
+
+      setTxt('sec3cTitle', t.sec3c);
+      setTxt('lblIntlVenue', t.intlVenue);
+      setTxt('lblIntlLogistics', t.intlLogistics);
+      setTxt('lblIntlVisa', t.visaSupport);
+      setTxt('lblIntlPayment', t.currency);
+      setTxt('lblIntlCustoms', t.customsNotes);
+
+      // Section 3: What You Need From Us
+      setTxt('sec3Title', t.sec3);
+      setTxt('lblServiceTypeRequested', t.serviceTypeRequested);
+      setTxt('lblOtherPerfServices', t.otherPerfServices);
+      setTxt('lblLessonServices', t.lessonServices);
+      setTxt('lblAudienceParticipation', t.audiencePart);
+      setTxt('lblServiceTime', t.duration);
+      setTxt('lblOtherServices', t.otherServices);
+      setTxt('lblGeneralFormats', t.generalFormats);
+      setTxt('lblSoundEquipment', t.soundSystem);
+
+      // Section 4: Venue & Hospitality
+      setTxt('sec4Title', t.sec4);
+      setTxt('lblVenueSetting', t.venueSetting);
+      setTxt('lblPerformanceSurface', t.surface);
+      setTxt('lblPerformanceArea', t.areaSize);
+
+      // Section 5: Your Contact Details
+      setTxt('sec5Title', t.sec5);
       setTxt('lblClientName', t.clientName);
       setTxt('lblClientEmail', t.clientEmail);
       setTxt('lblClientPhone', t.clientPhone);
       setTxt('lblRepresent', t.represent);
-      setTxt('lblEventName', t.eventName);
-      setTxt('lblEventScale', t.eventScale);
-      setTxt('lblWebsites', t.websites);
-      setTxt('lblPurpose', t.purpose);
-      setTxt('lblHearAbout', t.hearAbout);
-      setTxt('lblDescription', t.description);
-      setTxt('lblIsInternational', t.isInternational);
-      setTxt('lblDestinationCountry', t.destinationCountry);
+      setTxt('lblEventCoordinator', t.eventCoordinator);
+      setTxt('lblHasBudget', t.hasBudget);
+      setTxt('lblBudgetAmount', t.budgetAmount);
 
-      setTxt('sec2Title', t.sec2, true);
-      setTxt('lblEventDate', t.eventDate);
-      setTxt('lblEventTime', t.eventTime);
-      setTxt('lblEventAddress', t.eventAddress);
-      setTxt('lblRegionalLocation', t.regionalLocation);
-      setTxt('lblOutOfStateLogistics', t.outOfStateLogistics);
-      setTxt('lblIntlVenue', t.intlVenue);
-      setTxt('lblIntlLogistics', t.intlLogistics);
-      setTxt('lblVisaSupport', t.visaSupport);
-      setTxt('lblCurrency', t.currency);
-      setTxt('lblCustomsNotes', t.customsNotes);
+      // Section 6: Final Steps
+      setTxt('sec6Title', t.sec6);
       setTxt('lblAttendance', t.attendance);
-      setTxt('lblAdmission', t.admission);
-      setTxt('lblDuration', t.duration);
-      setTxt('lblAudiencePart', t.audiencePart);
-      setTxt('lblAreaSize', t.areaSize);
-      setTxt('lblSurface', t.surface);
-      setTxt('lblVenueSetting', t.venueSetting);
-      setTxt('lblSoundSystem', t.soundSystem);
       setTxt('lblAudienceAges', t.audienceAges);
-      setTxt('lblProvisions', t.provisions);
-
-      setTxt('sec3aTitle', t.sec3a, true);
-      setTxt('sec3bTitle', t.sec3b, true);
-      setTxt('sec4Title', t.sec4, true);
-      setTxt('lblPerfServices', t.perfServices);
-      setTxt('lblOtherPerfServices', t.otherPerfServices);
-      setTxt('lblLessonServices', t.lessonServices);
-      setTxt('lblOtherServices', t.otherServices);
-
-      setTxt('secFileTitle', t.secFile, true);
+      setTxt('lblHearAbout', t.hearAbout);
+      setTxt('lblHospitalityProvided', t.provisions);
+      setTxt('lblBadgeRequired', t.badgeRequired);
+      setTxt('lblDressingRoomDetails', t.dressingRoomDetails);
+      setTxt('lblNotes', t.notes);
       setTxt('lblFileUpload', t.fileUpload);
       setTxt('fileBoxText', t.fileBoxText);
-      setTxt('sec6Title', t.sec6, true);
-      setTxt('sec5Title', t.sec5, true);
-      setTxt('lblNotes', t.notes);
-      setTxt('sec7Title', t.sec7, true);
       setTxt('lblHiringPerformers', t.hiringPerformers);
       setTxt('lblGenInfoP1', t.genInfoP1);
       setTxt('lblGenInfoP2', t.genInfoP2);
       setTxt('lblGenInfoP3', t.genInfoP3);
       setTxt('lblTerms', t.terms, true);
-      setTxt('lblFooterTerms', t.footerTerms);
-      setTxt('lblFooterPrivacy', t.footerPrivacy);
       setTxt('lblEmailReceipt', t.emailReceipt);
       setTxt('btnSubmitText', t.submitBtn);
 
@@ -4439,19 +4345,438 @@ function saveUserSettings() {
       }
     });
 
+    let lastSubmittedData = null;
+    let lastSubmittedEventId = null;
+
     function showConfirmationScreen(eventId, data = {}) {
+      lastSubmittedEventId = eventId;
+      lastSubmittedData = (data && Object.keys(data).length > 0) ? data : gatherCurrentFormData();
+
       bookingForm.style.display = 'none';
       const topControls = document.querySelector('.top-controls-row');
       if (topControls) topControls.style.display = 'none';
       const noticeBox = document.getElementById('txtNotice');
       if (noticeBox) noticeBox.style.display = 'none';
+      const stepperNav = document.getElementById('stepperNav');
+      if (stepperNav) stepperNav.style.display = 'none';
+      const txtTitle = document.getElementById('txtTitle');
+      if (txtTitle) txtTitle.style.display = 'none';
 
       successCard.style.display = 'block';
       eventIdDisplay.textContent = `Request ID: ${eventId}`;
 
-      setupCalendarButtons(eventId, data);
+      renderSummaryReport(eventId, lastSubmittedData);
+      setupCalendarButtons(eventId, lastSubmittedData);
 
       successCard.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function gatherCurrentFormData() {
+      const getChecked = (name) => Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value).join(", ");
+      const val = (id) => document.getElementById(id)?.value?.trim() || '';
+
+      const perfVal = getChecked('perfServices');
+      let finalServiceType = val('serviceTypeRequested');
+      if (perfVal) {
+        const otherPerf = val('otherPerfServices');
+        let full = perfVal;
+        if (otherPerf) full += `, Other: ${otherPerf}`;
+        finalServiceType = full;
+      }
+
+      return {
+        serviceTypeRequested: finalServiceType || 'Event Booking Request',
+        clientName: val('clientName'),
+        clientEmail: val('clientEmail'),
+        clientPhone: val('clientPhone'),
+        representType: val('representType'),
+        hearAboutUs: val('hearAboutUs'),
+        eventName: val('eventName'),
+        eventCoordinator: val('eventCoordinator'),
+        eventPurpose: val('eventPurpose') || val('eventDescription'),
+        eventWebsites: val('eventWebsites'),
+        eventDescription: val('eventDescription'),
+        eventDate: val('eventDate'),
+        eventTime: val('eventTime'),
+        expectedAttendance: val('expectedAttendance'),
+        audienceAges: val('audienceAgesSelect'),
+        admissionType: val('admissionType'),
+        regionalLocation: val('regionalLocation'),
+        eventAddress: val('eventAddress'),
+        outOfStateLogistics: val('outOfStateLogistics'),
+        eventTypeScale: val('eventTypeScale'),
+        serviceRecurrence: val('serviceRecurrence'),
+        nonProfitName: val('nonProfitName'),
+        taxLetter: val('taxLetter'),
+        boothSpace: val('boothSpace'),
+        promoInclude: val('promoInclude'),
+        allowHelpPromote: val('allowHelpPromote'),
+        videoRights: val('videoRights'),
+        contingencyPlan: val('contingencyPlan'),
+        privateGatheringType: val('privateGatheringType'),
+        invitedToAttend: val('invitedToAttend3a') || val('invitedToAttend'),
+        intlVenueName: val('intlVenueName'),
+        intlLogistics: val('intlLogistics'),
+        intlVisaSupport: val('intlVisaSupport'),
+        intlPaymentTerms: val('intlPaymentTerms'),
+        intlCustomsConsiderations: val('intlCustomsConsiderations'),
+        performanceServices: getChecked('perfServices'),
+        otherPerfServices: val('otherPerfServices'),
+        lessonServices: val('lessonServicesSelect'),
+        audienceParticipation: val('audienceParticipation'),
+        durationRequired: val('serviceTimeSelect'),
+        otherServices: getChecked('otherServices'),
+        generalFormats: getChecked('generalFormats'),
+        venueSetting: val('venueSetting'),
+        performanceSurface: val('performanceSurface'),
+        performanceArea: val('stageSizes') || val('performanceArea'),
+        hasBudget: val('hasBudget'),
+        confirmedBudget: val('budgetAmount'),
+        soundEquipment: val('soundEquipment'),
+        badgeRequired: val('badgeRequired'),
+        hospitalityProvided: val('hospitalityProvided'),
+        dressingRoomDetails: val('dressingRoomDetails'),
+        notes: val('notes'),
+        termsAgreed: document.getElementById('termsCheck')?.checked ? "Agreed to Terms & Privacy Policy" : "No",
+        sendEmailReceipt: document.getElementById('sendEmailReceipt')?.checked ? "Yes" : "No"
+      };
+    }
+
+    function renderSummaryReport(eventId, data) {
+      const container = document.getElementById('bookingSummaryReport');
+      if (!container) return;
+
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+      // Format event date nicely
+      let formattedEventDate = data.eventDate || 'Pending confirmation';
+      if (data.eventDate && data.eventDate.includes('-')) {
+        const p = data.eventDate.split('-');
+        if (p.length === 3) {
+          const d = new Date(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10));
+          formattedEventDate = d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        }
+      }
+
+      // Format event start time nicely
+      let formattedTime = data.eventTime || 'TBD';
+      if (data.eventTime && data.eventTime.includes(':')) {
+        const [h, m] = data.eventTime.split(':');
+        const hourNum = parseInt(h, 10);
+        const ampm = hourNum >= 12 ? 'PM' : 'AM';
+        const hour12 = hourNum % 12 || 12;
+        formattedTime = `${hour12}:${m} ${ampm}`;
+      }
+
+      const escapeHtml = (str) => {
+        if (!str) return '—';
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      };
+
+      const valOrDash = (v) => v && String(v).trim() ? escapeHtml(v) : '—';
+
+      const html = `
+        <!-- Official Summary Report Header -->
+        <div class="summary-report-card summary-report-header">
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; margin-bottom: 12px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <img src="salsa_guy_logo.png" alt="Salsa Guy Richmond" style="height: 50px; width: auto; object-fit: contain;">
+              <img src="tradicion_logo.png" alt="Tradición" style="height: 50px; width: auto; object-fit: contain;">
+            </div>
+            <div style="text-align: right;">
+              <div class="summary-badge-pill" style="font-size: 0.95rem; font-family: monospace; background: rgba(245, 158, 11, 0.15); border: 1px dashed #F59E0B; color: #D97706;">
+                <i class="fa-solid fa-receipt"></i> Request ID: ${escapeHtml(eventId)}
+              </div>
+              <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">
+                Logged: ${dateStr}
+              </div>
+            </div>
+          </div>
+          <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.3rem; color: var(--text-main); margin: 0 0 4px 0;">
+            Event Request & Booking Summary Report
+          </h3>
+          <p style="font-size: 0.86rem; color: var(--text-muted); margin: 0;">
+            Official Logged Questionnaire Specifications &bull; Salsa Guy Richmond, LLC & Tradición Puerto Rican Folk Dancing
+          </p>
+        </div>
+
+        <!-- 1. Client & Contact Information -->
+        <div class="summary-report-card">
+          <div class="summary-section-title">
+            1. Contact & Organizer Profile
+          </div>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <div class="summary-label">Client Name</div>
+              <div class="summary-value">${valOrDash(data.clientName)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Email Address</div>
+              <div class="summary-value">${valOrDash(data.clientEmail)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Phone Number</div>
+              <div class="summary-value">${valOrDash(data.clientPhone)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Representing Entity</div>
+              <div class="summary-value">${valOrDash(data.representType)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Event Coordinator / Decision Maker</div>
+              <div class="summary-value">${valOrDash(data.eventCoordinator)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Referral Source</div>
+              <div class="summary-value">${valOrDash(data.hearAboutUs)}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Event Schedule & Location -->
+        <div class="summary-report-card">
+          <div class="summary-section-title">
+            2. Event Schedule & Location
+          </div>
+          <div class="summary-grid">
+            <div class="summary-item full-width">
+              <div class="summary-label">Name of the Event</div>
+              <div class="summary-value" style="font-weight: 700; font-size: 1.05rem;">${valOrDash(data.eventName)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Event Date</div>
+              <div class="summary-value" style="color: #22C55E; font-weight: 600;"><i class="fa-solid fa-calendar-day"></i> ${formattedEventDate}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Start Time</div>
+              <div class="summary-value" style="color: #38BDF8; font-weight: 600;"><i class="fa-solid fa-clock"></i> ${formattedTime}</div>
+            </div>
+            <div class="summary-item full-width">
+              <div class="summary-label">Venue Location & Full Address</div>
+              <div class="summary-value"><i class="fa-solid fa-location-dot" style="color: #DC2626;"></i> ${valOrDash(data.eventAddress)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Regional Location</div>
+              <div class="summary-value">${valOrDash(data.regionalLocation)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Event Scale / Type</div>
+              <div class="summary-value">${valOrDash(data.eventTypeScale)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Expected Attendance</div>
+              <div class="summary-value">${valOrDash(data.expectedAttendance)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Target Demographics</div>
+              <div class="summary-value">${valOrDash(data.audienceAges)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Event Admission</div>
+              <div class="summary-value">${valOrDash(data.admissionType)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Event / Org Websites</div>
+              <div class="summary-value">${valOrDash(data.eventWebsites)}</div>
+            </div>
+            <div class="summary-item full-width">
+              <div class="summary-label">Event Purpose & Description</div>
+              <div class="summary-value" style="white-space: pre-line;">${valOrDash(data.eventDescription || data.eventPurpose)}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Requested Performance & Dance Services -->
+        <div class="summary-report-card">
+          <div class="summary-section-title">
+            3. Requested Services & Show Specifications
+          </div>
+          <div class="summary-grid">
+            <div class="summary-item full-width">
+              <div class="summary-label">Primary Service Category</div>
+              <div class="summary-value" style="font-weight: 700; color: #DC2626;">${valOrDash(data.serviceTypeRequested)}</div>
+            </div>
+            <div class="summary-item full-width">
+              <div class="summary-label">Selected Showcase Acts</div>
+              <div class="summary-value">${valOrDash(data.performanceServices)}</div>
+            </div>
+            ${data.otherPerfServices ? `
+            <div class="summary-item full-width">
+              <div class="summary-label">Other Performance Notes / Custom Acts</div>
+              <div class="summary-value">${valOrDash(data.otherPerfServices)}</div>
+            </div>` : ''}
+            <div class="summary-item">
+              <div class="summary-label">Dance Instruction / Lesson Type</div>
+              <div class="summary-value">${valOrDash(data.lessonServices)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Service Duration Required</div>
+              <div class="summary-value">${valOrDash(data.durationRequired)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Interactive Audience Participation</div>
+              <div class="summary-value">${valOrDash(data.audienceParticipation)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Additional Event Services</div>
+              <div class="summary-value">${valOrDash(data.otherServices)}</div>
+            </div>
+            <div class="summary-item full-width">
+              <div class="summary-label">Presentation Formats</div>
+              <div class="summary-value">${valOrDash(data.generalFormats)}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Venue & Technical Logistics -->
+        <div class="summary-report-card">
+          <div class="summary-section-title">
+            4. Technical, Stage & Hospitality Logistics
+          </div>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <div class="summary-label">Venue Setting</div>
+              <div class="summary-value">${valOrDash(data.venueSetting)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Dance Surface</div>
+              <div class="summary-value">${valOrDash(data.performanceSurface)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Stage / Performance Area</div>
+              <div class="summary-value">${valOrDash(data.performanceArea)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Sound & Audio Setup</div>
+              <div class="summary-value">${valOrDash(data.soundEquipment)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Hospitality Provided</div>
+              <div class="summary-value">${valOrDash(data.hospitalityProvided)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Green Room / Dressing Details</div>
+              <div class="summary-value">${valOrDash(data.dressingRoomDetails)}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Conditional Logistics (if applicable) -->
+        ${(data.outOfStateLogistics || data.intlVenueName || data.contingencyPlan || data.nonProfitName || data.privateGatheringType) ? `
+        <div class="summary-report-card">
+          <div class="summary-section-title">
+            5. Classification Logistics & Contingency Plans
+          </div>
+          <div class="summary-grid">
+            ${data.outOfStateLogistics ? `
+            <div class="summary-item full-width">
+              <div class="summary-label">Out-of-State Travel & Lodging Logistics</div>
+              <div class="summary-value" style="white-space: pre-line;">${valOrDash(data.outOfStateLogistics)}</div>
+            </div>` : ''}
+            ${data.intlVenueName ? `
+            <div class="summary-item">
+              <div class="summary-label">International Destination</div>
+              <div class="summary-value">${valOrDash(data.intlVenueName)}</div>
+            </div>` : ''}
+            ${data.intlLogistics ? `
+            <div class="summary-item full-width">
+              <div class="summary-label">International Flight & Lodging Logistics</div>
+              <div class="summary-value" style="white-space: pre-line;">${valOrDash(data.intlLogistics)}</div>
+            </div>` : ''}
+            ${data.intlVisaSupport ? `
+            <div class="summary-item">
+              <div class="summary-label">Visa / Legal Support</div>
+              <div class="summary-value">${valOrDash(data.intlVisaSupport)}</div>
+            </div>` : ''}
+            ${data.nonProfitName ? `
+            <div class="summary-item">
+              <div class="summary-label">501(c) Non-Profit Name</div>
+              <div class="summary-value">${valOrDash(data.nonProfitName)}</div>
+            </div>` : ''}
+            ${data.taxLetter ? `
+            <div class="summary-item">
+              <div class="summary-label">Tax Letter Available</div>
+              <div class="summary-value">${valOrDash(data.taxLetter)}</div>
+            </div>` : ''}
+            ${data.contingencyPlan ? `
+            <div class="summary-item full-width">
+              <div class="summary-label">Weather / Contingency Plan</div>
+              <div class="summary-value" style="white-space: pre-line;">${valOrDash(data.contingencyPlan)}</div>
+            </div>` : ''}
+            ${data.privateGatheringType ? `
+            <div class="summary-item">
+              <div class="summary-label">Private Gathering Type</div>
+              <div class="summary-value">${valOrDash(data.privateGatheringType)}</div>
+            </div>` : ''}
+            ${data.invitedToAttend ? `
+            <div class="summary-item">
+              <div class="summary-label">Performers Invited to Attend</div>
+              <div class="summary-value">${valOrDash(data.invitedToAttend)}</div>
+            </div>` : ''}
+          </div>
+        </div>` : ''}
+
+        <!-- 6. Budget, Notes & Agreements -->
+        <div class="summary-report-card">
+          <div class="summary-section-title">
+            6. Budget, Special Notes & Legal Confirmation
+          </div>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <div class="summary-label">Budget Range / Confirmed Amount</div>
+              <div class="summary-value">${valOrDash(data.confirmedBudget || data.hasBudget)}</div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-label">Email Receipt Requested</div>
+              <div class="summary-value">${valOrDash(data.sendEmailReceipt)}</div>
+            </div>
+            <div class="summary-item full-width">
+              <div class="summary-label">Special Instructions, Song Choices & Notes</div>
+              <div class="summary-value" style="white-space: pre-line;">${valOrDash(data.notes)}</div>
+            </div>
+            <div class="summary-item full-width">
+              <div class="summary-label">Terms of Service & Privacy Policy</div>
+              <div class="summary-value" style="color: #22C55E; font-weight: 600;"><i class="fa-solid fa-circle-check"></i> ${valOrDash(data.termsAgreed)}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Official Report Footer -->
+        <div class="summary-footer-box">
+          <div style="font-weight: 700; color: var(--text-main); margin-bottom: 4px;">
+            Salsa Guy Richmond, LLC &nbsp;&bull;&nbsp; Tradición Puerto Rican Folk Dancing & More
+          </div>
+          <div>
+            Direct: (804) 555-0199 &nbsp;|&nbsp; Email: salsaguy@salsarichmond.com &nbsp;|&nbsp; Web: www.salsarichmond.com & www.tradicion.org
+          </div>
+          <div style="margin-top: 6px; font-size: 0.8rem; color: var(--text-muted);">
+            This document represents an official summary of the submitted event booking questionnaire. Custom proposal documents and calendar reservations are prepared according to these specifications.
+          </div>
+        </div>
+      `;
+
+      container.innerHTML = html;
+      container.style.display = 'block';
+    }
+
+    function printBookingSummaryReport() {
+      if (!lastSubmittedData) {
+        lastSubmittedData = gatherCurrentFormData();
+      }
+      const rawText = document.getElementById('eventIdDisplay')?.textContent || '';
+      const eventId = lastSubmittedEventId || rawText.replace(/Request ID:\s*/i, '').trim() || ('BTG-REQ-' + Date.now().toString(36).toUpperCase());
+      renderSummaryReport(eventId, lastSubmittedData);
+      const reportContainer = document.getElementById('bookingSummaryReport');
+      if (reportContainer) reportContainer.style.display = 'block';
+      setTimeout(() => {
+        window.print();
+      }, 100);
     }
 
     function setupCalendarButtons(eventId, data) {
@@ -4533,6 +4858,10 @@ function saveUserSettings() {
       if (topControls) topControls.style.display = 'flex';
       const noticeBox = document.getElementById('txtNotice');
       if (noticeBox) noticeBox.style.display = 'block';
+      const stepperNav = document.getElementById('stepperNav');
+      if (stepperNav) stepperNav.style.display = 'block';
+      const txtTitle = document.getElementById('txtTitle');
+      if (txtTitle) txtTitle.style.display = 'block';
 
       const formCard = document.getElementById('formCard');
       if (formCard) formCard.scrollIntoView({ behavior: 'smooth' });
