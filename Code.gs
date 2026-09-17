@@ -9,7 +9,7 @@ const CONFIG = {
   SPREADSHEET_URL: "https://docs.google.com/spreadsheets/d/1ssJPBdSTOUzq1S9b_kHYuBLMoUbxwrDap2FIkfHOX4k/edit",
   INFOCALENDAR_ID: "shqfpe645m3tj6fhee17irti5s@group.calendar.google.com",
   FOLDER_ID: "1FaiN_vTho7YY5mwd_OXrfHPnQB0fF6oR",
-  ADMIN_EMAILS: ["rodriguez2113@gmail.com"],
+  ADMIN_EMAILS: ["rodriguez2113@gmail.com", "salsaguy@salsarichmond.com"],
   TEMPLATES: {
     PROPOSAL: "1plCZvjBJijgJrGduzXrTMjbtDopMgCfB5Vo7MLWxspo",
     CONTRACT: "1BuEv7BF6wsHutvEWwVZOVb3m8J3zkYujKheti8X871g",
@@ -572,9 +572,9 @@ function processRow(sheet, rowNum, rowData, folder, headers, isNewSubmit = false
 
 /**
  * Safely dispatches email with fallback from MailApp to GmailApp.
- * Includes plain-text fallback generation and sender display name.
+ * Includes plain-text fallback generation, sender display name, and optional replyTo address.
  */
-function sendEmailSafely(toEmail, subject, htmlBody) {
+function sendEmailSafely(toEmail, subject, htmlBody, replyTo = "") {
   if (!toEmail || typeof toEmail !== "string" || toEmail.trim() === "") return false;
   const target = toEmail.trim();
 
@@ -591,23 +591,32 @@ function sendEmailSafely(toEmail, subject, htmlBody) {
 
   const senderName = "Salsa Guy Richmond LLC";
 
+  const mailOptions = {
+    to: target,
+    subject: subject,
+    body: plainBody,
+    htmlBody: htmlBody,
+    name: senderName
+  };
+  if (replyTo && typeof replyTo === "string" && replyTo.trim().includes("@")) {
+    mailOptions.replyTo = replyTo.trim();
+  }
+
   try {
-    MailApp.sendEmail({
-      to: target,
-      subject: subject,
-      body: plainBody,
-      htmlBody: htmlBody,
-      name: senderName
-    });
+    MailApp.sendEmail(mailOptions);
     console.log("Successfully sent email via MailApp to: " + target);
     return true;
   } catch (err1) {
     console.warn("MailApp.sendEmail failed for " + target + " (" + err1.message + "), trying GmailApp fallback...");
     try {
-      GmailApp.sendEmail(target, subject, plainBody, {
+      const gmailOptions = {
         htmlBody: htmlBody,
         name: senderName
-      });
+      };
+      if (replyTo && typeof replyTo === "string" && replyTo.trim().includes("@")) {
+        gmailOptions.replyTo = replyTo.trim();
+      }
+      GmailApp.sendEmail(target, subject, plainBody, gmailOptions);
       console.log("Successfully sent email via GmailApp to: " + target);
       return true;
     } catch (err2) {
@@ -708,7 +717,7 @@ function sendAdminSubmittalNotification(details) {
   `;
 
   CONFIG.ADMIN_EMAILS.forEach(email => {
-    sendEmailSafely(email, subject, htmlBody);
+    sendEmailSafely(email, subject, htmlBody, details.clientEmail || "");
   });
 }
 
@@ -759,7 +768,7 @@ function sendClientReceiptNotification(details) {
     </div>
   `;
 
-  sendEmailSafely(details.clientEmail, subject, htmlBody);
+  sendEmailSafely(details.clientEmail, subject, htmlBody, "salsaguy@salsarichmond.com");
 }
 
 /**
@@ -923,6 +932,18 @@ function onFormSubmit(e) {
     const headers = getUniqueHeaders(sheet);
     const rowData = sheet.getRange(rowNum, 1, 1, sheet.getLastColumn()).getValues()[0];
     
+    // Guard against blank/empty rows in onFormSubmit (ignoring timestamp & request ID columns)
+    const clientNameIdx = getHeaderIndex(headers, ["Your Name", "Full Name", "Client Name", "Name"]);
+    const clientEmailIdx = getHeaderIndex(headers, ["Email Address", "Email"]);
+    const eventNameIdx = getHeaderIndex(headers, ["What is the NAME of the event?", "Event Name", "Name of Event"]);
+    const hasName = clientNameIdx > -1 && rowData[clientNameIdx] && String(rowData[clientNameIdx]).trim().length > 0;
+    const hasEmail = clientEmailIdx > -1 && rowData[clientEmailIdx] && String(rowData[clientEmailIdx]).trim().length > 0;
+    const hasEvent = eventNameIdx > -1 && rowData[eventNameIdx] && String(rowData[eventNameIdx]).trim().length > 0;
+    if (!hasName && !hasEmail && !hasEvent) {
+      console.warn(`onFormSubmit skipped for row ${rowNum}: No client or event information found.`);
+      return;
+    }
+
     let folder = null;
     try {
       folder = DriveApp.getFolderById(CONFIG.FOLDER_ID);
@@ -1278,6 +1299,19 @@ function importQuickEntryData() {
  * mapping JSON keys to Google Sheet header aliases and appending the new response.
  */
 function handleFormSubmitJson(data) {
+  if (!data || typeof data !== "object") {
+    return { status: "ignored", message: "Empty or invalid submission payload." };
+  }
+
+  // Guard against blank/test submissions: require at least a client name, email, or event name
+  const hasClient = data.clientName && String(data.clientName).trim().length > 0;
+  const hasEmail = data.clientEmail && String(data.clientEmail).trim().length > 0;
+  const hasEvent = data.eventName && String(data.eventName).trim().length > 0;
+  if (!hasClient && !hasEmail && !hasEvent) {
+    console.warn("handleFormSubmitJson: Blank submission rejected. No client or event information provided.");
+    return { status: "ignored", message: "Rejected blank submission: missing required client or event data." };
+  }
+
   const ss = getSpreadsheet();
   const sheet = ss ? (ss.getSheetByName(CONFIG.SHEET_NAME) || ss.getActiveSheet()) : null;
   if (!sheet) throw new Error("Target sheet tab not found.");
