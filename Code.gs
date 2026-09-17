@@ -8,8 +8,11 @@ const CONFIG = {
   SPREADSHEET_ID: "1ssJPBdSTOUzq1S9b_kHYuBLMoUbxwrDap2FIkfHOX4k",
   SPREADSHEET_URL: "https://docs.google.com/spreadsheets/d/1ssJPBdSTOUzq1S9b_kHYuBLMoUbxwrDap2FIkfHOX4k/edit",
   INFOCALENDAR_ID: "shqfpe645m3tj6fhee17irti5s@group.calendar.google.com",
-  FOLDER_ID: "1FaiN_vTho7YY5mwd_OXrfHPnQB0fF6oR",
-  ADMIN_EMAILS: ["rodriguez2113@gmail.com", "salsaguy@salsarichmond.com"],
+  ADMIN_EMAILS: [
+    "rodriguez2113@gmail.com",
+    "salsaguyrichmond@gmail.com",
+    "salsaguy@salsarichmond.com"
+  ],
   TEMPLATES: {
     PROPOSAL: "1plCZvjBJijgJrGduzXrTMjbtDopMgCfB5Vo7MLWxspo",
     CONTRACT: "1BuEv7BF6wsHutvEWwVZOVb3m8J3zkYujKheti8X871g",
@@ -704,11 +707,13 @@ function processRow(sheet, rowNum, rowData, folder, headers, isNewSubmit = false
 
 /**
  * Safely dispatches email with fallback from MailApp to GmailApp.
- * Includes plain-text fallback generation, sender display name, and optional replyTo address.
+ * Returns structured result object with exact delivery status and error message if any.
  */
 function sendEmailSafely(toEmail, subject, htmlBody, replyTo = "") {
-  if (!toEmail || typeof toEmail !== "string" || toEmail.trim() === "") return false;
-  const target = toEmail.trim();
+  if (!toEmail || typeof toEmail !== "string" || toEmail.trim() === "") {
+    return { success: false, method: "None", target: toEmail || "", error: "Empty recipient address" };
+  }
+  const target = toEmail.trim().toLowerCase();
 
   // Create clean plain-text version for email clients that don't render HTML
   const plainBody = htmlBody
@@ -734,35 +739,40 @@ function sendEmailSafely(toEmail, subject, htmlBody, replyTo = "") {
     mailOptions.replyTo = replyTo.trim();
   }
 
+  let mailAppError = null;
   try {
     MailApp.sendEmail(mailOptions);
     console.log("Successfully sent email via MailApp to: " + target);
-    return true;
+    return { success: true, method: "MailApp", target: target };
   } catch (err1) {
+    mailAppError = err1;
     console.warn("MailApp.sendEmail failed for " + target + " (" + err1.message + "), trying GmailApp fallback...");
-    try {
-      const gmailOptions = {
-        htmlBody: htmlBody,
-        name: senderName
-      };
-      if (replyTo && typeof replyTo === "string" && replyTo.trim().includes("@")) {
-        gmailOptions.replyTo = replyTo.trim();
-      }
-      GmailApp.sendEmail(target, subject, plainBody, gmailOptions);
-      console.log("Successfully sent email via GmailApp to: " + target);
-      return true;
-    } catch (err2) {
-      console.error("GmailApp.sendEmail fallback also failed for " + target + ": " + err2.message);
-      return false;
+  }
+
+  try {
+    const gmailOptions = {
+      htmlBody: htmlBody,
+      name: senderName
+    };
+    if (replyTo && typeof replyTo === "string" && replyTo.trim().includes("@")) {
+      gmailOptions.replyTo = replyTo.trim();
     }
+    GmailApp.sendEmail(target, subject, plainBody, gmailOptions);
+    console.log("Successfully sent email via GmailApp to: " + target);
+    return { success: true, method: "GmailApp", target: target };
+  } catch (err2) {
+    const fullErr = `MailApp: ${mailAppError ? mailAppError.message : 'Failed'} | GmailApp: ${err2.message}`;
+    console.error("All email delivery methods failed for " + target + ": " + fullErr);
+    return { success: false, method: "Failed", target: target, error: fullErr };
   }
 }
 
 /**
  * Sends a rich, instant admin notification email to all configured admin recipients.
+ * Returns array of delivery results for diagnostics.
  */
 function sendAdminSubmittalNotification(details) {
-  if (!CONFIG.ADMIN_EMAILS || CONFIG.ADMIN_EMAILS.length === 0) return;
+  if (!CONFIG.ADMIN_EMAILS || CONFIG.ADMIN_EMAILS.length === 0) return [];
 
   const cleanPhone = (details.clientPhone || '').replace(/[^\d+]/g, '');
   const intlPhone = cleanPhone.startsWith('1') ? cleanPhone : ('1' + cleanPhone.replace(/^0+/, ''));
@@ -848,9 +858,12 @@ function sendAdminSubmittalNotification(details) {
     </div>
   `;
 
+  const results = [];
   CONFIG.ADMIN_EMAILS.forEach(email => {
-    sendEmailSafely(email, subject, htmlBody, details.clientEmail || "");
+    const res = sendEmailSafely(email, subject, htmlBody, details.clientEmail || "");
+    results.push(res);
   });
+  return results;
 }
 
 /**
@@ -909,6 +922,17 @@ function sendClientReceiptNotification(details) {
  */
 function sendTestNotificationEmail() {
   const ui = (typeof SpreadsheetApp !== "undefined" && SpreadsheetApp.getUi) ? SpreadsheetApp.getUi() : null;
+  
+  let quota = -1;
+  try {
+    quota = MailApp.getRemainingDailyQuota();
+  } catch (qErr) {}
+
+  let effectiveUser = "Unknown";
+  try {
+    effectiveUser = Session.getEffectiveUser().getEmail() || Session.getActiveUser().getEmail();
+  } catch (uErr) {}
+
   const testDetails = {
     rowNum: 99,
     eventId: "BTG-TEST-" + Date.now().toString(36).toUpperCase(),
@@ -936,16 +960,28 @@ function sendTestNotificationEmail() {
     fileUrl: `https://docs.google.com/spreadsheets/d/${CONFIG.SPREADSHEET_ID}/edit`
   };
 
-  sendAdminSubmittalNotification(testDetails);
-  
-  let quota = -1;
-  try {
-    quota = MailApp.getRemainingDailyQuota();
-  } catch (qErr) {}
+  const results = sendAdminSubmittalNotification(testDetails);
 
-  const msg = `✅ Test notification email successfully dispatched to:\n${CONFIG.ADMIN_EMAILS.join(", ")}\n\n` +
-    (quota >= 0 ? `📧 Remaining Daily Email Quota: ${quota} emails\n\n` : "") +
-    `Please check your inbox (and Spam/Promotions folder) for the "🔥 NEW BOOKING" alert.`;
+  let msg = `📧 Email Dispatch Diagnostics:\n\n`;
+  msg += `👤 Sent by Google Account: ${effectiveUser}\n`;
+  msg += `📊 Remaining Daily Email Quota: ${quota >= 0 ? quota : 'Unknown'} emails\n\n`;
+  msg += `Recipient Delivery Status:\n`;
+
+  let anySuccess = false;
+  results.forEach(r => {
+    if (r.success) {
+      anySuccess = true;
+      msg += `  ✅ ${r.target}: SENT via ${r.method}\n`;
+    } else {
+      msg += `  ❌ ${r.target}: FAILED (${r.error})\n`;
+    }
+  });
+
+  if (anySuccess) {
+    msg += `\n⚠️ IMPORTANT GMAIL NOTE:\n`;
+    msg += `Because this email was sent from '${effectiveUser}' to your own email, Gmail often bypasses the primary Inbox and places it in 'Sent' or 'Spam/Promotions', without a phone push notification.\n\n`;
+    msg += `Please search Gmail for: 'NEW BOOKING' or check your 'Sent' and 'Spam' folders.`;
+  }
 
   if (ui) {
     ui.alert("📧 Email Notification Test", msg, ui.ButtonSet.OK);
@@ -1682,7 +1718,21 @@ function handleFormSubmitJson(data) {
  * Web App HTTP GET endpoint.
  */
 function doGet(e) {
-  return HtmlService.createHtmlOutput("Salsa Guy Richmond LLC Automation Suite Web App Endpoint (v20.71) Active.");
+  if (e && e.parameter && e.parameter.action === "diagnose") {
+    let quota = -1;
+    try { quota = MailApp.getRemainingDailyQuota(); } catch (qErr) {}
+    let effectiveUser = "Unknown";
+    try { effectiveUser = Session.getEffectiveUser().getEmail() || Session.getActiveUser().getEmail(); } catch (uErr) {}
+    
+    return ContentService.createTextOutput(JSON.stringify({
+      status: "ok",
+      version: "v20.72",
+      effectiveUser: effectiveUser,
+      adminEmails: CONFIG.ADMIN_EMAILS,
+      remainingDailyQuota: quota
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+  return HtmlService.createHtmlOutput("Salsa Guy Richmond LLC Automation Suite Web App Endpoint (v20.72) Active.");
 }
 
 /**
