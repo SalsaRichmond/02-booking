@@ -38,6 +38,7 @@ function getSpreadsheet() {
 function onOpen() {
   const ui = SpreadsheetApp.getUi();
   ui.createMenu('Salsa Guy Richmond')
+    .addItem('🔄 REORDER COLUMNS (Match Form Order)', 'reorderColumnsToMatchForm')
     .addItem('🛠️ SETUP ALL QUESTIONNAIRE HEADERS', 'setupMasterHeaders')
     .addSeparator()
     .addItem('📧 SEND TEST NOTIFICATION EMAIL', 'sendTestNotificationEmail')
@@ -57,6 +58,191 @@ function onOpen() {
     .addSeparator()
     .addItem("📄 CREATE REVIEW GOOGLE DOC", 'createQuestionnaireReviewGoogleDoc')
     .addToUi();
+}
+
+/**
+ * Returns the authoritative ordered list of questionnaire headers aligned with
+ * the 2026 Questionnaire Form sequence (Sections 1 through 6 + Automation Tracking).
+ */
+function getCanonicalMasterHeaders() {
+  return [
+    // 0. Identifiers & Timestamps
+    "Submission Date",
+    "Request ID",
+    "Event ID",
+
+    // Section 1: Location & Logistics
+    "Is this event located within the Commonwealth of Virginia (USA)?",
+    "Where will the event take place? (ADDRESS)",
+    "Out-of-State Travel & Logistics Arrangement",
+
+    // Section 2: Event Basics
+    "What is the NAME of the event?",
+    "Websites for Event & Organization",
+    "Please confirm the DATE of your event:",
+    "Please confirm the TIME of your event:",
+    "Expected Number of Attendees",
+    "Audience Age Groups Expected",
+    "Purpose of this Event",
+    "Describe Your Event",
+    "Select Event Classification:",
+    "Type of Event Admission",
+
+    // Section 3A: Conditional - Large Public Event Details
+    "Will the PERFORMANCE SERVICES be...",
+    "501(c) Non-Profit Name (If Applicable)",
+    "Can you provide a Tax Deductibility Letter?",
+    "Provide a Booth/Exhibitor Space (10×10 Tent)?",
+    "Include our logo on promo materials & social media?",
+    "Allowed to help promote the event?",
+    "Provide copies of video footage and photos?",
+    "Weather / Contingency Plan",
+
+    // Section 3B: Conditional - Small Private Event Specifications
+    "Type of Private Gathering",
+    "Are performers invited to attend/stay for the event?",
+
+    // Section 3C: Conditional - International Logistics
+    "International: Specific Country, City, & Venue Name",
+    "International: Travel & Lodging Logistics",
+    "International: Visa & Legal Documentation Support",
+    "International: Preferred Currency & Payment Terms",
+    "International: Costumes, Props & Customs Considerations",
+
+    // Section 3: What You Need From Us (Services & Music)
+    "Service Type Requested",
+    "Any other PERFORMANCE SERVICES you wish, but are not listed above?",
+    "Which of our DANCE LESSON SERVICES will you need?",
+    "Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?",
+    "How much TIME do you require from us?",
+    "Additional Services Needed (MC, DJ, Lecture)",
+    "General Formats (Stage, Opening, Headliner, Main Act, Background)",
+    "Sound System Equipment",
+
+    // Section 4: Technical, Venue & Hospitality
+    "Venue Location Setting",
+    "On what SURFACE will the performance or class take place?",
+    "Size of Performance / Class Area",
+    "Will a BADGE or ID be required for performers?",
+    "WILL YOU PROVIDE the performers with (Water, Hospitality, Meal, Green Room)",
+    "Dressing Room / Costume Changing Instructions",
+
+    // Section 5: Your Contact Details & Budget Confirmation
+    "Your Name",
+    "Email Address",
+    "Best Contact Phone Number",
+    "Who do you represent? (Organization / Business / Self)",
+    "Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title",
+    "Confirm you have a BUDGET for our participation",
+    "Confirmed Budget Amount for Performance / Workshop",
+
+    // Section 6: Final Steps, Notes & Legal
+    "How did you HEAR of us?",
+    "Upload Event Document / Attachment",
+    "Special Instructions, Song Requests or Notes",
+    "Notice: Hiring Similar Performers Disclosure",
+    "Terms of Service & Privacy Policy Agreement",
+
+    // Automation & Management Tracking Columns
+    "Day of the Week",
+    "MASTER Proposal Form URL",
+    "Master Contract Document URL",
+    "Performance Information Document URL",
+    "Assigned to",
+    "Status",
+    "Internal Status"
+  ];
+}
+
+/**
+ * Reorders all columns and existing row data in the active sheet
+ * to match the 2026 Questionnaire Form sequence (Sections 1 through 6 + Tracking).
+ * Preserves all client responses, formulas, links, and any extra unmapped columns.
+ */
+function reorderColumnsToMatchForm() {
+  const ss = getSpreadsheet();
+  if (!ss) return;
+  const sheet = ss.getSheetByName(CONFIG.SHEET_NAME) || ss.getActiveSheet();
+  if (!sheet) return;
+
+  const ui = SpreadsheetApp.getUi();
+  const confirm = ui.alert(
+    "🔄 Reorder Columns",
+    "This will safely rearrange all columns and existing row data in '" + sheet.getName() + "' to match the 2026 Form order (Sections 1 through 6).\n\nExisting client responses and document formulas will be preserved.\n\nDo you want to proceed?",
+    ui.ButtonSet.YES_NO
+  );
+  if (confirm !== ui.Button.YES) return;
+
+  const lastRow = sheet.getLastRow();
+  const lastCol = sheet.getLastColumn();
+  if (lastCol < 1 || lastRow < 1) {
+    ui.alert("⚠️ Sheet is empty.");
+    return;
+  }
+
+  const existingHeaders = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+  const allValues = sheet.getRange(1, 1, lastRow, lastCol).getValues();
+  const allFormulas = sheet.getRange(1, 1, lastRow, lastCol).getFormulas();
+
+  const targetHeaders = getCanonicalMasterHeaders();
+
+  // Find column mapping: targetIndex -> existingIndex
+  const usedExistingCols = new Set();
+  const orderedCols = [];
+
+  targetHeaders.forEach(targetH => {
+    let matchIdx = -1;
+    for (let j = 0; j < existingHeaders.length; j++) {
+      if (usedExistingCols.has(j)) continue;
+      const existH = existingHeaders[j] ? existingHeaders[j].toString().trim() : "";
+      if (cleanHeaderStr(existH) === cleanHeaderStr(targetH)) {
+        matchIdx = j;
+        break;
+      }
+    }
+    if (matchIdx > -1) {
+      usedExistingCols.add(matchIdx);
+      orderedCols.push({ header: targetH, existingColIdx: matchIdx });
+    } else {
+      orderedCols.push({ header: targetH, existingColIdx: -1 });
+    }
+  });
+
+  // Preserve any remaining existing columns that weren't in targetHeaders
+  for (let j = 0; j < existingHeaders.length; j++) {
+    if (!usedExistingCols.has(j)) {
+      const remainingH = existingHeaders[j] ? existingHeaders[j].toString().trim() : `Column_${j + 1}`;
+      orderedCols.push({ header: remainingH, existingColIdx: j });
+    }
+  }
+
+  // Construct new row matrix
+  const newMatrix = [];
+  for (let r = 0; r < lastRow; r++) {
+    const newRow = [];
+    for (let c = 0; c < orderedCols.length; c++) {
+      if (r === 0) {
+        newRow.push(orderedCols[c].header);
+      } else {
+        const oldIdx = orderedCols[c].existingColIdx;
+        if (oldIdx > -1) {
+          const formula = allFormulas[r][oldIdx];
+          newRow.push(formula ? formula : allValues[r][oldIdx]);
+        } else {
+          newRow.push("");
+        }
+      }
+    }
+    newMatrix.push(newRow);
+  }
+
+  // Clear existing content and write reordered data
+  sheet.clearContents();
+  sheet.getRange(1, 1, newMatrix.length, newMatrix[0].length).setValues(newMatrix);
+  sheet.getRange(1, 1, 1, newMatrix[0].length).setFontWeight("bold");
+
+  colorCodeHeaders();
+  ui.alert("✅ Columns Reordered Successfully!\n\nAll columns and existing row data have been rearranged to match the 2026 Form (Sections 1 through 6).\nTotal columns: " + newMatrix[0].length);
 }
 
 /**
@@ -81,93 +267,7 @@ function setupMasterHeaders() {
     }
   }
 
-  const masterHeaders = [
-    // 1. Contact & Organizer Information
-    "Submission Date",
-    "Request ID",
-    "Event ID",
-    "Your Name",
-    "Email Address",
-    "Best Contact Phone Number",
-    "Who do you represent? (Organization / Business / Self)",
-    "How did you HEAR of us?",
-
-    // 2. Event Overview & Schedule
-    "What is the NAME of the event?",
-    "Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title",
-    "Purpose of this Event",
-    "Websites for Event & Organization",
-    "Describe Your Event",
-    "Please confirm the DATE of your event:",
-    "Please confirm the TIME of your event:",
-    "Expected Number of Attendees",
-    "Audience Age Groups Expected",
-    "Type of Event Admission",
-
-    // 3. Location & Event Classification Routing
-    "Is this event located within the Commonwealth of Virginia (USA)?",
-    "Where will the event take place? (ADDRESS)",
-    "Out-of-State Travel & Logistics Arrangement",
-    "Select Event Classification:",
-
-    // 4A. Conditional: Large Public Event Details
-    "Will the PERFORMANCE SERVICES be...",
-    "501(c) Non-Profit Name (If Applicable)",
-    "Can you provide a Tax Deductibility Letter?",
-    "Provide a Booth/Exhibitor Space (10×10 Tent)?",
-    "Include our logo on promo materials & social media?",
-    "Allowed to help promote the event?",
-    "Provide copies of video footage and photos?",
-    "Weather / Contingency Plan",
-
-    // 4B. Conditional: Small Private Event Specifications
-    "Type of Private Gathering",
-    "Are performers invited to attend/stay for the event?",
-
-    // 4C. Conditional: International Logistics
-    "International: Specific Country, City, & Venue Name",
-    "International: Travel & Lodging Logistics",
-    "International: Visa & Legal Documentation Support",
-    "International: Preferred Currency & Payment Terms",
-    "International: Costumes, Props & Customs Considerations",
-
-    // 5A. Repertoire Requests
-    "Service Type Requested",
-    "Any other PERFORMANCE SERVICES you wish, but are not listed above?",
-
-    // 5B. Dance Instruction & Formats
-    "Which of our DANCE LESSON SERVICES will you need?",
-    "Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?",
-    "Additional Services Needed (MC, DJ, Lecture)",
-    "General Formats (Stage, Opening, Headliner, Main Act, Background)",
-    "How much TIME do you require from us?",
-
-    // 6. Technical, Venue & Hospitality Logistics
-    "Venue Location Setting",
-    "On what SURFACE will the performance or class take place?",
-    "Size of Performance / Class Area",
-    "Sound System Equipment",
-    "Will a BADGE or ID be required for performers?",
-    "WILL YOU PROVIDE the performers with (Water, Hospitality, Meal, Green Room)",
-    "Dressing Room / Costume Changing Instructions",
-
-    // 7. Budget, Documents & Terms
-    "Confirm you have a BUDGET for our participation",
-    "Confirmed Budget Amount for Performance / Workshop",
-    "Upload Event Document / Attachment",
-    "Special Instructions, Song Requests or Notes",
-    "Notice: Hiring Similar Performers Disclosure",
-    "Terms of Service & Privacy Policy Agreement",
-
-    // Automation & Management Tracking Columns
-    "Day of the Week",
-    "MASTER Proposal Form URL",
-    "Master Contract Document URL",
-    "Performance Information Document URL",
-    "Assigned to",
-    "Status",
-    "Internal Status"
-  ];
+  const masterHeaders = getCanonicalMasterHeaders();
 
   sheet.getRange(1, 1, 1, masterHeaders.length).setValues([masterHeaders]).setFontWeight("bold");
   colorCodeHeaders();
@@ -230,7 +330,7 @@ function getUniqueHeaders(sheet) {
 }
 
 /**
- * Visually categorizes header cells with section background colors.
+ * Visually categorizes header cells with section background colors aligned with Form Sections 1 through 6.
  */
 function colorCodeHeaders() {
   const ss = getSpreadsheet();
@@ -241,21 +341,53 @@ function colorCodeHeaders() {
   headers.forEach((h, i) => {
     const colNum = i + 1;
     const cell = sheet.getRange(1, colNum);
+    const clean = cleanHeaderStr(h);
     
-    if (h.includes("Submission Date") || h.includes("Timestamp") || h.includes("Name") || h.includes("Email") || h.includes("event?")) {
-      cell.setBackground("#fce5cd"); // Soft Peach
-    } else if (h.includes("URL") || h.includes("Document") || h.includes("Event ID") || h.includes("Upload") || h.includes("Attachment") || h.includes("Flyer")) {
-      cell.setBackground("#f4cccc"); // Soft Red
-    } else if (h.includes("DATE") || h.includes("TIME") || h.includes("Day of the Week")) {
-      cell.setBackground("#cfe2f3"); // Soft Blue
-    } else if (h.includes("Status") || h.includes("Assigned")) {
-      cell.setBackground("#d9ead3"); // Soft Green
+    // 0. Identifiers & Timestamps -> Light Gray/Slate
+    if (clean.includes("submission date") || clean.includes("timestamp") || clean.includes("request id") || clean.includes("event id")) {
+      cell.setBackground("#e2e8f0");
+    } 
+    // Section 1: Location & Logistics -> Soft Mint / Green
+    else if (clean.includes("virginia") || clean.includes("where will the event take place") || clean.includes("address") || clean.includes("out of state")) {
+      cell.setBackground("#d9ead3");
+    } 
+    // Section 2: Event Basics -> Soft Blue
+    else if (clean.includes("name of the event") || clean.includes("websites") || clean.includes("date") || clean.includes("time") || clean.includes("attend") || clean.includes("audience age") || clean.includes("purpose") || clean.includes("describe") || clean.includes("classification") || clean.includes("admission")) {
+      cell.setBackground("#cfe2f3");
+    } 
+    // Section 3A, 3B, 3C: Conditional -> Soft Lavender / Pink
+    else if (clean.includes("performance services be") || clean.includes("non profit") || clean.includes("tax") || clean.includes("booth") || clean.includes("promo") || clean.includes("promote") || clean.includes("footage") || clean.includes("contingency") || clean.includes("private gathering") || clean.includes("invited to attend") || clean.includes("international")) {
+      cell.setBackground("#ead1dc");
+    } 
+    // Section 3: What You Need From Us (Services & Music) -> Soft Yellow
+    else if (clean.includes("service type") || clean.includes("dance lesson") || clean.includes("audience participation") || clean.includes("how much time") || clean.includes("additional services") || clean.includes("general formats") || clean.includes("sound system")) {
+      cell.setBackground("#fff2cc");
+    } 
+    // Section 4: Technical, Venue & Hospitality -> Soft Orange / Amber
+    else if (clean.includes("venue location") || clean.includes("surface") || clean.includes("class area") || clean.includes("badge") || clean.includes("provide the performers with") || clean.includes("dressing room")) {
+      cell.setBackground("#fce5cd");
+    } 
+    // Section 5: Your Contact Details & Budget -> Soft Cyan / Teal
+    else if (clean.includes("your name") || clean.includes("email address") || clean.includes("phone number") || clean.includes("represent") || clean.includes("coordinator") || clean.includes("budget")) {
+      cell.setBackground("#d0e0e3");
+    } 
+    // Section 6: Final Steps & Legal -> Soft Salmon / Rose
+    else if (clean.includes("hear of us") || clean.includes("upload") || clean.includes("attachment") || clean.includes("special instructions") || clean.includes("hiring similar") || clean.includes("terms of service")) {
+      cell.setBackground("#f4cccc");
+    } 
+    // Automation & Tracking Columns -> Soft Periwinkle Blue
+    else if (clean.includes("day of the week") || clean.includes("url") || clean.includes("assigned") || clean.includes("status")) {
+      cell.setBackground("#c9daf8");
     } else {
-      cell.setBackground("#fff2cc"); // Soft Yellow
+      cell.setBackground("#f3f4f6");
     }
   });
   
-  SpreadsheetApp.getUi().alert("🎨 Headers have been successfully color-coded and deduplicated!");
+  if (typeof SpreadsheetApp !== "undefined" && SpreadsheetApp.getUi) {
+    try {
+      SpreadsheetApp.getUi().alert("🎨 Headers have been successfully color-coded by form section!");
+    } catch (e) {}
+  }
 }
 
 /**
