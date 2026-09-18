@@ -1158,8 +1158,8 @@
             <select id="regionalLocation" name="regionalLocation" required onchange="handleRegionalLocationChange(this.value); updateConditionalSections();">
               <option value="" selected disabled>-- Select Option --</option>
               <option value="Yes (Within Virginia, USA)">Yes (Within Virginia, USA)</option>
-              <option value="No, Out-of-State (Within USA, outside VA)">No, Out-of-State (Within USA, outside VA) ➔ (Requires Travel & Logistics Details)</option>
-              <option value="No, International (Outside USA)">No, International (Outside USA) ➔ (Requires International Logistics)</option>
+              <option value="No, Out-of-State (Within USA, outside VA) ➔ (Requires Travel & Logistics Details)">No, Out-of-State (Within USA, outside VA) ➔ (Requires Travel & Logistics Details)</option>
+              <option value="No, International (Outside USA) ➔ (Requires International Logistics)">No, International (Outside USA) ➔ (Requires International Logistics)</option>
             </select>
           </div>
 
@@ -3822,6 +3822,8 @@ function handleRegionalLocationChange(val) {
       const isOutState = val.includes('Out-of-State') || val.includes('Out-of-state') || val.includes('outside VA') || val.includes('USA Domestic Travel');
       const isIntl = val.includes('International') || val.includes('Outside USA');
 
+      const addrInput = document.getElementById('eventAddress');
+
       if (isOutState) {
         if (outOfStateBlock) outOfStateBlock.style.display = 'block';
         if (internationalBlock) internationalBlock.style.display = 'none';
@@ -3831,6 +3833,10 @@ function handleRegionalLocationChange(val) {
         if (isIntlSel) isIntlSel.value = 'No';
         if (countryGrp) countryGrp.style.display = 'none';
         if (destCountry) { destCountry.required = false; destCountry.value = ''; }
+        if (addrInput) {
+          addrInput.required = true;
+          if (addrInput.value === "It's International") addrInput.value = '';
+        }
       } else if (isIntl) {
         if (outOfStateBlock) outOfStateBlock.style.display = 'none';
         if (internationalBlock) internationalBlock.style.display = 'block';
@@ -3842,6 +3848,12 @@ function handleRegionalLocationChange(val) {
           if (countryGrp) countryGrp.style.display = 'block';
           if (destCountry) destCountry.required = true;
         }
+        if (addrInput) {
+          addrInput.required = false;
+          if (!addrInput.value.trim() || addrInput.value === "It's International") {
+            addrInput.value = "It's International";
+          }
+        }
       } else {
         if (outOfStateBlock) outOfStateBlock.style.display = 'none';
         if (internationalBlock) internationalBlock.style.display = 'none';
@@ -3851,7 +3863,60 @@ function handleRegionalLocationChange(val) {
         if (isIntlSel) isIntlSel.value = 'No';
         if (countryGrp) countryGrp.style.display = 'none';
         if (destCountry) { destCountry.required = false; destCountry.value = ''; }
+        if (addrInput) {
+          addrInput.required = true;
+          if (addrInput.value === "It's International") addrInput.value = '';
+        }
       }
+    }
+
+    /**
+     * Applies the 4 Regional Location & Logistics rules (Virginia vs Out-of-State vs International)
+     * to a form submission payload:
+     * 1. If "Yes (Within Virginia, USA)":
+     *    - regionalLocation -> "Yes"
+     *    - outOfStateLogistics -> "Not Applicable"
+     *    - All 5 international fields -> "Not Applicable"
+     * 2. If "No, Out-of-State (Within USA, outside VA)":
+     *    - regionalLocation -> "Not Applicable"
+     *    - All 5 international fields -> "Not Applicable"
+     * 3. If "No, International (Outside USA)":
+     *    - regionalLocation -> "It's International"
+     *    - eventAddress -> "It's International"
+     *    - outOfStateLogistics -> "It's International"
+     */
+    function applyRegionalLocationRulesToFormData(formData) {
+      if (!formData) return formData;
+      const rawRegLoc = (formData.regionalLocation || '').trim();
+      const lowerReg = rawRegLoc.toLowerCase();
+
+      // Rule 1 & 2: Virginia ("Yes (Within Virginia, USA)")
+      if (lowerReg.includes('within virginia') || lowerReg === 'yes' || (lowerReg.startsWith('yes') && !lowerReg.includes('no'))) {
+        formData.regionalLocation = 'Yes';
+        formData.outOfStateLogistics = 'Not Applicable';
+        formData.intlVenueName = 'Not Applicable';
+        formData.intlLogistics = 'Not Applicable';
+        formData.intlVisaSupport = 'Not Applicable';
+        formData.intlPaymentTerms = 'Not Applicable';
+        formData.intlCustomsConsiderations = 'Not Applicable';
+      }
+      // Rule 3: Out-of-State ("No, Out-of-State (Within USA, outside VA)...")
+      else if (lowerReg.includes('out-of-state') || lowerReg.includes('out of state') || lowerReg.includes('outside va')) {
+        formData.regionalLocation = 'Not Applicable';
+        formData.intlVenueName = 'Not Applicable';
+        formData.intlLogistics = 'Not Applicable';
+        formData.intlVisaSupport = 'Not Applicable';
+        formData.intlPaymentTerms = 'Not Applicable';
+        formData.intlCustomsConsiderations = 'Not Applicable';
+      }
+      // Rule 4: International ("No, International (Outside USA)...")
+      else if (lowerReg.includes('international') || lowerReg.includes('outside usa') || lowerReg === "it's international") {
+        formData.regionalLocation = "It's International";
+        formData.eventAddress = "It's International";
+        formData.outOfStateLogistics = "It's International";
+      }
+
+      return formData;
     }
 
 
@@ -4323,6 +4388,9 @@ function saveUserSettings() {
         serviceCategory: document.getElementById('eventTypeScale')?.value || ''
       };
 
+      // Apply Regional Location & Logistics Rules (VA vs Out-of-State vs International)
+      applyRegionalLocationRulesToFormData(formData);
+
       try {
         let eventId = "";
 
@@ -4409,7 +4477,7 @@ function saveUserSettings() {
         finalServiceType = full;
       }
 
-      return {
+      const formDataObj = {
         serviceTypeRequested: finalServiceType || 'Event Booking Request',
         clientName: val('clientName'),
         clientEmail: val('clientEmail'),
@@ -4465,6 +4533,8 @@ function saveUserSettings() {
         termsAgreed: document.getElementById('termsCheck')?.checked ? "Agreed to Terms & Privacy Policy" : "No",
         sendEmailReceipt: document.getElementById('sendEmailReceipt')?.checked ? "Yes" : "No"
       };
+
+      return applyRegionalLocationRulesToFormData(formDataObj);
     }
 
     function renderSummaryReport(eventId, data) {

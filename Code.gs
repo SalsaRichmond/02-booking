@@ -7,6 +7,8 @@ const CONFIG = {
   SHEET_NAME: "Form Responses 1", 
   SPREADSHEET_ID: "1ssJPBdSTOUzq1S9b_kHYuBLMoUbxwrDap2FIkfHOX4k",
   SPREADSHEET_URL: "https://docs.google.com/spreadsheets/d/1ssJPBdSTOUzq1S9b_kHYuBLMoUbxwrDap2FIkfHOX4k/edit",
+  SOURCE_HISTORICAL_SPREADSHEET_ID: "1Mm4L5YVglsukjfpbAiyHRCxNZ8_rD2gPk0n7WBD5VCM",
+  SOURCE_HISTORICAL_SPREADSHEET_URL: "https://docs.google.com/spreadsheets/d/1Mm4L5YVglsukjfpbAiyHRCxNZ8_rD2gPk0n7WBD5VCM/edit",
   INFOCALENDAR_ID: "shqfpe645m3tj6fhee17irti5s@group.calendar.google.com",
   ADMIN_EMAILS: [
     "rodriguez2113@gmail.com",
@@ -41,8 +43,12 @@ function getSpreadsheet() {
 function onOpen() {
   const ui = SpreadsheetApp.getUi();
   ui.createMenu('Salsa Guy Richmond')
+    .addItem('📥 TRANSFER ALL HISTORICAL DATA', 'transferAllHistoricalData')
+    .addSeparator()
     .addItem('🔄 REORDER COLUMNS (Match Form Order)', 'reorderColumnsToMatchForm')
     .addItem('🛠️ SETUP ALL QUESTIONNAIRE HEADERS', 'setupMasterHeaders')
+    .addItem('📋 APPLY DROPDOWN VALIDATIONS', 'applyDropdownValidations')
+    .addItem('🗺️ APPLY REGIONAL LOCATION RULES', 'applyRegionalLocationRulesToActiveSheet')
     .addSeparator()
     .addItem('📧 SEND TEST NOTIFICATION EMAIL', 'sendTestNotificationEmail')
     .addItem('🔔 SETUP AUTO-SUBMISSION TRIGGER', 'installFormSubmitTrigger')
@@ -81,6 +87,7 @@ function getCanonicalMasterHeaders() {
 
     // Section 2: Event Basics
     "What is the NAME of the event?",
+    "Assigned to",
     "Websites for Event & Organization",
     "Please confirm the DATE of your event:",
     "Please confirm the TIME of your event:",
@@ -151,7 +158,6 @@ function getCanonicalMasterHeaders() {
     "MASTER Proposal Form URL",
     "Master Contract Document URL",
     "Performance Information Document URL",
-    "Assigned to",
     "Status",
     "Internal Status"
   ];
@@ -165,7 +171,8 @@ function getCanonicalMasterHeaders() {
 function reorderColumnsToMatchForm() {
   const ss = getSpreadsheet();
   if (!ss) return;
-  const sheet = ss.getSheetByName(CONFIG.SHEET_NAME) || ss.getActiveSheet();
+  // Safely targets the active sheet tab currently open in front of the user
+  const sheet = ss.getActiveSheet() || ss.getSheetByName(CONFIG.SHEET_NAME);
   if (!sheet) return;
 
   const ui = SpreadsheetApp.getUi();
@@ -189,16 +196,85 @@ function reorderColumnsToMatchForm() {
 
   const targetHeaders = getCanonicalMasterHeaders();
 
+  // Alias dictionary mapping canonical headers to historical / alternative header variations
+  const targetAliases = {
+    "Submission Date": ["Submission Date", "Timestamp", "Date Submitted", "Submission Timestamp"],
+    "Request ID": ["Request ID", "Request Tracking ID", "Tracking ID"],
+    "Event ID": ["Event ID", "Calendar Event ID"],
+    "Is this event located within the Commonwealth of Virginia (USA)?": ["Is this event located within the Commonwealth of Virginia (USA)?", "Regional Location", "Virginia Check"],
+    "Where will the event take place? (ADDRESS)": ["Where will the event take place? (ADDRESS)", "Event Address", "Address", "Location"],
+    "Out-of-State Travel & Logistics Arrangement": ["Out-of-State Travel & Logistics Arrangement", "Out-of-State Logistics", "Travel Logistics"],
+    "What is the NAME of the event?": ["What is the NAME of the event?", "Event Name", "Name of Event", "Event"],
+    "Assigned to": ["Assigned to", "Assigned To"],
+    "Websites for Event & Organization": ["Websites for Event & Organization", "Websites", "Website"],
+    "Please confirm the DATE of your event:": ["Please confirm the DATE of your event:", "Event Date", "Date of event", "Date"],
+    "Please confirm the TIME of your event:": ["Please confirm the TIME of your event:", "Event Time", "Time of event", "Time"],
+    "Expected Number of Attendees": ["Expected Number of Attendees", "Expected Attendance", "Attendees"],
+    "Audience Age Groups Expected": ["Audience Age Groups Expected", "Target Audience", "Audience", "Age Groups"],
+    "Purpose of this Event": ["Purpose of this Event", "Event Purpose", "Purpose / Theme", "Theme"],
+    "Describe Your Event": ["Describe Your Event", "Event Description", "Describe event"],
+    "Select Event Classification:": ["Select Event Classification:", "Event Type Scale", "Scale of Event"],
+    "Type of Event Admission": ["Type of Event Admission", "Admission Type", "Admission"],
+    "Will the PERFORMANCE SERVICES be...": ["Will the PERFORMANCE SERVICES be...", "Service Recurrence", "Performance Services Frequency"],
+    "501(c) Non-Profit Name (If Applicable)": ["501(c) Non-Profit Name (If Applicable)", "501(c) Organization", "501c Non Profit Name"],
+    "Can you provide a Tax Deductibility Letter?": ["Can you provide a Tax Deductibility Letter?", "Tax Deductibility Letter", "Tax Letter"],
+    "Provide a Booth/Exhibitor Space (10×10 Tent)?": ["Provide a Booth/Exhibitor Space (10×10 Tent)?", "Provide a Booth/Exhibitor Space (10x10 Tent)?", "Booth/Exhibitor Space(10x10 Tent)", "Booth Space"],
+    "Include our logo on promo materials & social media?": ["Include our logo on promo materials & social media?", "Include Our Info & Logo", "Include Logo on Promo"],
+    "Allowed to help promote the event?": ["Allowed to help promote the event?", "Allowed to Help Promote?", "Promote Event"],
+    "Provide copies of video footage and photos?": ["Provide copies of video footage and photos?", "Copies of Video/Pictures?", "Video Footage & Photos"],
+    "Weather / Contingency Plan": ["Weather / Contingency Plan", "Contingency Plan?", "Contingency Plan Details", "Contingency Plan"],
+    "Type of Private Gathering": ["Type of Private Gathering", "TYPE of Private Gathering"],
+    "Are performers invited to attend/stay for the event?": ["Are performers invited to attend/stay for the event?", "Invited to Attend?", "Invited to Attend"],
+    "Service Type Requested": ["Service Type Requested", "Primary Service", "Requested Service"],
+    "Which of our PERFORMANCE SERVICES will you need?": ["Which of our PERFORMANCE SERVICES will you need?", "Performance Services Needed", "Performance Services"],
+    "Any other PERFORMANCE SERVICES you wish, but are not listed above?": ["Any other PERFORMANCE SERVICES you wish, but are not listed above?", "Other Performance Services"],
+    "Which of our DANCE LESSON SERVICES will you need?": ["Which of our DANCE LESSON SERVICES will you need?", "Dance Lesson Services Needed", "Dance Lesson Services"],
+    "Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?": ["Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?", "Expecting Audience Participation?", "Audience Participation"],
+    "How much TIME do you require from us?": ["How much TIME do you require from us?", "Time Required", "DURATION of Service Required", "Duration"],
+    "Additional Services Needed (MC, DJ, Lecture)": ["Additional Services Needed (MC, DJ, Lecture)", "Other Services Needed", "Additional Services Needed"],
+    "General Formats (Stage, Opening, Headliner, Main Act, Background)": ["General Formats (Stage, Opening, Headliner, Main Act, Background)", "General Formats"],
+    "Sound System Equipment": ["Sound System Equipment", "Sound System"],
+    "Venue Location Setting": ["Venue Location Setting", "Where will it take place?(Place)", "Where will it take place?", "Venue Setting"],
+    "On what SURFACE will the performance or class take place?": ["On what SURFACE will the performance or class take place?", "Surface / Floor", "Performance Surface", "Surface Type"],
+    "Size of Performance / Class Area": ["Size of Performance / Class Area", "Area Size", "Performance Area Size"],
+    "Will a BADGE or ID be required for performers?": ["Will a BADGE or ID be required for performers?", "Performer Access / Badge", "Badge Access"],
+    "WILL YOU PROVIDE the performers with (Water, Hospitality, Meal, Green Room)": ["WILL YOU PROVIDE the performers with (Water, Hospitality, Meal, Green Room)", "Hospitality(Food/Water/Beverages)", "Hospitality Provided"],
+    "Dressing Room / Costume Changing Instructions": ["Dressing Room / Costume Changing Instructions", "Costume Change Place", "Dressing Room Instructions"],
+    "Your Name": ["Your Name", "Full Name", "Client Name", "Name"],
+    "Email Address": ["Email Address", "Email"],
+    "Best Contact Phone Number": ["Best Contact Phone Number", "PhoneNumber", "Phone Number", "Phone", "Telephone"],
+    "Who do you represent? (Organization / Business / Self)": ["Who do you represent? (Organization / Business / Self)", "Representing / Organization", "Representing", "Organization"],
+    "Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title": ["Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title", "Coordinator Name & Title", "Event Planner / Coordinator", "Event Coordinator"],
+    "Confirm you have a BUDGET for our participation": ["Confirm you have a BUDGET for our participation", "Budget Confirmed?", "Confirm Budget"],
+    "Confirmed Budget Amount for Performance / Workshop": ["Confirmed Budget Amount for Performance / Workshop", "Budget", "Confirmed Budget Amount", "Confirmed Budget"],
+    "How did you HEAR of us?": ["How did you HEAR of us?", "How did you hear of us?", "Referral Source"],
+    "Upload Event Document / Attachment": ["Upload Event Document / Attachment", "Upload Event Document", "Attachment", "Uploaded File"],
+    "Special Instructions, Song Requests or Notes": ["Special Instructions, Song Requests or Notes", "Additional Notes / Sound DJ MC", "Special Requests"],
+    "Notice: Hiring Similar Performers Disclosure": ["Notice: Hiring Similar Performers Disclosure", "Hiring Disclosure"],
+    "Terms of Service & Privacy Policy Agreement": ["Terms of Service & Privacy Policy Agreement", "Terms of Service", "Terms Agreed"],
+    "Day of the Week": ["Day of the Week", "Day of Week", "DOW"],
+    "MASTER Proposal Form URL": ["MASTER Proposal Form URL", "Proposal Form URL", "Proposal Document URL", "Proposal URL"],
+    "Master Contract Document URL": ["Master Contract Document URL", "Contract URL", "Contract Document URL"],
+    "Performance Information Document URL": ["Performance Information Document URL", "Performance Information URL", "Performance Document URL", "Performance Info URL"],
+    "Status": ["Status"],
+    "Internal Status": ["Internal Status"]
+  };
+
   // Find column mapping: targetIndex -> existingIndex
   const usedExistingCols = new Set();
   const orderedCols = [];
 
   targetHeaders.forEach(targetH => {
     let matchIdx = -1;
+    const aliases = targetAliases[targetH] || [targetH];
     for (let j = 0; j < existingHeaders.length; j++) {
       if (usedExistingCols.has(j)) continue;
       const existH = existingHeaders[j] ? existingHeaders[j].toString().trim() : "";
-      if (cleanHeaderStr(existH) === cleanHeaderStr(targetH)) {
+      const matches = aliases.some(alias => 
+        existH.toLowerCase() === alias.toLowerCase() || 
+        cleanHeaderStr(existH) === cleanHeaderStr(alias)
+      );
+      if (matches) {
         matchIdx = j;
         break;
       }
@@ -239,13 +315,294 @@ function reorderColumnsToMatchForm() {
     newMatrix.push(newRow);
   }
 
+  // Apply Regional Location Rules to all existing data rows
+  for (let r = 1; r < newMatrix.length; r++) {
+    applyRegionalLocationRulesToRow(newMatrix[r], newMatrix[0]);
+  }
+
   // Clear existing content and write reordered data
   sheet.clearContents();
   sheet.getRange(1, 1, newMatrix.length, newMatrix[0].length).setValues(newMatrix);
   sheet.getRange(1, 1, 1, newMatrix[0].length).setFontWeight("bold");
 
   colorCodeHeaders();
+  applyDropdownValidations(sheet);
   ui.alert("✅ Columns Reordered Successfully!\n\nAll columns and existing row data have been rearranged to match the 2026 Form (Sections 1 through 6).\nTotal columns: " + newMatrix[0].length);
+}
+
+/**
+ * Transfers all historical client data from the master spreadsheet
+ * (1Mm4L5YVglsukjfpbAiyHRCxNZ8_rD2gPk0n7WBD5VCM) into the production 2026 spreadsheet
+ * (1ssJPBdSTOUzq1S9b_kHYuBLMoUbxwrDap2FIkfHOX4k), mapping each column to the canonical
+ * 2026 Questionnaire format, preventing duplicate entries, normalizing status/assignments,
+ * and applying colored dropdown validations.
+ */
+function transferAllHistoricalData() {
+  const ui = SpreadsheetApp.getUi();
+  const destSs = getSpreadsheet();
+  if (!destSs) {
+    ui.alert("⚠️ Could not open active destination spreadsheet.");
+    return;
+  }
+
+  const destSheet = destSs.getSheetByName(CONFIG.SHEET_NAME) || destSs.getActiveSheet();
+  if (!destSheet) {
+    ui.alert("⚠️ Could not find destination tab '" + CONFIG.SHEET_NAME + "'.");
+    return;
+  }
+
+  const confirm = ui.alert(
+    "📥 Transfer All Historical Data",
+    "This will import all historical client submissions from your Master Archive spreadsheet into tab '" + destSheet.getName() + "'.\n\n" +
+    "• All columns will be matched to the 2026 Questionnaire structure.\n" +
+    "• 'Assigned to' will be positioned right next to the event name.\n" +
+    "• Existing client rows in this sheet will be preserved (no duplicates created).\n" +
+    "• Native dropdown validations and badge colors will be applied.\n\n" +
+    "Do you want to proceed?",
+    ui.ButtonSet.YES_NO
+  );
+  if (confirm !== ui.Button.YES) return;
+
+  // 1. Open Source Historical Spreadsheet
+  let srcSs;
+  try {
+    srcSs = SpreadsheetApp.openById(CONFIG.SOURCE_HISTORICAL_SPREADSHEET_ID);
+  } catch (e) {
+    ui.alert("⚠️ Could not access source spreadsheet (ID: " + CONFIG.SOURCE_HISTORICAL_SPREADSHEET_ID + ").\nPlease verify sharing permissions.\nError: " + e.message);
+    return;
+  }
+
+  // 2. Identify Source Sheet (Consolidated tab with all records)
+  const srcSheets = srcSs.getSheets();
+  let srcSheet = srcSheets.find(s => {
+    const lastCol = Math.min(s.getLastColumn(), 5);
+    if (lastCol < 1) return false;
+    const h = s.getRange(1, 1, 1, lastCol).getValues()[0];
+    return h.some(cell => String(cell).toLowerCase().includes("source tab"));
+  }) || srcSheets[0];
+
+  const srcLastRow = srcSheet.getLastRow();
+  const srcLastCol = srcSheet.getLastColumn();
+  if (srcLastRow < 2 || srcLastCol < 1) {
+    ui.alert("⚠️ Source sheet '" + srcSheet.getName() + "' is empty or has no data rows.");
+    return;
+  }
+
+  const srcHeaders = srcSheet.getRange(1, 1, 1, srcLastCol).getValues()[0];
+  const srcData = srcSheet.getRange(2, 1, srcLastRow - 1, srcLastCol).getValues();
+
+  // 3. Read Destination Structure & Existing Keys (Deduplication)
+  const destLastRow = destSheet.getLastRow();
+  const destLastCol = destSheet.getLastColumn();
+  if (destLastCol < 1) {
+    setupMasterHeaders();
+  }
+  const destHeaders = destSheet.getRange(1, 1, 1, destSheet.getLastColumn()).getValues()[0];
+  const destData = destLastRow > 1 ? destSheet.getRange(2, 1, destLastRow - 1, destHeaders.length).getValues() : [];
+
+  const destEventIdCol = getHeaderIndex(destHeaders, ["Event ID", "Calendar Event ID"]);
+  const destReqIdCol = getHeaderIndex(destHeaders, ["Request ID", "Tracking ID"]);
+  const destNameCol = getHeaderIndex(destHeaders, ["What is the NAME of the event?", "Event Name"]);
+  const destClientCol = getHeaderIndex(destHeaders, ["Your Name", "Client Name"]);
+  const destDateCol = getHeaderIndex(destHeaders, ["Please confirm the DATE of your event:", "Event Date"]);
+
+  const existingKeys = new Set();
+  destData.forEach(row => {
+    if (destEventIdCol > -1 && row[destEventIdCol]) {
+      existingKeys.add(String(row[destEventIdCol]).trim().toLowerCase());
+    }
+    if (destReqIdCol > -1 && row[destReqIdCol]) {
+      existingKeys.add(String(row[destReqIdCol]).trim().toLowerCase());
+    }
+    const combo = `${row[destNameCol] || ""}_${row[destDateCol] || ""}_${row[destClientCol] || ""}`.toLowerCase().trim();
+    if (combo.length > 5) existingKeys.add(combo);
+  });
+
+  // 4. Precalculate Column Mapping: Destination Index -> Source Index
+  const targetAliases = {
+    "Submission Date": ["Submission Date", "Timestamp", "Date Submitted", "Submission Timestamp"],
+    "Request ID": ["Request ID", "Request Tracking ID", "Tracking ID"],
+    "Event ID": ["Event ID", "Calendar Event ID"],
+    "Is this event located within the Commonwealth of Virginia (USA)?": ["Is this event located within the Commonwealth of Virginia (USA)?", "Regional Location", "Virginia Check"],
+    "Where will the event take place? (ADDRESS)": ["Where will the event take place? (ADDRESS)", "Event Address", "Address", "Location"],
+    "Out-of-State Travel & Logistics Arrangement": ["Out-of-State Travel & Logistics Arrangement", "Out-of-State Logistics", "Travel Logistics"],
+    "What is the NAME of the event?": ["What is the NAME of the event?", "Event Name", "Name of Event", "Event"],
+    "Assigned to": ["Assigned to", "Assigned To"],
+    "Websites for Event & Organization": ["Websites for Event & Organization", "Websites", "Website"],
+    "Please confirm the DATE of your event:": ["Please confirm the DATE of your event:", "Event Date", "Date of event", "Date"],
+    "Please confirm the TIME of your event:": ["Please confirm the TIME of your event:", "Event Time", "Time of event", "Time"],
+    "Expected Number of Attendees": ["Expected Number of Attendees", "Expected Attendance", "Attendees"],
+    "Audience Age Groups Expected": ["Audience Age Groups Expected", "Target Audience", "Audience", "Age Groups"],
+    "Purpose of this Event": ["Purpose of this Event", "Event Purpose", "Purpose / Theme", "Theme"],
+    "Describe Your Event": ["Describe Your Event", "Event Description", "Describe event"],
+    "Select Event Classification:": ["Select Event Classification:", "Event Type Scale", "Scale of Event"],
+    "Type of Event Admission": ["Type of Event Admission", "Admission Type", "Admission"],
+    "Will the PERFORMANCE SERVICES be...": ["Will the PERFORMANCE SERVICES be...", "Service Recurrence", "Performance Services Frequency"],
+    "501(c) Non-Profit Name (If Applicable)": ["501(c) Non-Profit Name (If Applicable)", "501(c) Organization", "501c Non Profit Name"],
+    "Can you provide a Tax Deductibility Letter?": ["Can you provide a Tax Deductibility Letter?", "Tax Deductibility Letter", "Tax Letter"],
+    "Provide a Booth/Exhibitor Space (10×10 Tent)?": ["Provide a Booth/Exhibitor Space (10×10 Tent)?", "Provide a Booth/Exhibitor Space (10x10 Tent)?", "Booth/Exhibitor Space(10x10 Tent)", "Booth Space"],
+    "Include our logo on promo materials & social media?": ["Include our logo on promo materials & social media?", "Include Our Info & Logo", "Include Logo on Promo"],
+    "Allowed to help promote the event?": ["Allowed to help promote the event?", "Allowed to Help Promote?", "Promote Event"],
+    "Provide copies of video footage and photos?": ["Provide copies of video footage and photos?", "Copies of Video/Pictures?", "Video Footage & Photos"],
+    "Weather / Contingency Plan": ["Weather / Contingency Plan", "Contingency Plan?", "Contingency Plan Details", "Contingency Plan"],
+    "Type of Private Gathering": ["Type of Private Gathering", "TYPE of Private Gathering"],
+    "Are performers invited to attend/stay for the event?": ["Are performers invited to attend/stay for the event?", "Invited to Attend?", "Invited to Attend"],
+    "Service Type Requested": ["Service Type Requested", "Primary Service", "Requested Service"],
+    "Which of our PERFORMANCE SERVICES will you need?": ["Which of our PERFORMANCE SERVICES will you need?", "Performance Services Needed", "Performance Services"],
+    "Any other PERFORMANCE SERVICES you wish, but are not listed above?": ["Any other PERFORMANCE SERVICES you wish, but are not listed above?", "Other Performance Services"],
+    "Which of our DANCE LESSON SERVICES will you need?": ["Which of our DANCE LESSON SERVICES will you need?", "Dance Lesson Services Needed", "Dance Lesson Services"],
+    "Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?": ["Interactive (AUDIENCE PARTICIPATION / Mini-Lesson)?", "Expecting Audience Participation?", "Audience Participation"],
+    "How much TIME do you require from us?": ["How much TIME do you require from us?", "Time Required", "DURATION of Service Required", "Duration"],
+    "Additional Services Needed (MC, DJ, Lecture)": ["Additional Services Needed (MC, DJ, Lecture)", "Other Services Needed", "Additional Services Needed"],
+    "General Formats (Stage, Opening, Headliner, Main Act, Background)": ["General Formats (Stage, Opening, Headliner, Main Act, Background)", "General Formats"],
+    "Sound System Equipment": ["Sound System Equipment", "Sound System"],
+    "Venue Location Setting": ["Venue Location Setting", "Where will it take place?(Place)", "Where will it take place?", "Venue Setting"],
+    "On what SURFACE will the performance or class take place?": ["On what SURFACE will the performance or class take place?", "Surface / Floor", "Performance Surface", "Surface Type"],
+    "Size of Performance / Class Area": ["Size of Performance / Class Area", "Area Size", "Performance Area Size"],
+    "Will a BADGE or ID be required for performers?": ["Will a BADGE or ID be required for performers?", "Performer Access / Badge", "Badge Access"],
+    "WILL YOU PROVIDE the performers with (Water, Hospitality, Meal, Green Room)": ["WILL YOU PROVIDE the performers with (Water, Hospitality, Meal, Green Room)", "Hospitality(Food/Water/Beverages)", "Hospitality Provided"],
+    "Dressing Room / Costume Changing Instructions": ["Dressing Room / Costume Changing Instructions", "Costume Change Place", "Dressing Room Instructions"],
+    "Your Name": ["Your Name", "Full Name", "Client Name", "Name"],
+    "Email Address": ["Email Address", "Email"],
+    "Best Contact Phone Number": ["Best Contact Phone Number", "PhoneNumber", "Phone Number", "Phone", "Telephone"],
+    "Who do you represent? (Organization / Business / Self)": ["Who do you represent? (Organization / Business / Self)", "Representing / Organization", "Representing", "Organization"],
+    "Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title": ["Who is the Event Planner/Coordinator and or decision maker for this event? Name and Title", "Coordinator Name & Title", "Event Planner / Coordinator", "Event Coordinator"],
+    "Confirm you have a BUDGET for our participation": ["Confirm you have a BUDGET for our participation", "Budget Confirmed?", "Confirm Budget"],
+    "Confirmed Budget Amount for Performance / Workshop": ["Confirmed Budget Amount for Performance / Workshop", "Budget", "Confirmed Budget Amount", "Confirmed Budget"],
+    "How did you HEAR of us?": ["How did you HEAR of us?", "How did you hear of us?", "Referral Source"],
+    "Upload Event Document / Attachment": ["Upload Event Document / Attachment", "Upload Event Document", "Attachment", "Uploaded File"],
+    "Special Instructions, Song Requests or Notes": ["Special Instructions, Song Requests or Notes", "Additional Notes / Sound DJ MC", "Special Requests"],
+    "Notice: Hiring Similar Performers Disclosure": ["Notice: Hiring Similar Performers Disclosure", "Hiring Disclosure"],
+    "Terms of Service & Privacy Policy Agreement": ["Terms of Service & Privacy Policy Agreement", "Terms of Service", "Terms Agreed"],
+    "Day of the Week": ["Day of the Week", "Day of Week", "DOW"],
+    "MASTER Proposal Form URL": ["MASTER Proposal Form URL", "Proposal Form URL", "Proposal Document URL", "Proposal URL"],
+    "Master Contract Document URL": ["Master Contract Document URL", "Contract URL", "Contract Document URL"],
+    "Performance Information Document URL": ["Performance Information Document URL", "Performance Information URL", "Performance Document URL", "Performance Info URL"],
+    "Status": ["Status"],
+    "Internal Status": ["Internal Status"]
+  };
+
+  const destToSrcMap = [];
+  for (let c = 0; c < destHeaders.length; c++) {
+    const destH = destHeaders[c];
+    const aliases = targetAliases[destH] || [destH];
+    let foundSrcIdx = -1;
+    for (let s = 0; s < srcHeaders.length; s++) {
+      const sH = srcHeaders[s];
+      if (aliases.some(a => sH.toLowerCase() === a.toLowerCase() || cleanHeaderStr(sH) === cleanHeaderStr(a))) {
+        foundSrcIdx = s;
+        break;
+      }
+    }
+    destToSrcMap.push(foundSrcIdx);
+  }
+
+  // 5. Build New Data Matrix with normalized values
+  const rowsToInsert = [];
+  let skippedCount = 0;
+
+  const srcEventIdCol = getHeaderIndex(srcHeaders, ["Event ID", "Calendar Event ID"]);
+  const srcNameCol = getHeaderIndex(srcHeaders, ["Event Name", "What is the NAME of the event?"]);
+  const srcDateCol = getHeaderIndex(srcHeaders, ["Event Date", "Please confirm the DATE of your event:"]);
+  const srcClientCol = getHeaderIndex(srcHeaders, ["Your Name", "Name", "Client Name"]);
+  const assignedToDestIdx = getHeaderIndex(destHeaders, ["Assigned to", "Assigned To"]);
+  const internalStatusDestIdx = getHeaderIndex(destHeaders, ["Internal Status"]);
+  const statusDestIdx = getHeaderIndex(destHeaders, ["Status"]);
+
+  for (let r = 0; r < srcData.length; r++) {
+    const srcRow = srcData[r];
+    
+    // Skip empty rows
+    const hasName = srcNameCol > -1 && String(srcRow[srcNameCol] || "").trim().length > 0;
+    const hasClient = srcClientCol > -1 && String(srcRow[srcClientCol] || "").trim().length > 0;
+    if (!hasName && !hasClient) continue;
+
+    // Check duplication against existing records
+    const eventIdVal = (srcEventIdCol > -1 && srcRow[srcEventIdCol]) ? String(srcRow[srcEventIdCol]).trim().toLowerCase() : "";
+    const comboKey = `${srcRow[srcNameCol] || ""}_${srcRow[srcDateCol] || ""}_${srcRow[srcClientCol] || ""}`.toLowerCase().trim();
+
+    if ((eventIdVal && existingKeys.has(eventIdVal)) || (comboKey.length > 5 && existingKeys.has(comboKey))) {
+      skippedCount++;
+      continue;
+    }
+
+    // Map columns
+    const newRow = new Array(destHeaders.length).fill("");
+    for (let c = 0; c < destHeaders.length; c++) {
+      const sIdx = destToSrcMap[c];
+      if (sIdx > -1 && srcRow[sIdx] !== undefined && srcRow[sIdx] !== null) {
+        newRow[c] = srcRow[sIdx];
+      }
+    }
+
+    // Normalize "Assigned to" to valid dropdown value
+    if (assignedToDestIdx > -1) {
+      const curAssigned = String(newRow[assignedToDestIdx] || "").trim().toLowerCase();
+      if (curAssigned.includes("tradicion")) {
+        newRow[assignedToDestIdx] = "Tradicion";
+      } else if (curAssigned.includes("both") || curAssigned.includes("&")) {
+        newRow[assignedToDestIdx] = "Both";
+      } else {
+        newRow[assignedToDestIdx] = "Salsa Guy";
+      }
+    }
+
+    // Normalize "Internal Status" to valid dropdown value
+    if (internalStatusDestIdx > -1) {
+      const curIntStatus = String(newRow[internalStatusDestIdx] || "").trim().toLowerCase();
+      if (curIntStatus.includes("completed") || curIntStatus.includes("ended")) {
+        newRow[internalStatusDestIdx] = "SERVICES COMPLETED";
+      } else if (curIntStatus.includes("cancel")) {
+        newRow[internalStatusDestIdx] = "Cancelled by Customer";
+      } else if (curIntStatus.includes("invoice") && curIntStatus.includes("needs")) {
+        newRow[internalStatusDestIdx] = "Scheduled Needs Invoicing";
+      } else if (curIntStatus.includes("invoice")) {
+        newRow[internalStatusDestIdx] = "Scheduled & Invoiced";
+      } else if (curIntStatus.includes("pro-bono") || curIntStatus.includes("pro bono")) {
+        newRow[internalStatusDestIdx] = "Scheduled Pro-Bono";
+      } else if (curIntStatus.includes("unable")) {
+        newRow[internalStatusDestIdx] = "Unable to Support";
+      } else if (curIntStatus.includes("reject")) {
+        newRow[internalStatusDestIdx] = "Reject by Customer";
+      } else if (curIntStatus.includes("review letter") || curIntStatus.includes("thank you")) {
+        newRow[internalStatusDestIdx] = "Thank You and Review Letter";
+      } else if (curIntStatus.includes("waiting")) {
+        newRow[internalStatusDestIdx] = "Proposal Submitted Waiting for Organizer";
+      } else {
+        newRow[internalStatusDestIdx] = "Proposal Needed";
+      }
+    }
+
+    // Normalize "Status"
+    if (statusDestIdx > -1 && (!newRow[statusDestIdx] || newRow[statusDestIdx] === "")) {
+      newRow[statusDestIdx] = "Synced";
+    }
+
+    // Apply Regional Location Rules (VA / Out-of-State / International)
+    applyRegionalLocationRulesToRow(newRow, destHeaders);
+
+    rowsToInsert.push(newRow);
+    if (eventIdVal) existingKeys.add(eventIdVal);
+    if (comboKey.length > 5) existingKeys.add(comboKey);
+  }
+
+  // 6. Fast batch write to destination sheet
+  if (rowsToInsert.length > 0) {
+    const startRow = destSheet.getLastRow() + 1;
+    destSheet.getRange(startRow, 1, rowsToInsert.length, destHeaders.length).setValues(rowsToInsert);
+  }
+
+  // 7. Apply dropdowns, badge colors, and header formatting
+  applyDropdownValidations(destSheet);
+  colorCodeHeaders();
+
+  ui.alert(
+    "✅ Historical Data Transfer Complete!\n\n" +
+    "• Successfully imported: " + rowsToInsert.length + " historical event rows\n" +
+    "• Skipped duplicates: " + skippedCount + "\n" +
+    "• Total rows now in '" + destSheet.getName() + "': " + destSheet.getLastRow() + "\n\n" +
+    "All data columns have been matched to the 2026 Questionnaire format with dropdowns applied!"
+  );
 }
 
 /**
@@ -274,6 +631,7 @@ function setupMasterHeaders() {
 
   sheet.getRange(1, 1, 1, masterHeaders.length).setValues([masterHeaders]).setFontWeight("bold");
   colorCodeHeaders();
+  applyDropdownValidations(sheet);
   diagnoseSheet();
 }
 
@@ -289,10 +647,12 @@ function diagnoseSheet() {
 
   const required = [
     "What is the NAME of the event?",
+    "Assigned to",
     "Please confirm the DATE of your event:",
     "Please confirm the TIME of your event:",
     "Event ID",
-    "Status"
+    "Status",
+    "Internal Status"
   ];
 
   let report = "📊 Header Diagnosis Report:\n\n";
@@ -345,6 +705,7 @@ function colorCodeHeaders() {
     const colNum = i + 1;
     const cell = sheet.getRange(1, colNum);
     const clean = cleanHeaderStr(h);
+    cell.setFontColor("#000000"); // Default dark font color
     
     // 0. Identifiers & Timestamps -> Light Gray/Slate
     if (clean.includes("submission date") || clean.includes("timestamp") || clean.includes("request id") || clean.includes("event id")) {
@@ -354,6 +715,10 @@ function colorCodeHeaders() {
     else if (clean.includes("virginia") || clean.includes("where will the event take place") || clean.includes("address") || clean.includes("out of state")) {
       cell.setBackground("#d9ead3");
     } 
+    // Assigned to & Management/Tracking Columns -> Rich Royal Purple with White Text (Matches SGR Admin Theme)
+    else if (clean.includes("assigned") || clean.includes("internal status") || clean.includes("status") || clean.includes("day of the week") || clean.includes("url") || clean.includes("additional email")) {
+      cell.setBackground("#4c2975").setFontColor("#ffffff");
+    }
     // Section 2: Event Basics -> Soft Blue
     else if (clean.includes("name of the event") || clean.includes("websites") || clean.includes("date") || clean.includes("time") || clean.includes("attend") || clean.includes("audience age") || clean.includes("purpose") || clean.includes("describe") || clean.includes("classification") || clean.includes("admission")) {
       cell.setBackground("#cfe2f3");
@@ -377,10 +742,6 @@ function colorCodeHeaders() {
     // Section 6: Final Steps & Legal -> Soft Salmon / Rose
     else if (clean.includes("hear of us") || clean.includes("upload") || clean.includes("attachment") || clean.includes("special instructions") || clean.includes("hiring similar") || clean.includes("terms of service")) {
       cell.setBackground("#f4cccc");
-    } 
-    // Automation & Tracking Columns -> Soft Periwinkle Blue
-    else if (clean.includes("day of the week") || clean.includes("url") || clean.includes("assigned") || clean.includes("status")) {
-      cell.setBackground("#c9daf8");
     } else {
       cell.setBackground("#f3f4f6");
     }
@@ -391,6 +752,278 @@ function colorCodeHeaders() {
       SpreadsheetApp.getUi().alert("🎨 Headers have been successfully color-coded by form section!");
     } catch (e) {}
   }
+}
+
+/**
+ * Applies native dropdown validations and color-coded badge styling to:
+ * 1. "Assigned to" (Salsa Guy, Tradicion, Both) - positioned to the right of "What is the NAME of the event?"
+ * 2. "Internal Status" (Cancelled by Customer, Cancelled by SGR, Proposal Needed, etc.)
+ */
+function applyDropdownValidations(targetSheet) {
+  const ss = getSpreadsheet();
+  if (!ss) return;
+  const sheet = targetSheet || ss.getSheetByName(CONFIG.SHEET_NAME) || ss.getActiveSheet();
+  if (!sheet) return;
+
+  const maxRows = sheet.getMaxRows();
+  if (maxRows < 2) return;
+  const numDataRows = maxRows - 1;
+
+  let headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  let eventNameIdx = getHeaderIndex(headers, ["What is the NAME of the event?", "Event Name", "Name of Event"]);
+  let assignedToIdx = getHeaderIndex(headers, ["Assigned to", "Assigned To"]);
+
+  // If "Assigned to" doesn't exist yet, insert it immediately to the right of "What is the NAME of the event?"
+  if (assignedToIdx === -1 && eventNameIdx > -1) {
+    sheet.insertColumnAfter(eventNameIdx + 1);
+    sheet.getRange(1, eventNameIdx + 2).setValue("Assigned to").setFontWeight("bold").setBackground("#4c2975").setFontColor("#ffffff");
+    assignedToIdx = eventNameIdx + 1;
+    headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  }
+
+  // 1. Data Validation: "Assigned to" (Salsa Guy, Tradicion, Both)
+  if (assignedToIdx > -1) {
+    const assignedToRange = sheet.getRange(2, assignedToIdx + 1, numDataRows, 1);
+    const assignedOptions = ["Salsa Guy", "Tradicion", "Both"];
+    const assignedRule = SpreadsheetApp.newDataValidation()
+      .requireValueInList(assignedOptions, true)
+      .setAllowInvalid(true)
+      .build();
+    assignedToRange.setDataValidation(assignedRule);
+  }
+
+  // 2. Data Validation: "Internal Status"
+  let internalStatusIdx = getHeaderIndex(headers, ["Internal Status"]);
+  const internalStatusOptions = [
+    "Cancelled by Customer",
+    "Cancelled by SGR",
+    "Proposal Needed",
+    "Proposal Submitted Waiting for Organizer",
+    "Scheduled & Invoiced",
+    "Scheduled Needs Invoicing",
+    "Scheduled Pro-Bono",
+    "SERVICES COMPLETED",
+    "Reject by Customer",
+    "Unable to Support",
+    "Thank You and Review Letter"
+  ];
+  if (internalStatusIdx > -1) {
+    const internalStatusRange = sheet.getRange(2, internalStatusIdx + 1, numDataRows, 1);
+    const internalStatusRule = SpreadsheetApp.newDataValidation()
+      .requireValueInList(internalStatusOptions, true)
+      .setAllowInvalid(true)
+      .build();
+    internalStatusRange.setDataValidation(internalStatusRule);
+  }
+
+  // 3. Data Validation: "Is this event located within the Commonwealth of Virginia (USA)?"
+  let vaColIdx = getHeaderIndex(headers, ["Is this event located within the Commonwealth of Virginia (USA)?", "Regional Location", "Virginia Check"]);
+  if (vaColIdx > -1) {
+    const vaRange = sheet.getRange(2, vaColIdx + 1, numDataRows, 1);
+    const vaOptions = ["Yes", "Not Applicable", "It's International"];
+    const vaRule = SpreadsheetApp.newDataValidation()
+      .requireValueInList(vaOptions, true)
+      .setAllowInvalid(true)
+      .build();
+    vaRange.setDataValidation(vaRule);
+  }
+
+  // 4. Conditional Formatting Rules for Status, Assigned, and Location Pills/Badges
+  applyDropdownConditionalFormatting(sheet, assignedToIdx, internalStatusIdx, vaColIdx);
+
+  if (!targetSheet && typeof SpreadsheetApp !== "undefined" && SpreadsheetApp.getUi) {
+    try {
+      SpreadsheetApp.getUi().alert("✅ Dropdown menus and badge colors successfully applied to 'Assigned to', 'Internal Status', and 'Regional Location'!");
+    } catch (e) {}
+  }
+}
+
+/**
+ * Configures conditional format rules matching the exact badge pill colors for
+ * 'Assigned to', 'Internal Status', and 'Regional Location' dropdown selections.
+ */
+function applyDropdownConditionalFormatting(sheet, assignedToColIdx, internalStatusColIdx, vaColIdx) {
+  const maxRows = sheet.getMaxRows();
+  if (maxRows < 2) return;
+  const numDataRows = maxRows - 1;
+
+  const existingRules = sheet.getConditionalFormatRules() || [];
+  const newRules = [];
+
+  // Rules for "Assigned to" (Salsa Guy = Green, Tradicion = Purple, Both = Gray)
+  if (assignedToColIdx > -1) {
+    const range = sheet.getRange(2, assignedToColIdx + 1, numDataRows, 1);
+    const assignedRules = [
+      { text: "Salsa Guy", bg: "#d9ead3", font: "#274e13" },
+      { text: "Tradicion", bg: "#ead1dc", font: "#4c1130" },
+      { text: "Both", bg: "#f3f3f3", font: "#434343" }
+    ];
+    assignedRules.forEach(r => {
+      newRules.push(
+        SpreadsheetApp.newConditionalFormatRule()
+          .whenTextEqualTo(r.text)
+          .setBackground(r.bg)
+          .setFontColor(r.font)
+          .setRanges([range])
+          .build()
+      );
+    });
+  }
+
+  // Rules for "Internal Status"
+  if (internalStatusColIdx > -1) {
+    const range = sheet.getRange(2, internalStatusColIdx + 1, numDataRows, 1);
+    const statusRules = [
+      { text: "Cancelled by Customer", bg: "#fce8e6", font: "#c5221f" },
+      { text: "Cancelled by SGR", bg: "#b71c1c", font: "#ffffff" },
+      { text: "Proposal Needed", bg: "#ffe599", font: "#7f6000" },
+      { text: "Proposal Submitted Waiting for Organizer", bg: "#fce5cd", font: "#b06000" },
+      { text: "Scheduled & Invoiced", bg: "#d9ead3", font: "#274e13" },
+      { text: "Scheduled Needs Invoicing", bg: "#d9ead3", font: "#274e13" },
+      { text: "Scheduled Pro-Bono", bg: "#d9ead3", font: "#274e13" },
+      { text: "SERVICES COMPLETED", bg: "#cfe2f3", font: "#0b5394" },
+      { text: "Reject by Customer", bg: "#b71c1c", font: "#ffffff" },
+      { text: "Unable to Support", bg: "#b71c1c", font: "#ffffff" },
+      { text: "Thank You and Review Letter", bg: "#0b5394", font: "#ffffff" }
+    ];
+    statusRules.forEach(r => {
+      newRules.push(
+        SpreadsheetApp.newConditionalFormatRule()
+          .whenTextEqualTo(r.text)
+          .setBackground(r.bg)
+          .setFontColor(r.font)
+          .setRanges([range])
+          .build()
+      );
+    });
+  }
+
+  // Rules for "Regional Location / Virginia" (Yes = Green, Not Applicable = Light Gray, It's International = Soft Blue)
+  if (vaColIdx > -1) {
+    const range = sheet.getRange(2, vaColIdx + 1, numDataRows, 1);
+    const vaRules = [
+      { text: "Yes", bg: "#d9ead3", font: "#274e13" },
+      { text: "Not Applicable", bg: "#f3f3f3", font: "#595959" },
+      { text: "It's International", bg: "#cfe2f3", font: "#0b5394" }
+    ];
+    vaRules.forEach(r => {
+      newRules.push(
+        SpreadsheetApp.newConditionalFormatRule()
+          .whenTextEqualTo(r.text)
+          .setBackground(r.bg)
+          .setFontColor(r.font)
+          .setRanges([range])
+          .build()
+      );
+    });
+  }
+
+  // Combine with existing rules
+  sheet.setConditionalFormatRules(existingRules.concat(newRules));
+}
+
+/**
+ * Applies the 4 Regional Location & Logistics rules (Virginia vs Out-of-State vs International)
+ * to a row data array given the sheet headers:
+ * 
+ * 1. If "Yes (Within Virginia, USA)":
+ *    - "Is this event located within the Commonwealth of Virginia (USA)?" -> "Yes"
+ *    - "Out-of-State Travel & Logistics Arrangement" -> "Not Applicable"
+ *    - All 5 International columns -> "Not Applicable"
+ * 
+ * 2. If "No, Out-of-State (Within USA, outside VA)":
+ *    - "Is this event located within the Commonwealth of Virginia (USA)?" -> "Not Applicable"
+ *    - All 5 International columns -> "Not Applicable"
+ * 
+ * 3. If "No, International (Outside USA)":
+ *    - "Is this event located within the Commonwealth of Virginia (USA)?" -> "It's International"
+ *    - "Where will the event take place? (ADDRESS)" -> "It's International"
+ *    - "Out-of-State Travel & Logistics Arrangement" -> "It's International"
+ */
+function applyRegionalLocationRulesToRow(row, headers) {
+  if (!row || !headers) return row;
+
+  const vaCol = getHeaderIndex(headers, ["Is this event located within the Commonwealth of Virginia (USA)?", "Regional Location", "Virginia Check"]);
+  const addrCol = getHeaderIndex(headers, ["Where will the event take place? (ADDRESS)", "Event Address", "Address", "Location"]);
+  const outOfStateCol = getHeaderIndex(headers, ["Out-of-State Travel & Logistics Arrangement", "Out-of-State Logistics"]);
+
+  const intlCols = [
+    getHeaderIndex(headers, ["International: Specific Country, City, & Venue Name", "Specific Country, City, & Venue Name", "International Venue Name"]),
+    getHeaderIndex(headers, ["International: Travel & Lodging Logistics", "International Travel & Lodging Logistics", "International Logistics"]),
+    getHeaderIndex(headers, ["International: Visa & Legal Documentation Support", "Visa & Legal Documentation Support", "Visa Support"]),
+    getHeaderIndex(headers, ["International: Preferred Currency & Payment Terms", "Preferred Currency & Payment Terms", "Preferred Currency"]),
+    getHeaderIndex(headers, ["International: Costumes, Props & Customs Considerations", "Costumes, Props & Customs Considerations", "Customs Notes"])
+  ];
+
+  if (vaCol === -1) return row;
+
+  const rawVaVal = String(row[vaCol] || "").trim();
+  const lowerVal = rawVaVal.toLowerCase();
+
+  // Rule 1 & 2: Virginia ("Yes (Within Virginia, USA)")
+  if (lowerVal.includes("within virginia") || lowerVal === "yes" || (lowerVal.startsWith("yes") && !lowerVal.includes("no"))) {
+    row[vaCol] = "Yes";
+    if (outOfStateCol > -1) {
+      row[outOfStateCol] = "Not Applicable";
+    }
+    intlCols.forEach(colIdx => {
+      if (colIdx > -1) {
+        row[colIdx] = "Not Applicable";
+      }
+    });
+  }
+  // Rule 3: Out-of-State ("No, Out-of-State (Within USA, outside VA)...")
+  else if (lowerVal.includes("out-of-state") || lowerVal.includes("out of state") || lowerVal.includes("outside va")) {
+    row[vaCol] = "Not Applicable";
+    intlCols.forEach(colIdx => {
+      if (colIdx > -1) {
+        row[colIdx] = "Not Applicable";
+      }
+    });
+  }
+  // Rule 4: International ("No, International (Outside USA)...")
+  else if (lowerVal.includes("international") || lowerVal.includes("outside usa") || lowerVal === "it's international") {
+    row[vaCol] = "It's International";
+    if (addrCol > -1) {
+      row[addrCol] = "It's International";
+    }
+    if (outOfStateCol > -1) {
+      row[outOfStateCol] = "It's International";
+    }
+  }
+
+  return row;
+}
+
+/**
+ * Menu action: Applies the Regional Location & Logistics rules to all existing rows
+ * in the active sheet.
+ */
+function applyRegionalLocationRulesToActiveSheet() {
+  const ss = getSpreadsheet();
+  if (!ss) return;
+  const sheet = ss.getActiveSheet() || ss.getSheetByName(CONFIG.SHEET_NAME);
+  if (!sheet) return;
+
+  const lastRow = sheet.getLastRow();
+  const lastCol = sheet.getLastColumn();
+  if (lastRow < 2 || lastCol < 1) {
+    SpreadsheetApp.getUi().alert("⚠️ Sheet has no data rows.");
+    return;
+  }
+
+  const headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+  const dataRange = sheet.getRange(2, 1, lastRow - 1, lastCol);
+  const data = dataRange.getValues();
+
+  let updatedCount = 0;
+  for (let r = 0; r < data.length; r++) {
+    applyRegionalLocationRulesToRow(data[r], headers);
+    updatedCount++;
+  }
+
+  dataRange.setValues(data);
+  SpreadsheetApp.getUi().alert("✅ Regional Location Rules Applied!\n\nUpdated " + updatedCount + " rows in tab '" + sheet.getName() + "' according to VA, Out-of-State, and International rules.");
 }
 
 /**
@@ -607,10 +1240,10 @@ function processRow(sheet, rowNum, rowData, folder, headers, isNewSubmit = false
       sheet.getRange(rowNum, statusIdx + 1).setValue("Synced").setBackground("#d9ead3");
     }
     if (internalStatusIdx > -1 && !rowData[internalStatusIdx]) {
-      sheet.getRange(rowNum, internalStatusIdx + 1).setValue("Ready for Review");
+      sheet.getRange(rowNum, internalStatusIdx + 1).setValue("Proposal Needed");
     }
     if (assignedToIdx > -1 && !rowData[assignedToIdx]) {
-      sheet.getRange(rowNum, assignedToIdx + 1).setValue("The Salsa Guy");
+      sheet.getRange(rowNum, assignedToIdx + 1).setValue("Salsa Guy");
     }
   } catch (sErr) {}
 
@@ -1454,6 +2087,7 @@ function importQuickEntryData() {
       let idx = mainHeaders.indexOf(h);
       if (idx > -1) newRow[idx] = rowData[j];
     });
+    applyRegionalLocationRulesToRow(newRow, mainHeaders);
     mainSheet.appendRow(newRow);
     addedCount++;
   }
@@ -1583,6 +2217,18 @@ function handleFormSubmitJson(data) {
     const tz = ss.getSpreadsheetTimeZone() || Session.getScriptTimeZone() || "America/New_York";
     newRow[timestampIdx] = Utilities.formatDate(new Date(), tz, "M/d/yyyy H:mm:ss");
   }
+
+  const assignedToColIdx = getHeaderIndex(headers, ["Assigned to", "Assigned To"]);
+  if (assignedToColIdx > -1 && (!newRow[assignedToColIdx] || newRow[assignedToColIdx] === "")) {
+    newRow[assignedToColIdx] = "Salsa Guy";
+  }
+  const internalStatusColIdx = getHeaderIndex(headers, ["Internal Status"]);
+  if (internalStatusColIdx > -1 && (!newRow[internalStatusColIdx] || newRow[internalStatusColIdx] === "")) {
+    newRow[internalStatusColIdx] = "Proposal Needed";
+  }
+
+  // Apply Regional Location & Logistics Rules (VA vs Out-of-State vs International)
+  applyRegionalLocationRulesToRow(newRow, headers);
 
   sheet.appendRow(newRow);
   const rowNum = sheet.getLastRow();
