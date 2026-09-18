@@ -2952,7 +2952,7 @@ function createQuestionnaireReviewGoogleDoc() {
         "type": "select",
         "name": "representType",
         "label": "Who do you represent? (Organization / Business / Self)",
-        "required": false,
+        "required": true,
         "options": [
           "Organization / Business / Self",
           "Dance Studio",
@@ -2990,8 +2990,8 @@ function createQuestionnaireReviewGoogleDoc() {
         "type": "text",
         "name": "budgetAmount",
         "label": "Confirmed Budget Amount for Performance / Workshop",
-        "required": true,
-        "placeholder": "e.g. $1,500 USD"
+        "required": false,
+        "placeholder": "e.g. $1,500 USD (Optional)"
       }
     ]
   },
